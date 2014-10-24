@@ -1,0 +1,34 @@
+---
+- name: install utilities
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - vim-nox
+  - python
+  - python3
+  - git
+  - htop
+  - zsh
+  - python-dev
+  - python-setuptools
+  - ntp
+  - tree
+  - ncdu
+  - ack-grep
+  - ssh
+  - mosh
+  - fail2ban
+  - postfix
+  - lldpd
+  - apticron
+  - lm-sensors
+  - cu
+
+- name: install snmpd
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - snmpd
+  - snmp-mibs-downloader
+
+- name: configure snmpd
+  template: src=snmpd.conf dest=/etc/snmp/snmpd.conf
+  notify: restart snmpd
