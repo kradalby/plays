@@ -1,3 +1,6 @@
 ---
 - name: restart snmpd
   service: name=snmpd state=restarted
+  
+- name: restart fail2ban
+  service: name=fail2ban state=restarted

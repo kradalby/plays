@@ -1,0 +1,33 @@
+---
+# variables needed for this playbook
+ansible_hostname: zapdos.fap.no
+ansible_only: Don't edit manually
+
+hostname: zapdos
+domain: fap.no
+
+# for apt configs
+apt_mirror: http://debian.samfundet.no/
+debian_release: wheezy
+
+# for postfix
+mail_relayhost: smtp.stud.ntnu.no
+mailname: zapdos.fap.no
+
+
+# dns configs
+dns_domain: fap.no
+nameservers:
+  - 8.8.8.8
+  - 8.8.4.4
+
+jail_mail: True
+jail_mail_dest: kradalby@kradalby.no
+
+# for ssh
+ssh_users:
+  - kradalby
+
+snmp_location: IT-Bygget NTNU, Trondheim
+snmp_contact: Kristoffer Dalby <kradalby@kradalby.no>
+snmp_allowed: 129.241.210.105

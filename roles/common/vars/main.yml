@@ -1,0 +1,25 @@
+---
+base_packages:
+  - vim-nox
+  - python
+  - python3
+  - git
+  - htop
+  - zsh
+  - python-dev
+  - python-setuptools
+  - ntp
+  - tree
+  - ncdu
+  - ack-grep
+  - ssh
+  - mosh
+  - fail2ban
+  - postfix
+  - lldpd
+  - apticron
+  - lm-sensors
+  - cu
+  - openssh-server
+  - openssl
+

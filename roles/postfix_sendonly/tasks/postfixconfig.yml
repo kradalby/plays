@@ -1,0 +1,5 @@
+---
+- name: file /etc/postfix/main.cf
+  template: src=postfix/nousers-main.cf.j2 dest=/etc/postfix/main.cf owner=root group=root mode=644
+  notify: restart postfix
+

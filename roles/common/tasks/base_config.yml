@@ -1,0 +1,36 @@
+---
+- name: /etc/resolv.conf
+  template: src=resolv.conf.j2 dest=/etc/resolv.conf owner=root group=root mode=644
+
+- name: /etc/mailname
+  template: src=mailname.j2 dest=/etc/mailname owner=root group=root mode=644
+
+- name: /etc/hosts
+  template: src=hosts.j2 dest=/etc/hosts owner=root group=root mode=644
+
+- name: /etc/hostname
+  template: src=hostname.j2 dest=/etc/hostname owner=root group=root mode=644
+
+- name: install snmpd
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - snmpd
+  - snmp-mibs-downloader
+
+- name: configure snmpd
+  template: src=snmpd.conf.j2 dest=/etc/snmp/snmpd.conf
+  notify: restart snmpd
+
+- name: create motd
+  shell: curl  --silent --compressed "http://www.lemoda.net/games/figlet/figlet.cgi?text=$(hostname)&font=puffy&width=80" > /etc/motd; echo "This server was bootstrapped with bs.sh (kradalby.no/bs.sh)" >> /etc/motd
+
+- name: install prezto 
+  git: repo=https://github.com/sorin-ionescu/prezto.git
+       dest="/root/.zprezto"
+       recursive=yes 
+
+- name: install dotfiles 
+  git: repo=https://github.com/kradalby/dotfiles.git
+       dest="/root/git/dotfiles"
+
+

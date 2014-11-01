@@ -1,0 +1,52 @@
+# {{ ansible_managed }}
+# {{ ansible_only }}
+
+[DEFAULT]
+ignoreip = 127.0.0.1/8
+bantime  = 36000
+maxretry = 3
+backend = auto
+destemail = {{ jail_mail_dest }}
+
+banaction = iptables-multiport
+mta = sendmail
+protocol = tcp
+chain = INPUT
+
+action_ = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+action = %(action_)s
+
+
+# JAILS
+[ssh]
+enabled  = true
+port     = ssh
+filter   = sshd
+logpath  = /var/log/auth.log
+maxretry = 6
+
+{% if jail_mail %}
+# Email only jails
+[postfix]
+enabled  = true
+port     = smtp,ssmtp
+filter   = postfix
+logpath  = /var/log/mail.warn
+
+[sasl]
+enabled  = true
+port     = smtp,ssmtp,imap2,imap3,imaps,pop3,pop3s
+filter   = sasl
+logpath  = /var/log/mail.warn
+
+[dovecot]
+enabled = true
+port    = smtp,ssmtp,imap2,imap3,imaps,pop3,pop3s
+filter  = dovecot
+logpath = /var/log/mail.warn
+# End of email only jails
+{% endif %}
+
+# {{ ansible_managed }}
+# {{ ansible_only }}
+

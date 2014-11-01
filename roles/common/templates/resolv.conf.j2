@@ -1,0 +1,7 @@
+# {{ ansible_managed}}
+search {{ dns_domain }}
+{% for server in nameservers %}
+nameserver {{ server }}
+{% endfor %}
+options attempts:3 rotate
+
