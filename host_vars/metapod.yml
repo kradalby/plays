@@ -1,0 +1,5 @@
+---
+hostname: metapod
+
+# SMTP spesific
+snmp_location: IT-Bygget NTNU, Trondheim

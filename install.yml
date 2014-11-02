@@ -6,3 +6,4 @@
   roles:
     - common
     - postfix_sendonly
+    - xenserver

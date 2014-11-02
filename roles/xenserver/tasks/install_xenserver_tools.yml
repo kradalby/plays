@@ -1,0 +1,7 @@
+---
+- name: copy install script
+  template: src=install_xenserver_tools.sh dest=/root/install_xenserver_tools.sh owner=root group=root mode=755
+
+- name: install xenserver
+  shell: bash /root/install_xenserver_tools.sh
+

@@ -1,7 +1,14 @@
 ---
+- name: Assures home .ssh dir exists
+  file: path=/home/{{ item }}/.ssh state=directory
+  with_items: ssh_users
+
 - name: user ssh keys
   template: src=ssh_keys/{{ item }}.j2 dest=/home/{{ item }}/.ssh/authorized_keys owner={{ item }} mode=640
   with_items: ssh_users
+
+- name: Assures root .ssh dir exists
+  file: path=/root/.ssh state=directory
 
 - name: root ssh keys
   template: src=ssh_keys/root.j2 dest=/root/.ssh/authorized_keys owner=root mode=640

@@ -33,4 +33,5 @@
   git: repo=https://github.com/kradalby/dotfiles.git
        dest="/root/git/dotfiles"
 
-
+- name: deploy dotfiles
+  shell: ~/git/dotfiles/deploy.sh

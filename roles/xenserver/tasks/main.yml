@@ -1,0 +1,3 @@
+---
+- include: install_xenserver_tools.yml
+
