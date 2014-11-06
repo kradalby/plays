@@ -1,0 +1,9 @@
+---
+- name: Setup base configuration
+  hosts: studdem
+  remote_user: root
+
+  roles:
+    - common
+    - postfix_sendonly
+    - bind-studdem

@@ -1,0 +1,78 @@
+; {{ ansible_managed }}
+$ORIGIN studdem.ntnu.no.
+$TTL 86400   ; 24 hour
+@                               IN SOA tussi.studdem.ntnu.no.   drift.studdem.ntnu.no. (
+                                    2014110602  ; serial yyyymmdd##
+                                    3600        ; refresh ( 1 hour )
+                                    1800        ; retry ( 30 minutes )
+                                    608400      ; expire ( 1 week 1 hour )
+                                    3600        ;   minimum ( 1 hour )
+                                    )
+                                IN NS  ns1.ntnu.no.
+                                IN NS  ns2.ntnu.no.
+
+@                IN A       129.241.78.144
+
+
+; Servers
+ugla             IN  A      129.241.78.139
+kengu            IN  A      129.241.78.141
+kengu            IN  AAAA   2001:0700:0300:1736:020c:29ff:feed:d8f1
+tussi            IN  A      129.241.197.245
+tussi            IN  AAAA   2001:700:300:1736:20c:29ff:fed0:ae3
+vissel           IN  A      129.241.78.150
+vissel           IN  AAAA   2001:0700:0300:1736:020c:29ff:fe91:f209
+ru               IN  A      129.241.78.144
+brumm            IN  A      129.241.78.145
+nasse            IN  A      129.241.78.149
+sprett           IN  A      129.241.78.155
+ghost            IN  A      129.241.78.157
+backup           IN  A      129.241.78.147
+heffalump        IN  A      129.241.78.147
+kristofferrobin  IN  A      129.241.78.143
+
+; Printers
+vtprint          IN  A      129.241.197.228
+stiprint         IN  A      129.241.197.229
+sr-nt-ime-multi  IN  A      129.241.78.158
+sr-ivt-scan      IN  A      129.241.197.230
+;sr-nt-print      IN  A      129.241.78.145
+;nt-hp-print      IN  A      129.241.78.156
+
+
+
+sr-ivt-scan      IN  A      129.241.78.148
+
+; Web related
+sr-ab            IN  A      129.241.78.150
+sr-dmf           IN  A      129.241.78.150
+sr-hf            IN  A      129.241.78.150
+sr-ime           IN  A      129.241.78.150
+sr-ivt           IN  A      129.241.78.150
+sr-nt            IN  A      129.241.78.150
+sr-svt           IN  A      129.241.78.150
+srdrupal         IN  A      129.241.78.150
+sti              IN  A      129.241.78.150
+studenttinget    IN  A      129.241.78.150
+velferdstinget   IN  A      129.241.78.150
+www              IN  A      129.241.78.150
+
+; Email
+@                IN  MX  1      ASPMX.L.GOOGLE.COM.
+@                IN  MX  5      ALT1.ASPMX.L.GOOGLE.COM.
+@                IN  MX  5      ALT2.ASPMX.L.GOOGLE.COM.
+@                IN  MX  10     ASPMX2.GOOGLEMAIL.COM.
+@                IN  MX  10     ASPMX3.GOOGLEMAIL.COM.
+@                IN  MX  10     ASPMX4.GOOGLEMAIL.COM.
+@                IN  MX  10     ASPMX5.GOOGLEMAIL.COM.
+
+; Google hosting
+drift            IN  CNAME  ghs.google.com.
+kalender         IN  CNAME  ghs.google.com.
+mail             IN  CNAME  ghs.google.com.
+
+; Other
+ntp              IN  CNAME  www.studdem.ntnu.no.
+sr               IN  CNAME  www.studentrad.no.
+ns               IN  CNAME  tussi.studdem.ntnu.no.
+

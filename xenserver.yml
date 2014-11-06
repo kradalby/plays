@@ -1,6 +1,6 @@
 ---
 - name: Setup base configuration
-  hosts: test
+  hosts: xenserver
   remote_user: root
 
   roles:

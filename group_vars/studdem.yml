@@ -1,0 +1,28 @@
+---
+# variables needed for this playbook
+domain: studdem.ntnu.no
+ansible_only: Don't edit manually
+
+# for apt configs
+apt_mirror: http://debian.samfundet.no/
+debian_release: jessie
+
+# for postfix
+mail_relayhost: smtp.stud.ntnu.no
+
+
+# dns configs
+nameservers:
+  - 129.241.0.200
+  - 129.241.0.201
+
+jail_mail: True
+jail_mail_dest: drift@studdem.ntnu.no
+
+# for ssh
+ssh_users:
+  - kradalby
+
+# General SMTP
+snmp_contact: Kristoffer Dalby <kradalby@kradalby.no>
+snmp_allowed: 129.241.210.105

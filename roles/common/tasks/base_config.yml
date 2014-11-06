@@ -22,7 +22,7 @@
   notify: restart snmpd
 
 - name: create motd
-  shell: curl  --silent --compressed "http://www.lemoda.net/games/figlet/figlet.cgi?text=$(hostname)&font=puffy&width=80" > /etc/motd; echo "This server was bootstrapped with bs.sh (kradalby.no/bs.sh)" >> /etc/motd
+  shell: curl  --silent --compressed "http://www.lemoda.net/games/figlet/figlet.cgi?text=$(hostname)&font=puffy&width=80" > /etc/motd
 
 - name: install prezto 
   git: repo=https://github.com/sorin-ionescu/prezto.git

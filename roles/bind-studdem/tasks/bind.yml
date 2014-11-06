@@ -1,0 +1,13 @@
+---
+- name: copy named.conf.local
+  template: src=bind/named.conf.local dest=/etc/bind/named.conf.local owner=root group=bind mode=755
+
+- name: copy zone.masters
+  template: src=bind/zone.masters dest=/etc/bind/zone.masters owner=root group=bind mode=755
+
+- name: assure db.d exists
+  file: path=/etc/bind/db.d state=directory
+
+- name: copy studdem.ntnu.no zone
+  template: src=bind/db.d/studdem.ntnu.no dest=/etc/bind/db.d/studdem.ntnu.no owner=root group=bind mode=755
+  notify: reload bind

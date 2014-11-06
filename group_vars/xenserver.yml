@@ -5,7 +5,7 @@ ansible_only: Don't edit manually
 
 # for apt configs
 apt_mirror: http://debian.samfundet.no/
-debian_release: wheezy
+debian_release: jessie
 
 # for postfix
 mail_relayhost: smtp.altibox.no
