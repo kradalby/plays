@@ -6,4 +6,4 @@
   roles:
     - common
     - postfix_sendonly
-    - bind-studdem
+    - { role: bind-studdem, when: "hostname == 'tussi'" }
