@@ -1,0 +1,12 @@
+---
+- name: Upgrade all machines
+  hosts: all
+
+  tasks:
+    - name: upgrade debian
+      apt: upgrade=full update_cache=yes
+      when: ansible_os_family == 'Debian'
+
+    - name: upgrade macs
+      homebrew: update_homebrew=yes upgrade_all=yes
+      when: ansible_os_family == "Darwin"
