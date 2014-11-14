@@ -2,7 +2,7 @@
 $ORIGIN studdem.ntnu.no.
 $TTL 86400   ; 24 hour
 @                               IN SOA tussi.studdem.ntnu.no.   drift.studdem.ntnu.no. (
-                                    2014110602  ; serial yyyymmdd##
+                                    2014111401  ; serial yyyymmdd##
                                     3600        ; refresh ( 1 hour )
                                     1800        ; retry ( 30 minutes )
                                     608400      ; expire ( 1 week 1 hour )
@@ -15,11 +15,11 @@ $TTL 86400   ; 24 hour
 
 
 ; Servers
+tussi            IN  A      129.241.78.136
+tussi            IN  AAAA   2001:700:300:1736:20c:29ff:fed0:ae3
 ugla             IN  A      129.241.78.139
 kengu            IN  A      129.241.78.141
 kengu            IN  AAAA   2001:0700:0300:1736:020c:29ff:feed:d8f1
-tussi            IN  A      129.241.197.245
-tussi            IN  AAAA   2001:700:300:1736:20c:29ff:fed0:ae3
 vissel           IN  A      129.241.78.150
 vissel           IN  AAAA   2001:0700:0300:1736:020c:29ff:fe91:f209
 ru               IN  A      129.241.78.144
@@ -39,7 +39,11 @@ sr-ivt-scan      IN  A      129.241.197.230
 ;sr-nt-print      IN  A      129.241.78.145
 ;nt-hp-print      IN  A      129.241.78.156
 
-
+; Windows AD
+_ldap._tcp.studdem.ntnu.no. SRV 0 0 389 studdem.ntnu.no.
+_kerberos._tcp.studdem.ntnu.no. SRV 0 0 88 studdem.ntnu.no.
+_ldap._tcp.dc._msdcs.studdem.ntnu.no. SRV 0 0 389 studdem.ntnu.no.
+_kerberos._tcp.dc._msdcs.studdem.ntnu.no. SRV 0 0 88 studdem.ntnu.no.
 
 sr-ivt-scan      IN  A      129.241.78.148
 
@@ -75,4 +79,5 @@ mail             IN  CNAME  ghs.google.com.
 ntp              IN  CNAME  www.studdem.ntnu.no.
 sr               IN  CNAME  www.studentrad.no.
 ns               IN  CNAME  tussi.studdem.ntnu.no.
+
 
