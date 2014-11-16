@@ -18,6 +18,7 @@ $TTL 86400   ; 24 hour
 tussi            IN  A      129.241.78.136
 tussi            IN  AAAA   2001:700:300:1736:20c:29ff:fed0:ae3
 ugla             IN  A      129.241.78.139
+lottie           IN  A      129.241.78.137
 kengu            IN  A      129.241.78.141
 kengu            IN  AAAA   2001:0700:0300:1736:020c:29ff:feed:d8f1
 vissel           IN  A      129.241.78.150
