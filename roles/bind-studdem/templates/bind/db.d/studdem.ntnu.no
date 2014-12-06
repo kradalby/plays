@@ -2,7 +2,7 @@
 $ORIGIN studdem.ntnu.no.
 $TTL 86400   ; 24 hour
 @                               IN SOA tussi.studdem.ntnu.no.   drift.studdem.ntnu.no. (
-                                    2014111401  ; serial yyyymmdd##
+                                    2014111601  ; serial yyyymmdd##
                                     3600        ; refresh ( 1 hour )
                                     1800        ; retry ( 30 minutes )
                                     608400      ; expire ( 1 week 1 hour )
@@ -33,10 +33,10 @@ heffalump        IN  A      129.241.78.147
 kristofferrobin  IN  A      129.241.78.143
 
 ; Printers
-vtprint          IN  A      129.241.197.228
-stiprint         IN  A      129.241.197.229
+vtprint          IN  A      129.241.78.154
+stiprint         IN  A      129.241.78.156
 sr-nt-ime-multi  IN  A      129.241.78.158
-sr-ivt-scan      IN  A      129.241.197.230
+sr-ivt-scan      IN  A      129.241.78.159
 ;sr-nt-print      IN  A      129.241.78.145
 ;nt-hp-print      IN  A      129.241.78.156
 
@@ -45,8 +45,6 @@ _ldap._tcp.studdem.ntnu.no. SRV 0 0 389 studdem.ntnu.no.
 _kerberos._tcp.studdem.ntnu.no. SRV 0 0 88 studdem.ntnu.no.
 _ldap._tcp.dc._msdcs.studdem.ntnu.no. SRV 0 0 389 studdem.ntnu.no.
 _kerberos._tcp.dc._msdcs.studdem.ntnu.no. SRV 0 0 88 studdem.ntnu.no.
-
-sr-ivt-scan      IN  A      129.241.78.148
 
 ; Web related
 sr-ab            IN  A      129.241.78.150
