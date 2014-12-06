@@ -9,11 +9,11 @@
 - name: add nginx key
   apt_key: url=http://nginx.org/keys/nginx_signing.key state=present
 
-#- name: add nginx repo
-#  apt_repository: repo='deb http://nginx.org/packages/debian/ {{ debian_release }} nginx' state=present
-#
-#- name: add nginx repo src
-#  apt_repository: repo='deb-src http://nginx.org/packages/debian/ {{ debian_release }} nginx' state=present
+- name: add nginx repo
+  apt_repository: repo='deb http://nginx.org/packages/debian/ wheezy nginx' state=present
+
+- name: add nginx repo src
+  apt_repository: repo='deb-src http://nginx.org/packages/debian/ wheezy nginx' state=present
 
 - name: add node key
   apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
@@ -24,20 +24,20 @@
 - name: add node repo src
   apt_repository: repo='deb-src https://deb.nodesource.com/node {{ debian_release }} main' state=present
 
-#- name: add weechat repo
-#  apt_repository: repo='deb http://debian.weechat.org {{ debian_release }} main' state=present
-#
-#- name: add postgres key
-#  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
-#
-#- name: add postgres repo
-#  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ {{ debian_release }}-pgdg main' state=present
-#
-#- name: add mariadb key
-#  apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db state=present
-#
-#- name: add mariadb repo
-#  apt_repository: repo='deb http://ftp.eenet.ee/pub/mariadb/repo/5.5/debian {{ debian_release }} main' state=present
+- name: add weechat repo
+  apt_repository: repo='deb http://debian.weechat.org {{ debian_release }} main' state=present
+
+- name: add postgres key
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+
+- name: add postgres repo
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt {{ debian_release }}-pgdg main' state=present
+
+- name: add mariadb key
+  apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db state=present
+
+- name: add mariadb repo
+  apt_repository: repo='deb http://ftp.eenet.ee/pub/mariadb/repo/5.5/debian wheezy main' state=present
 
 - name: add mongodb key
   apt_key: keyserver=keyserver.ubuntu.com id=7F0CEB10 state=present
