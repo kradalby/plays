@@ -45,3 +45,9 @@
 - name: add mongodb repo
   apt_repository: repo='deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen' state=present
 
+- name: add jenkins key
+  apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key state=present
+
+- name: add jenkins repo
+  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state=present
+
