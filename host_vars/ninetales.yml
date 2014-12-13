@@ -1,0 +1,5 @@
+---
+hostname: ninetales
+
+# SMTP spesific
+snmp_location: IT-Bygget NTNU, Trondheim
