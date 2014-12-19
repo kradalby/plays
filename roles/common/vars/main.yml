@@ -22,4 +22,6 @@ base_packages:
   - cu
   - openssh-server
   - openssl
+  - tmux
+  - nload
 

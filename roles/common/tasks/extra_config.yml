@@ -13,6 +13,13 @@
 - name: root ssh keys
   template: src=ssh_keys/root.j2 dest=/root/.ssh/authorized_keys owner=root mode=640
 
+- name: zsh root
+  user: name=root shell=/bin/zsh
+
+- name: zsh user
+  user: name={{ item }} shell=/bin/zsh
+  with_items: ssh_users
+
 # Fail2ban
 - name: /etc/fail2ban/fail2ban.conf
   template: src=fail2ban/fail2ban.conf.j2 dest=/etc/fail2ban/fail2ban.conf owner=root group=root mode=644
