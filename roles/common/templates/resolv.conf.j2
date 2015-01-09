@@ -3,5 +3,3 @@ search {{ domain }}
 {% for server in nameservers %}
 nameserver {{ server }}
 {% endfor %}
-options attempts:3 rotate
-
