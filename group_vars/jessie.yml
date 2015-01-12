@@ -8,14 +8,13 @@ apt_mirror: http://debian.samfundet.no/
 debian_release: jessie
 
 # for postfix
-mail_relayhost: smtp.stud.ntnu.no
+mail_relayhost: smtp.homenet.no
 
 
 # dns configs
 nameservers:
-    - 10.0.1.1
-    - 129.241.0.200
-    - 129.241.0.201
+    - 192.168.1.1
+    - 8.8.8.8
 
 jail_mail: True
 jail_mail_dest: kradalby@kradalby.no

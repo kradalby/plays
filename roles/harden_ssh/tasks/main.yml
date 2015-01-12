@@ -1,0 +1,3 @@
+---
+- include: harden_ssh.yml
+

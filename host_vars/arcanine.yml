@@ -1,0 +1,5 @@
+---
+hostname: arcanine
+
+# SMTP spesific
+snmp_location: IT-Bygget NTNU, Trondheim

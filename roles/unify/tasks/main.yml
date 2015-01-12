@@ -1,0 +1,10 @@
+---
+
+- name: add unifi key
+  apt_key: keyserver=keyserver.ubuntu.com id=C0A52C50 state=present
+
+- name: add unifi repo
+  apt_repository: repo='deb http://www.ubnt.com/downloads/unifi/distros/deb/wheezy wheezy ubiquiti' state=present
+
+- name: Install unifi
+  action: apt name=unifi state=latest

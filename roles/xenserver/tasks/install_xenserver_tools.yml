@@ -1,7 +1,6 @@
 ---
-- name: copy install script
-  template: src=install_xenserver_tools.sh dest=/root/install_xenserver_tools.sh owner=root group=root mode=755
+- name: add local xenserver repo
+  apt_repository: repo='deb http://10.0.1.13/repo binary/' state=present
 
-- name: install xenserver
-  shell: bash /root/install_xenserver_tools.sh
-
+- name: install xe-guest-utilities
+  apt: name=xe-guest-utilities state=present update_cache=yes force=yes

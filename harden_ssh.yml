@@ -1,0 +1,7 @@
+---
+- name: Setup base configuration
+  hosts: metapod
+  remote_user: root
+
+  roles:
+    - harden_ssh

@@ -1,0 +1,5 @@
+---
+hostname: slowbro
+
+# SMTP spesific
+snmp_location: IT-Bygget NTNU, Trondheim

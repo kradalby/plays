@@ -1,0 +1,9 @@
+---
+- name: Setup base configuration
+  hosts: jessie
+  remote_user: root
+
+  roles:
+    - common
+    - postfix_sendonly
+    - { role: unify, when: "hostname == 'abra'" }

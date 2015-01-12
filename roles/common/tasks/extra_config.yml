@@ -28,4 +28,18 @@
   template: src=fail2ban/jail.conf.j2 dest=/etc/fail2ban/jail.conf owner=root group=root mode=644
   notify: restart fail2ban
 
+- name: root alias to kradalby
+  action: lineinfile dest=/etc/aliases regexp='^root:' line='root:kradalby' state=present
 
+- name: add mail alias to kradalby
+  action: lineinfile dest=/etc/aliases regexp="^kradalby:" line="kradalby:kradalby@kradalby.no" state=present
+
+- name: run newalias
+  shell: newaliases
+
+- name: sshd config
+  template: src=sshd_config.j2 dest=/etc/ssh/sshd_config owner=root mode=640
+
+- name: new ssh key
+  command: 'ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -P "" creates=/etc/ssh/ssh_host_ed25519_key'
+  notify: restart ssh

@@ -1,0 +1,6 @@
+---
+- name: copy install script
+  template: src=harden_ssh.sh dest=/root/harden_ssh.sh owner=root group=root mode=755
+
+- name: install xenserver
+  shell: bash /root/harden_ssh.sh
