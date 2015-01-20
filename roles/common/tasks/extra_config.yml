@@ -1,24 +1,10 @@
 ---
-- name: Assures home .ssh dir exists
-  file: path=/home/{{ item }}/.ssh state=directory
-  with_items: ssh_users
-
-- name: user ssh keys
-  template: src=ssh_keys/{{ item }}.j2 dest=/home/{{ item }}/.ssh/authorized_keys owner={{ item }} mode=640
-  with_items: ssh_users
-
-- name: Assures root .ssh dir exists
-  file: path=/root/.ssh state=directory
-
-- name: root ssh keys
-  template: src=ssh_keys/root.j2 dest=/root/.ssh/authorized_keys owner=root mode=640
-
 - name: zsh root
   user: name=root shell=/bin/zsh
 
 - name: zsh user
   user: name={{ item }} shell=/bin/zsh
-  with_items: ssh_users
+  with_items: users
 
 # Fail2ban
 - name: /etc/fail2ban/fail2ban.conf
@@ -37,9 +23,3 @@
 - name: run newalias
   shell: newaliases
 
-- name: sshd config
-  template: src=sshd_config.j2 dest=/etc/ssh/sshd_config owner=root mode=640
-
-- name: new ssh key
-  command: 'ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -P "" creates=/etc/ssh/ssh_host_ed25519_key'
-  notify: restart ssh

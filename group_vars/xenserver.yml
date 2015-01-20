@@ -21,8 +21,9 @@ jail_mail: True
 jail_mail_dest: kradalby@kradalby.no
 
 # for ssh
-ssh_users:
+users:
   - kradalby
+  - root
 
 # General SMTP
 snmp_contact: Kristoffer Dalby <kradalby@kradalby.no>

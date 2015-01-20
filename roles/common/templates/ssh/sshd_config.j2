@@ -33,11 +33,16 @@ PermitEmptyPasswords no
 ChallengeResponseAuthentication no
 PasswordAuthentication yes
 
-X11Forwarding yes
-X11DisplayOffset 10
-PrintMotd yes
+AuthorizedKeysFile      /etc/ssh/keys/%u.pub
+
+AllowAgentForwarding yes
+AllowTcpForwarding yes
+AllowStreamLocalForwarding yes
+X11Forwarding no
+
+PrintMotd no
 PrintLastLog yes
-TCPKeepAlive yes
+TCPKeepAlive no
 
 AcceptEnv LANG LC_*
 

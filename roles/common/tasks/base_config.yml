@@ -27,7 +27,6 @@
 - name: install prezto 
   git: repo=https://github.com/sorin-ionescu/prezto.git
        dest="/root/.zprezto"
-       recursive=yes 
 
 - name: install dotfiles 
   git: repo=https://github.com/kradalby/dotfiles.git
