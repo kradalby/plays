@@ -51,3 +51,11 @@
 - name: add jenkins repo
   apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state=present
 
+- name: webupd8 java8 key
+  apt_key: keyserver=keyserver.ubuntu.com id=EEA14886 state=present
+
+- name: webupd8 java8 repo
+  apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present
+
+- name: webupd8 java8 repo src
+  apt_repository: repo='deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present
