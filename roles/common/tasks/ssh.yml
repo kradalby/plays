@@ -7,7 +7,7 @@
   file: path=/etc/ssh/keys state=directory
 
 - name: user ssh keys
-  template: src=ssh/keys/{{ item }}.j2 dest=/etc/ssh/keys/{{ item }}.pub owner=root mode=640
+  template: src=ssh/keys/{{ item }}.j2 dest=/etc/ssh/keys/{{ item }}.pub owner={{ item }} mode=640
   with_items: users
 
 #- name: Assures root .ssh dir exists
