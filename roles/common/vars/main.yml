@@ -24,4 +24,5 @@ base_packages:
   - openssl
   - tmux
   - nload
+  - ldap-utils
 
