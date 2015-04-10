@@ -25,4 +25,5 @@ base_packages:
   - tmux
   - nload
   - ldap-utils
+  - source-highlight
 
