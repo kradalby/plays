@@ -26,4 +26,5 @@ base_packages:
   - nload
   - ldap-utils
   - source-highlight
+  - figlet
 
