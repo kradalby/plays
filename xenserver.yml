@@ -5,5 +5,7 @@
 
   roles:
     - common
-    - postfix_sendonly
+    - ssh
+    - snmp
+    - { role: postfix_sendonly, when: "hostname != 'butterfree'" }
     - xenserver

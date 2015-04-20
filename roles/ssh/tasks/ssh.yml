@@ -20,7 +20,7 @@
   template: src=ssh/sshd_config.j2 dest=/etc/ssh/sshd_config owner=root mode=640
   notify: restart ssh
 
-- name: new ssh ed25519 key
+- name: new ssh key
   command: 'ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -P "" creates=/etc/ssh/ssh_host_ed25519_key'
   notify: restart ssh
 

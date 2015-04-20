@@ -1,0 +1,7 @@
+---
+hostname: butterfree
+
+# SMTP spesific
+snmp_location: Ole Aasvedsveg, Trondheim, Sor-Trondelag, Norway
+
+xenserver: False

@@ -11,16 +11,6 @@
 - name: /etc/hostname
   template: src=hostname.j2 dest=/etc/hostname owner=root group=root mode=644
 
-- name: install snmpd
-  apt: pkg={{ item }} state=latest
-  with_items:
-  - snmpd
-  - snmp-mibs-downloader
-
-- name: configure snmpd
-  template: src=snmpd.conf.j2 dest=/etc/snmp/snmpd.conf
-  notify: restart snmpd
-
 - name: create motd
   shell: figlet $(hostname) > /etc/motd
 
@@ -36,3 +26,5 @@
 - name: deploy dotfiles
   shell: ~/git/dotfiles/deploy.sh
 
+- name: Assures backup dir exists
+  file: path=/backup state=directory

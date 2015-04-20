@@ -1,9 +1,12 @@
 ---
 - name: Setup base configuration
-  hosts: jessie
+  hosts: jessie:xenserver
   remote_user: root
 
   roles:
     - common
     - postfix_sendonly
+    - ssh
+    - snmp
     - { role: unify, when: "hostname == 'abra'" }
+    - { role: xenserver, when: "xenserver == true" }

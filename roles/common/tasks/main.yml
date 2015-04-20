@@ -5,6 +5,5 @@
 - include: install_base.yml
 - include: base_config.yml
 - include: extra_config.yml
-- include: ssh.yml
 
 
