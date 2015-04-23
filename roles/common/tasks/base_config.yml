@@ -11,6 +11,9 @@
 - name: /etc/hostname
   template: src=hostname.j2 dest=/etc/hostname owner=root group=root mode=644
 
+- name: interfaces.example
+  template: src=interfaces.example dest=/etc/network/interfaces.example owner=root group=root mode=644
+
 - name: create motd
   shell: figlet $(hostname) > /etc/motd
 

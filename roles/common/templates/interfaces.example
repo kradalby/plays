@@ -1,0 +1,9 @@
+# The loopback network interface
+auto lo eth0
+iface lo inet loopback
+
+# The primary network interface
+iface eth0 inet static
+    address 10.0.1.x
+    netmask 255.255.255.0
+    gateway 10.0.1.1
