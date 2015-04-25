@@ -1,0 +1,16 @@
+---
+- name: install logstash-forwarder
+  apt: pkg=logstash-forwarder state=latest
+  notify: restart logstash-forwarder
+
+- name: forwarder config
+  template: src=logstash-forwarder.conf.j2 dest=/etc/logstash-forwarder.conf owner=root mode=644
+  notify: restart logstash-forwarder
+
+- name: cert dir
+  file: path=/etc/pki/tls/certs state=directory
+  notify: restart logstash-forwarder
+
+- name: forwarder cert
+  template: src=logstash-forwarder.crt dest=/etc/pki/tls/certs/logstash-forwarder.crt owner=root mode=644
+  notify: restart logstash-forwarder

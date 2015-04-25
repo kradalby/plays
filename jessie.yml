@@ -10,3 +10,4 @@
     - snmp
     - { role: unify, when: "hostname == 'abra'" }
     - { role: xenserver, when: "xenserver == true" }
+    - { role: logstash-forwarder, when: "xenserver == true" }
