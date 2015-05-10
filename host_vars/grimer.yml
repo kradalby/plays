@@ -1,0 +1,6 @@
+---
+hostname: grimer
+
+# SMTP spesific
+snmp_location: IT-Bygget NTNU, Trondheim
+xenserver: True
