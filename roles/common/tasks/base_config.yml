@@ -29,5 +29,8 @@
 - name: deploy dotfiles
   shell: ~/git/dotfiles/deploy.sh
 
+- name: install vim plugins
+  shell: vim -c "PlugInstall" -c "q" -c "q" > /dev/null
+
 - name: Assures backup dir exists
   file: path=/backup state=directory
