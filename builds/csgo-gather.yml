@@ -1,0 +1,9 @@
+---
+- name: Deploy latest release of CSGO-gather
+  hosts: gengar
+  remote_user: root
+
+- name: fetch master
+  git: repo=https://github.com/dfekt/csgo-web-application.git
+  dest="/srv/www/beta.dfekt.no/csgo-gather"
+  update=yes
