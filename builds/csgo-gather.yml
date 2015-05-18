@@ -2,8 +2,20 @@
 - name: Deploy latest release of CSGO-gather
   hosts: gengar
   remote_user: root
+  vars:
+    install_dir: "/srv/www/beta.dfekt.no/csgo-gather"
 
-- name: fetch master
-  git: repo=https://github.com/dfekt/csgo-web-application.git
-  dest="/srv/www/beta.dfekt.no/csgo-gather"
-  update=yes
+  tasks:
+  - name: update production
+    git: repo=https://github.com/dfekt/csgo-web-application.git
+         dest={{ install_dir }}
+         update=yes
+
+  - name: install node packages
+    npm: path={{ install_dir }} state=present
+
+  - name: correct ownership
+    file: path={{ install_dir }} group=nginx owner=nginx recurse=yes
+
+  - name: restart node instance
+    service: name=node-csgo-gather state=restarted
