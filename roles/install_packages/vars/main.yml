@@ -1,7 +1,8 @@
 ---
-base_packages:
+apt_packages:
   - vim-nox
   - python
+  - python-pip
   - python3
   - git
   - htop
@@ -28,3 +29,5 @@ base_packages:
   - source-highlight
   - figlet
 
+pip_packages:
+  - requests

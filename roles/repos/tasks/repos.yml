@@ -1,0 +1,79 @@
+---
+
+- name: install apt https support
+  apt: pkg=apt-transport-https state=latest
+
+- name: /etc/apt/sources.list
+  template: src=apt/sources.list.j2 dest=/etc/apt/sources.list owner=root group=root mode=644
+
+- name: add nginx key
+  apt_key: url=http://nginx.org/keys/nginx_signing.key state=present
+
+- name: add nginx repo
+  apt_repository: repo='deb http://nginx.org/packages/mainline/debian/ wheezy nginx' state=present
+
+- name: add nginx repo src
+  apt_repository: repo='deb-src http://nginx.org/packages/debian/ wheezy nginx' state=present
+
+- name: add node key
+  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
+
+- name: add node repo
+  apt_repository: repo='deb https://deb.nodesource.com/node {{ debian_release }} main' state=present
+
+- name: add node repo src
+  apt_repository: repo='deb-src https://deb.nodesource.com/node {{ debian_release }} main' state=present
+
+- name: add weechat repo
+  apt_repository: repo='deb http://debian.weechat.org {{ debian_release }} main' state=present
+
+- name: add postgres key
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+
+- name: add postgres repo
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt {{ debian_release }}-pgdg main' state=present
+
+- name: add mariadb key
+  apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db state=present
+
+- name: add mariadb repo
+  apt_repository: repo='deb http://ftp.eenet.ee/pub/mariadb/repo/5.5/debian wheezy main' state=present
+
+- name: add mongodb key
+  apt_key: keyserver=keyserver.ubuntu.com id=7F0CEB10 state=present
+
+- name: add mongodb repo
+  apt_repository: repo='deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main' state=present
+
+- name: add jenkins key
+  apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key state=present
+
+- name: add jenkins repo
+  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state=present
+
+- name: webupd8 java8 key
+  apt_key: keyserver=keyserver.ubuntu.com id=EEA14886 state=present
+
+- name: webupd8 java8 repo
+  apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present
+
+- name: webupd8 java8 repo src
+  apt_repository: repo='deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present
+
+- name: elasticsearch key
+  apt_key: url=http://packages.elasticsearch.org/GPG-KEY-elasticsearch state=present
+
+- name: elasticsearch repo
+  apt_repository: repo='deb http://packages.elasticsearch.org/elasticsearch/1.5/debian stable main' state=present
+
+#- name: logstash key
+#  apt_key: url=http://packages.elasticsearch.org/GPG-KEY-logstash state=present
+
+- name: logstash repo
+  apt_repository: repo='deb http://packages.elasticsearch.org/logstash/1.5/debian stable main' state=present
+
+#- name: logstash forwarder key
+#  apt_key: url=http://packages.elasticsearch.org/GPG-KEY-elasticsearch state=present
+
+- name: logstash forwarder repo
+  apt_repository: repo='deb http://packages.elasticsearch.org/logstashforwarder/debian stable main' state=present

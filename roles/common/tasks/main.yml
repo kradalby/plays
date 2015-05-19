@@ -1,9 +1,0 @@
----
-- include: add_repos.yml
-- include: update.yml
-- include: upgrade.yml
-- include: install_base.yml
-- include: base_config.yml
-- include: extra_config.yml
-
-

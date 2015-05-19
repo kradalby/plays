@@ -17,20 +17,5 @@
 - name: create motd
   shell: figlet $(hostname) > /etc/motd
 
-- name: install prezto 
-  git: repo=https://github.com/sorin-ionescu/prezto.git
-       dest="/root/.zprezto"
-
-- name: install dotfiles 
-  git: repo=https://github.com/kradalby/dotfiles.git
-       dest="/root/git/dotfiles"
-       update=yes
-
-- name: deploy dotfiles
-  shell: ~/git/dotfiles/deploy.sh
-
-- name: install vim plugins
-  shell: vim -c "PlugInstall" -c "q" -c "q" > /dev/null
-
 - name: Assures backup dir exists
   file: path=/backup state=directory
