@@ -19,10 +19,10 @@
   apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
 
 - name: add node repo
-  apt_repository: repo='deb https://deb.nodesource.com/node {{ debian_release }} main' state=present
+  apt_repository: repo='deb https://deb.nodesource.com/node_0.12 {{ debian_release }} main' state=present
 
 - name: add node repo src
-  apt_repository: repo='deb-src https://deb.nodesource.com/node {{ debian_release }} main' state=present
+  apt_repository: repo='deb-src https://deb.nodesource.com/node_0.12 {{ debian_release }} main' state=present
 
 - name: add weechat repo
   apt_repository: repo='deb http://debian.weechat.org {{ debian_release }} main' state=present

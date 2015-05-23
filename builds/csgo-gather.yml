@@ -14,6 +14,9 @@
   - name: install node packages
     npm: path={{ install_dir }} state=present
 
+  - name: build js
+    command: /usr/bin/npm run build:js chdir={{ install_dir }} 
+
   - name: correct ownership
     file: path={{ install_dir }} group=nginx owner=nginx recurse=yes
 
