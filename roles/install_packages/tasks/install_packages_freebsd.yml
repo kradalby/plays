@@ -1,0 +1,9 @@
+---
+
+- name: install utilities with pkg
+  pkgng: name={{ item }} cached=no state=present
+  with_items: pkg_packages
+
+#- name: install utilities with pip
+#  pip: name={{ item }} state=latest
+#  with_items: pip_packages

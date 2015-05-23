@@ -1,4 +1,7 @@
 ---
-- include: install_packages.yml
+- include: install_packages_debian.yml
+  when: ansible_os_family == "Debian"
 
+- include: install_packages_freebsd.yml
+  when: ansible_os_family == "FreeBSD"
 

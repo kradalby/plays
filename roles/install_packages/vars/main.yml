@@ -28,6 +28,39 @@ apt_packages:
   - ldap-utils
   - source-highlight
   - figlet
+  - minicom
 
 pip_packages:
   - requests
+
+pkg_packages:
+  - vim-lite
+  - python
+    #- python-pip
+  - python3
+  - git
+  - htop
+  - zsh
+    #- python-dev
+    #- python-setuptools
+    #- ntp
+  - tree
+  - ncdu
+  - ack
+    #  - ssh
+  - mosh
+    #- fail2ban
+  - postfix
+  - lldpd
+    #- apticron
+    #- lm-sensors
+    #- cu
+    #- openssh-server
+  - openssl
+  - tmux
+  - nload
+    #- ldap-utils
+    #- source-highlight
+  - figlet
+  - minicom
+
