@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+# Put local settings for this server in rc.conf.local
+
+hostname="{{ hostname }}"
+ifconfig_xn0="inet {{ ip_address }} netmask 0xffffff00"
+defaultrouter="10.0.1.1"
+sshd_enable="YES"
+ntpd_enable="YES"
+# Set dumpdev to "AUTO" to enable crash dumps, "NO" to disable
+dumpdev="NO"

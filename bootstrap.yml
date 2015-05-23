@@ -1,19 +1,19 @@
 ---
 - name: Setup base configuration
-  hosts: jessie:freebsd
+  hosts: ole:ntnu:tjodalyng
   remote_user: root
   vars:
     ansible_python_interpreter: "/usr/bin/env python"
 
   roles:
       #- repos
-    - install_packages
+      #    - install_packages
       #    - mail
       #    - fail2ban
       #    - config_server
       #    - usage
       #    - postfix_sendonly
-      #    - ssh
+          - ssh
       #    - snmp
       #    - { role: unify, when: "hostname == 'abra'" }
       #    - { role: xenserver, when: "xenserver == true" }

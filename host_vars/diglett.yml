@@ -4,3 +4,4 @@ hostname: diglett
 # SMTP spesific
 snmp_location: IT-Bygget NTNU, Trondheim
 xenserver: True
+config_location: ""

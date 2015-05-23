@@ -5,3 +5,4 @@ hostname: pidgey
 snmp_location: IT-Bygget NTNU, Trondheim
 xenserver: True
 ip_address: 10.0.1.20
+config_location: ""

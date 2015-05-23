@@ -5,3 +5,4 @@ hostname: zapdos
 snmp_location: IT-Bygget NTNU, Trondheim
 
 xenserver: False
+config_location: ""

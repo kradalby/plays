@@ -1,0 +1,4 @@
+---
+- name: rc.conf
+  template: src=rc.conf.j2 dest=/etc/rc.conf owner=root mode=644
+

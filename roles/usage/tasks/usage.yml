@@ -9,14 +9,13 @@
        update=yes
 
 - name: deploy dotfiles
-  shell: ~/git/dotfiles/deploy.sh
+  shell: zsh ~/git/dotfiles/deploy.sh
 
 - name: install vim plugins
   shell: vim -c "PlugInstall" -c "q" -c "q" > /dev/null
 
-
-- name: zsh root
-  user: name=root shell=/bin/zsh
+- name: zsh root debian
+  user: name=root shell={{ config_location }}/bin/zsh
 
 - name: zsh user
   user: name={{ item }} shell=/bin/zsh

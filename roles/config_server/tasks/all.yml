@@ -1,0 +1,13 @@
+---
+- name: /etc/hosts
+  template: src=hosts.j2 dest=/etc/hosts owner=root mode=644
+
+- name: create motd
+  shell: figlet $(hostname) > /etc/motd
+
+- name: Assures backup dir exists
+  file: path=/backup state=directory
+
+- name: /etc/resolv.conf
+  template: src=resolv.conf.j2 dest=/etc/resolv.conf owner=root mode=644
+

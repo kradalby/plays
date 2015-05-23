@@ -2,12 +2,17 @@
 # fap.no
 ################################
 
-[jessie]
+[tjodalyng]
 abra               ansible_ssh_host=tw.fap.no               ansible_ssh_port=22001  ansible_ssh_user=root
 snorlax           ansible_ssh_host=tw2.fap.no               ansible_ssh_port=22010  ansible_ssh_user=root
-butterfree         ansible_ssh_host=b.fap.no                ansible_ssh_port=22222  ansible_ssh_user=root
-zapdos             ansible_ssh_host=z.fap.no                ansible_ssh_port=21337  ansible_ssh_user=root
 
+
+[ole]
+butterfree         ansible_ssh_host=b.fap.no                ansible_ssh_port=22222  ansible_ssh_user=root
+
+
+[ntnu]
+zapdos             ansible_ssh_host=z.fap.no                ansible_ssh_port=21337  ansible_ssh_user=root
 
 # XenServer
 diglett            ansible_ssh_host=m.fap.no               ansible_ssh_port=21337  ansible_ssh_user=root
@@ -24,11 +29,9 @@ weezing             ansible_ssh_host=m.fap.no               ansible_ssh_port=220
 magnemite             ansible_ssh_host=m.fap.no               ansible_ssh_port=22022  ansible_ssh_user=root
 porygon             ansible_ssh_host=m.fap.no               ansible_ssh_port=22023  ansible_ssh_user=root
 grimer             ansible_ssh_host=m.fap.no               ansible_ssh_port=22024  ansible_ssh_user=root
-
-
-[freebsd]
-# XenServer
 golum    ansible_ssh_host=m.fap.no               ansible_ssh_port=22025  ansible_ssh_user=root
+
+
 
 
 #############################

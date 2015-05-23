@@ -5,3 +5,4 @@ hostname: snorlax
 snmp_location: Østbyveien, Tjodalyng, Vestfold, Norway
 
 xenserver: False
+config_location: ""

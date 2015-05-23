@@ -1,2 +1,6 @@
 ---
-- include: config_server.yml
+- include: debian.yml
+  when: ansible_os_family == "Debian"
+- include: freebsd.yml
+  when: ansible_os_family == "FreeBSD"
+- include: all.yml

@@ -42,7 +42,9 @@ AuthorizedKeysFile      /etc/ssh/keys/%u.pub
 
 AllowAgentForwarding yes
 AllowTcpForwarding yes
+{% if ansible_os_family == "Debian" %}
 AllowStreamLocalForwarding yes
+{% endif %}
 X11Forwarding no
 
 PrintMotd no
@@ -51,7 +53,11 @@ TCPKeepAlive no
 
 AcceptEnv LANG LC_*
 
+{% if ansible_os_family == "Debian" %}
 Subsystem sftp /usr/lib/openssh/sftp-server
+{% elif ansible_os_family == "FreeBSD" %}
+Subsystem sftp /usr/libexec/sftp-server
+{% endif %}
 
 UsePAM yes
 
