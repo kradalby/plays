@@ -6,14 +6,14 @@
     ansible_python_interpreter: "/usr/bin/env python"
 
   roles:
-      #- repos
+      - repos
       #    - install_packages
       #    - mail
       #    - fail2ban
       #    - config_server
       #    - usage
       #    - postfix_sendonly
-          - ssh
+      #    - ssh
       #    - snmp
       #    - { role: unify, when: "hostname == 'abra'" }
       #    - { role: xenserver, when: "xenserver == true" }

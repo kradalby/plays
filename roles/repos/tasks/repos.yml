@@ -77,3 +77,10 @@
 
 - name: logstash forwarder repo
   apt_repository: repo='deb http://packages.elasticsearch.org/logstashforwarder/debian stable main' state=present
+
+- name: docker key
+  apt_key: keyserver=keyserver.ubuntu.com id=A88D21E9 state=present
+
+- name: docker repo
+  apt_repository: repo='https://get.docker.com/ubuntu docker main' state=present
+
