@@ -14,8 +14,8 @@
 - name: install vim plugins
   shell: vim -c "PlugInstall" -c "q" -c "q" > /dev/null
 
-- name: zsh root debian
-  user: name=root shell={{ config_location }}/bin/zsh
+- name: zsh root 
+  user: name=root shell="{{ config_location }}/bin/zsh"
 
 - name: zsh user
   user: name={{ item }} shell=/bin/zsh

@@ -50,7 +50,7 @@ pkg_packages:
     #  - ssh
   - mosh
     #- fail2ban
-  - postfix
+    #  - postfix
   - lldpd
     #- apticron
     #- lm-sensors
