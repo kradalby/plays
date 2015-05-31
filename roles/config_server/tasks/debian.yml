@@ -8,3 +8,5 @@
 - name: interfaces.example
   template: src=interfaces.example dest=/etc/network/interfaces.example owner=root group=root mode=644
 
+- name: fap.no update.sh
+  template: src=update.sh dest=/usr/local/bin/update.sh mode=755 owner=root group=root
