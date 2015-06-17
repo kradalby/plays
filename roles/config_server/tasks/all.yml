@@ -5,6 +5,12 @@
 - name: create motd
   shell: figlet $(hostname) > /etc/motd
 
+- name: local ip motd
+  shell: /sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1 >> /etc/motd
+
+- name: pub ip motd
+  shell: curl -s http://canihazip.com/s >> /etc/motd
+
 - name: Assures backup dir exists
   file: path=/backup state=directory
 
