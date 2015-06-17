@@ -1,0 +1,1 @@
+00 1,2 * * * root if test -x /usr/sbin/apticron; then /usr/sbin/apticron --cron; else true; fi

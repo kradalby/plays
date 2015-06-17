@@ -6,16 +6,17 @@
     ansible_python_interpreter: "/usr/bin/env python"
 
   roles:
-      #      - repos
-      #      - install_packages
-      #      - mail
-      #      - fail2ban
-            - config_server
-      #      - usage
-      #      - postfix_sendonly
-      #      - ssh
-      #      - snmp
-      #      - { role: unify, when: "hostname == 'abra'" }
-      #      - { role: xenserver, when: "xenserver == true" }
-      #      - { role: xenserver_if, when: "xenserver == true and hostname != 'diglett'" }
-      #      - { role: logstash-forwarder, when: "xenserver == true" }
+             - repos
+             - install_packages
+             - mail
+             - fail2ban
+             - apticron
+             - config_server
+             - usage
+             - ssh
+             - snmp
+             - { role: postfix_sendonly, when: "hostname != 'butterfree'"}
+             - { role: unify, when: "hostname == 'abra'" }
+             - { role: xenserver, when: "xenserver == true" }
+             - { role: xenserver_if, when: "xenserver == true and hostname != 'diglett'" }
+             - { role: logstash-forwarder, when: "xenserver == true" }
