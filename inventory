@@ -31,6 +31,8 @@ porygon             ansible_ssh_host=m.fap.no               ansible_ssh_port=220
 grimer             ansible_ssh_host=m.fap.no               ansible_ssh_port=22024  ansible_ssh_user=root
 #golum    ansible_ssh_host=m.fap.no               ansible_ssh_port=22025  ansible_ssh_user=root
 
+# Casual gaming
+goomba             ansible_ssh_host=goomba.casualgaming.no               ansible_ssh_port=22  ansible_ssh_user=root
 
 
 
