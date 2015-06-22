@@ -1,0 +1,8 @@
+---
+hostname: goomba
+
+# SMTP spesific
+snmp_location: NTNU, Trondheim
+
+xenserver: False
+config_location: ""
