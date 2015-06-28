@@ -42,6 +42,8 @@ goomba             ansible_ssh_host=goomba.casualgaming.no               ansible
 
 [studdem]
 tussi              ansible_ssh_host=tussi.studdem.ntnu.no   ansible_ssh_port=22     ansible_ssh_user=root
+vissel2            ansible_ssh_host=129.241.78.165   ansible_ssh_port=22     ansible_ssh_user=root
+heffalompen            ansible_ssh_host=129.241.78.142   ansible_ssh_port=22     ansible_ssh_user=root
 
 [studdem-squeeze]
 vissel             ansible_ssh_host=vissel.studdem.ntnu.no  ansible_ssh_port=22     ansible_ssh_user=root

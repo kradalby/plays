@@ -21,9 +21,8 @@ jail_mail_dest: drift@studdem.ntnu.no
 
 # for ssh
 users:
-  - kradalby
   - root
 
 # General SMTP
-snmp_contact: Kristoffer Dalby <kradalby@kradalby.no>
+snmp_contact: Kristoffer Dalby <drift@studdem.ntnu.no>
 snmp_allowed: 129.241.210.105

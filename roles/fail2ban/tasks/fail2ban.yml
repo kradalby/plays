@@ -2,3 +2,8 @@
 - name: /etc/fail2ban/jail.conf
   template: src=fail2ban/jail.conf.j2 dest=/etc/fail2ban/jail.conf owner=root group=root mode=644
   notify: restart fail2ban
+
+- name: /etc/fail2ban/fail2ban.conf
+  template: src=fail2ban/fail2ban.conf dest=/etc/fail2ban/fail2ban.conf owner=root group=root mode=644
+  notify: restart fail2ban
+
