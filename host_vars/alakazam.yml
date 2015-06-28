@@ -7,3 +7,4 @@ snmp_location: IT-Bygget NTNU, Trondheim
 xenserver: True
 ip_address: 10.0.1.16
 config_location: ""
+rpi: True

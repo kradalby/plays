@@ -5,3 +5,4 @@ hostname: tussi
 snmp_location: Gamle fysikk, NTNU, Trondheim
 xenserver: false
 config_location: ""
+rpi: True

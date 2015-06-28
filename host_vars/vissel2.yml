@@ -6,3 +6,4 @@ snmp_location: Gamle fysikk, NTNU, Trondheim
 xenserver: false
 ip_address: ""
 config_location: ""
+rpi: True
