@@ -6,4 +6,4 @@ snmp_location: IT-Bygget NTNU, Trondheim
 
 xenserver: False
 config_location: ""
-rpi: True
+rpi: False

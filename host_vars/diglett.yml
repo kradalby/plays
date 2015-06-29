@@ -5,4 +5,4 @@ hostname: diglett
 snmp_location: IT-Bygget NTNU, Trondheim
 xenserver: True
 config_location: ""
-rpi: True
+rpi: False

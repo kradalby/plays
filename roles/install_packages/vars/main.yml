@@ -9,6 +9,7 @@ apt_packages:
   - zsh
   - python-dev
   - python-setuptools
+  - virtualenv
   - ntp
   - tree
   - ncdu
@@ -29,6 +30,7 @@ apt_packages:
   - source-highlight
   - figlet
   - minicom
+  - make
 
 pip_packages:
   - requests

@@ -6,4 +6,4 @@ snmp_location: Ole Aasvedsveg, Trondheim, Sor-Trondelag, Norway
 
 xenserver: False
 config_location: ""
-rpi: True
+rpi: False
