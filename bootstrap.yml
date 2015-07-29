@@ -6,6 +6,7 @@
     ansible_python_interpreter: "/usr/bin/env python"
 
   roles:
+<<<<<<< HEAD
            - { role: repos, when: "rpi == false"}
            - install_packages
            - mail
