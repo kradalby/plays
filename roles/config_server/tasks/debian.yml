@@ -11,8 +11,8 @@
 - name: fap.no update.sh
   template: src=update.sh dest=/usr/local/bin/update.sh mode=755 owner=root group=root
 
-- name: fap.no update.sh crontab
-  cron: name="fap.no update.sh" minute="0" hour="0" job="/usr/local/bin/update.sh > /dev/null"
+- name: Add update script to crontab
+  lineinfile: dest=/etc/crontab regexp="update\.sh" line='03 * * * * root /usr/local/bin/update.sh >/dev/null 2>&1' state=present
 
 - name: fap.no update.sh dhcp hook
   file: src=/usr/local/bin/update.sh dest=/etc/dhcp/dhclient-exit-hooks.d/update.sh state=link

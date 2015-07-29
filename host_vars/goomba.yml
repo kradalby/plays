@@ -1,5 +1,6 @@
 ---
 hostname: goomba
+domain: causalgaming.com
 
 # SMTP spesific
 snmp_location: NTNU, Trondheim

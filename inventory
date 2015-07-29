@@ -9,7 +9,6 @@ snorlax           ansible_ssh_host=tw2.fap.no               ansible_ssh_port=220
 
 [ole]
 butterfree         ansible_ssh_host=b.fap.no                ansible_ssh_port=22222  ansible_ssh_user=root
-paras         ansible_ssh_host=10.0.0.102                ansible_ssh_port=22  ansible_ssh_user=root
 
 
 [ntnu]
@@ -30,7 +29,7 @@ weezing             ansible_ssh_host=m.fap.no               ansible_ssh_port=220
 magnemite             ansible_ssh_host=m.fap.no               ansible_ssh_port=22022  ansible_ssh_user=root
 porygon             ansible_ssh_host=m.fap.no               ansible_ssh_port=22023  ansible_ssh_user=root
 grimer             ansible_ssh_host=m.fap.no               ansible_ssh_port=22024  ansible_ssh_user=root
-#golum    ansible_ssh_host=m.fap.no               ansible_ssh_port=22025  ansible_ssh_user=root
+golum    ansible_ssh_host=m.fap.no               ansible_ssh_port=22025  ansible_ssh_user=root
 pidgeot             ansible_ssh_host=m.fap.no               ansible_ssh_port=22026  ansible_ssh_user=root
 shellder             ansible_ssh_host=m.fap.no               ansible_ssh_port=22027  ansible_ssh_user=root
 
