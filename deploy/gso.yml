@@ -1,0 +1,25 @@
+---
+- name: Deploy master of kradalby/gso
+  hosts: gengar
+  remote_user: root
+  vars:
+    install_dir: "/srv/www/dfekt.no"
+    git_repo: "https://github.com/kradalby/gso.git"
+
+  tasks:
+  - name: update production
+    git: repo={{ git_repo }}
+         dest={{ install_dir }}
+         update=yes
+
+  - name: create env
+    command: make env chdir={{ install_dir }} creates={{ install_dir }}/env
+
+  - name: install python requirements
+    command: make prod chdir={{ install_dir }}
+
+  - name: correct ownership
+    file: path={{ install_dir }} group=nginx owner=nginx recurse=yes
+
+  - name: reload uwsgi
+    service: name=uwsgi state=reloaded
