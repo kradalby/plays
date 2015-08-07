@@ -1,9 +1,9 @@
 ---
-- name: install prezto 
+- name: install prezto
   git: repo=https://github.com/sorin-ionescu/prezto.git
        dest="/root/.zprezto"
 
-- name: install dotfiles 
+- name: install dotfiles
   git: repo=https://github.com/kradalby/dotfiles.git
        dest="/root/git/dotfiles"
        update=yes
@@ -14,7 +14,7 @@
 - name: install vim plugins
   shell: vim -c "PlugInstall" -c "q" -c "q" > /dev/null
 
-- name: zsh root 
+- name: zsh root
   user: name=root shell="{{ config_location }}/bin/zsh"
 
 - name: zsh user

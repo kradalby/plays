@@ -32,7 +32,7 @@ porygon             ansible_ssh_host=m.fap.no               ansible_ssh_port=220
 grimer             ansible_ssh_host=m.fap.no               ansible_ssh_port=22024  ansible_ssh_user=root
 golum    ansible_ssh_host=m.fap.no               ansible_ssh_port=22025  ansible_ssh_user=root
 pidgeot             ansible_ssh_host=m.fap.no               ansible_ssh_port=22026  ansible_ssh_user=root
-shellder             ansible_ssh_host=m.fap.no               ansible_ssh_port=22027  ansible_ssh_user=root
+#shellder             ansible_ssh_host=m.fap.no               ansible_ssh_port=22027  ansible_ssh_user=root
 
 # Casual gaming
 goomba             ansible_ssh_host=goomba.casualgaming.no               ansible_ssh_port=22  ansible_ssh_user=root
@@ -44,9 +44,10 @@ goomba             ansible_ssh_host=goomba.casualgaming.no               ansible
 #############################
 
 [studdem]
+arkiv              ansible_ssh_host=arkiv.studdem.ntnu.no   ansible_ssh_port=22     ansible_ssh_user=root
 tussi              ansible_ssh_host=tussi.studdem.ntnu.no   ansible_ssh_port=22     ansible_ssh_user=root
-vissel2            ansible_ssh_host=129.241.78.165   ansible_ssh_port=22     ansible_ssh_user=root
-heffalompen            ansible_ssh_host=129.241.78.142   ansible_ssh_port=22     ansible_ssh_user=root
+vissel2            ansible_ssh_host=vissel2.studdem.ntnu.no   ansible_ssh_port=22     ansible_ssh_user=root
+heffalompen            ansible_ssh_host=heffalompen.studdem.ntnu.no   ansible_ssh_port=22     ansible_ssh_user=root
 
 [studdem-squeeze]
 vissel             ansible_ssh_host=vissel.studdem.ntnu.no  ansible_ssh_port=22     ansible_ssh_user=root
