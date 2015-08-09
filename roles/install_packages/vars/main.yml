@@ -31,6 +31,7 @@ apt_packages:
   - figlet
   - minicom
   - make
+  - silversearcher-ag
 
 pip_packages:
   - requests
