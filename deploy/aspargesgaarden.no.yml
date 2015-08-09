@@ -18,6 +18,11 @@
   - name: install python requirements
     command: make prod chdir={{ install_dir }}
 
+  - name: migrate database
+    command: make migrate chdir={{ install_dir }}
+    environment:
+        DJANGO_SETTINGS_MODULE: aspargesgaarden.settings.prod
+
   - name: correct ownership
     file: path={{ install_dir }} group=nginx owner=nginx recurse=yes
 
