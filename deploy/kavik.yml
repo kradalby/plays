@@ -1,0 +1,25 @@
+---
+- name: Deploy master of kradalby/kavik
+  hosts: pidgeot
+  remote_user: root
+  vars:
+    install_dir: "/srv/kavik"
+    git_repo: "https://github.com/kradalby/kavik.git"
+
+  tasks:
+  - name: update production
+    git: repo={{ git_repo }}
+         dest={{ install_dir }}
+         update=yes
+
+  - name: create env
+    command: make env chdir={{ install_dir }} creates={{ install_dir }}/env
+
+  - name: install python requirements
+    command: make prod chdir={{ install_dir }}
+
+  - name: migrate database
+    command: make migrate chdir={{ install_dir }}
+
+  - name: correct ownership
+    file: path={{ install_dir }} group=root owner=root recurse=yes
