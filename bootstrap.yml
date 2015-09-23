@@ -15,8 +15,8 @@
     - usage
     - ssh
     - snmp
-    - { role: postfix_sendonly, when: "hostname != 'butterfree' and hostname != 'pidgeot'"}
+    - { role: exim4, when: "hostname != 'pidgeot'"}
     - { role: unify, when: "hostname == 'abra'" }
     - { role: xenserver, when: "xenserver == true" }
-    - { role: xenserver_if, when: "xenserver == true and hostname != 'diglett'" }
+    - { role: xenserver_if, when: "xenserver == true and hostname != 'diglett' and hostname != 'slowking'" }
     - { role: logstash-forwarder, when: "xenserver == true" }

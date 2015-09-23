@@ -1,6 +1,2 @@
 ---
 # Upgrade tasks, used for install and upgrade playbooks of mail servers
-- name: Install Packages
-  action: apt name={{ item }} state=latest
-  with_items: role_packages
-

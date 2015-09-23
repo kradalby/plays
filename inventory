@@ -33,6 +33,7 @@ grimer             ansible_ssh_host=m.fap.no               ansible_ssh_port=2202
 golum    ansible_ssh_host=m.fap.no               ansible_ssh_port=22025  ansible_ssh_user=root
 pidgeot             ansible_ssh_host=m.fap.no               ansible_ssh_port=22026  ansible_ssh_user=root
 #shellder             ansible_ssh_host=m.fap.no               ansible_ssh_port=22027  ansible_ssh_user=root
+slowking             ansible_ssh_host=m.fap.no               ansible_ssh_port=22028  ansible_ssh_user=root
 
 # Casual gaming
 goomba             ansible_ssh_host=goomba.casualgaming.no               ansible_ssh_port=22  ansible_ssh_user=root
