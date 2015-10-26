@@ -84,3 +84,8 @@
 - name: docker repo
   apt_repository: repo='deb https://get.docker.com/ubuntu docker main' state=present
 
+- name: openvpn key
+  apt_key: url=https://swupdate.openvpn.net/repos/repo-public.gpg state=present
+
+- name: openvpn repo
+  apt_repository: repo='deb http://swupdate.openvpn.net/apt wheezy main'
