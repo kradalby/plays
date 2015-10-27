@@ -25,7 +25,7 @@
   apt_repository: repo='deb-src https://deb.nodesource.com/node_0.12 {{ debian_release }} main' state=present
 
 - name: add weechat repo
-  apt_repository: repo='deb http://debian.weechat.org {{ debian_release }} main' state=present
+  apt_repository: repo='deb https://weechat.org/debian {{ debian_release }} main' state=present
 
 - name: add postgres key
   apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
@@ -84,3 +84,8 @@
 - name: docker repo
   apt_repository: repo='deb https://get.docker.com/ubuntu docker main' state=present
 
+- name: openvpn key
+  apt_key: url=https://swupdate.openvpn.net/repos/repo-public.gpg state=present
+
+- name: openvpn repo
+  apt_repository: repo='deb http://swupdate.openvpn.net/apt wheezy main'
