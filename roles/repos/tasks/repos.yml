@@ -37,7 +37,7 @@
   apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db state=present
 
 - name: add mariadb repo
-  apt_repository: repo='deb http://ftp.eenet.ee/pub/mariadb/repo/5.5/debian wheezy main' state=present
+  apt_repository: repo='deb [arch=amd64,i386] http://mirrors.supportex.net/mariadb/repo/10.1/debian jessie main' state=present
 
 - name: add mongodb key
   apt_key: keyserver=keyserver.ubuntu.com id=7F0CEB10 state=present

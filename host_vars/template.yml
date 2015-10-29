@@ -1,0 +1,10 @@
+---
+hostname: template
+
+# SMTP spesific
+snmp_location: INSIDE THE XEN
+
+xenserver: True
+ip_address: 10.0.1.254
+config_location: ""
+rpi: False
