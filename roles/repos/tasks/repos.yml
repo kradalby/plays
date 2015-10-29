@@ -24,6 +24,9 @@
 - name: add node repo src
   apt_repository: repo='deb-src https://deb.nodesource.com/node_0.12 {{ debian_release }} main' state=present
 
+- name: add weechat key
+  apt_key: keyserver=keys.gnupg.net id=11E9DE8848F2B65222AA75B8D1820DB22A11534E state=present
+
 - name: add weechat repo
   apt_repository: repo='deb https://weechat.org/debian {{ debian_release }} main' state=present
 
