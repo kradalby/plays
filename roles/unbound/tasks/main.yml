@@ -1,0 +1,12 @@
+---
+
+- name: install unbound
+  apt: package=unbound state=latest
+
+- name: copy unbound config
+  template: src=unbound.conf dest=/etc/unbound/unbound.conf owner=root group=unbound mode=755
+  notify: restart unbound
+
+- name: update adblock
+  get_url: url="http://pgl.yoyo.org/as/serverlist.php?hostformat=unbound&showintro=0&startdate%5Bday%5D=&startdate%5Bmonth%5D=&startdate%5Byear%5D=&mimetype=plaintext" dest=/etc/unbound/unbound.conf.d/adblock.conf force=yes
+  notify: restart unbound

@@ -1,6 +1,7 @@
 ---
 apt_packages:
   - vim-nox
+  - jq
   - python
   - python-pip
   - python3
