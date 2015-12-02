@@ -3,7 +3,7 @@
 ################################
 
 [tjodalyng]
-abra               ansible_ssh_host=abra.fap.no               ansible_ssh_port=22001  ansible_ssh_user=root
+#abra               ansible_ssh_host=abra.fap.no               ansible_ssh_port=22001  ansible_ssh_user=root
 snorlax           ansible_ssh_host=abra.fap.no               ansible_ssh_port=22010  ansible_ssh_user=root
 
 
