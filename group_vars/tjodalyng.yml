@@ -8,12 +8,12 @@ apt_mirror: http://ftp.se.debian.org/debian/
 debian_release: jessie
 
 # for postfix
-mail_relayhost: smtp.homenet.no
+mail_relayhost: mail.broadpark.no
 
 
 # dns configs
 nameservers:
-    - 192.168.1.1
+    - 192.168.1.10
     - 8.8.8.8
 
 jail_mail: True
