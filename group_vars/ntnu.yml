@@ -27,4 +27,4 @@ users:
 
 # General SMTP
 snmp_contact: Kristoffer Dalby <kradalby@kradalby.no>
-snmp_allowed: 129.241.210.105
+snmp_allowed: 10.0.1.30
