@@ -20,4 +20,5 @@
       - { role: xenserver, when: "xenserver == true" }
       - { role: xenserver_if, when: "xenserver == true and hostname != 'diglett' and hostname != 'slowking'" }
       - { role: unbound, when: "hostname == 'diglett' or hostname == 'butterfree' or hostname == 'snorlax'" }
+        #  - { role: ptunnel-server, when: "hostname == 'diglett' or hostname == 'butterfree'" }
       #    - { role: logstash-forwarder, when: "xenserver == true" }
