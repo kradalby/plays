@@ -1,6 +1,6 @@
 ---
 - name: add local xenserver repo
-  apt_repository: repo='deb http://10.0.1.13/repo binary/' state=present
+  apt_repository: repo='deb https://fap.no/repo binary/' state=present
 
 - name: install xe-guest-utilities
   apt: name=xe-guest-utilities state=present update_cache=yes force=yes
