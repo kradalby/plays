@@ -87,8 +87,8 @@
 - name: docker repo
   apt_repository: repo='deb https://get.docker.com/ubuntu docker main' state=present
 
-- name: openvpn key
-  apt_key: url=https://swupdate.openvpn.net/repos/repo-public.gpg state=present
+- name: btsync (yeasoft) key
+  apt_key: keyserver=keys.gnupg.net id=6BF18B15 state=present
 
-- name: openvpn repo
-  apt_repository: repo='deb http://swupdate.openvpn.net/apt wheezy main'
+- name: btsync (yeasoft) repos
+  apt_repository: repo='deb http://debian.yeasoft.net/btsync {{ debian_release }}-unstable main'
