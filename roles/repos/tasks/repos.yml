@@ -91,4 +91,7 @@
   apt_key: keyserver=keys.gnupg.net id=6BF18B15 state=present
 
 - name: btsync (yeasoft) repos
-  apt_repository: repo='deb http://debian.yeasoft.net/btsync {{ debian_release }}-unstable main'
+  apt_repository: repo='deb http://debian.yeasoft.net/btsync {{ debian_release }} main'
+
+- name: btsync (yeasoft) source repos
+  apt_repository: repo='deb-src http://debian.yeasoft.net/btsync {{ debian_release }} main'
