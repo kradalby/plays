@@ -30,6 +30,7 @@ pidgeot             ansible_ssh_host=m.fap.no               ansible_ssh_port=220
 shellder             ansible_ssh_host=m.fap.no               ansible_ssh_port=22027  ansible_ssh_user=root
 slowking             ansible_ssh_host=m.fap.no               ansible_ssh_port=22005  ansible_ssh_user=root
 spearow             ansible_ssh_host=m.fap.no               ansible_ssh_port=22030  ansible_ssh_user=root
+tentacool             ansible_ssh_host=m.fap.no               ansible_ssh_port=22032  ansible_ssh_user=root
 
 # Casual gaming
 goomba             ansible_ssh_host=goomba.casualgaming.no               ansible_ssh_port=22  ansible_ssh_user=root
