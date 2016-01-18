@@ -3,7 +3,6 @@
 ################################
 
 [tjodalyng]
-#abra               ansible_ssh_host=abra.fap.no               ansible_ssh_port=22001  ansible_ssh_user=root
 snorlax           ansible_ssh_host=abra.fap.no               ansible_ssh_port=22010  ansible_ssh_user=root
 
 
@@ -12,12 +11,10 @@ butterfree         ansible_ssh_host=b.fap.no                ansible_ssh_port=222
 
 
 [ntnu]
-#zapdos             ansible_ssh_host=z.fap.no                ansible_ssh_port=21337  ansible_ssh_user=root
 
 # XenServer
 diglett            ansible_ssh_host=m.fap.no               ansible_ssh_port=21337  ansible_ssh_user=root
 metapod            ansible_ssh_host=m.fap.no               ansible_ssh_port=22011  ansible_ssh_user=root
-gengar             ansible_ssh_host=m.fap.no               ansible_ssh_port=22013  ansible_ssh_user=root
 weedle             ansible_ssh_host=m.fap.no               ansible_ssh_port=22014  ansible_ssh_user=root
 ninetales             ansible_ssh_host=m.fap.no               ansible_ssh_port=22015  ansible_ssh_user=root
 arcanine             ansible_ssh_host=m.fap.no               ansible_ssh_port=22018  ansible_ssh_user=root
@@ -32,9 +29,6 @@ slowking             ansible_ssh_host=m.fap.no               ansible_ssh_port=22
 spearow             ansible_ssh_host=m.fap.no               ansible_ssh_port=22030  ansible_ssh_user=root
 tentacool             ansible_ssh_host=m.fap.no               ansible_ssh_port=22032  ansible_ssh_user=root
 
-# Casual gaming
-goomba             ansible_ssh_host=goomba.casualgaming.no               ansible_ssh_port=22  ansible_ssh_user=root
-
 
 
 #############################
@@ -44,11 +38,8 @@ goomba             ansible_ssh_host=goomba.casualgaming.no               ansible
 [studdem]
 arkiv              ansible_ssh_host=arkiv.studdem.ntnu.no   ansible_ssh_port=22     ansible_ssh_user=root
 tussi              ansible_ssh_host=tussi.studdem.ntnu.no   ansible_ssh_port=22     ansible_ssh_user=root
-vissel2            ansible_ssh_host=vissel2.studdem.ntnu.no   ansible_ssh_port=22     ansible_ssh_user=root
-heffalompen            ansible_ssh_host=heffalompen.studdem.ntnu.no   ansible_ssh_port=22     ansible_ssh_user=root
 
 [studdem-squeeze]
-vissel             ansible_ssh_host=vissel.studdem.ntnu.no  ansible_ssh_port=22     ansible_ssh_user=root
 kengu              ansible_ssh_host=kengu.studdem.ntnu.no   ansible_ssh_port=22     ansible_ssh_user=root
 
 
