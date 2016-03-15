@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 cd /root
 wget https://kradalby.no/pub/xen_tools.tar.gz
 tar xvfz xen_tools.tar.gz
