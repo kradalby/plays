@@ -3,31 +3,32 @@
 ################################
 
 [tjodalyng]
-snorlax           ansible_ssh_host=abra.fap.no               ansible_ssh_port=22010  ansible_ssh_user=root
+snorlax
 
 
 [ole]
-butterfree         ansible_ssh_host=b.fap.no                ansible_ssh_port=22222  ansible_ssh_user=root
+#butterfree         ansible_ssh_host=b.fap.no                ansible_ssh_port=22222  ansible_ssh_user=root
+butterfree
 
 
 [ntnu]
 
 # XenServer
-diglett            ansible_ssh_host=m.fap.no               ansible_ssh_port=21337  ansible_ssh_user=root
-metapod            ansible_ssh_host=m.fap.no               ansible_ssh_port=22011  ansible_ssh_user=root
-weedle             ansible_ssh_host=m.fap.no               ansible_ssh_port=22014  ansible_ssh_user=root
-ninetales             ansible_ssh_host=m.fap.no               ansible_ssh_port=22015  ansible_ssh_user=root
-arcanine             ansible_ssh_host=m.fap.no               ansible_ssh_port=22018  ansible_ssh_user=root
-pidgey             ansible_ssh_host=m.fap.no               ansible_ssh_port=22020  ansible_ssh_user=root
-weezing             ansible_ssh_host=m.fap.no               ansible_ssh_port=22021  ansible_ssh_user=root
-magnemite             ansible_ssh_host=m.fap.no               ansible_ssh_port=22022  ansible_ssh_user=root
-porygon             ansible_ssh_host=m.fap.no               ansible_ssh_port=22023  ansible_ssh_user=root
-golem    ansible_ssh_host=m.fap.no               ansible_ssh_port=22025  ansible_ssh_user=root
-pidgeot             ansible_ssh_host=m.fap.no               ansible_ssh_port=22026  ansible_ssh_user=root
-shellder             ansible_ssh_host=m.fap.no               ansible_ssh_port=22027  ansible_ssh_user=root
-slowking             ansible_ssh_host=m.fap.no               ansible_ssh_port=22005  ansible_ssh_user=root
-spearow             ansible_ssh_host=m.fap.no               ansible_ssh_port=22030  ansible_ssh_user=root
-tentacool             ansible_ssh_host=m.fap.no               ansible_ssh_port=22032  ansible_ssh_user=root
+diglett
+metapod
+weedle
+ninetales
+arcanine
+pidgey
+weezing
+magnemite
+porygon
+golem
+pidgeot
+shellder
+slowking
+spearow
+tentacool
 
 ############################
 # Other
