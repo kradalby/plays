@@ -12,4 +12,5 @@
       when: ansible_os_family == "Darwin"
 
     - name: upgrade dotfiles
-      git: repo=https://github.com/kradalby/dotfiles dest=~/git/dotfiles update=yes clone=no track_submodules=yes
+      git: repo=https://github.com/kradalby/dotfiles dest=~/git/dotfiles update=yes clone=no track_submodules=yes force=yes
+      when: ansible_os_family == 'Debian'
