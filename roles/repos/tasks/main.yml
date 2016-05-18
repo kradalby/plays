@@ -1,5 +1,10 @@
 ---
-- include: repos.yml
+# Remove old/unused repos
+- include: absent_repos.yml
+  when: ansible_os_family == "Debian"
+
+# Add present
+- include: present_repos.yml
   when: ansible_os_family == "Debian"
 
 - include: upgrade.yml
