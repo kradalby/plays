@@ -69,3 +69,8 @@
 - name: docker repo
   apt_repository: repo='deb https://get.docker.com/ubuntu docker main' state=present
 
+- name: erlang key
+  apt_key: url=https://packages.erlang-solutions.com/debian/erlang_solutions.asc state=present
+
+- name: erlang repo
+  apt_repository: repo='deb https://packages.erlang-solutions.com/debian wheezy contrib' state=present
