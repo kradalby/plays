@@ -74,3 +74,9 @@
 
 - name: erlang repo
   apt_repository: repo='deb https://packages.erlang-solutions.com/debian wheezy contrib' state=present
+
+- name: fish key
+  apt_key: url=http://download.opensuse.org/repositories/shells:fish:release:2/Debian_8.0/Release.key state=present
+
+- name: fish repo
+  apt_repository: repo='deb http://download.opensuse.org/repositories/shells:/fish:/release:/2/Debian_8.0/ /' state=present

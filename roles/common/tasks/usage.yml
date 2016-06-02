@@ -1,9 +1,9 @@
 ---
-- name: install prezto 
-  git: repo=https://github.com/sorin-ionescu/prezto.git
-       dest="/root/.zprezto"
+# - name: install prezto
+#   git: repo=https://github.com/sorin-ionescu/prezto.git
+#        dest="/root/.zprezto"
 
-- name: install dotfiles 
+- name: install dotfiles
   git: repo=https://github.com/kradalby/dotfiles.git
        dest="/root/git/dotfiles"
        update=yes
