@@ -64,10 +64,10 @@
   apt_repository: repo='deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present
 
 - name: docker key
-  apt_key: keyserver=keyserver.ubuntu.com id=A88D21E9 state=present
+  apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D state=present
 
 - name: docker repo
-  apt_repository: repo='deb https://get.docker.com/ubuntu docker main' state=present
+  apt_repository: repo='deb https://apt.dockerproject.org/repo debian-jessie main' state=present
 
 - name: erlang key
   apt_key: url=https://packages.erlang-solutions.com/debian/erlang_solutions.asc state=present
