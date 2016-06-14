@@ -6,19 +6,19 @@
     ansible_python_interpreter: "/usr/bin/env python"
 
   roles:
-      - { role: repos, when: "rpi == false"}
-      - install_packages
-      - mail
-      - fail2ban
-      - apticron
-      - config_server
-      - usage
-      - ssh
-      - snmp
-      - { role: exim4, when: "hostname != 'pidgeot'"}
-      - { role: unify, when: "hostname == 'abra'" }
-      - { role: xenserver, when: "xenserver == true" }
-      - { role: xenserver_if, when: "xenserver == true and hostname != 'diglett' and hostname != 'slowking'" }
-      - { role: unbound, when: "hostname == 'diglett' or hostname == 'butterfree' or hostname == 'snorlax'" }
+      #       - { role: repos, when: "rpi == false"}
+      #       - install_packages
+      #       - mail
+      #       - fail2ban
+      #       - apticron
+      #       - config_server
+      #       - usage
+             - ssh
+      #       - snmp
+      #       - { role: exim4, when: "hostname != 'pidgeot'"}
+      #       - { role: unify, when: "hostname == 'abra'" }
+      #       - { role: xenserver, when: "xenserver == true" }
+      #       - { role: xenserver_if, when: "xenserver == true and hostname != 'diglett' and hostname != 'slowking'" }
+      #       - { role: unbound, when: "hostname == 'diglett' or hostname == 'butterfree' or hostname == 'snorlax'" }
         #  - { role: ptunnel-server, when: "hostname == 'diglett' or hostname == 'butterfree'" }
       #    - { role: logstash-forwarder, when: "xenserver == true" }
