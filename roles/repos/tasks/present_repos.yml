@@ -9,11 +9,11 @@
 - name: add nginx key
   apt_key: url=http://nginx.org/keys/nginx_signing.key state=present
 
-- name: add nginx repo
-  apt_repository: repo='deb http://nginx.org/packages/mainline/debian/ wheezy nginx' state=present
+  # - name: add nginx repo
+  #   apt_repository: repo='deb http://nginx.org/packages/mainline/debian/ {{ debian_release }} nginx' state=present
 
 - name: add nginx repo src
-  apt_repository: repo='deb-src http://nginx.org/packages/debian/ wheezy nginx' state=present
+  apt_repository: repo='deb-src http://nginx.org/packages/mainline/debian/ {{ debian_release }} nginx' state=present
 
 - name: add node key
   apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present

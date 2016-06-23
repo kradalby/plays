@@ -16,3 +16,6 @@
 
 - name: btsync (yeasoft) source repos
   apt_repository: repo='deb-src http://debian.yeasoft.net/btsync {{ debian_release }} main' state=absent
+
+- name: add nginx repo
+  apt_repository: repo='deb http://nginx.org/packages/mainline/debian/ wheezy nginx' state=absent
