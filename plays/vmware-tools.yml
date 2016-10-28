@@ -1,0 +1,12 @@
+---
+- name: Install Open VMware tools
+  hosts: all
+
+  tasks:
+      - name: Install open-vmware-tools
+        apt:
+            name: open-vm-tools
+            update_cache: yes
+            state: latest
+        when: ansible_os_family == 'Debian'
+
