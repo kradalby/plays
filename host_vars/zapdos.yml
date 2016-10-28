@@ -1,9 +1,0 @@
----
-hostname: zapdos
-
-# SMTP spesific
-snmp_location: IT-Bygget NTNU, Trondheim
-
-xenserver: False
-config_location: ""
-rpi: False

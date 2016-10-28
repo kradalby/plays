@@ -1,19 +1,18 @@
 ---
 # variables needed for this playbook
-domain: fap.no
-ansible_only: Don't edit manually
+domain: ntnu.fap.no
+ansible_only: Dont edit manually
 
 # for apt configs
 apt_mirror: http://ftp.se.debian.org/debian/
 debian_release: jessie
 
 # for postfix
-mail_relayhost: smtp.stud.ntnu.no
+mail_relayhost: mail.ntnu.fap.no
 
 
 # dns configs
 nameservers:
-    - 10.0.1.5
     - 129.241.0.200
     - 129.241.0.201
 
@@ -22,7 +21,6 @@ jail_mail_dest: kradalby@kradalby.no
 
 # for ssh
 users:
-    #  - kradalby
   - root
 
 # General SMTP

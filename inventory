@@ -6,30 +6,23 @@
 snorlax
 
 
-[ole]
+[ova]
 #butterfree         ansible_ssh_host=b.fap.no                ansible_ssh_port=22222  ansible_ssh_user=root
 butterfree
 
 
 [ntnu]
+mankey
+slowpoke
+pidgey
 
-# XenServer
-diglett
-metapod
-weedle
-ninetales
-arcanine
-weezing
-magnemite
+
+[terra]
 porygon
-pidgeot
-shellder
-slowking
-spearow
-# tentacool
-# pidgey
-golem
-gengar
+primeape
+seel
+
+
 
 ############################
 # Other

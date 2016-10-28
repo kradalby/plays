@@ -1,9 +1,0 @@
----
-hostname: snorlax
-
-# SMTP spesific
-snmp_location: Østbyveien, Tjodalyng, Vestfold, Norway
-
-xenserver: False
-config_location: ""
-rpi: False

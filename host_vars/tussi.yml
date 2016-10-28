@@ -1,8 +1,0 @@
----
-hostname: tussi
-
-# SMTP spesific
-snmp_location: Gamle fysikk, NTNU, Trondheim
-xenserver: false
-config_location: ""
-rpi: False
