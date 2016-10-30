@@ -7,8 +7,7 @@ snorlax
 
 
 [ova]
-#butterfree         ansible_ssh_host=b.fap.no                ansible_ssh_port=22222  ansible_ssh_user=root
-butterfree
+# butterfree
 
 
 [ntnu]
