@@ -1,0 +1,8 @@
+---
+
+- name: Assures ssh keys dir exists
+  file: path=/etc/ssh/keys state=directory
+
+- name: user ssh keys
+  template: src=ssh/keys/{{ item }}.j2 dest=/etc/ssh/keys/{{ item }}.pub owner={{ item }} mode=640
+  with_items: "{{ ssh_keys_users | default([]) }}"

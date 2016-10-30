@@ -1,0 +1,7 @@
+---
+- name: create ssh config for root user
+  hosts: all
+  roles:
+    - role: roles/ssh
+      ssh_skip_sshd_config: true
+      ssh_skip_ssh_keys: true

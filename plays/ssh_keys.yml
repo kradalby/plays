@@ -1,0 +1,11 @@
+---
+- name: Deploy ssh keys
+  hosts: all
+  roles:
+    - role: roles/ssh
+      ssh_skip_sshd_config: true
+      ssh_skip_ssh_config: true
+      ssh_keys_users:
+        - 'root'
+      when: inventory_hostname != "vsop"
+

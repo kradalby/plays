@@ -1,0 +1,6 @@
+---
+- name: Assures .ssh in root folder
+  file: path=/root/.ssh state=directory
+
+- name: ssh config
+  get_url: url=https://sshconfig.kradalby.no dest=/root/.ssh/config owner=root mode=640 force=yes

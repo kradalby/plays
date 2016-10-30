@@ -1,19 +1,15 @@
 # {{ ansible_managed }}
 
 Port 22
-Port 21337
-Port 22222
 Protocol 2
 HostKey /etc/ssh/ssh_host_ed25519_key
 HostKey /etc/ssh/ssh_host_rsa_key
 
+UseDNS no
 
-KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group1-sha1
-
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
 Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
-
 MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
-
 
 UsePrivilegeSeparation yes
 
@@ -24,7 +20,7 @@ SyslogFacility AUTH
 LogLevel INFO
 
 LoginGraceTime 120
-PermitRootLogin without-password
+PermitRootLogin yes
 StrictModes yes
 
 RSAAuthentication yes
@@ -35,38 +31,37 @@ RhostsRSAAuthentication no
 HostbasedAuthentication no
 
 PermitEmptyPasswords no
-PasswordAuthentication yes
-{% if hostname == 'arcanine' %}
-ChallengeResponseAuthentication yes
-{% else %}
 ChallengeResponseAuthentication no
-{% endif %}
-
+PasswordAuthentication yes
 
 AuthorizedKeysFile      /etc/ssh/keys/%u.pub
 
 AllowAgentForwarding yes
 AllowTcpForwarding yes
-{% if ansible_os_family == "Debian" %}
 AllowStreamLocalForwarding yes
-{% endif %}
 X11Forwarding no
 
 PrintMotd no
-PrintLastLog yes
 TCPKeepAlive no
 
-AcceptEnv LANG LC_*
 
-{% if ansible_os_family == "Debian" %}
-Subsystem sftp /usr/lib/openssh/sftp-server
-{% elif ansible_os_family == "FreeBSD" %}
+{% if ansible_os_family == 'FreeBSD' %}
 Subsystem sftp /usr/libexec/sftp-server
+{% else %}
+Subsystem sftp /usr/lib/openssh/sftp-server
+PrintLastLog yes
 {% endif %}
 
 UsePAM yes
 
-Match Group sftp
+{% if inventory_hostname == "seel" %}
+Match User prokom
+    PasswordAuthentication yes
     ChrootDirectory %h
     ForceCommand internal-sftp
     AllowTcpForwarding no
+    AllowAgentForwarding no
+    PermitTunnel no
+    PermitTTY no
+    X11Forwarding no
+{% endif %}
