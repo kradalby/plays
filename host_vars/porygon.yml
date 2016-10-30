@@ -3,4 +3,4 @@ hostname: porygon
 
 snmp_location: Terrahost, Sandefjord, Norway
 
-vmware: True
+vmware: true

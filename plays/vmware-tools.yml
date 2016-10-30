@@ -8,5 +8,5 @@
             name: open-vm-tools
             update_cache: yes
             state: latest
-        when: ansible_os_family == 'Debian'
+        when: ansible_os_family == 'Debian' and vmware == true
 

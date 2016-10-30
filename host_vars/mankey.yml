@@ -3,4 +3,4 @@ hostname: mankey
 
 snmp_location: IT-Bygget NTNU, Trondheim
 
-vmware: True
+vmware: true

@@ -6,4 +6,3 @@
     - name: upgrade debian
       apt: upgrade=dist update_cache=yes
       when: ansible_os_family == 'Debian'
-

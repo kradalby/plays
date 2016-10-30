@@ -3,4 +3,4 @@ hostname: slowpoke
 
 snmp_location: IT-Bygget NTNU, Trondheim
 
-vmware: True
+vmware: true
