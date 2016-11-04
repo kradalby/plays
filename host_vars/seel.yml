@@ -4,3 +4,6 @@ hostname: seel
 snmp_location: Terrahost, Sandefjord, Norway
 
 vmware: true
+
+ssh_keys_additional_host_keys:
+
