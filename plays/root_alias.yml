@@ -1,0 +1,11 @@
+---
+- name: Change root alias to kradalby
+  hosts: all
+
+  tasks:
+    - name: root alias to kradalby
+      action: lineinfile dest=/etc/aliases regexp='^root:' line='root:kradalby@kradalby.no' state=present
+
+    - name: run newaliases
+      shell: newaliases
+
