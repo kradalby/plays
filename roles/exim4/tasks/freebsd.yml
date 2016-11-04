@@ -1,0 +1,14 @@
+---
+- name: file /etc/exim4/update-exim4.conf.conf
+  template: src=exim4/update-exim4.conf.conf dest="/usr/local/etc/exim/update-exim4.conf.conf" owner=root mode=0644
+- name: install exim
+  pkgng: name=exim state=present
+- name: Install update-exim.conf on Freebsd
+  template: src=update-exim4.conf dest=/usr/local/sbin/update-exim4.conf owner=root group=wheel mode=0755
+- name: Install mailer.conf file
+  template: src=mailer.conf dest=/etc/mailer.conf owner=root group=wheel mode=0644
+- name: Install the exim rc.conf.d config file
+  template: src=exim.rc.conf dest=/etc/rc.conf.d/exim owner=root group=wheel mode=0644
+- name: update exim config
+  command: update-exim4.conf -d /usr/local/etc/exim/ --output configure
+  notify: restart exim4 FreeBSD

@@ -1,0 +1,9 @@
+---
+- name: file /etc/exim4/update-exim4.conf.conf
+  template: src=exim4/update-exim4.conf.conf dest="/etc/exim4/update-exim4.conf.conf" owner=root mode=0644
+- name: install exim
+  apt: name=exim4 state=present
+
+- name: update exim config
+  command: update-exim4.conf
+  notify: restart exim4 Debian
