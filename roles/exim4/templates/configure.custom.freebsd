@@ -1,0 +1,40 @@
+# {{ ansible_managed }}
+
+UPEX4CmacrosUPEX4C = 1
+##############################################
+# the following macro definitions were created
+# dynamically by /usr/sbin/update-exim4.conf
+.ifndef MAIN_LOCAL_INTERFACES
+MAIN_LOCAL_INTERFACES=127.0.0.1
+.endif
+.ifndef HIDE_MAILNAME
+HIDE_MAILNAME=1
+.endif
+.ifndef MAIN_LOCAL_DOMAINS
+MAIN_LOCAL_DOMAINS=@:localhost:{{ hostname }}.{{ domain }}
+.endif
+.ifndef MAIN_RELAY_TO_DOMAINS
+MAIN_RELAY_TO_DOMAINS=empty
+.endif
+.ifndef ETC_MAILNAME
+ETC_MAILNAME={{ hostname }}.{{ domain }}
+.endif
+.ifndef LOCAL_DELIVERY
+LOCAL_DELIVERY=mail_spool
+.endif
+.ifndef MAIN_RELAY_NETS
+MAIN_RELAY_NETS=127.0.0.1 : ::::1
+.endif
+.ifndef DCreadhost
+DCreadhost={{ hostname }}.{{ domain }}
+.endif
+.ifndef DCsmarthost
+DCsmarthost={{ mail_relay_host }}
+.endif
+.ifndef DC_eximconfig_configtype
+DC_eximconfig_configtype=satellite
+.endif
+.ifndef DCconfig_satellite
+DCconfig_satellite=1
+.endif
+##############################################
