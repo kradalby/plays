@@ -5,6 +5,9 @@
 - name: file configure.freebsd
   copy: src=../templates/configure.freebsd dest=/usr/local/etc/exim/configure.freebsd owner=root mode=0644
 
+- name: stop sendmail
+  service: name=sendmail state=stopped
+
 - name: file configure.custom.freebsd
   template: src=configure.custom.freebsd dest=/usr/local/etc/exim/configure.custom.freebsd owner=root mode=0644
 

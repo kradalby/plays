@@ -1,0 +1,5 @@
+---
+- name: Bootstrap servers with common config files
+  hosts: all
+  roles:
+    - role: roles/common

@@ -1,0 +1,21 @@
+---
+- name: /etc/resolv.conf
+  template: src=resolv.conf.j2 dest=/etc/resolv.conf owner=root group=root mode=0644
+
+  # - name: /etc/mailname
+  #   template: src=mailname.j2 dest=/etc/mailname owner=root group=root mode=644
+  #
+  # - name: /etc/hosts
+  #   template: src=hosts.j2 dest=/etc/hosts owner=root group=root mode=644
+  #
+  # - name: /etc/hostname
+  #   template: src=hostname.j2 dest=/etc/hostname owner=root group=root mode=644
+  #
+  # - name: interfaces.example
+  #   template: src=interfaces.example dest=/etc/network/interfaces.example owner=root group=root mode=644
+  #
+  # - name: create motd
+  #   shell: figlet $(hostname) > /etc/motd
+  #
+  # - name: Assures backup dir exists
+  #   file: path=/backup state=directory
