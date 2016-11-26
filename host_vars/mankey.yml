@@ -2,3 +2,5 @@
 hostname: mankey
 
 vmware: true
+
+docker_host: true
