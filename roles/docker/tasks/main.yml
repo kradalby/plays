@@ -1,0 +1,6 @@
+---
+- include: docker.yml
+  when: docker_host
+
+- include: docker-compose.yml
+  when: docker_host
