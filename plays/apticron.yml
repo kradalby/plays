@@ -1,0 +1,5 @@
+---
+- name: Install apticron on Debian servers
+  hosts: all
+  roles:
+    - role: roles/apticron

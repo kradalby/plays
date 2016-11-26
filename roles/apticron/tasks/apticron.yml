@@ -1,9 +1,0 @@
----
-- name: /etc/cron.d/apticron
-  template: src=cron.d/apticron dest=/etc/cron.d/apticron owner=root group=root mode=644
-
-- name: apticron last_run
-  command: touch -t 201501010000 /var/lib/apticron/last_run
-
-- name: apticron cron_run
-  command: touch -t 201501010000 /var/lib/apticron/cron_run

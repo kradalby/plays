@@ -1,5 +1,16 @@
 ---
-- include: apticron.yml
+- name: Install apticron
+  apt: package=apticron state=latest
   when: ansible_os_family == "Debian"
 
+- name: /etc/cron.d/apticron
+  template: src=cron.d/apticron dest=/etc/cron.d/apticron owner=root group=root mode=644
+  when: ansible_os_family == "Debian"
 
+- name: apticron last_run
+  command: touch -t 201501010000 /var/lib/apticron/last_run
+  when: ansible_os_family == "Debian"
+
+- name: apticron cron_run
+  command: touch -t 201501010000 /var/lib/apticron/cron_run
+  when: ansible_os_family == "Debian"
