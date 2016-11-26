@@ -25,4 +25,5 @@ users:
 
 # General SMTP
 snmp_contact: Kristoffer Dalby <kradalby@kradalby.no>
-snmp_allowed: 10.0.1.30
+snmp_location: IT-Bygget NTNU, Trondheim
+snmp_allowed: 10.60.10.10

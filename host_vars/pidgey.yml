@@ -1,6 +1,4 @@
 ---
 hostname: pidgey
 
-snmp_location: IT-Bygget NTNU, Trondheim
-
 vmware: true
