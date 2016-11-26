@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+# {{ ansible_only }}
+#  Listen for connections on all interfaces (both IPv4 *and* IPv6)
+agentAddress udp:161
+
+rocommunity public {{ snmp_allowed }}
+
+#Info
+sysLocation    {{ snmp_location }}
+sysContact     {{ snmp_contact }}

@@ -1,0 +1,6 @@
+---
+- name: Configure SNMPd on servers
+  hosts: all
+  roles:
+    - role: roles/snmpd
+
