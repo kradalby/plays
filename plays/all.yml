@@ -9,3 +9,4 @@
 - include: sshd_config.yml
 - include: upgrade.yml
 - include: vmware-tools.yml
+- include: docker.yml

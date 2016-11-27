@@ -15,6 +15,9 @@ mankey
 slowpoke
 pidgey
 grimer
+muk
+venonat
+venomoth
 
 
 [terra]
@@ -22,6 +25,11 @@ porygon
 primeape
 seel
 
+[consul_server]
+grimer      consul_node_role=bootstrap  consul_datacenter=ntnu
+muk         consul_node_role=server     consul_datacenter=ntnu
+venonat     consul_node_role=server     consul_datacenter=ntnu
+venomoth    consul_node_role=client     consul_datacenter=ntnu
 
 
 ############################

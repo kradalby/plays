@@ -1,0 +1,11 @@
+---
+- name: Configure consul
+  hosts: consul_server
+  become: yes
+  become_user: root
+  vars:
+    consul_iface: eth0
+    consul_group_name: consul_server
+  roles:
+    - role: brianshumate.consul
+
