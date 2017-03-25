@@ -20,7 +20,7 @@ SyslogFacility AUTH
 LogLevel INFO
 
 LoginGraceTime 120
-PermitRootLogin yes
+PermitRootLogin without-password
 StrictModes yes
 
 RSAAuthentication yes
@@ -55,13 +55,16 @@ PrintLastLog yes
 UsePAM yes
 
 {% if inventory_hostname == "seel" %}
-Match User prokom
-    PasswordAuthentication yes
-    ChrootDirectory %h
-    ForceCommand internal-sftp
-    AllowTcpForwarding no
-    AllowAgentForwarding no
-    PermitTunnel no
-    PermitTTY no
-    X11Forwarding no
+# Match User prokom
+#     PasswordAuthentication yes
+#     ChrootDirectory %h
+#     ForceCommand internal-sftp
+#     AllowTcpForwarding no
+#     AllowAgentForwarding no
+#     PermitTunnel no
+#     PermitTTY no
+#     X11Forwarding no
+
+Match User kradalby
+    AuthenticationMethods keyboard-interactive
 {% endif %}
