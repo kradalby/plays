@@ -1,0 +1,8 @@
+postgresql_streaming_user:
+  name: replicator
+  pass: secret
+  postgresql_streaming_master: 'db-test-01.terra.fap.no'
+postgresql_streaming_slaves:
+ - 'db-test-02.terra.fap.no'
+ - 'db-test-03.terra.fap.no'
+postgresql_version: 9.6

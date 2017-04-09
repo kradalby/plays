@@ -3,7 +3,7 @@
 ################################
 
 [tjodalyng]
-snorlax
+# snorlax
 
 
 [ova]
@@ -14,10 +14,6 @@ snorlax
 mankey
 slowpoke
 pidgey
-grimer
-muk
-venonat
-venomoth
 
 
 [terra]
@@ -25,12 +21,11 @@ porygon
 primeape
 seel
 
-[consul_server]
-grimer      consul_node_role=bootstrap  consul_datacenter=ntnu
-muk         consul_node_role=server     consul_datacenter=ntnu
-venonat     consul_node_role=server     consul_datacenter=ntnu
-venomoth    consul_node_role=client     consul_datacenter=ntnu
 
+[db-postgresql]
+db-test-01.terra.fap.no postgresql_master=true
+db-test-02.terra.fap.no postgresql_master=false
+db-test-03.terra.fap.no postgresql_master=false
 
 ############################
 # Other

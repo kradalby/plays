@@ -1,0 +1,16 @@
+# file: tasks/install.yml -- install postgresql packages
+
+
+- debug: msg="Install {{ ansible_os_family }}"
+
+# - name: "Stage 1: install PostgreSQL on RedHat/CentOS"
+#   include: 'install_rhel.yml'
+#   when: ansible_os_family == 'RedHat'
+
+- name: "Stage 1: install PostgreSQL on Debian/Ubuntu"
+  include: 'install_deb.yml'
+  # when: ansible_os_family == 'Debian'
+
+- name: 'Stage 1: install Ansible postgresql dependency package'
+  package: state='latest' pkg='python-psycopg2'
+
