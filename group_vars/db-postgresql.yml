@@ -1,8 +1,16 @@
 postgresql_streaming_user:
   name: replicator
   pass: secret
-  postgresql_streaming_master: 'db-test-01.terra.fap.no'
+
+postgresql_streaming_master: '10.60.0.90'
 postgresql_streaming_slaves:
- - 'db-test-02.terra.fap.no'
- - 'db-test-03.terra.fap.no'
+ - '10.60.10.91'
+ - '10.60.0.91'
+ - '10.60.0.92'
 postgresql_version: 9.6
+postgresql_drop_old_cluster: true
+
+
+postgresql_pg_hba_custom:
+  # - { type: host, database: all, role: "{{ postgresql_admin_user }}", address: "10.60.0.10/32", method: "{{ postgresql_default_ipv4_auth_method }}", comment: 'pgadmin4 from primeape' }
+  - { type: host, database: all, role: "{{ postgresql_admin_user }}", address: "10.60.0.10/32", method: "trust", comment: 'pgadmin4 from primeape' }

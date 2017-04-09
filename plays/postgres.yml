@@ -2,7 +2,5 @@
 - name: Install and configure postgresql replica sets
   hosts: db-postgresql
   remote_user: root
-  vars_files:
-    - '../group_vars/db-postgresql.yml'
   roles:
-    - { role: amnay-mo.postgresql }
+    - role: roles/postgresql
