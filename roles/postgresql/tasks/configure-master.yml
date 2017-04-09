@@ -1,8 +1,10 @@
 # file: tasks/configure-master.yml -- postgresql pre-start configuration of master server and startup
 
+- debug: msg="{{postgresql_drop_old_cluster}}"
+
 - name: "Stage 2: stop old postgresql service"
   service: name="{{ postgresql_service_name }}" state=stopped
-  when: postgresql_drop_old_cluster
+  when: postgresql_drop_old_cluster == true
 
 - name: "Stage 2: remove old postgresql cluster"
   file: path="{{ postgresql_data_dir }}" state=absent
@@ -16,7 +18,7 @@
     group: "{{ postgresql_admin_user }}"
     mode: 0700
   when: postgresql_cluster_symlink_src|length > 0
-  
+
 - name: "Stage 2: cluster directory replacement with symlink, create symlink"
   file:
     src: "{{ postgresql_cluster_symlink_src }}"
