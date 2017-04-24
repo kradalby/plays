@@ -27,11 +27,3 @@ db-test-01.terra.fap.no postgresql_master=true
 db-test-02.ntnu.fap.no postgresql_master=false
 db-test-03.terra.fap.no postgresql_master=false
 db-test-04.terra.fap.no postgresql_master=false
-
-############################
-# Other
-############################
-
-[mac]
-mac         ansible_connection=local
-
