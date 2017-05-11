@@ -8,7 +8,7 @@ postgresql_streaming_slaves:
  - '10.60.0.91'
  - '10.60.0.92'
 postgresql_version: 9.6
-postgresql_drop_old_cluster: true
+postgresql_drop_old_cluster: false
 
 
 postgresql_pg_hba_custom:
