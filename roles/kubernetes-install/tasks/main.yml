@@ -1,0 +1,38 @@
+---
+- name: 'Install kubernetes and role dependencies'
+  become: yes
+  apt:
+    name: "{{item}}"
+    state: present
+    install_recommends: false
+  with_items:
+    - "apt-transport-https"
+    - "ca-certificates"
+    - "software-properties-common"
+- name: add Kubernetes apt-key
+  apt_key:
+     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+     state: present
+
+- name: add Kubernetes' APT repository
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+
+- name: install kubelet
+  apt:
+     name: kubelet
+     state: present
+     update_cache: true
+
+- name: install kubectl
+  apt:
+     name: kubectl
+     state: present
+     update_cache: true
+
+- name: install kubeadm
+  apt:
+     name: kubeadm
+     state: present
+     update_cache: true
