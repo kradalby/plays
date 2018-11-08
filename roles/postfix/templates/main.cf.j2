@@ -1,5 +1,4 @@
 # {{ ansible_managed }}
-# {{ ansible_only }}
 
 
 # Debian specific:  Specifying a file name will cause the first
@@ -29,11 +28,11 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 # information on enabling SSL in the smtp client.
 
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
-myhostname = {{ hostname }}.fap.no
+myhostname = {{ ansible_fqdn }}
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 myorigin = /etc/mailname
-mydestination = {{ hostname }}.fap.no, localhost.fap.no, localhost
+mydestination = {{ ansible_fqdn }}, localhost.fap.no, localhost
 relayhost = {{ mail_relayhost }}
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 mailbox_command = procmail -a "$EXTENSION"
