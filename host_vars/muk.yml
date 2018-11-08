@@ -1,6 +1,0 @@
----
-hostname: muk
-
-vmware: true
-
-docker_host: true

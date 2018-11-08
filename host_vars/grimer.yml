@@ -1,6 +1,0 @@
----
-hostname: grimer
-
-vmware: true
-
-docker_host: true

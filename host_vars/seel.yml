@@ -1,7 +1,0 @@
----
-hostname: seel
-
-vmware: true
-
-ssh_keys_additional_host_keys:
-  - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPRksviYkQFtSJ4Yu/s0SZ6NtL9kyDHiImkAnHNv7E9Q drone@drone"

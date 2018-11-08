@@ -1,6 +1,0 @@
----
-- name: Install and configure postgresql replica sets
-  hosts: db-postgresql
-  remote_user: root
-  roles:
-    - role: roles/postgresql

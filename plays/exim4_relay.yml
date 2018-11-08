@@ -1,7 +1,0 @@
----
-- name: configure exim4 relay
-  hosts: all
-  roles:
-    - role: roles/exim4
-      mail_relay_host: mail.ntnu.fap.no
-      when: inventory_hostname != 'pidgey'

@@ -1,3 +1,0 @@
----
-- name: restart ptunnel
-  service: name=ptunnel state=restarted

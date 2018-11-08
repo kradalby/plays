@@ -1,9 +1,0 @@
----
-- include: sshd_config.yml
-  when: not ssh_skip_sshd_config
-
-- include: ssh_config.yml
-  when: not ssh_skip_ssh_config
-
-- include: keys.yml
-  when: not ssh_skip_ssh_keys

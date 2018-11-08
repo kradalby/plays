@@ -1,3 +1,0 @@
----
-- name: interfaces.example
-  template: src=interfaces.j2 dest=/etc/network/interfaces owner=root group=root mode=644

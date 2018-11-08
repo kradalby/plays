@@ -2,22 +2,11 @@
 # fap.no
 ################################
 
-[tjodalyng]
-# snorlax
-
-
-[ova]
-# butterfree
-
-
 [ntnu]
-mankey
-slowpoke
-pidgey
 
 
 [terra]
-porygon
-primeape
-seel
+storage.terra.fap.no
+database.terra.fap.no
 
+node01.terra.fap.no

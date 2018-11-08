@@ -1,0 +1,10 @@
+################################
+# k8s
+################################
+
+# [masters]
+# node01.terra.fap.no
+# 
+[nodes]
+# node02.terra.fap.no
+node01.ntnu.fap.no

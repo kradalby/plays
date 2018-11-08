@@ -1,5 +1,0 @@
----
-- name: file /etc/postfix/main.cf
-  template: src=postfix/main.cf.j2 dest="{{ config_location }}/etc/postfix/main.cf" owner=root mode=644
-  notify: restart postfix
-

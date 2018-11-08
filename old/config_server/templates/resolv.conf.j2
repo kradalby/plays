@@ -1,5 +1,0 @@
-# {{ ansible_managed}}
-search {{ domain }}
-{% for server in nameservers %}
-nameserver {{ server }}
-{% endfor %}

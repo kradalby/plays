@@ -1,0 +1,14 @@
+---
+- name: Make sure Exim is absent
+  apt:
+    name: exim4
+    state: absent
+
+- name: Install Postfix
+  apt:
+    name: postfix
+    state: present
+
+- name: file /etc/postfix/main.cf
+  template: src=main.cf.j2 dest="/etc/postfix/main.cf" owner=root mode=644
+  notify: restart postfix

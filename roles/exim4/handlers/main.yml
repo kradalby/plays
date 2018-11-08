@@ -1,6 +1,0 @@
----
-- name: restart exim4 Debian
-  service: name=exim4 state=restarted
-
-- name: restart exim4 FreeBSD
-  service: name=exim state=restarted

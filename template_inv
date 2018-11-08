@@ -1,2 +1,0 @@
-[ntnu]
-template            ansible_ssh_host=m.fap.no               ansible_ssh_port=22254  ansible_ssh_user=root

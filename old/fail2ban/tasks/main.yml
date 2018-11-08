@@ -1,5 +1,0 @@
----
-- include: fail2ban.yml
-  when: ansible_os_family == "Debian"
-
-

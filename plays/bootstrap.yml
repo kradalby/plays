@@ -1,0 +1,8 @@
+---
+- name: Setup base configuration
+  hosts: all
+
+  roles:
+    - apticron
+    - postfix
+    - snmpd

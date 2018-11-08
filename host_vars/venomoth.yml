@@ -1,6 +1,0 @@
----
-hostname: venomoth
-
-vmware: true
-
-docker_host: true

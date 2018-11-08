@@ -1,5 +1,0 @@
----
-
-- name: install utilities
-  apt: pkg={{ item }} state=latest
-  with_items: base_packages

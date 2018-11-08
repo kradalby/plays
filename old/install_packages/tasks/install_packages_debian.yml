@@ -1,9 +1,0 @@
----
-
-- name: install utilities with apt
-  apt: pkg={{ item }} state=latest
-  with_items: apt_packages
-
-#- name: install utilities with pip
-#  pip: name={{ item }} state=latest
-#  with_items: pip_packages

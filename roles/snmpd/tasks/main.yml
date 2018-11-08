@@ -1,6 +1,10 @@
 ---
-- include: debian.yml
-  when: ansible_os_family == 'Debian'
+- name: install snmpd
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - snmpd
+  - snmp-mibs-downloader
 
-- include: freebsd.yml
-  when: ansible_os_family == 'FreeBSD'
+- name: configure snmpd
+  template: src=snmpd.conf.j2 dest=/etc/snmp/snmpd.conf
+  notify: restart snmpd

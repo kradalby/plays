@@ -1,8 +1,0 @@
----
-- name: restart ssh
-  service: name=ssh state=restarted
-  when: ansible_os_family == 'Debian'
-
-- name: restart ssh
-  service: name=sshd state=restarted
-  when: ansible_os_family == 'FreeBSD'
