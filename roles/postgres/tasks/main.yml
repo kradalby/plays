@@ -1,0 +1,20 @@
+---
+- name: PostgreSQL signing key
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: PostgreSQL repository
+  apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
+    state: present
+    filename: postgres
+
+- name: Install PostgreSQL
+  apt:
+   update_cache: yes
+   name: "{{ packages }}"
+   state: latest
+   vars:
+     - postgresql-10
+     - postgresql-client-10
