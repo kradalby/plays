@@ -1,0 +1,7 @@
+---
+- name: Init kubernetes master
+  hosts: all 
+  roles:
+    - role: roles/kubernetes-master
+      
+# kubeadm token create --print-join-command

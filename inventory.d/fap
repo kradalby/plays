@@ -8,5 +8,9 @@
 [terra]
 storage.terra.fap.no
 database.terra.fap.no
+mail.terra.fap.no # skip_postfix=true
 
 node01.terra.fap.no
+node02.terra.fap.no
+node03.terra.fap.no
+node04.terra.fap.no

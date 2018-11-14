@@ -4,5 +4,5 @@
 
   roles:
     - apticron
-    - postfix
+    - { role: postfix, when: skip_postfix is not defined }
     - snmpd

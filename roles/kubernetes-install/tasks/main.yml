@@ -9,6 +9,7 @@
     - "apt-transport-https"
     - "ca-certificates"
     - "software-properties-common"
+
 - name: add Kubernetes apt-key
   apt_key:
      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg

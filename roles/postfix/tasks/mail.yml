@@ -8,3 +8,6 @@
 - name: run newalias
   shell: newaliases
 
+- name: set mailname
+  template: src=mailname.j2 dest="/etc/mailname" owner=root mode=644
+  notify: restart postfix
