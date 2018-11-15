@@ -25,3 +25,9 @@
     update_cache: yes
     state: present
   notify: start docker
+
+- name: hold docker
+  dpkg_selections:
+    name: docker-ce
+    selection: hold
+

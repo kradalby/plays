@@ -1,6 +1,6 @@
 ---
 - name: Turn off swap
-  shell: swapoff /swapfile
+  shell: swapoff -a 
 
 - name: Remove swap from fstab
   lineinfile:

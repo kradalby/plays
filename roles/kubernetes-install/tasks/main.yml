@@ -26,14 +26,47 @@
      state: present
      update_cache: true
 
+- name: hold kubelet
+  dpkg_selections:
+    name: kubelet
+    selection: hold
+
 - name: install kubectl
   apt:
      name: kubectl
      state: present
      update_cache: true
 
+- name: hold kubectl
+  dpkg_selections:
+    name: kubectl
+    selection: hold
+
 - name: install kubeadm
   apt:
      name: kubeadm
      state: present
      update_cache: true
+
+- name: hold kubeadm
+  dpkg_selections:
+    name: kubeadm
+    selection: hold
+
+- name: enable ipvs modules
+  modprobe:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ip_vs
+    - ip_vs_rr
+    - ip_vs_wrr
+    - ip_vs_sh
+    - nf_conntrack_ipv4
+
+- name: set net.bridge.bridge-nf-call-iptables
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: 1
+    state: present
+    reload: yes
