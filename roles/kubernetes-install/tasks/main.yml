@@ -2,13 +2,14 @@
 - name: 'Install kubernetes and role dependencies'
   become: yes
   apt:
-    name: "{{item}}"
+    name: "{{ packages }}"
     state: present
     install_recommends: false
-  with_items:
-    - "apt-transport-https"
-    - "ca-certificates"
-    - "software-properties-common"
+  vars:
+    packages:
+      - "apt-transport-https"
+      - "ca-certificates"
+      - "software-properties-common"
 
 - name: add Kubernetes apt-key
   apt_key:
@@ -68,5 +69,49 @@
   sysctl:
     name: net.bridge.bridge-nf-call-iptables
     value: 1
+    state: present
+    reload: yes
+
+# https://github.com/kubernetes/kubernetes/issues/56903#issuecomment-427890769
+# https://blog.openai.com/scaling-kubernetes-to-2500-nodes/
+- name: set net.ipv6.conf.all.disable_ipv6
+  sysctl:
+    name: net.ipv6.conf.all.disable_ipv6
+    value: 1
+    state: present
+    reload: yes
+
+- name: set net.ipv6.conf.default.disable_ipv6
+  sysctl:
+    name: net.ipv6.conf.default.disable_ipv6
+    value: 1
+    state: present
+    reload: yes
+
+- name: set net.ipv6.conf.lo.disable_ipv6
+  sysctl:
+    name: net.ipv6.conf.lo.disable_ipv6
+    value: 1
+    state: present
+    reload: yes
+
+- name: set net.ipv4.neigh.default.gc_thresh1
+  sysctl:
+    name: net.ipv4.neigh.default.gc_thresh1
+    value: 80000
+    state: present
+    reload: yes
+
+- name: set net.ipv4.neigh.default.gc_thresh2
+  sysctl:
+    name: net.ipv4.neigh.default.gc_thresh2
+    value: 90000
+    state: present
+    reload: yes
+
+- name: set net.ipv4.neigh.default.gc_thresh3
+  sysctl:
+    name: net.ipv4.neigh.default.gc_thresh3
+    value: 100000
     state: present
     reload: yes

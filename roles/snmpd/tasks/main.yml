@@ -1,9 +1,12 @@
 ---
 - name: install snmpd
-  apt: pkg={{ item }} state=latest
-  with_items:
-  - snmpd
-  - snmp-mibs-downloader
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+    - snmpd
+    - snmp-mibs-downloader
 
 - name: configure snmpd
   template: src=snmpd.conf.j2 dest=/etc/snmp/snmpd.conf

@@ -2,14 +2,15 @@
 - name: 'Install docker and role dependencies'
   become: yes
   apt:
-    name: "{{item}}"
+    name: "{{ packages }}"
     state: present
     install_recommends: false
-  with_items:
-    - "apt-transport-https"
-    - "ca-certificates"
-    - "software-properties-common"
-    - "curl"
+  vars:
+    packages:
+      - "apt-transport-https"
+      - "ca-certificates"
+      - "software-properties-common"
+      - "curl"
 
 - name: Add docker repository key
   apt_key:
