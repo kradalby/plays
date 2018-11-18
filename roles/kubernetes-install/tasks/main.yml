@@ -88,6 +88,13 @@
     state: present
     reload: yes
 
+- name: set net.ipv6.conf.ens192.disable_ipv6
+  sysctl:
+    name: net.ipv6.conf.ens192.disable_ipv6
+    value: 1
+    state: present
+    reload: yes
+
 - name: set net.ipv6.conf.lo.disable_ipv6
   sysctl:
     name: net.ipv6.conf.lo.disable_ipv6
