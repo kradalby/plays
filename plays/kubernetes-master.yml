@@ -1,6 +1,6 @@
 ---
 - name: Init kubernetes master
-  hosts: all 
+  hosts: kubernetes
   roles:
     - role: roles/kubernetes-master
       

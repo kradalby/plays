@@ -1,0 +1,9 @@
+---
+# https://docs.syncthing.net/users/faq.html#how-do-i-increase-the-inotify-limit-to-get-my-filesystem-watcher-to-work
+- name: set fs.inotify.max_user_watches
+  sysctl:
+    name: fs.inotify.max_user_watches
+    value: 204800
+    state: present
+    reload: yes
+

@@ -1,6 +1,6 @@
 ---
 - name: Configure install kubernetes
-  hosts: all
+  hosts: kubernetes
   roles:
     - role: roles/docker
     - role: roles/swap-off
