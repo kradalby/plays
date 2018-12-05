@@ -2,5 +2,28 @@
 - name: install prometheus node exporter
   apt:
     name: prometheus-node-exporter
-     state: present
-     update_cache: true
+    state: present
+    update_cache: true
+
+
+- name: get prometheus node exporter
+  unarchive:
+    src: https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz
+    dest: /tmp/node_exporter
+    remote_src: yes
+
+- name: replace prometheus node exporter binary
+  copy:
+    src: /tmp/node_exporter/node_exporter
+    dest: /usr/bin/prometheus-node-exporter
+    mode: 0744
+    remote_src: yes
+    notify: restart node_exporter
+
+
+- name: clean up node_exporter folder
+  file:
+    path: /tmp/node_exporter
+    state: absent
+
+
