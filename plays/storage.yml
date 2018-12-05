@@ -1,0 +1,5 @@
+---
+- name: Prepare storage 
+  hosts: storage
+  roles:
+    - role: roles/max-user-watches

@@ -5,11 +5,16 @@
 [ntnu]
 
 
-[terra]
+[storage]
 storage.terra.fap.no
+
+[database]
 database.terra.fap.no
+
+[mail]
 mail.terra.fap.no skip_postfix=true
 
+[kubernetes]
 node01.terra.fap.no
 node02.terra.fap.no
 node03.terra.fap.no
