@@ -15,6 +15,9 @@ database.terra.fap.no
 [mail]
 mail.terra.fap.no skip_postfix=true
 
+[unifi]
+unifi.tjoda.fap.no
+
 [kubernetes]
 node01.terra.fap.no
 node02.terra.fap.no

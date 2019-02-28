@@ -1,0 +1,5 @@
+---
+- name: Install Unifi
+  hosts: unifi
+  roles:
+    - role: roles/unifi

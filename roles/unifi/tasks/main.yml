@@ -1,0 +1,37 @@
+---
+- name: 'Install role dependencies'
+  apt:
+    name: "{{ packages }}"
+    state: present
+    install_recommends: false
+  vars:
+    packages:
+      - "apt-transport-https"
+      - "ca-certificates"
+
+
+- name: Add mongo repository key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 0C49F3730359A14518585931BC711F9BA15703C6
+    state: present
+
+- name: Add mongo repository
+  apt_repository: repo='deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4' state=present
+
+
+- name: Add unifi repository key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 06E85760C0A52C50
+    state: present
+
+- name: Add unifi repository
+  apt_repository: repo='deb http://www.ui.com/downloads/unifi/debian stable ubiquiti' state=present
+
+- name: Install unifi
+  apt:
+    name: "unifi"
+    update_cache: yes
+    state: present
+
