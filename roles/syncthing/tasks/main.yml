@@ -1,0 +1,30 @@
+---
+- name: 'Install role dependencies'
+  apt:
+    name: "{{ packages }}"
+    state: present
+    install_recommends: false
+  vars:
+    packages:
+      - "apt-transport-https"
+      - "ca-certificates"
+
+- name: Syncthing signing key
+  apt_key:
+    url: https://syncthing.net/release-key.txt
+    state: present
+
+- name: Syncthing repository
+  apt_repository:
+    repo: deb https://apt.syncthing.net/ syncthing stable
+    state: present
+    filename: syncthing
+
+- name: Install Syncthing
+  apt:
+   update_cache: yes
+   name: "{{ packages }}"
+   state: latest
+  vars:
+   packages:
+     - syncthing

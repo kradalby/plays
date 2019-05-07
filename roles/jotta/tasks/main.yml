@@ -1,0 +1,30 @@
+---
+- name: 'Install role dependencies'
+  apt:
+    name: "{{ packages }}"
+    state: present
+    install_recommends: false
+  vars:
+    packages:
+      - "apt-transport-https"
+      - "ca-certificates"
+
+- name: JottaCloud signing key
+  apt_key:
+    url: https://repo.jotta.us/public.gpg
+    state: present
+
+- name: JottaCloud repository
+  apt_repository:
+    repo: deb https://repo.jotta.us/debian debian main
+    state: present
+    filename: jottacloud
+
+- name: Install JottaCloud
+  apt:
+   update_cache: yes
+   name: "{{ packages }}"
+   state: latest
+  vars:
+   packages:
+     - jotta-cli

@@ -1,0 +1,24 @@
+---
+- name: 'Install role dependencies'
+  apt:
+    name: "{{ packages }}"
+    state: present
+    install_recommends: false
+  vars:
+    packages:
+      - "apt-transport-https"
+      - "ca-certificates"
+
+- name: WireGuard repository
+  apt_repository:
+    repo: ppa:wireguard/wireguard
+    state: present
+
+- name: Install WireGuard
+  apt:
+   update_cache: yes
+   name: "{{ packages }}"
+   state: latest
+  vars:
+   packages:
+     - wireguard

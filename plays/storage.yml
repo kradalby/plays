@@ -1,5 +1,7 @@
 ---
-- name: Prepare storage 
+- name: Prepare storage
   hosts: storage
   roles:
     - role: roles/max-user-watches
+    - role: roles/syncthing
+    - role: roles/jotta
