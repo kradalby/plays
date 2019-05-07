@@ -8,6 +8,8 @@
 [storage]
 storage.terra.fap.no
 storage.tjoda.fap.no
+storage.leiden.fap.no
+storage.atle.fap.no
 
 [database]
 database.terra.fap.no
