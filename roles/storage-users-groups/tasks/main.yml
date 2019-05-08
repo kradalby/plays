@@ -1,0 +1,30 @@
+---
+- name: Add storage group
+  group:
+    name: storage
+    gid: 1000
+    state: present
+
+- name: Add storage user
+  user:
+    name: storage
+    comment: Storage user, owner of /storage
+    uid: 1000
+    group: 1000
+    home: /storage
+    state: present
+
+- name: Add syncthing user
+  user:
+    name: syncthing
+    comment: Syncthing user, responsible for syncing
+    uid: 1001
+    group: 1000
+    home: /storage
+    state: present
+
+- name: Add jotta user to storage group
+  user:
+    name: jottad 
+    groups: storage
+    append: true

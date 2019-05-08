@@ -5,3 +5,4 @@
     - role: roles/max-user-watches
     - role: roles/syncthing
     - role: roles/jotta
+    - role: roles/storage-users-groups
