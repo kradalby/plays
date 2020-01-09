@@ -8,8 +8,8 @@
 [storage]
 storage.terra.fap.no
 storage.tjoda.fap.no
-storage.leiden.fap.no
-storage.atle.fap.no
+# storage.leiden.fap.no
+# storage.atle.fap.no
 
 [database]
 database.terra.fap.no
@@ -20,8 +20,12 @@ mail.terra.fap.no skip_postfix=true
 [unifi]
 unifi.tjoda.fap.no
 
-[kubernetes]
-node01.terra.fap.no
-node02.terra.fap.no
-node03.terra.fap.no
-node04.terra.fap.no
+[docker]
+rpi.ldn.fap.no
+storage.terra.fap.no
+
+
+[prod_terra_kubernetes]
+node01.terra.fap.no master=true skip_traefik=true skip_servicelb=true skip_node_exporter=true
+node[02:03].terra.fap.no agent=true skip_node_exporter=true
+# node04.terra.fap.no

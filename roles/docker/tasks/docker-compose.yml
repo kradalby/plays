@@ -1,6 +1,6 @@
 ---
 - name: Install docker-compose
   get_url:
-    url: https://github.com/docker/compose/releases/download/1.22.0/run.sh
+    url: https://github.com/docker/compose/releases/latest/download/run.sh 
     dest: /usr/local/bin/docker-compose
     mode: 0555

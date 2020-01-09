@@ -6,4 +6,4 @@
     - apticron
     - { role: postfix, when: skip_postfix is not defined }
     - snmpd
-    - prometheus-node-exporter 
+    - { role: prometheus-node-exporter, when: skip_node_exporter is not defined }

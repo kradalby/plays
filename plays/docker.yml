@@ -1,6 +1,6 @@
 ---
 - name: Configure docker
-  hosts: kubernetes 
+  hosts: docker
   roles:
     - role: roles/docker
 

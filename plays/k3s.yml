@@ -1,0 +1,6 @@
+---
+- name: Install a k3s cluster
+  hosts: prod_terra_kubernetes
+  roles:
+    - role: roles/k3s
+
