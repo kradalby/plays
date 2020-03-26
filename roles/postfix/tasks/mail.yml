@@ -5,9 +5,9 @@
 - name: add mail alias to kradalby
   action: lineinfile dest=/etc/aliases regexp="^kradalby:" line="kradalby:kradalby@kradalby.no" state=present
 
-- name: run newalias
-  shell: newaliases
-
 - name: set mailname
   template: src=mailname.j2 dest="/etc/mailname" owner=root mode=644
+
+- name: run newalias
+  shell: newaliases
   notify: restart postfix
