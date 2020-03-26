@@ -28,4 +28,7 @@ storage.terra.fap.no
 [prod_terra_kubernetes]
 node01.terra.fap.no master=true skip_traefik=true skip_servicelb=true skip_node_exporter=true
 node[02:03].terra.fap.no agent=true skip_node_exporter=true
-# node04.terra.fap.no
+
+[prod_ntnu_kubernetes]
+node01.ntnu.fap.no master=true skip_traefik=true skip_servicelb=true
+node[02:03].ntnu.fap.no agent=true skip_node_exporter=true
