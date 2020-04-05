@@ -1,0 +1,51 @@
+---
+- debug:
+    msg: "time_machine: {{ time_machine|bool }}, samba_share: {{ storage_share|bool }}"
+
+- name: Install Samba
+  apt:
+    name: samba
+    state: latest
+
+- name: Install Avahi
+  apt:
+    name: avahi-daemon
+    state: latest
+  when: time_machine|bool
+
+- name: Add Time Machine user
+  user:
+    name: timemachine
+    comment: Time Machine user, owner of /storage/timemachine
+    uid: 1080
+    group: 1000
+    home: /storage/timemachine
+    state: present
+    shell: /usr/sbin/nologin
+  when: time_machine|bool
+
+- name: Create timemachine directory
+  file:
+    path: /storage/timemachine
+    state: directory
+    mode: "0775"
+    owner: timemachine
+    group: storage
+  when: time_machine|bool
+
+- name: Configure Samba
+  template:
+    src: smb.conf
+    dest: /etc/samba/smb.conf
+    owner: root
+    mode: 644
+  notify: Restart Samba
+
+- name: Configure Avahi
+  template:
+    src: avahi/samba.service
+    dest: /etc/avahi/services/samba.service
+    owner: root
+    mode: 644
+  notify: Restart Avahi
+  when: time_machine|bool

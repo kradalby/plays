@@ -3,6 +3,7 @@
   hosts: storage
   roles:
     - role: roles/max-user-watches
+    - role: roles/storage-users-groups
     - role: roles/syncthing
     - role: roles/jotta
-    - role: roles/storage-users-groups
+    - role: roles/samba

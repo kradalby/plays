@@ -28,3 +28,14 @@
     name: jottad 
     groups: storage
     append: true
+
+- name: Add dalby user
+  user:
+    name: dalby
+    comment: Dalby family user 
+    uid: 1090
+    group: 1000
+    home: /storage
+    state: present
+    shell: /usr/sbin/nologin
+

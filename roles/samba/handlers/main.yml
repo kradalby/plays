@@ -1,0 +1,11 @@
+---
+- name: Restart Avahi
+  service: name=avahi-daemon state=restarted
+
+- name: Restart Samba
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - nmbd
+    - smbd
