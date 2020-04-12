@@ -1,0 +1,8 @@
+---
+- name: Clone dotfiles
+  git:
+    repo: https://github.com/kradalby/dotfiles.git
+    dest: ~/git/dotfiles
+
+- name: Install dotfiles
+  script: ~/git/dotfiles/deploy.sh
