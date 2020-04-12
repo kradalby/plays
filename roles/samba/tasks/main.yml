@@ -49,3 +49,20 @@
     mode: 644
   notify: Restart Avahi
   when: time_machine|bool
+
+- name: Add Time Machine client users
+  user:
+    name: "{{ item }}"
+    comment: "Time Machine {{ item }} user, owner of /storage/timemachine"
+    uid: "{{ 2500 + index }}"
+    group: 1000
+    home: "/storage/timemachine/{{ item }}"
+    state: present
+    shell: /usr/sbin/nologin
+  loop:
+    - kristine
+    - imma
+    - kradalby
+  loop_control:
+    index_var: index
+  when: time_machine|bool
