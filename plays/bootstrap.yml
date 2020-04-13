@@ -13,6 +13,9 @@
         update_cache: true
         pkg:
           - mosh
+          - tmux
+          - socat
+          - tcpdump
         state: latest
 
   roles:
