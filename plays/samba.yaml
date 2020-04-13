@@ -2,6 +2,7 @@
 - name: Install Samba
   hosts: all
   roles:
+    - role: roles/avahi
     - role: roles/samba
       vars:
         time_machine: False

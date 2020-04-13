@@ -9,7 +9,8 @@
  <service>
    <type>_device-info._tcp</type>
    <port>0</port>
-   <txt-record>model=TimeCapsule8,119</txt-record>
+       <!--<txt-record>model=TimeCapsule8,119</txt-record>-->
+   <txt-record>model=RackMac</txt-record>
  </service>
  <service>
    <type>_adisk._tcp</type>

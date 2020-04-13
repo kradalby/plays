@@ -6,4 +6,5 @@
     - role: roles/storage-users-groups
     - role: roles/syncthing
     - role: roles/jotta
+    - role: roles/avahi
     - role: roles/samba

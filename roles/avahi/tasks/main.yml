@@ -1,0 +1,13 @@
+---
+- name: Install Avahi
+  apt:
+    name: avahi-daemon
+    state: latest
+
+- name: Configure Avahi
+  template:
+    src: avahi/avahi-daemon.conf
+    dest: /etc/avahi/avahi-daemon.conf
+    owner: root
+    mode: 644
+  notify: Restart Avahi
