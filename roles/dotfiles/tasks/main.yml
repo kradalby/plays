@@ -3,6 +3,8 @@
   git:
     repo: https://github.com/kradalby/dotfiles.git
     dest: ~/git/dotfiles
+  register: dotfiles
 
 - name: Install dotfiles
   script: ~/git/dotfiles/deploy.sh
+  when: dotfiles.changed
