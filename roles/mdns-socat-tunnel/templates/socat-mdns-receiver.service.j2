@@ -1,0 +1,14 @@
+[Unit]
+Description=socat mDNS receiver service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/usr/local/bin/socat_mdns_receiver.sh
+
+[Install]
+WantedBy=multi-user.target

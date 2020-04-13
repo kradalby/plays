@@ -1,0 +1,46 @@
+---
+- name: Install socat
+  apt:
+    name: socat
+    state: latest
+
+- name: Install receiver
+  template:
+    src: socat_mdns_receiver.sh
+    dest: /usr/local/bin/socat_mdns_receiver.sh
+    owner: root
+    mode: 655
+    # notify: Restart Receiver
+
+- name: Install sender
+  template:
+    src: socat_mdns_sender.sh
+    dest: /usr/local/bin/socat_mdns_sender.sh
+    owner: root
+    mode: 655
+    # notify: Restart Sender
+
+- name: SystemD receiver unit
+  template: src=socat-mdns-receiver.service.j2 dest=/lib/systemd/system/socat-mdns-receiver.service mode=644
+  register: systemd_receiver
+
+- name: SystemD sender unit
+  template: src=socat-mdns-sender.service.j2 dest=/lib/systemd/system/socat-mdns-sender.service mode=644
+  register: systemd_sender
+
+- name: SystemD daemon reload
+  systemd:
+    daemon_reload: yes
+  when: systemd_receiver.changed or systemd_sender.changed
+
+- name: Enable receiver service
+  systemd:
+    name: socat-mdns-receiver
+    state: restarted
+    enabled: yes
+
+- name: Enable sender service
+  systemd:
+    name: socat-mdns-sender
+    state: restarted
+    enabled: yes

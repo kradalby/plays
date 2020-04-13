@@ -32,3 +32,9 @@ node[02:03].terra.fap.no agent=true skip_node_exporter=true
 [prod_ntnu_kubernetes]
 node01.ntnu.fap.no master=true skip_traefik=true skip_servicelb=true
 node[02:03].ntnu.fap.no agent=true
+
+
+[socat_mdns]
+storage.terra.fap.no
+storage.tjoda.fap.no
+rpi.ldn.fap.no
