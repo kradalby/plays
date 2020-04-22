@@ -4,4 +4,7 @@
 
   tasks:
     - name: upgrade debian
-      apt: upgrade=yes update_cache=yes
+      apt: 
+        upgrade: yes 
+        update_cache: yes
+        autoremove: yes

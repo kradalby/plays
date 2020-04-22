@@ -39,3 +39,11 @@ mdns-socat.terra.fap.no
 mdns-socat.ntnu.fap.no
 mdns-socat.tjoda.fap.no
 rpi.ldn.fap.no
+
+[legacyservers]
+node[01:03].ntnu.fap.no
+mdns-socat.terra.fap.no
+mdns-socat.ntnu.fap.no
+mdns-socat.tjoda.fap.no
+storage.terra.fap.no
+storage.tjoda.fap.no

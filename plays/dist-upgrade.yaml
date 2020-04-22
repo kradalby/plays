@@ -1,0 +1,65 @@
+---
+- hosts: legacyservers
+  gather_facts: yes
+
+  tasks:
+    # Use a block to perform tasks conditionally—only if running Ubuntu 18.04.
+    - block:
+        - debug:
+            msg: "This server is running Ubuntu 18.04 LTS and will be upgraded to 20.04 LTS."
+
+        # Now would be a good time to take a backup if you can trigger an
+        # automated backup!
+
+        - name: Remove the EOL message of the day if one exists.
+          file:
+            path: "{{ item }}"
+            state: absent
+          with_items:
+            - /etc/update-motd.d/99-esm
+            - /run/motd.dynamic
+
+        - name: Upgrade all packages to the latest version
+          apt:
+            update_cache: yes
+            upgrade: full
+
+        - name: Ensure update-manager-core is installed.
+          apt:
+            name: update-manager-core
+            state: present
+
+        - name: Add dpkg conf to resolve new config files
+          lineinfile:
+            path: /etc/apt/apt.conf.d/000-local-do-release-upgrade
+            line: 'DPkg::options { "--force-confdef"; "--force-confnew"; }'
+            create: yes
+            mode: 0644
+
+        - name: Remove deprecated UsePrivilegeSeparation from SSH
+          lineinfile:
+            dest: /etc/ssh/sshd_config
+            regexp: "^UsePrivilegeSeparation .+"
+            state: absent
+
+        - name: Run do-release-upgrade non-interactively.
+          command: do-release-upgrade -d -f DistUpgradeViewNonInteractive
+
+        - name: Reboot
+          reboot:
+            reboot_timeout: 3600
+
+        - name: cleanup dpkg options
+          file:
+            path: /etc/apt/apt.conf.d/000-local-do-release-upgrade
+            state: absent
+
+        - name: Autoremove unused packages
+          apt:
+            update_cache: yes
+            autoremove: yes
+
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
+# After the playbook is finished, it's a good idea to confirm all the servers
+# are actually upgraded. Run something like:
+#     ansible [group] -a "lsb_release -a"

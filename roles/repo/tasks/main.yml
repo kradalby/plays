@@ -1,0 +1,9 @@
+---
+- name: Configure Ubuntu mirrors
+  template:
+    src: sources.list.j2
+    dest: /etc/apt/sources.list
+
+- name: Verify repositories
+  apt:
+    update_cache: yes

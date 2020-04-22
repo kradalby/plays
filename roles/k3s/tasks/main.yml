@@ -14,9 +14,8 @@
     reload: yes
 
 - name: Install k3s on master
-  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server {% if skip_traefik %}--no-deploy traefik{% endif %} {% if skip_servicelb %}--no-deploy servicelb{% endif %}" sh -s -
+  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server {% if skip_traefik %}--disable traefik{% endif %} {% if skip_servicelb %}--disable servicelb{% endif %} --disable local-storage" sh -s -
   when: inventory_hostname in groups[group_names[0]][0]
-
 
 - name: Wait for node-token
   wait_for:
@@ -44,7 +43,7 @@
 
 - name: Store Master node-token
   set_fact:
-   token: "{{ node_token.content | b64decode | regex_replace('\n', '') }}"
+    token: "{{ node_token.content | b64decode | regex_replace('\n', '') }}"
   when: inventory_hostname in groups[group_names[0]][0]
 
 - name: Restore node-token file access

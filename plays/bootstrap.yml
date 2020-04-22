@@ -19,6 +19,7 @@
         state: latest
 
   roles:
+    - repo
     - dotfiles
     - apticron
     - { role: postfix, when: skip_postfix is not defined }
