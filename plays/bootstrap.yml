@@ -3,6 +3,21 @@
   hosts: all
 
   pre_tasks:
+    - name: Fix Ubuntu 20.04 vCenter - check for issue.original
+      stat:
+        path: /etc/issue.original
+      register: issue
+
+    - name: Fix Ubuntu 20.04 vCenter - restore original
+      command: mv /etc/issue.original /etc/issue
+      when: issue.stat.exists
+
+    - name: Fix Ubuntu 20.04 vCenter - ensure backup is gone
+      file:
+        path: /etc/issue.original
+        state: absent
+
+
     - name: Upgrade packages
       apt:
         upgrade: true
@@ -19,7 +34,7 @@
         state: latest
 
   roles:
-    - repo
+    - { role: repo, when: skip_repo is not defined }
     - dotfiles
     - apticron
     - { role: postfix, when: skip_postfix is not defined }

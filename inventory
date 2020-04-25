@@ -21,9 +21,8 @@ mail.terra.fap.no skip_postfix=true
 unifi.tjoda.fap.no
 
 [docker]
-rpi.ldn.fap.no
+rpi.ldn.fap.no skip_repo=true
 storage.terra.fap.no
-
 
 [prod_terra_kubernetes]
 node01.terra.fap.no master=true skip_traefik=true skip_servicelb=true skip_node_exporter=true
@@ -33,17 +32,8 @@ node[02:03].terra.fap.no agent=true skip_node_exporter=true
 node01.ntnu.fap.no master=true skip_traefik=true skip_servicelb=true
 node[02:03].ntnu.fap.no agent=true
 
-
 [socat_mdns]
 mdns-socat.terra.fap.no
 mdns-socat.ntnu.fap.no
 mdns-socat.tjoda.fap.no
-rpi.ldn.fap.no
-
-[legacyservers]
-node[01:03].ntnu.fap.no
-mdns-socat.terra.fap.no
-mdns-socat.ntnu.fap.no
-mdns-socat.tjoda.fap.no
-storage.terra.fap.no
-storage.tjoda.fap.no
+# rpi.ldn.fap.no
