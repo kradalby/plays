@@ -24,6 +24,9 @@ unifi.tjoda.fap.no
 rpi.ldn.fap.no skip_repo=true
 storage.terra.fap.no
 
+[packer]
+packer-builder.ntnu.fap.no
+
 [prod_terra_kubernetes]
 node01.terra.fap.no master=true skip_traefik=true skip_servicelb=true skip_node_exporter=true
 node[02:03].terra.fap.no agent=true skip_node_exporter=true

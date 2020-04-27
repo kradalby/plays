@@ -1,0 +1,10 @@
+---
+- name: Set up Packer builder
+  hosts: packer
+  roles:
+    - role: roles/rdp-server
+    - role: roles/vmware-player
+    - role: roles/packer
+    - role: roles/drone-runner-exec
+
+

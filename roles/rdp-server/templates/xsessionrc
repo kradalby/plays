@@ -1,0 +1,3 @@
+export XDG_SESSION_DESKTOP=mate
+export XDG_DATA_DIRS=/usr/share/mate:/usr/share/mate:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+export XDG_CONFIG_DIRS=/etc/xdg/xdg-mate:/etc/xdg

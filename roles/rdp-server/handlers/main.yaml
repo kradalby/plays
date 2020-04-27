@@ -1,0 +1,5 @@
+---
+- name: Restart xrdp
+  service:
+    name: xrdp
+    state: restarted

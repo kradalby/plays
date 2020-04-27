@@ -1,0 +1,6 @@
+DRONE_RPC_PROTO=https
+DRONE_RPC_HOST=drone.fap.no
+DRONE_RPC_SECRET={{ secret }}
+DRONE_LOG_FILE=/var/log/drone-runner-exec/log.txt
+DRONE_RUNNER_LABELS=vmware:true,packer:true
+DRONE_RUNNER_CAPACITY=1

@@ -1,0 +1,58 @@
+---
+- name: rdp-server | Ensure xrdp and desktop env
+  apt:
+    state: latest
+    update_cache: yes
+    pkg:
+      # - lightdm
+      # - ubuntu-mate-desktop
+      # - xfce4
+      - lxde
+      - xrdp
+
+# - name: rdp-server | Ensure user xfce to xsession
+#   lineinfile:
+#     path: /home/ola/.xsession
+#     line: 'xfce4-session'
+#     create: yes
+#     mode: 0644
+#     owner: ola
+#     group: ola
+
+# - name: rdp-server | Unsure user has xsessionrc
+#   template:
+#     src: xsessionrc
+#     dest: /home/ola/.xsessionrc
+#     mode: 0644
+#     owner: ola
+#     group: ola
+
+# - name: rdp-server | Ensure global xfce to xsession
+#   lineinfile:
+#     path: /etc/skel/.xsession
+#     line: 'mate-session'
+#     create: yes
+#     mode: 0644
+
+# - name: rdp-server | Add xrdp configuration
+#   template:
+#     src: xrdp.ini
+#     dest: /etc/xrdp/xrdp.ini
+#   notify: Restart xrdp
+
+- name: rdp-server | Modify startwm.sh script
+  template:
+    src: startwm.sh
+    dest: /etc/xrdp/startwm.sh
+  notify: Restart xrdp
+
+- name: rdp-server | Ensure xrdp in ssl-cert group
+  user:
+    name: xrdp
+    groups:
+      - ssl-cert
+
+- name: rdp-server | setup password for default user
+  user:
+    name: ola
+    password_lock: no

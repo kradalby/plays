@@ -1,0 +1,5 @@
+---
+- name: Restart drone
+  service:
+    name: drone-runner-exec
+    state: restarted

@@ -1,0 +1,48 @@
+---
+- name: vmworkstation | Ensure dependencies
+  apt:
+    pkg:
+      - libaio1
+      # Ansible expect module dependency
+      - python3-pexpect
+    state: latest
+
+- name: vmworkstation | Check if vmrun binary is already present
+  stat:
+    path: '/usr/bin/vmrun'
+  register: vmrun_binary
+
+- block:
+    - name: vmworkstation | Download vmware_workstation
+      get_url:
+        url: 'https://download3.vmware.com/software/wkst/file/VMware-Workstation-Full-15.5.2-15785246.x86_64.bundle'
+        dest: '/tmp/vmware-workstation.bundle'
+        force: no
+
+    - name: vmworkstation | Make bundle executable
+      file:
+        path: '/tmp/vmware-workstation.bundle'
+        mode: a+x
+
+    - name: vmworkstation | Install
+      # VMware complained about the CPU not supporting VT-x, say yes to install
+      # anyways
+      expect:
+        command: '/tmp/vmware-workstation.bundle --console --required --eulas-agreed'
+        timeout: 3600
+        responses:
+          (.*)Do you still want to install this product?(.*): 'yes'
+
+    - name: vmworkstation | Enter License
+      # License from here: https://gist.github.com/gopalindians/94c2c8617028cfe7a5788f760e036fd2
+      # Tool info from here: https://everythingshouldbevirtual.com/virtualization/VMware-Workstation-Enter-Serial-Number-Linux-CLI/
+      command: '/usr/lib/vmware/bin/licenseTool enter FU512-2DG1H-M85QZ-U7Z5T-PY8ZD "" "" 15.0+ "VMware Workstation" /usr/lib/vmware'
+
+    - name: vmworkstation | Allow old CPUs
+      # https://vinfrastructure.it/2018/07/vmware-workstation-pro-14-issues-with-old-cpu/
+      lineinfile:
+        path: /etc/vmware/config
+        line: 'monitor.allowLegacyCPU = "true"'
+        state: present
+
+  when: not vmrun_binary.stat.exists
