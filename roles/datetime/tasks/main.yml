@@ -1,0 +1,9 @@
+---
+- name: datetime | Set timezone to UTC
+  timezone:
+    name: UTC
+
+- name: datetime | Ensure chrony
+  apt:
+    package: chrony
+    state: latest

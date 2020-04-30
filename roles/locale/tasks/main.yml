@@ -1,0 +1,10 @@
+---
+- name: locale | Ensure en_US.UTF-8
+  locale_gen:
+    name: en_US.UTF-8
+    state: present
+  register: local_gen
+
+- name: locale | set default locale
+  command: "localectl set-locale LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8"
+  # when: local_gen.changed
