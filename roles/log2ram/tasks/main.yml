@@ -1,0 +1,23 @@
+---
+- name: log2ram | Add repo gpg key
+  apt_key:
+    url: https://azlux.fr/repo.gpg.key
+    state: present
+
+- name: log2ram | Add repo
+  apt_repository:
+    repo: deb http://packages.azlux.fr/debian/ buster main
+    state: present
+    filename: log2ram
+
+- name: log2ram | Install log2ram
+  apt:
+    update_cache: yes
+    state: latest
+    pkg: log2ram
+  register: log2ram
+
+- name: log2ram | Reboot
+  reboot:
+    reboot_timeout: 3600
+  when: log2ram.changed

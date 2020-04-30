@@ -40,3 +40,6 @@ mdns-socat.terra.fap.no
 mdns-socat.ntnu.fap.no
 mdns-socat.tjoda.fap.no
 # rpi.ldn.fap.no
+
+[rpi]
+rpi.ldn.fap.no

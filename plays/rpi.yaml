@@ -1,0 +1,7 @@
+---
+- name: Configure Raspberry Pi
+  hosts: rpi
+  roles:
+    - role: roles/log2ram
+    - role: roles/tmpfs_mounts
+    - role: roles/swap-off

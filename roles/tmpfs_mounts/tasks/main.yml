@@ -1,0 +1,16 @@
+---
+- name: tmpfs_mount | /tmp as tmpfs
+  mount:
+    path: /tmp
+    src: tmpfs
+    fstype: tmpfs
+    opts: defaults,noatime,nosuid,nodev,noexec,mode=0755,size=50M 0 0
+    state: present
+
+- name: tmpfs_mount | /var/tmp as tmpfs
+  mount:
+    path: /var/tmp
+    src: tmpfs
+    fstype: tmpfs
+    opts: defaults,noatime,nosuid,nodev,noexec,mode=0755,size=50M 0 0
+    state: present
