@@ -1,0 +1,28 @@
+---
+- name: Desktop | Hide icons for external hard drives on the desktop
+  osx_defaults:
+    domain: com.apple.finder
+    key: ShowExternalHardDrivesOnDesktop
+    type: bool
+    value: false
+
+- name: Desktop | Hide icons for hard drives on the desktop
+  osx_defaults:
+    domain: com.apple.finder
+    key: ShowHardDrivesOnDesktop
+    type: bool
+    value: false
+
+- name: Desktop | Hide icons for servers on the desktop
+  osx_defaults:
+    domain: com.apple.finder
+    key: ShowMountedServersOnDesktop
+    type: bool
+    value: false
+
+- name: Desktop | Hide icons for removable media on the desktop
+  osx_defaults:
+    domain: com.apple.finder
+    key: ShowRemovableMediaOnDesktop
+    type: bool
+    value: false

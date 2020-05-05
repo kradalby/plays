@@ -1,0 +1,23 @@
+---
+- name: ActivityMonitor | Show the main window when launching Activity Monitor
+  osx_defaults:
+    domain: com.apple.ActivityMonitor
+    key: OpenMainWindow
+    type: bool
+    value: true
+    state: present
+
+- name: ActivityMonitor | Sort Activity Monitor results by CPU usage 1
+  osx_defaults:
+    domain: com.apple.ActivityMonitor
+    key: SortColumn
+    value: CPUUsage
+    state: present
+
+- name: ActivityMonitor | sort activity monitor results by cpu usage 2
+  osx_defaults:
+    domain: com.apple.activitymonitor
+    key: sortdirection
+    type: int
+    value: 0
+    state: present

@@ -1,0 +1,18 @@
+---
+ansible_user: 'kradalby'
+ansible_shell_type: powershell
+# ansible_become_method: runas
+# ansible_become_user: System
+
+hostname: win-terra
+gr_work: false
+
+choco_packages:
+  # - 1password
+  - microsoft-windows-terminal
+  - golang
+  - kubernetes-cli
+  - kubernetes-helm
+  - vmware-tools
+# choco_packages_privileged:
+# - citrix-workspace

@@ -1,0 +1,4 @@
+DRONE_RPC_PROTO=https
+DRONE_RPC_HOST=drone.fap.no
+DRONE_RPC_SECRET={{ secret }}
+DRONE_LOG_FILE={{ ansible_env.HOME }}/.drone-runner-exec/log.txt

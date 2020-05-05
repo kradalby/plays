@@ -1,0 +1,35 @@
+---
+- name: Mail | Disable animations
+  osx_defaults:
+    domain: 'com.apple.mail'
+    key: '{{ item }}'
+    type: bool
+    value: false
+    state: present
+  loop:
+    - DisableReplyAnimations
+    - DisableSendAnimations
+
+- name: Mail | Copy addresses in plain text
+  osx_defaults:
+    domain: 'com.apple.mail'
+    key: 'AddressesIncludeNameOnPasteboard'
+    type: bool
+    value: false
+    state: present
+
+- name: Mail | Just show attachment icon
+  osx_defaults:
+    domain: 'com.apple.mail'
+    key: 'DisableInlineAttachmentViewing'
+    type: bool
+    value: true
+    state: present
+
+- name: Mail | Disable automatic spell checking
+  osx_defaults:
+    domain: 'com.apple.mail'
+    key: 'SpellCheckingBehavior'
+    type: string
+    value: NoSpellCheckingEnabled
+    state: present

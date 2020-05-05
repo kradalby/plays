@@ -1,0 +1,24 @@
+---
+- name: Screensaver | Set screensaver right corner (cmd+right)
+  osx_defaults:
+    domain: 'com.apple.dock'
+    key: 'wvous-br-corner'
+    type: int
+    value: 13
+    state: present
+
+- name: Screensaver | Require password
+  osx_defaults:
+    domain: 'com.apple.screensaver'
+    key: 'askForPassword'
+    type: int
+    value: 1
+    state: present
+
+- name: Screensaver | Require password after 60s
+  osx_defaults:
+    domain: 'com.apple.screensaver'
+    key: 'askForPasswordDelay'
+    type: int
+    value: 60
+    state: present

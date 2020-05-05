@@ -1,0 +1,9 @@
+---
+- name: Windows Hostname | Set hostname
+  win_hostname:
+    name: '{{ hostname }}'
+  register: resp
+
+- name: Windows Hostname | Reboot
+  win_reboot:
+  when: resp.reboot_required

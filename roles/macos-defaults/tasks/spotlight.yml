@@ -1,0 +1,80 @@
+---
+- name: Spotlight | Disable Dictionary results
+  osx_defaults:
+    domain: 'com.apple.spotlight'
+    key: 'DictionaryLookupEnabled'
+    type: bool
+    value: false
+    state: present
+
+- name: Spotlight | Included items
+  osx_defaults:
+    domain: 'com.apple.spotlight'
+    key: 'orderedItems'
+    type: array
+    value:
+      - '{"enabled" = 1;"name" = "APPLICATIONS";}'
+      - '{"enabled" = 1;"name" = "SYSTEM_PREFS";}'
+      - '{"enabled" = 1;"name" = "DIRECTORIES";}'
+      - '{"enabled" = 1;"name" = "PDF";}'
+      - '{"enabled" = 1;"name" = "MENU_DEFINITION";}'
+      - '{"enabled" = 1;"name" = "MENU_CONVERSION";}'
+      - '{"enabled" = 1;"name" = "MENU_EXPRESSION";}'
+      - '{"enabled" = 0;"name" = "FONTS";}'
+      - '{"enabled" = 0;"name" = "DOCUMENTS";}'
+      - '{"enabled" = 0;"name" = "MESSAGES";}'
+      - '{"enabled" = 0;"name" = "CONTACT";}'
+      - '{"enabled" = 0;"name" = "EVENT_TODO";}'
+      - '{"enabled" = 0;"name" = "IMAGES";}'
+      - '{"enabled" = 0;"name" = "BOOKMARKS";}'
+      - '{"enabled" = 0;"name" = "MUSIC";}'
+      - '{"enabled" = 0;"name" = "MOVIES";}'
+      - '{"enabled" = 0;"name" = "PRESENTATIONS";}'
+      - '{"enabled" = 0;"name" = "SPREADSHEETS";}'
+      - '{"enabled" = 0;"name" = "SOURCE";}'
+      - '{"enabled" = 0;"name" = "MENU_OTHER";}'
+      - '{"enabled" = 0;"name" = "MENU_WEBSEARCH";}'
+      - '{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
+    state: present
+  register: spotlight_included_items
+
+# - name: Spotlight | Disable /Volumes
+#   osx_defaults:
+#     domain: '/.Spotlight-V100/VolumeConfiguration'
+#     key: 'Exclusions'
+#     type: array
+#     value:
+#       - '/Volumes'
+#     state: present
+
+- name: Spotlight | Disable Spotlight indexing of network volumes
+  become: yes
+  osx_defaults:
+    domain: /Library/Preferences/com.apple.SpotlightServer.plist
+    key: ExternalVolumesDefaultOff
+    value: true
+
+- name: Spotlight | Turn off network indexing
+  become: yes
+  osx_defaults:
+    domain: /Library/Preferences/com.apple.SpotlightServer.plist
+    key: ExternalVolumesIgnore
+    type: bool
+    value: true
+
+- name: Spotlight | Kill mds before rebuild
+  command: 'killall mds'
+  ignore_errors: true
+  when: spotlight_included_items.changed
+
+- name: Spotlight | Ensure index of root volume
+  become: yes
+  command: 'mdutil -i on'
+  changed_when: false
+  when: spotlight_included_items.changed
+
+- name: Spotlight | Index root volume
+  become: yes
+  command: 'mdutil -E /'
+  changed_when: false
+  when: spotlight_included_items.changed

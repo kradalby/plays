@@ -1,0 +1,13 @@
+---
+- name: Windows Update | Install all updates
+  win_updates:
+    category_names:
+      - SecurityUpdates
+      - CriticalUpdates
+      - UpdateRollups
+  register: resp
+
+- name: Windows Update | Reboot
+  win_reboot:
+    reboot_timeout: 3600
+  when: resp.reboot_required

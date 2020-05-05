@@ -1,0 +1,125 @@
+---
+- name: Safari | Show developer menu 1
+  osx_defaults:
+    domain: 'com.apple.Safari'
+    type: bool
+    value: true
+    key: '{{ item }}'
+    state: present
+  loop:
+    - 'IncludeDevelopMenu'
+    - 'IncludeInternalDebugMenu'
+    - 'WebKitDeveloperExtrasEnabledPreferenceKey'
+    - 'com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled'
+
+- name: Safari | Show developer menu 2
+  osx_defaults:
+    domain: 'com.apple.Safari.SandboxBroker'
+    key: 'ShowDevelopMenu'
+    type: int
+    value: 1
+    state: present
+
+- name: Safari | Web Inspector in web views
+  osx_defaults:
+    domain: 'NSGlobalDomain'
+    key: 'WebKitDeveloperExtras'
+    type: bool
+    value: true
+    state: present
+
+- name: Safari | Warn about fraudulent websites
+  osx_defaults:
+    domain: com.apple.Safari
+    key: WarnAboutFraudulentWebsites
+    type: bool
+    value: true
+
+- name: Safari | Block pop-up windows
+  osx_defaults:
+    domain: com.apple.Safari
+    key: WebKitJavaScriptCanOpenWindowsAutomatically
+    type: bool
+    value: false
+
+- name: Safari | Block pop-up windows
+  osx_defaults:
+    domain: com.apple.Safari
+    key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically
+    type: bool
+    value: false
+
+- name: Safari | Enable “Do Not Track”
+  osx_defaults:
+    domain: com.apple.Safari
+    key: SendDoNotTrackHTTPHeader
+    type: bool
+    value: true
+
+- name: Safari | Show full URL
+  osx_defaults:
+    domain: 'com.apple.Safari'
+    key: 'ShowFullURLInSmartSearchField'
+    type: bool
+    value: true
+    state: present
+
+- name: Safari | Prevent opening safe files
+  osx_defaults:
+    domain: 'com.apple.Safari'
+    key: 'AutoOpenSafeDownloads'
+    type: bool
+    value: false
+    state: present
+
+- name: Safari | Tab to highlight each item on a web page
+  osx_defaults:
+    domain: 'com.apple.Safari'
+    key: '{{ item }}'
+    type: bool
+    value: true
+    state: present
+  loop:
+    - WebKitTabToLinksPreferenceKey
+    - 'com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks'
+
+- name: Safari | Make find on page contains, not starts with
+  osx_defaults:
+    domain: 'com.apple.Safari'
+    key: 'FindOnPageMatchesWordStartsOnly'
+    type: bool
+    value: false
+    state: present
+
+- name: Safari | Enable spell checking
+  osx_defaults:
+    domain: 'com.apple.Safari'
+    key: 'WebContinuousSpellCheckingEnabled'
+    type: bool
+    value: true
+    state: present
+
+- name: Safari | Disable autocorrect
+  osx_defaults:
+    domain: 'com.apple.Safari'
+    key: 'WebAutomaticSpellingCorrectionEnabled'
+    type: bool
+    value: false
+    state: present
+
+- name: Safari | Configure Autofill
+  osx_defaults:
+    domain: 'com.apple.Safari'
+    key: '{{ item.key }}'
+    type: bool
+    value: '{{ item.value }}'
+    state: present
+  loop:
+    - key: AutoFillFromAddressBook
+      value: false
+    - key: AutoFillMiscellaneousForms
+      value: false
+    - key: AutoFillPasswords
+      value: false
+    - key: AutoFillCreditCardData
+      value: true

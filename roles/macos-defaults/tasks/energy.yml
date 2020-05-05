@@ -1,0 +1,67 @@
+---
+- name: Energy | Disable hibernation (speeds up entering sleep mode).
+  become: yes
+  command: pmset -a hibernatemode 0
+  changed_when: false
+
+- name: Energy | Disable sudden motion sensor.
+  become: yes
+  command: pmset -a sms 0
+  changed_when: false
+
+- name: Energy | Enable lid wakeup
+  become: yes
+  command: pmset -a lidwake 1
+  changed_when: false
+
+- name: Energy | Restart on power loss
+  become: yes
+  command: pmset -a autorestart 1
+  changed_when: false
+
+- name: Energy | Restart on freeze
+  become: yes
+  command: systemsetup -setrestartfreeze on
+  changed_when: false
+
+- name: Energy | Sleep display after 15m
+  become: yes
+  command: pmset -a displaysleep 15
+  changed_when: false
+
+- name: Energy | Disable sleep when charging
+  become: yes
+  command: pmset -c sleep 0
+  changed_when: false
+
+- name: Energy | Sleep after 5m when on battery
+  become: yes
+  command: pmset -b sleep 5
+  changed_when: false
+
+- name: Energy | Set standby delay to 24h
+  become: yes
+  command: pmset -a standbydelay 86400
+  changed_when: false
+
+- name: Energy | Never go into computer sleep mode
+  become: yes
+  command: systemsetup -setcomputersleep Off
+  changed_when: false
+
+# - name: Energy | Remove sleepimage
+#   become: yes
+#   file:
+#     path: /private/var/vm/sleepimage
+#     state: absent
+#
+# - name: Energy | Touch sleepimage
+#   become: yes
+#   file:
+#     path: /private/var/vm/sleepimage
+#     state: touch
+#
+# - name: Energy | Make sleepimage unwritable
+#   become: yes
+#   command: chflags uchg /private/var/vm/sleepimage
+#   changed_when: false

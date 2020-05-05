@@ -43,3 +43,12 @@ mdns-socat.tjoda.fap.no
 
 [rpi]
 rpi.ldn.fap.no
+
+[macs]
+kramacbook.vpn.fap.no hostname=kramacbook ansible_connection=local
+vmac.terra.fap.no hostname=vmac.terra ansible_user=kradalby drone=true
+vmac.ntnu.fap.no hostname=vmac.ntnu ansible_user=kradalby drone=true
+
+[windows]
+kranovo.vpn.fap.no
+win.terra.fap.no

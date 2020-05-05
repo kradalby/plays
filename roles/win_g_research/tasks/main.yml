@@ -1,0 +1,17 @@
+---
+- name: Windows G-Research | Install Citrix Workspace
+  # become: yes
+  # become_method: runas
+  # become_user: administrator
+  win_chocolatey:
+    name: 'citrix-workspace'
+    state: latest
+    force: yes
+
+- name: Windows G-Research | Citrix Alt+Tab passthrough
+  win_regedit:
+    path: 'HKLM:\SOFTWARE\WOW6432Node\Citrix\ICA Client\Engine\Lockdown Profiles\All Regions\Lockdown\Virtual Channels\Keyboard\'
+    name: TransparentKeyPassthrough
+    data: Remote
+    type: string
+    state: present

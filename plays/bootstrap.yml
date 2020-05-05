@@ -19,14 +19,14 @@
         state: latest
 
   roles:
-    - { role: repo, when: skip_repo is not defined }
-    - datetime
-    - locale
-    - dotfiles
-    - apticron
-    - { role: postfix, when: skip_postfix is not defined }
-    - snmpd
-    - {
-        role: prometheus-node-exporter,
-        when: skip_node_exporter is not defined,
-      }
+    - role: repo
+      when: skip_repo is not defined
+    - role: datetime
+    - role: locale
+    - role: dotfiles
+    - role: apticron
+    - role: postfix
+      when: skip_postfix is not defined
+    - role: snmpd
+    - role: prometheus-node-exporter
+      when: skip_node_exporter is not defined

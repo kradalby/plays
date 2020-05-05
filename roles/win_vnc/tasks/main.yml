@@ -1,0 +1,40 @@
+---
+- name: Windows VNC | Ensure UltraVNC
+  win_chocolatey:
+    name: ultravnc
+    state: latest
+  notify: Restart VNC
+
+- name: Windows VNC | Install UltraVNC config
+  win_template:
+    src: ultravnc.ini
+    dest: 'C:\Program Files\uvnc bvba\UltraVNC\ultravnc.ini'
+    backup: yes
+  notify: Restart VNC
+
+- name: Windows VNC | Firewall rule to allow VNC on port 5900
+  win_firewall_rule:
+    name: '{{ item.name }}'
+    localport: '5900'
+    action: allow
+    direction: in
+    protocol: '{{ item.protocol }}'
+    profiles: domain,private
+    state: present
+    enabled: true
+    service: termservice
+    program: 'C:\Program Files\uvnc bvba\UltraVNC\winvnc.exe'
+  loop:
+    - name: UltraVNC (TCP)
+      protocol: tcp
+    - name: UltraVNC (UDP)
+      protocol: udp
+
+- name: Windows VNC | Ensure UltraVNC service
+  win_service:
+    name: uvnc_service
+    path: '"C:\Program Files\uvnc bvba\UltraVNC\winvnc.exe" -service'
+    display_name: uvnc_service
+    description: Provides secure remote desktop sharing
+    state: started
+    start_mode: auto

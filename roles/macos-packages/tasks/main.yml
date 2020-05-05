@@ -1,0 +1,164 @@
+---
+
+- name: Ensure macOS Homebrew packages cleaned
+  homebrew:
+    pkg:
+      - jsonnet
+    state: absent
+
+- name: Ensure macOS Homebrew Cask packages cleaned
+  homebrew_cask:
+    pkg:
+      - zoomus
+    state: absent
+
+- name: Ensure macOS Homebrew taps
+  homebrew_tap:
+    name: '{{ item }}'
+    state: present
+  loop:
+    - homebrew/services
+    - drone/drone
+    - jotta/cli
+    - kradalby/tap
+    - golangci/tap
+    - ibm-swift/kitura
+    - homebrew/cask
+
+- name: Ensure macOS Homebrew packages
+  homebrew:
+    pkg:
+      - go
+      - node
+      - python
+      - python3
+      - ocaml
+      - elm
+      - mono
+      - haskell-stack
+      - tidy-html5
+      - swiftlint
+      - shellcheck
+      - elm-format
+      - golangci-lint
+      - tflint
+      - aria2
+      - git
+      - git-extras
+      - fzf
+      - cloc
+      - ninja
+      - diff-so-fancy
+      - drone
+      - nload
+      - fdupes
+      - fd
+      - bat
+      - prettyping
+      - jotta-cli
+      - sleepwatcher
+      - openapi-generator
+      - kitura
+      - terraform
+      - packer
+      - kompose
+      - kubernetes-cli
+      - helm
+      - opam
+      - pipx
+      - yarn
+      - starship
+      - fish
+      - mosh
+      - xz
+      - htop
+      - dos2unix
+      - gnu-sed
+      - gnu-tar
+      - findutils
+      - coreutils
+      - jq
+      - yq
+      - ncdu
+      - the_silver_searcher
+      - tmux
+      - tmuxinator
+      - tree
+      - unrar
+      - vim
+      - neovim
+      - watch
+      - wireguard-go
+      - wget
+      - readline
+      - ipcalc
+      - nmap
+      - socat
+      - netcat
+      - netcat6
+      - sqlite
+      - postgresql
+      - redis
+      - cask
+      - mas
+      - go-jsonnet
+    state: latest
+    update_homebrew: yes
+
+    # - name: Ensure HEAD packages
+    #   homebrew:
+    #     pkg:
+    #       - mdns-repeater
+    #     install_options:
+    #       - '--HEAD'
+
+- name: Ensure macOS Homebrew Cask packages
+  homebrew_cask:
+    pkg:
+      - java
+      - 1password
+      - 1password-cli
+      - adobe-creative-cloud
+      - balenaetcher
+      - iterm2
+      - firefox
+      - google-chrome
+      - chrome-remote-desktop-host
+      - iina
+      - spectacle
+      - spotify
+      - teamviewer
+      - transmission
+      - vlc
+      - the-unarchiver
+      - discord
+      - sequel-pro
+      - psequel
+      - jumpcut
+      - calibre
+        # - beardedspice
+      - tunnelblick
+      - free-ruler
+      - docker
+      - slack
+      - visual-studio-code
+      - menumeters
+      - steam
+      - transmit
+      - little-snitch
+      - tripmode
+      - signal
+      - openttd
+      - tor-browser
+      - webex-meetings
+      - dotnet-sdk
+      - syncthing
+      - barrier
+      - altserver
+      - menubar-colors
+      - gas-mask
+      - turbo-boost-switcher
+      - steveschow-gfxcardstatus
+      - powershell
+    state: latest
+    update_homebrew: yes

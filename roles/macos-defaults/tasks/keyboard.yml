@@ -1,0 +1,24 @@
+---
+- name: Keyboard | Keyboard repeat rate 1
+  osx_defaults:
+    domain: 'NSGlobalDomain'
+    key: 'ApplePressAndHoldEnabled'
+    type: bool
+    value: false
+    state: present
+
+- name: Keyboard | Keyboard repeat rate 2
+  osx_defaults:
+    domain: 'NSGlobalDomain'
+    key: 'InitialKeyRepeat_Level_Saved'
+    type: int
+    value: 1
+    state: present
+
+- name: Keyboard | Keyboard repeat rate 3
+  osx_defaults:
+    domain: 'NSGlobalDomain'
+    key: 'InitialKeyRepeat'
+    type: int
+    value: 15
+    state: present

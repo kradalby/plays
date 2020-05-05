@@ -2,7 +2,8 @@
 - name: Clone dotfiles
   git:
     repo: https://github.com/kradalby/dotfiles.git
-    dest: ~/git/dotfiles
+    dest: '{{ ansible_env.HOME }}/git/dotfiles'
+    # force: yes
   register: dotfiles
 
 - name: Install dotfiles

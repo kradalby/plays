@@ -1,0 +1,5 @@
+---
+- name: Restart VNC
+  win_service:
+    name: uvnc_service
+    state: restarted

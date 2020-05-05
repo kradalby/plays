@@ -1,0 +1,23 @@
+---
+- name: Pre | Ensure System Preferences is closed
+  command: osascript -e 'tell application "System Preferences" to quit'
+  changed_when: false
+
+- include: global.yml
+- include: activity.yml
+- include: desktop.yml
+- include: dock.yml
+- include: finder.yml
+- include: hostname.yml
+- include: menubar.yml
+- include: misc.yml
+- include: safari.yml
+- include: mail.yml
+- include: screencapture.yml
+- include: screensaver.yml
+- include: swupdate.yml
+- include: third-party.yml
+- include: trackpad.yml
+- include: keyboard.yml
+- include: spotlight.yml
+- include: energy.yml

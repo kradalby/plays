@@ -1,0 +1,32 @@
+---
+- name: Hostname | Set family name
+  osx_defaults:
+    domain: 'com.apple.rapport'
+    key: 'familySyncedName'
+    type: string
+    value: '{{ hostname }}'
+    state: present
+
+- name: Hostname | Set ComputerName
+  command: 'scutil --set ComputerName {{ hostname }}'
+  become: yes
+  changed_when: false
+
+- name: Hostname | Set HostName
+  command: 'scutil --set HostName {{ hostname }}'
+  become: yes
+  changed_when: false
+
+- name: Hostname | Set LocalHostName
+  command: "scutil --set LocalHostName {{ hostname | replace('.', '-') }}"
+  become: yes
+  changed_when: false
+
+- name: Hostname | Set NetBIOSName name
+  osx_defaults:
+    domain: 'com.apple.smb.server'
+    key: 'NetBIOSName'
+    type: string
+    value: '{{ hostname }}'
+    state: present
+

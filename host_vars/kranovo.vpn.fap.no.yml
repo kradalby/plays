@@ -1,0 +1,21 @@
+---
+ansible_user: 'Kristoffer Dalby'
+ansible_shell_type: powershell
+# ansible_become_method: runas
+# ansible_become_user: System
+
+hostname: kranovo
+gr_work: true
+
+choco_packages:
+  # - 1password
+  - barrier
+  - cutepdf
+  - microsoft-windows-terminal
+  - golang
+  - kubernetes-cli
+  - kubernetes-helm
+  - steam
+  - spotify
+  # choco_packages_privileged:
+  # - citrix-workspace

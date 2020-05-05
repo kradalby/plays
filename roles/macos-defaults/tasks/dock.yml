@@ -1,0 +1,32 @@
+---
+- name: Dock | Make Dock very small
+  osx_defaults:
+    domain: 'com.apple.dock'
+    key: 'tilesize'
+    type: float
+    value: 16
+    state: present
+
+- name: Dock | Set Dock orientation right
+  osx_defaults:
+    domain: 'com.apple.dock'
+    key: 'orientation'
+    type: string
+    value: right
+    state: present
+
+- name: Dock | Autohide
+  osx_defaults:
+    domain: 'com.apple.dock'
+    key: 'autohide'
+    type: int
+    value: 1
+    state: present
+
+- name: Dock | Autohide delay
+  osx_defaults:
+    domain: 'com.apple.dock'
+    key: 'autohide-delay'
+    type: float
+    value: 0
+    state: present

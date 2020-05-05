@@ -1,0 +1,17 @@
+---
+- name: Setup base configuration for macOS
+  hosts: macs
+
+  # pre_tasks:
+  #   - name: Upgrade packages
+  #     apt:
+  #       upgrade: true
+  #       update_cache: true
+
+  roles:
+    - role: roles/dotfiles
+    - role: roles/macos-defaults
+    - role: roles/macos-packages
+    - role: roles/macos-drone-runner-exec
+      when: drone is defined and drone
+
