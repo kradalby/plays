@@ -1,0 +1,22 @@
+---
+ansible_user: 'anders'
+ansible_shell_type: powershell
+# ansible_become_method: runas
+# ansible_become_user: System
+
+hostname: kontor-pc
+
+choco_packages:
+  # - barrier
+  - cutepdf
+  - microsoft-windows-terminal
+  - spotify
+  - thunderbird
+  - adobereader
+  - vlc
+  - teamviewer
+  - putty
+  - dropbox
+  - winrar
+  # choco_packages_privileged:
+  # - citrix-workspace

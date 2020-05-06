@@ -17,6 +17,12 @@
       - firefox
     state: latest
 
+- name: Windows Packages | Remove unwanted packages
+  win_chocolatey:
+    name:
+      - tightvnc
+    state: absent
+
 - name: Windows Packages | Install additional packages
   # become: yes
   # become_method: runas
@@ -65,6 +71,10 @@
     - 'WinDirStat.lnk'
     - 'Vivaldi.lnk'
     - 'Microsoft Edge.lnk'
+    - 'Steam.lnk'
+    - 'PuTTY.lnk'
+    - 'Barrier.lnk'
+    - 'Spotify.lnk'
 
 - name: Windows Packages | Cleanup user Desktop
   win_file:
@@ -79,3 +89,7 @@
     - 'WinDirStat.lnk'
     - 'Vivaldi.lnk'
     - 'Microsoft Edge.lnk'
+    - 'Steam.lnk'
+    - 'PuTTY.lnk'
+    - 'Barrier.lnk'
+    - 'Spotify.lnk'

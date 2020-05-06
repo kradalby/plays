@@ -1,5 +1,5 @@
 ---
-- name: Restart VNC
+- name: Restart TigerVNC
   win_service:
-    name: uvnc_service
+    name: TigerVNC
     state: restarted

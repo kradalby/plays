@@ -1,0 +1,27 @@
+---
+# - name: Windows VNC | Ensure TigerVNC
+#   win_chocolatey:
+#     name: tigervnc
+#     state: latest
+#   notify: Restart TigerVNC
+
+- name: Windows SSH | Install SSHd config
+  win_template:
+    src: sshd_config
+    dest: 'C:\ProgramData\ssh\sshd_config'
+    newline_sequence: '\n'
+    backup: yes
+  notify: Restart SSH
+
+- name: Windows SSH | Firewall rule to allow SSH on port 22
+  win_firewall_rule:
+    name: 'OpenSSH SSH Server (sshd)'
+    description: 'Inbound rule for OpenSSH SSH Server (sshd)'
+    localport: '22'
+    action: allow
+    direction: in
+    protocol: tcp
+    remoteip: '{{ allowed_networks | join(",") }}'
+    state: present
+    enabled: true
+    program: '%SystemRoot%\system32\OpenSSH\sshd.exe'

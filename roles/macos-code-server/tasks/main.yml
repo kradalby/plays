@@ -1,0 +1,40 @@
+---
+- name: code-server | Ensure runner
+  unarchive:
+    src: 'https://github.com/cdr/code-server/releases/download/3.2.0/code-server-3.2.0-darwin-x86_64.zip'
+    remote_src: yes
+    dest: '{{ ansible_env.HOME }}'
+    mode: '0755'
+    creates: '{{ ansible_env.HOME }}/code-server/code-server'
+    list_files: yes
+  register: downloaded
+
+- name: code-server | Move directory
+  command:
+    cmd: 'mv {{ downloaded.files[0] }} code-server'
+    creates: '{{ ansible_env.HOME }}/code-server/code-server'
+  when: downloaded.changed
+
+- name: code-server | Link Binary
+  file:
+    src: '{{ ansible_env.HOME }}/code-server/code-server'
+    dest: '{{ ansible_env.HOME }}/bin/code-server'
+    state: link
+
+- name: code-server | Install service
+  template:
+    src: no.kradalby.code-server.plist
+    dest: '{{ ansible_env.HOME }}/Library/LaunchAgents/no.kradalby.code-server.plist'
+  register: install_service
+
+- name: code-server | Load code-server
+  command: 'launchctl load -w {{ ansible_env.HOME }}/Library/LaunchAgents/no.kradalby.code-server.plist'
+  when: install_service.changed
+
+- name: code-server | Stop code-server
+  command: 'launchctl stop no.kradalby.code-server'
+  when: downloaded.changed and install_service.changed
+
+- name: code-server | Start code-server
+  command: 'launchctl start no.kradalby.code-server'
+  when: downloaded.changed and install_service.changed

@@ -1,16 +1,55 @@
 ---
-- name: Windows VNC | Ensure UltraVNC
-  win_chocolatey:
-    name: ultravnc
-    state: latest
-  notify: Restart VNC
+# - name: Windows VNC | Ensure TigerVNC
+#   win_chocolatey:
+#     name: tigervnc
+#     state: latest
+#   notify: Restart TigerVNC
 
-- name: Windows VNC | Install UltraVNC config
-  win_template:
-    src: ultravnc.ini
-    dest: 'C:\Program Files\uvnc bvba\UltraVNC\ultravnc.ini'
-    backup: yes
-  notify: Restart VNC
+- name: Windows VNC | Ensure TigerVNC
+  # Product ID: https://stackoverflow.com/questions/29937568/how-can-i-find-the-product-guid-of-an-installed-msi-setup
+  win_package:
+    # http://tigervnc.bphinz.com/nightly/
+    path: http://tigervnc.bphinz.com/nightly/windows/tigervnc64-1.10.80.exe
+    arguments:
+      - '/VERYSILENT'
+      - '/SUPPRESSMSGBOXES'
+      - '/NORESTART'
+      - '/SP-'
+    product_id: 'TigerVNC 64-bit_is1'
+    state: present
+  register: vnc_installed
+
+- name: Windows VNC | Configure TigerVNC
+  win_regedit:
+    path: 'HKLM:\SOFTWARE\TigerVNC\WinVNC4\'
+    name: '{{ item.name }}'
+    data: '{{ item.data }}'
+    type: '{{ item.type }}'
+    state: present
+  loop:
+    - name: 'AcceptCutText'
+      type: 'dword'
+      data: '1'
+    - name: 'AcceptKeyEvents'
+      type: 'dword'
+      data: '1'
+    - name: 'AcceptPointerEvents'
+      type: 'dword'
+      data: '1'
+    - name: 'SendCutText'
+      type: 'dword'
+      data: '1'
+    - name: 'PortNumber'
+      type: 'dword'
+      data: '5900'
+    - name: 'SecurityTypes'
+      type: 'string'
+      data: 'VeNCrypt,TLSVnc,VncAuth'
+    - name: 'Password'
+      type: 'binary'
+      data: 'hex:d7,f5,fc,28,af,0d,cf,0c'
+      # data: 'hex:c7,c9,32,93,34,ec,e4,93'
+  notify: Restart TigerVNC
 
 - name: Windows VNC | Firewall rule to allow VNC on port 5900
   win_firewall_rule:
@@ -19,15 +58,15 @@
     action: allow
     direction: in
     protocol: '{{ item.protocol }}'
-    profiles: domain,private
+    remoteip: '{{ allowed_networks | join(",") }}'
     state: present
     enabled: true
     service: termservice
-    program: 'C:\Program Files\uvnc bvba\UltraVNC\winvnc.exe'
+    program: 'C:\Program Files\TigerVNC\winvnc4.exe'
   loop:
-    - name: UltraVNC (TCP)
+    - name: TigerVNC (TCP)
       protocol: tcp
-    - name: UltraVNC (UDP)
+    - name: TigerVNC (UDP)
       protocol: udp
 
 - name: Windows VNC | Ensure UltraVNC service
@@ -36,5 +75,28 @@
     path: '"C:\Program Files\uvnc bvba\UltraVNC\winvnc.exe" -service'
     display_name: uvnc_service
     description: Provides secure remote desktop sharing
+    state: stopped
+    start_mode: manual
+
+- name: Windows VNC | Ensure TightVNC service
+  win_service:
+    name: tvnserver
+    path: '"C:\Program Files\TightVNC\tvnserver.exe" -service'
+    display_name: 'TightVNC Server'
+    description: Provides secure remote desktop sharing
+    state: stopped
+    start_mode: manual
+
+- name: Windows VNC | Ensure TigerVNC service
+  win_service:
+    name: 'TigerVNC'
+    path: '"C:\Program Files\TigerVNC\winvnc4.exe" -service'
+    display_name: 'TigerVNC Server'
+    description: 'Provides remote access to this machine via the VNC/RFB protocol.'
     state: started
     start_mode: auto
+  register: vnc_service_installed
+
+- name: Windows VNC | Reboot
+  win_reboot:
+  when: vnc_installed.changed and vnc_service_installed.changed

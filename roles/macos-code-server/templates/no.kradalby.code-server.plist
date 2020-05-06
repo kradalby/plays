@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>no.kradalby.code-server</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>{{ ansible_env.HOME }}/bin/code-server</string>
+      <string>--auth none</string>
+      <string>--bind-addr 0.0.0.0:8080</string>
+      <string>--disable-telemetry</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+  </dict>
+</plist>

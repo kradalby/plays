@@ -3,12 +3,13 @@
   hosts: windows
 
   roles:
-    # - role: roles/win_update
-    # - role: roles/win_debloat
-    # - role: roles/win_hostname
+    - role: roles/win_update
+    - role: roles/win_debloat
+    - role: roles/win_hostname
     - role: roles/win_vnc
-    # - role: roles/win_ping
-    # - role: roles/win_rdp
-    # - role: roles/win_packages
+    - role: roles/win_ssh
+    - role: roles/win_ping
+    - role: roles/win_rdp
+    - role: roles/win_packages
     # - role: roles/win_g_research
     #   when: gr_work is defined and gr_work

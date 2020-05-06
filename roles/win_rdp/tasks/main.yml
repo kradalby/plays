@@ -34,7 +34,7 @@
     action: allow
     direction: in
     protocol: '{{ item.protocol }}'
-    profiles: domain,private,public
+    remoteip: '{{ allowed_networks | join(",") }}'
     state: present
     enabled: true
     service: termservice

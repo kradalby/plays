@@ -1,0 +1,7 @@
+AuthorizedKeysFile      .ssh/authorized_keys
+PubkeyAuthentication yes
+
+PasswordAuthentication no
+PermitEmptyPasswords no
+
+Subsystem       sftp    sftp-server.exe
