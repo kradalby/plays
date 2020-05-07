@@ -9,9 +9,9 @@
   #       update_cache: true
 
   roles:
-    # - role: roles/dotfiles
-    # - role: roles/macos-defaults
-    # - role: roles/macos-packages
+    - role: roles/dotfiles
+    - role: roles/macos-defaults
+    - role: roles/macos-packages
     - role: roles/macos-code-server
       when: code is defined and code
     - role: roles/macos-drone-runner-exec
