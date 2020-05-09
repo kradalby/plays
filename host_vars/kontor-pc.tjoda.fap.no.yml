@@ -5,6 +5,7 @@ ansible_shell_type: powershell
 # ansible_become_user: System
 
 hostname: kontor-pc
+win_vnc_password_hex: '{{ local("env", "WIN_VNC_PASSWORD_HEX") }}'
 
 choco_packages:
   # - barrier
@@ -17,6 +18,6 @@ choco_packages:
   - teamviewer
   - putty
   - dropbox
-  - winrar
+  - 7zip
   # choco_packages_privileged:
   # - citrix-workspace

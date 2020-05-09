@@ -4,7 +4,7 @@
     name: 'ICMP Allow incoming V4 echo request'
     enabled: yes
     state: present
-    remoteip: '{{ allowed_networks | join(",") }}'
+    remoteip: '{{ win_allowed_networks | join(",") }}'
     action: allow
     direction: in
     protocol: icmpv4

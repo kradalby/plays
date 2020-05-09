@@ -21,7 +21,7 @@
     action: allow
     direction: in
     protocol: tcp
-    remoteip: '{{ allowed_networks | join(",") }}'
+    remoteip: '{{ win_allowed_networks | join(",") }}'
     state: present
     enabled: true
     program: '%SystemRoot%\system32\OpenSSH\sshd.exe'

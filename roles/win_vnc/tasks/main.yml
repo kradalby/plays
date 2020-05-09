@@ -47,8 +47,7 @@
       data: 'VeNCrypt,TLSVnc,VncAuth'
     - name: 'Password'
       type: 'binary'
-      data: 'hex:d7,f5,fc,28,af,0d,cf,0c'
-      # data: 'hex:c7,c9,32,93,34,ec,e4,93'
+      data: '{{ win_vnc_password_hex }}'
   notify: Restart TigerVNC
 
 - name: Windows VNC | Firewall rule to allow VNC on port 5900
@@ -58,7 +57,7 @@
     action: allow
     direction: in
     protocol: '{{ item.protocol }}'
-    remoteip: '{{ allowed_networks | join(",") }}'
+    remoteip: '{{ win_allowed_networks | join(",") }}'
     state: present
     enabled: true
     service: termservice

@@ -1,4 +1,9 @@
 ---
+- name: Windows Debloat | Check Windows 10 Debloater state
+  win_stat:
+    path: '{{ ansible_env.APPDATA }}\ansible\win_debloat'
+  register: debloat
+
 - name: Windows Debloat | Ensure temp directory
   win_file:
     path: 'C:\temp'
@@ -8,6 +13,12 @@
   win_get_url:
     url: 'https://raw.githubusercontent.com/Sycnex/Windows10Debloater/master/Windows10SysPrepDebloater.ps1'
     dest: 'C:\temp\Windows10SysPrepDebloater.ps1'
+  register: debloater
+  when: >
+    not debloat.stat.exists or
+    (debloat.stat.lastwritetime is defined and
+    ((ansible_date_time.epoch|int - debloat.stat.lastwritetime|int) >
+    (1 * 60 * 60 * 24)))
 
 - name: Windows Debloat | Run Windows 10 Debloater
   # become: yes
@@ -18,7 +29,24 @@
     - '-Sysprep'
     - '-Debloat'
     - '-Privacy'
-  changed_when: false
+  when: debloater.changed
+
+- name: Windows Debloat | Remove Windows 10 Debloater script
+  win_file:
+    path: 'C:\temp\Windows10SysPrepDebloater.ps1'
+    state: absent
+
+- name: Windows Debloat | Mark Windows 10 Debloater
+  win_file:
+    path: '{{ ansible_env.APPDATA }}\ansible'
+    state: directory
+  when: debloater.changed
+
+- name: Windows Debloat | Mark Windows 10 Debloater
+  win_file:
+    path: '{{ ansible_env.APPDATA }}\ansible\win_debloat'
+    state: touch
+  when: debloater.changed
 
 - name: Windows Debloat | Disable OneDrive
   win_regedit:

@@ -1,0 +1,56 @@
+---
+ansible_user: kradalby
+hostname: vmac.terra
+caddy: true
+code: false
+drone: true
+drone_secret: '{{ lookup ("env", "DRONE_SHARED_SECRET") }}'
+
+brew_packages:
+  - aria2
+  - cloc
+  - diff-so-fancy
+  - dos2unix
+  - drone
+  - elm-format
+  - fd
+  - fdupes
+  - go-jsonnet
+  - golangci-lint
+  - haskell-stack
+  - helm
+  - ipcalc
+  - kitura
+  - kompose
+  - kubernetes-cli
+  - mono
+  - netcat
+  - netcat6
+  - ninja
+  - nload
+  - nmap
+  - ocaml
+  - opam
+  - packer
+  - postgresql
+  - readline
+  - redis
+  - shellcheck
+  - sleepwatcher
+  - sqlite
+  - swiftlint
+  - terraform
+  - tflint
+  - tidy-html5
+  - tmuxinator
+  - unrar
+  - wireguard-go
+
+brew_cask_packages:
+  # - tunnelblick
+  - altserver
+  - docker
+  - dotnet-sdk
+  - java
+  - powershell
+  - syncthing

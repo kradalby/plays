@@ -1,6 +1,6 @@
 ---
 - name: Setup base configuration
-  hosts: all
+  hosts: ubuntu
 
   pre_tasks:
     - name: Upgrade packages

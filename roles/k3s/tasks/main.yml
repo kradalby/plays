@@ -2,19 +2,27 @@
 - name: Enable IPv4 forwarding
   sysctl:
     name: net.ipv4.ip_forward
-    value: "1"
+    value: '1'
     state: present
     reload: yes
 
 - name: Enable IPv6 forwarding
   sysctl:
     name: net.ipv6.conf.all.forwarding
-    value: "1"
+    value: '1'
     state: present
     reload: yes
 
 - name: Install k3s on master
-  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server {% if skip_traefik %}--disable traefik{% endif %} {% if skip_servicelb %}--disable servicelb{% endif %} --disable local-storage" sh -s -
+  shell: |-
+    curl -sfL https://get.k3s.io | \
+    INSTALL_K3S_CHANNEL=latest \
+    INSTALL_K3S_EXEC=" \
+      server \
+      {% if skip_traefik %}--disable traefik \{% endif %}
+      {% if skip_servicelb %}--disable servicelb \{% endif %}
+      --disable local-storage" \
+    sh -s -
   when: inventory_hostname in groups[group_names[0]][0]
 
 - name: Wait for node-token
@@ -32,7 +40,7 @@
 - name: Change file access node-token
   file:
     path: /var/lib/rancher/k3s/server
-    mode: "g+rx,o+rx"
+    mode: 'g+rx,o+rx'
   when: inventory_hostname in groups[group_names[0]][0]
 
 - name: Read node-token from master
@@ -49,9 +57,16 @@
 - name: Restore node-token file access
   file:
     path: /var/lib/rancher/k3s/server
-    mode: "{{ p.stat.mode }}"
+    mode: '{{ p.stat.mode }}'
   when: inventory_hostname in groups[group_names[0]][0]
 
 - name: Install k3s on workers
-  shell: curl -sfL https://get.k3s.io | K3S_URL="https://{{ hostvars[groups[group_names[0]][0]].ansible_default_ipv4.address|default(hostvars[groups[group_names[0]][0]].ansible_all_ipv4_addresses[0]) }}:6443" K3S_TOKEN="{{ hostvars[groups[group_names[0]][0]]['token'] }}" sh -
+  shell: >
+    curl -sfL https://get.k3s.io |
+    INSTALL_K3S_CHANNEL=latest
+    K3S_URL="
+    https://{{ hostvars[groups[group_names[0]][0]].ansible_default_ipv4.address |
+    default(hostvars[groups[group_names[0]][0]].ansible_all_ipv4_addresses[0]) }}:6443"
+    K3S_TOKEN="{{ hostvars[groups[group_names[0]][0]]['token'] }}"
+    sh -
   when: inventory_hostname not in groups[group_names[0]][0]

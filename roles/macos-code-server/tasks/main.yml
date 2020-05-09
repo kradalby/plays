@@ -47,3 +47,21 @@
 - name: code-server | Start code-server
   command: 'launchctl start no.kradalby.code-server'
   when: downloaded.changed and install_service.changed
+
+- name: code-server | Check if caddy is installed
+  stat:
+    path: '{{ ansible_env.HOME }}/.config/caddy'
+  register: caddy
+
+- name: code-server | Install Caddyfile
+  template:
+    src: Caddyfile
+    dest: '{{ ansible_env.HOME }}/.config/caddy/code-server'
+  when: caddy.stat.exists and caddy.stat.isdir
+  register: caddyfile
+
+- name: code-server | Reload caddy
+  file:
+    path: '{{ ansible_env.HOME }}/.config/Caddyfile'
+    state: touch
+  when: caddyfile.changed

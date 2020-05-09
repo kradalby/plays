@@ -1,6 +1,6 @@
 ---
 - name: Upgrade all machines
-  hosts: all
+  hosts: ubuntu
 
   tasks:
     - name: upgrade debian

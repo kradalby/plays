@@ -1,0 +1,7 @@
+---
+- name: journald | Ensure RPi configuration
+  template:
+    src: journald.conf
+    dest: /etc/systemd/journald.conf
+    mode: '0644'
+  notify: Restart journald

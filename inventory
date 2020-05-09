@@ -2,9 +2,6 @@
 # fap.no
 ################################
 
-[ntnu]
-
-
 [storage]
 storage.terra.fap.no
 storage.tjoda.fap.no
@@ -21,7 +18,6 @@ mail.terra.fap.no skip_postfix=true
 unifi.tjoda.fap.no
 
 [docker]
-rpi.ldn.fap.no skip_repo=true
 storage.terra.fap.no
 
 [packer]
@@ -44,10 +40,22 @@ mdns-socat.tjoda.fap.no
 [rpi]
 rpi.ldn.fap.no
 
+[ubuntu:children]
+storage
+database
+mail
+unifi
+docker
+packer
+prod_terra_kubernetes
+prod_ntnu_kubernetes
+socat_mdns
+rpi
+
 [macs]
-kramacbook.vpn.fap.no hostname=kramacbook ansible_connection=local
-vmac.terra.fap.no hostname=vmac.terra ansible_user=kradalby drone=true
-vmac.ntnu.fap.no hostname=vmac.ntnu ansible_user=kradalby drone=true code=true
+kramacbook.vpn.fap.no
+vmac.terra.fap.no
+vmac.ntnu.fap.no
 
 [windows]
 kranovo.vpn.fap.no

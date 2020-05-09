@@ -1,0 +1,6 @@
+{
+    email kradalby@kradalby.no
+    experimental_http3
+}
+
+import {{ ansible_env.HOME }}/.config/caddy/*
