@@ -17,7 +17,7 @@
     <key>EnvironmentVariables</key>
     <dict>
         <key>CLOUDFLARE_API_TOKEN</key>
-        <string>5yK3f9W_uZvwSeFhmZwu6BoDXpe68a1iwGaCwxdz</string>
+        <string>caddy_cloudflare_api_token</string>
     </dict>
     <key>WorkingDirectory</key>
     <string>{{ ansible_env.HOME }}</string>

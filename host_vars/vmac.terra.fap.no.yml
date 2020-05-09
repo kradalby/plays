@@ -1,10 +1,13 @@
 ---
 ansible_user: kradalby
 hostname: vmac.terra
+
 caddy: true
+caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
+
 code: false
 drone: true
-drone_secret: '{{ lookup ("env", "DRONE_SHARED_SECRET") }}'
+drone_secret: '{{ lookup("env", "DRONE_SHARED_SECRET") }}'
 
 brew_packages:
   - aria2
