@@ -1,13 +1,13 @@
 ---
 - name: 'Install role dependencies'
   apt:
-    name: "{{ packages }}"
+    name: '{{ packages }}'
     state: present
     install_recommends: false
   vars:
     packages:
-      - "apt-transport-https"
-      - "ca-certificates"
+      - 'apt-transport-https'
+      - 'ca-certificates'
 
 - name: Syncthing signing key
   apt_key:
@@ -22,9 +22,18 @@
 
 - name: Install Syncthing
   apt:
-   update_cache: yes
-   name: "{{ packages }}"
-   state: latest
+    update_cache: yes
+    name: '{{ packages }}'
+    state: latest
   vars:
-   packages:
-     - syncthing
+    packages:
+      - syncthing
+
+- name: Syncthing | Ensure caddy proxy
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile.d/syncthing
+    owner: caddy
+    group: caddy
+  when: caddy is defined and caddy
+  notify: Reload Caddy

@@ -1,0 +1,11 @@
+{
+    email kradalby@kradalby.no
+}
+
+(cf) {
+    tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+    }
+}
+
+import /etc/caddy/Caddyfile.d/*

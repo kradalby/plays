@@ -60,7 +60,6 @@
     remoteip: '{{ win_allowed_networks | join(",") }}'
     state: present
     enabled: true
-    service: termservice
     program: 'C:\Program Files\TigerVNC\winvnc4.exe'
   loop:
     - name: TigerVNC (TCP)
@@ -71,20 +70,12 @@
 - name: Windows VNC | Ensure UltraVNC service
   win_service:
     name: uvnc_service
-    path: '"C:\Program Files\uvnc bvba\UltraVNC\winvnc.exe" -service'
-    display_name: uvnc_service
-    description: Provides secure remote desktop sharing
-    state: stopped
-    start_mode: manual
+    state: absent
 
 - name: Windows VNC | Ensure TightVNC service
   win_service:
     name: tvnserver
-    path: '"C:\Program Files\TightVNC\tvnserver.exe" -service'
-    display_name: 'TightVNC Server'
-    description: Provides secure remote desktop sharing
-    state: stopped
-    start_mode: manual
+    state: absent
 
 - name: Windows VNC | Ensure TigerVNC service
   win_service:

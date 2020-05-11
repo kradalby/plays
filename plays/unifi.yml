@@ -2,4 +2,6 @@
 - name: Install Unifi
   hosts: unifi
   roles:
+    - role: roles/caddy-server
+      when: caddy is defined and caddy
     - role: roles/unifi

@@ -4,6 +4,8 @@
   roles:
     - role: roles/max-user-watches
     - role: roles/storage-users-groups
+    - role: roles/caddy-server
+      when: caddy is defined and caddy
     - role: roles/syncthing
     - role: roles/jotta
     - role: roles/avahi

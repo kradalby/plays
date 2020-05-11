@@ -1,0 +1,58 @@
+---
+- name: caddy | Ensure caddy with Cloudflare
+  get_url:
+    url: https://builds.kradalby.no/caddy/caddy_linux
+    dest: /usr/bin/caddy
+    mode: '0755'
+  notify: Restart Caddy
+
+- name: caddy | Ensure caddy group
+  group:
+    gid: 1995
+    name: caddy
+    system: yes
+    state: present
+
+- name: caddy | Ensure caddy user
+  user:
+    uid: 1995
+    name: caddy
+    group: caddy
+    home: /var/lib/caddy
+    shell: /usr/sbin/nologin
+    comment: Caddy web server
+    create_home: yes
+
+- name: caddy | Ensure caddy config directory
+  file:
+    path: '/etc/caddy'
+    state: directory
+    owner: caddy
+    group: caddy
+
+- name: caddy | Ensure Caddyfile.d config directory
+  file:
+    path: '/etc/caddy/Caddyfile.d'
+    state: directory
+    owner: caddy
+    group: caddy
+
+- name: caddy | Install Caddyfile
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile
+    owner: caddy
+    group: caddy
+  notify: Reload Caddy
+
+- name: caddy | Install systemd service description
+  template:
+    src: caddy.service
+    dest: /etc/systemd/system/caddy.service
+
+- name: cadde | Enable systemd service
+  systemd:
+    name: caddy
+    daemon_reload: yes
+    enabled: yes
+    state: started

@@ -1,37 +1,47 @@
 ---
-- name: 'Install role dependencies'
+- name: Unifi | Install role dependencies
   apt:
-    name: "{{ packages }}"
+    name: '{{ packages }}'
     state: present
     install_recommends: false
   vars:
     packages:
-      - "apt-transport-https"
-      - "ca-certificates"
+      - 'apt-transport-https'
+      - 'ca-certificates'
 
-
-- name: Add mongo repository key
+- name: Unifi | Add mongo repository key
   apt_key:
     keyserver: keyserver.ubuntu.com
-    id: 0C49F3730359A14518585931BC711F9BA15703C6 
+    id: 0C49F3730359A14518585931BC711F9BA15703C6
     state: present
 
-- name: Add mongo repository
-  apt_repository: repo='deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse' state=present
+- name: Unifi | Add mongo repository
+  apt_repository:
+    repo: 'deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse'
+    state: present
 
-
-- name: Add unifi repository key
+- name: Unifi | Add unifi repository key
   apt_key:
     keyserver: keyserver.ubuntu.com
     id: 06E85760C0A52C50
     state: present
 
-- name: Add unifi repository
-  apt_repository: repo='deb http://www.ui.com/downloads/unifi/debian stable ubiquiti' state=present
+- name: Unifi | Add unifi repository
+  apt_repository:
+    repo: 'deb http://www.ui.com/downloads/unifi/debian stable ubiquiti'
+    state: present
 
-- name: Install unifi
+- name: Unifi | Install unifi
   apt:
-    name: "unifi"
+    name: 'unifi'
     update_cache: yes
     state: present
 
+- name: Unifi | Ensure caddy proxy
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile.d/unifi
+    owner: caddy
+    group: caddy
+  when: caddy is defined and caddy
+  notify: Reload Caddy

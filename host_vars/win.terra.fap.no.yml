@@ -6,7 +6,7 @@ ansible_shell_type: powershell
 
 hostname: win-terra
 gr_work: false
-win_vnc_password_hex: '{{ local("env", "WIN_VNC_PASSWORD_HEX") }}'
+win_vnc_password_hex: '{{ lookup("env", "WIN_VNC_PASSWORD_HEX") }}'
 
 choco_packages:
   # - 1password
