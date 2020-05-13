@@ -1,0 +1,5 @@
+minio_domains: []
+minio_port: '9000'
+minio_access_key: ''
+minio_secret_key: ''
+minio_directory: ''

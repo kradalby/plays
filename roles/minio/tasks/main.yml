@@ -1,0 +1,64 @@
+---
+- name: minio | Ensure minio
+  get_url:
+    url: https://dl.min.io/server/minio/release/linux-amd64/minio
+    dest: /usr/local/bin/minio
+    mode: '0755'
+  notify: Restart minio
+
+- name: minio | Ensure minio group
+  group:
+    gid: 1996
+    name: minio
+    system: no
+    state: present
+
+- name: minio | Ensure minio user
+  user:
+    uid: 1996
+    name: minio
+    group: minio
+    groups:
+      - storage
+    home: '{{ minio_directory }}'
+    shell: /usr/sbin/nologin
+    comment: Minio object storage
+    create_home: yes
+
+- name: minio | Install minio config
+  template:
+    src: default_minio
+    dest: /etc/default/minio
+    owner: minio
+    group: minio
+  notify: Restart minio
+
+- name: minio | Ensure minio directory permissions
+  file:
+    path: '{{ minio_directory }}'
+    owner: minio
+    group: storage
+    mode: '0755'
+    recurse: yes
+    state: directory
+
+- name: minio | Install Caddyfile
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile.d/minio
+    owner: caddy
+    group: caddy
+  when: caddy is defined and caddy
+  notify: Reload Caddy
+
+- name: minio | Install systemd service description
+  template:
+    src: minio.service
+    dest: /etc/systemd/system/minio.service
+
+- name: minio | Enable systemd service
+  systemd:
+    name: minio
+    daemon_reload: yes
+    enabled: yes
+    state: started

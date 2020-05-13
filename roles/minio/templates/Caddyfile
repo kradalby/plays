@@ -1,0 +1,4 @@
+{{ minio_domains | join(", ") }} {
+    reverse_proxy 127.0.0.1:{{ minio_port }}
+    import cf
+}
