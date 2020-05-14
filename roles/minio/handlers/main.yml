@@ -11,5 +11,6 @@
 
 - name: Restart minio
   service:
-    name: minio
+    name: 'minio-{{ item }}'
     state: restarted
+  loop: '{{ minio_sub_domains }}'

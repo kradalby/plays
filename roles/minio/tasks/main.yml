@@ -20,27 +20,20 @@
     group: minio
     groups:
       - storage
-    home: '{{ minio_directory }}'
+    home: '{{ minio_base_directory }}'
     shell: /usr/sbin/nologin
     comment: Minio object storage
     create_home: yes
 
-- name: minio | Install minio config
-  template:
-    src: default_minio
-    dest: /etc/default/minio
-    owner: minio
-    group: minio
-  notify: Restart minio
-
 - name: minio | Ensure minio directory permissions
   file:
-    path: '{{ minio_directory }}'
+    path: '{{ minio_base_directory }}/{{ item }}'
     owner: minio
     group: storage
     mode: '0755'
     recurse: yes
     state: directory
+  loop: '{{ minio_sub_domains }}'
 
 - name: minio | Install Caddyfile
   template:
@@ -49,16 +42,21 @@
     owner: caddy
     group: caddy
   when: caddy is defined and caddy
-  notify: Reload Caddy
+  notify: Restart Caddy
 
 - name: minio | Install systemd service description
   template:
     src: minio.service
-    dest: /etc/systemd/system/minio.service
-
+    dest: '/etc/systemd/system/minio-{{ item }}.service'
+  loop: '{{ minio_sub_domains }}'
+  loop_control:
+    index_var: index
+  notify:
+    Restart minio
 - name: minio | Enable systemd service
   systemd:
-    name: minio
+    name: 'minio-{{ item }}'
     daemon_reload: yes
     enabled: yes
     state: started
+  loop: '{{ minio_sub_domains }}'

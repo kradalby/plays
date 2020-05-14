@@ -1,9 +1,0 @@
-# Volume to be used for MinIO server.
-MINIO_VOLUMES="{{ minio_directory }}"
-# Use if you want to run MinIO on a custom port.
-MINIO_OPTS="--address :{{ minio_port }}"
-# Access Key of the server.
-MINIO_ACCESS_KEY="{{ minio_access_key }}"
-# Secret key of the server.
-MINIO_SECRET_KEY="{{ minio_secret_key }}"
-MINIO_DOMAIN="{{ minio_domains | join(',') }}"

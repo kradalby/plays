@@ -11,8 +11,17 @@ WorkingDirectory=/usr/local/
 User=minio
 Group=minio
 
-EnvironmentFile=/etc/default/minio
-ExecStartPre=/bin/bash -c "if [ -z \"${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not set in /etc/default/minio\"; exit 1; fi"
+# Volume to be used for MinIO server.
+Environment=MINIO_VOLUMES="{{ minio_base_directory }}/{{ item }}"
+# Use if you want to run MinIO on a custom port.
+Environment=MINIO_OPTS="--address :{{ minio_base_port + index }}"
+# Access Key of the server.
+Environment=MINIO_ACCESS_KEY="{{ minio_access_key }}"
+# Secret key of the server.
+Environment=MINIO_SECRET_KEY="{{ minio_secret_key }}"
+Environment=MINIO_DOMAIN="{{ item }}.{{ minio_base_domain }}"
+
+ExecStartPre=/bin/bash -c "if [ -z \"${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not\"; exit 1; fi"
 
 ExecStart=/usr/local/bin/minio server $MINIO_OPTS $MINIO_VOLUMES
 
