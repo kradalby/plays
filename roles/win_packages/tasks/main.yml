@@ -3,18 +3,19 @@
   win_chocolatey:
     name:
       # - ccleaner
-      - git
-      - vim
-      - windirstat
-      - kitty
-      - dos2unix
-      - curl
       - 7zip.install
-      - python
-      - vscode
-      - rufus
-      - vivaldi
+      - angryip
+      - curl
+      - dos2unix
       - firefox
+      - git
+      - kitty
+      - python
+      - rufus
+      - vim
+      - vivaldi
+      - vscode
+      - windirstat
     state: latest
 
 - name: Windows Packages | Remove unwanted choco packages
