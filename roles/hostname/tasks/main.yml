@@ -2,6 +2,13 @@
 - name: hostname | Set hostname
   hostname:
     name: '{{  inventory_hostname.split(".")[0] }}.{{  inventory_hostname.split(".")[1] }}'
+    use: debian
+
+- name: hostname | Set hostname
+  hostname:
+    name: '{{  inventory_hostname.split(".")[0] }}.{{  inventory_hostname.split(".")[1] }}'
+    use: systemd
+  ignore_errors: yes
 
 - name: hostname | Ensure /etc/hosts
   template:

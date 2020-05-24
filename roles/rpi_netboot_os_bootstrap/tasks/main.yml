@@ -10,4 +10,4 @@
 
 - name: rpi | Set hostname
   hostname:
-    name: '{{  ansible_fqdn.split(".")[0] }}'
+    name: '{{  inventory_hostname.split(".")[0] }}'
