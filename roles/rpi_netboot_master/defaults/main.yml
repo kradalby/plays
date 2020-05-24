@@ -1,0 +1,4 @@
+---
+router_gateway_addr: ''
+rpi_netboot_static_leases: []
+rpi_netboot_nodes: []

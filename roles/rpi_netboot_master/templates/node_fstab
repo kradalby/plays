@@ -1,0 +1,8 @@
+# LABEL=writable	/	 ext4	defaults	0 0
+# LABEL=system-boot       /boot/firmware  vfat    defaults        0       1
+proc            /proc           proc    defaults        0       0
+# LABEL=writable /dev/nfs       /               nfs    defaults          1       1
+{{ router_gateway_addr }}:/tftpboot/{{ item.ip }} /boot/firmware nfs defaults,vers=4.1,proto=tcp 0 0
+none            /tmp            tmpfs   defaults        0       0
+none            /var/lock       tmpfs   defaults        0       0
+none            /var/tmp        tmpfs   defaults        0       0

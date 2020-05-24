@@ -9,12 +9,12 @@
   #       update_cache: true
 
   roles:
-    # - role: roles/dotfiles
-    # - role: roles/macos-defaults
-    # - role: roles/macos-packages
-    # - role: roles/macos-caddy-server
-    #   when: caddy is defined and caddy
-    # - role: roles/macos-code-server
-    #   when: code is defined and code
+    - role: roles/dotfiles
+    - role: roles/macos-defaults
+    - role: roles/macos-packages
+    - role: roles/macos-caddy-server
+      when: caddy is defined and caddy
+    - role: roles/macos-code-server
+      when: code is defined and code
     - role: roles/macos-drone-runner-exec
       when: drone is defined and drone

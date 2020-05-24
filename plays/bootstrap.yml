@@ -19,8 +19,9 @@
         state: latest
 
   roles:
+    - role: hostname
     - role: repo
-      when: skip_repo is not defined
+      when: skip_repo is defined or not skip_repo
     - role: datetime
     - role: locale
     - role: dotfiles

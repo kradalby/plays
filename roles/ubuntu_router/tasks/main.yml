@@ -1,0 +1,231 @@
+---
+- name: Ubuntu router | Enable IPv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    state: present
+    reload: yes
+
+- name: Ubuntu router | Enable IPv6 forwarding
+  sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: '1'
+    state: present
+    reload: yes
+
+- name: Ubuntu router | Ensure WireGuard
+  apt:
+    update_cache: yes
+    pkg: wireguard
+    state: latest
+
+- name: Ubuntu router | Ensure WireGuard service
+  systemd:
+    name: wg-quick@wg0
+    masked: no
+    enabled: yes
+    state: started
+
+- name: Ubuntu router | Install netplan config
+  template:
+    src: netplan.yaml
+    dest: /etc/netplan/99-rpi-router.yaml
+    mode: '0644'
+  notify: Apply netplan
+
+- name: Ubuntu router | Ensure dnsmasq
+  apt:
+    pkg: dnsmasq
+    state: latest
+  notify: Restart dnsmasq
+
+- name: Ubuntu router | Install dnsmasq config
+  template:
+    src: dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+    mode: '0644'
+  notify: Restart dnsmasq
+
+- name: Ubuntu router | Ensure dnsmasq resolv.conf
+  template:
+    src: resolv.conf
+    dest: /etc/resolv.conf
+    mode: '0644'
+  notify: Restart dnsmasq
+
+- name: Ubuntu router | Ensure dnsmasq logrotate
+  template:
+    src: dnsmasq.logrotate
+    dest: /etc/logrotate.d/dnsmasq
+    mode: '0644'
+
+- name: Ubuntu router | Disable systemd-resolved
+  systemd:
+    name: systemd-resolved
+    enabled: false
+    state: stopped
+
+#
+# Firewall
+#
+
+- name: Ubuntu router | Flush all tables
+  iptables:
+    flush: yes
+    table: '{{ item }}'
+  loop:
+    - filter
+    - nat
+    - mangle
+
+    # - name: Ubuntu router | Drop incoming traffic
+    #   iptables:
+    #     chain: '{{ item }}'
+    #     policy: DROP
+    #   loop:
+    #     - INPUT
+    #     - FORWARD
+    #     - OUTPUT
+    #   notify: Save iptables
+
+- name: Ubuntu router | Accept NAT chains
+  iptables:
+    table: nat
+    chain: '{{ item }}'
+    policy: ACCEPT
+  loop:
+    - PREROUTING
+    - OUTPUT
+    - POSTROUTING
+  notify: Save iptables
+
+- name: Ubuntu router | Accept mangle chains
+  iptables:
+    table: mangle
+    chain: '{{ item }}'
+    policy: ACCEPT
+  loop:
+    - PREROUTING
+    - INPUT
+    - FORWARD
+    - OUTPUT
+    - POSTROUTING
+  notify: Save iptables
+
+- name: Ubuntu router | Allow loopback to do anything
+  iptables:
+    chain: OUTPUT
+    out_interface: lo
+    jump: ACCEPT
+  notify: Save iptables
+
+- name: Ubuntu router | Allow loopback to do anything
+  iptables:
+    chain: INPUT
+    in_interface: lo
+    jump: ACCEPT
+  notify: Save iptables
+
+- name: Ubuntu router | Allow incoming established
+  iptables:
+    ctstate:
+      - ESTABLISHED
+      - RELATED
+    chain: INPUT
+    jump: ACCEPT
+  notify: Save iptables
+
+- name: Ubuntu router | Allow outgoing
+  iptables:
+    ctstate:
+      - NEW
+      - ESTABLISHED
+      - RELATED
+    chain: OUTPUT
+    jump: ACCEPT
+  notify: Save iptables
+
+- name: Ubuntu router | Drop invalid packets
+  iptables:
+    ctstate:
+      - INVALID
+    chain: '{{ item }}'
+    jump: DROP
+  loop:
+    - INPUT
+    - FORWARD
+    - OUTPUT
+  notify: Save iptables
+
+# - name: Ubuntu router | Drop spoofed source packets
+#   iptables:
+#     chain: INPUT
+#     jump: DROP
+#     source: '{{ item }}'
+#   loop:
+#     - 169.254.0.0/16
+#     - 172.16.0.0/12
+#     - 127.0.0.0/8
+#     - 224.0.0.0/4
+#     - 240.0.0.0/5
+#     - 0.0.0.0/8
+#   notify: Save iptables
+
+# - name: Ubuntu router | Drop spoofed destination packets
+#   iptables:
+#     chain: INPUT
+#     jump: DROP
+#     destination: '{{ item }}'
+#   loop:
+#     - 224.0.0.0/4
+#     - 240.0.0.0/5
+#     - 0.0.0.0/8
+#     - 239.255.255.0/24
+#     - 255.255.255.255
+#   notify: Save iptables
+
+- name: Ubuntu router | Open ports to services
+  iptables:
+    chain: INPUT
+    ctstate:
+      - NEW
+    jump: ACCEPT
+    protocol: tcp
+    destination_port: '{{ item }}'
+  loop:
+    - '22' # SSH
+    - '80' # HTTP
+    - '443' # HTTPS
+  notify: Save iptables
+
+- name: Ubuntu router | Forward incoming established/related
+  iptables:
+    ctstate:
+      - ESTABLISHED
+      - RELATED
+    chain: FORWARD
+    in_interface: '{{ router_wan }}'
+    out_interface: '{{ router_lan }}'
+    jump: ACCEPT
+  notify: Save iptables
+
+- name: Ubuntu router | Forward outgoing traffic
+  iptables:
+    chain: FORWARD
+    in_interface: '{{ router_lan }}'
+    out_interface: '{{ router_wan }}'
+    jump: ACCEPT
+  notify: Save iptables
+
+- name: Ubuntu router | Masquerade
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: '{{ router_wan }}'
+    jump: MASQUERADE
+  notify: Save iptables
+
+- name: Ubuntu router | Ensure iptables-persistent
+  apt:
+    pkg: iptables-persistent
+    state: latest

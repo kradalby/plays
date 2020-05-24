@@ -1,0 +1,30 @@
+[pi4]
+
+# By default, Ubuntu loads its own u-boot loader, but we want to use
+# the built in RPi one, so get the kernel directly
+# https://wiki.ubuntu.com/ARM/RaspberryPi#Change_the_bootloader
+kernel=vmlinuz
+# kernel=uboot_rpi_4.bin
+initramfs initrd.img followkernel
+max_framebuffers=2
+
+[pi2]
+kernel=uboot_rpi_2.bin
+
+[pi3]
+kernel=uboot_rpi_3.bin
+
+[all]
+arm_64bit=1
+# device_tree_address=0x03000000
+
+enable_uart=1
+dtparam=audio=on
+dtparam=i2c_arm=on
+dtparam=spi=on
+cmdline=cmdline.txt
+
+# Disable SD card to avoid interrupt
+# log spam
+# https://github.com/raspberrypi/linux/issues/3092#issuecomment-589981998
+dtparam=sd_poll_once=on

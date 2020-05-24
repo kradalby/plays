@@ -1,0 +1,25 @@
+---
+- name: Restart hostapd
+  service:
+    name: hostapd
+    state: restarted
+
+- name: Apply netplan
+  command: netplan apply
+
+- name: Restart dnsmasq
+  service:
+    name: dnsmasq
+    state: restarted
+
+- name: Save iptables
+  # command: iptables-save -f /etc/iptables/rules.v4
+  command: echo "test"
+
+- name: Restart nfs
+  service:
+    name: '{{ item }}'
+    state: restarted
+  loop:
+    - rpcbind
+    - nfs-kernel-server

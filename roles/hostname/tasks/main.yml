@@ -1,0 +1,9 @@
+---
+- name: hostname | Set hostname
+  hostname:
+    name: '{{  inventory_hostname.split(".")[0] }}.{{  inventory_hostname.split(".")[1] }}'
+
+- name: hostname | Ensure /etc/hosts
+  template:
+    src: hosts
+    dest: /etc/hosts

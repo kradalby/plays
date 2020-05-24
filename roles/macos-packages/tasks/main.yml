@@ -16,13 +16,15 @@
     name: '{{ item }}'
     state: present
   loop:
-    - homebrew/services
+    - AdoptOpenJDK/openjdk
     - drone/drone
+    - golangci/tap
+    - homebrew/cask
+    - homebrew/cask-drivers
+    - homebrew/services
+    - ibm-swift/kitura
     - jotta/cli
     - kradalby/tap
-    - golangci/tap
-    - ibm-swift/kitura
-    - homebrew/cask
 
 - name: Ensure macOS Homebrew base packages
   homebrew:
@@ -87,6 +89,7 @@
       - spotify
       - teamviewer
       - visual-studio-code
+      - adoptopenjdk8
     state: latest
 
 - name: Ensure macOS Homebrew cask additional packages

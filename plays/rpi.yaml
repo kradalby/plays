@@ -2,7 +2,10 @@
 - name: Configure Raspberry Pi
   hosts: rpi
   roles:
+    - role: roles/rpi_netboot_os_bootstrap
+      when: netboot is defined and netboot
     - role: roles/swap-off
     - role: roles/rpi_journald
     - role: roles/rpi_log2ram
     - role: roles/rpi_tmpfs_mounts
+      when: netboot is undefined or not netboot

@@ -1,0 +1,11 @@
+---
+- name: Trim Ubuntu | Remove packages
+  apt:
+    update_cache: yes
+    state: absent
+    purge: yes
+    pkg:
+      - snapd
+      - docker
+      - docker-ce
+      - docker-ce-cli

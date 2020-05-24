@@ -1,6 +1,6 @@
 ---
 ansible_user: kradalby
-hostname: vmac.terra
+hostname: kramacbook
 caddy: false
 code: false
 drone: false
@@ -50,6 +50,8 @@ brew_cask_packages:
   - 1password
   - 1password-cli
   - adobe-creative-cloud
+  - adoptopenjdk14
+  - adoptopenjdk8
   - altserver
   - balenaetcher
   - barrier
@@ -60,7 +62,6 @@ brew_cask_packages:
   - dotnet-sdk
   - free-ruler
   - gas-mask
-  - java
   - little-snitch
   - menubar-colors
   - menumeters

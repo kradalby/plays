@@ -38,7 +38,10 @@ mdns-socat.tjoda.fap.no
 # rpi.ldn.fap.no
 
 [rpi]
-rpi.ldn.fap.no
+# rpi.ldn.fap.no
+rpi1.ldn.fap.no skip_repo=true
+rpi2.ldn.fap.no netboot=true skip_repo=true
+rpi3.ldn.fap.no netboot=true skip_repo=true
 
 [ubuntu:children]
 storage
@@ -51,6 +54,7 @@ prod_terra_kubernetes
 prod_ntnu_kubernetes
 socat_mdns
 rpi
+vlan_router
 
 [macs]
 kramacbook.vpn.fap.no

@@ -15,9 +15,16 @@
     update_cache: yes
     state: latest
     pkg: log2ram
-  register: log2ram
+  notify: Restart log2ram
 
-- name: log2ram | Reboot
-  reboot:
-    reboot_timeout: 3600
-  when: log2ram.changed
+- name: log2ram | Clean journald dir
+  file:
+    path: /var/log/journal
+    state: '{{ item }}'
+    owner: root
+    group: systemd-journal
+    mode: '0755'
+  loop:
+    # - absent
+    - directory
+  notify: Restart journald

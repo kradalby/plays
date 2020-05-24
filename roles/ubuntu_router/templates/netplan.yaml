@@ -1,0 +1,21 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+{% for inf in router_bridge %}
+    {{ inf }}:
+      dhcp4: no
+{% endfor %}
+{% if router_vlan_wan %}
+  vlans:
+    {{ router_wan }}:
+      id: {{ router_vlan_wan_id }}
+      link: {{ router_vlan_wan_if }}
+      dhcp4: {{ router_wan_dhcp }}
+{% endif %}
+  bridges:
+    br0:
+      interfaces: {{ router_bridge }}
+      dhcp4: false
+      addresses:
+        - {{ router_gateway_addr }}/{{ router_gateway_mask }}

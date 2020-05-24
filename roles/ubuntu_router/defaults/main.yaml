@@ -1,0 +1,14 @@
+---
+router_vlan_wan: false
+router_vlan_wan_id: 317
+router_vlan_wan_if: ''
+router_wan: uplink
+router_wan_dhcp: true
+router_lan: br0
+router_gateway_addr: ''
+router_gateway_mask: ''
+router_domain: ''
+router_bridge: []
+router_upstream_dns: []
+router_dhcp_start: ''
+router_dhcp_end: ''

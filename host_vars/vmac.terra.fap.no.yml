@@ -51,9 +51,10 @@ brew_packages:
 
 brew_cask_packages:
   # - tunnelblick
+  - adoptopenjdk14
+  - adoptopenjdk8
   - altserver
   - docker
   - dotnet-sdk
-  - java
   - powershell
   - syncthing

@@ -1,0 +1,10 @@
+---
+- name: Restart log2ram
+  systemd:
+    name: log2ram
+    state: restarted
+
+- name: Restart journald
+  systemd:
+    name: systemd-journald
+    state: restarted

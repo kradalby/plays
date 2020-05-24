@@ -1,0 +1,37 @@
+#cloud-config
+# vim: syntax=yaml
+#
+# For initialisation of a fresh Pi:
+# Add to "user-data" on boot partition
+
+hostname: {{ item.name }}
+
+disable_root: false
+ssh_authorized_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBV4ZjlUvRDs70qHD/Ldi6OTkFpDEFgfbXbqSnaL2Qup
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMCZOutN9LIpx5mIgJVbyEbURzurA8IUdBm2V7aXD33D
+write_files:
+  - path: "/etc/ssh/sshd_config.d/permit_root"
+    owner: "root:root"
+    permissions: "0644"
+    content: |
+      PermitRootLogin without-password
+
+users:
+  - name: ubuntu
+    inactive: true
+
+locale: "en_US.UTF-8"
+timezone: "Europe/London"
+
+package_update: true
+package_upgrade: true
+packages:
+  - nfs-common
+
+runcmd:
+  - apt autoremove --purge snapd -y
+  - rm -rf /var/cache/snapd/
+
+power_state:
+  mode: reboot

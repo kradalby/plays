@@ -1,0 +1,27 @@
+---
+- name: Wireless AP | Ensure hostapd
+  apt:
+    update_cache: yes
+    pkg: hostapd
+    state: latest
+
+- name: Wireless AP | Install hostapd config
+  template:
+    src: hostapd.conf
+    dest: /etc/hostapd/hostapd.conf
+    mode: '0644'
+  notify: Restart hostapd
+
+- name: Wireless AP | Ensure hostapd default config
+  lineinfile:
+    path: /etc/default/hostapd
+    line: 'DAEMON_CONF="/etc/hostapd/hostapd.conf"'
+    create: yes
+    mode: 0644
+
+- name: Wireless AP | Ensure hostapd service
+  systemd:
+    name: hostapd
+    masked: no
+    enabled: yes
+    state: started

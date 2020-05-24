@@ -1,0 +1,41 @@
+---
+caddy: true
+caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
+
+router_vlan_wan: true
+router_vlan_wan_id: 317
+router_vlan_wan_if: eth0
+router_wan: uplink
+router_wan_dhcp: true
+router_lan: br0
+router_gateway_addr: 10.65.0.1
+router_gateway_mask: 24
+router_domain: ldn.fap.no
+router_bridge:
+  - eth0
+  - wlan0
+router_upstream_dns:
+  - 1.1.1.1
+  - 1.0.0.1
+router_dhcp_start: 10.65.0.151
+router_dhcp_end: 10.65.0.220
+
+router_ap_ssid: dalby-london-backup
+router_ap_key: Th1sIsForEm3rgency0nly!
+router_ap_if: wlan0
+
+rpi_netboot_static_leases:
+  - mac: dc:a6:32:a8:d3:7c
+    ip: 10.65.0.31
+  - mac: dc:a6:32:a8:e6:6b
+    ip: 10.65.0.32
+    #  - mac: aa:bb:cc:dd:ee:dd
+    #    ip: 10.65.0.33
+
+rpi_netboot_nodes:
+  - name: rpi2
+    ip: 10.65.0.31
+  - name: rpi3
+    ip: 10.65.0.32
+    #   - name: rpi4
+    #     ip: 10.65.0.33

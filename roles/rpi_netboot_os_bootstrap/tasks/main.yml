@@ -1,0 +1,13 @@
+---
+- name: rpi | Hold kernels
+  dpkg_selections:
+    name: '{{ item }}'
+    selection: hold
+  loop:
+    - linux-headers-raspi
+    - linux-image-raspi
+    - linux-raspi
+
+- name: rpi | Set hostname
+  hostname:
+    name: '{{  ansible_fqdn.split(".")[0] }}'
