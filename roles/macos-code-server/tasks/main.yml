@@ -1,67 +1,17 @@
 ---
-- name: code-server | Ensure runner
-  unarchive:
-    src: 'https://github.com/cdr/code-server/releases/download/3.2.0/code-server-3.2.0-darwin-x86_64.zip'
-    remote_src: yes
-    dest: '{{ ansible_env.HOME }}'
-    mode: '0755'
-    creates: '{{ ansible_env.HOME }}/code-server/code-server'
-    list_files: yes
-  register: downloaded
+- name: code-server | Ensure code-server
+  homebrew:
+    pkg: code-server
+    state: latest
+  notify: Restart code-server
 
-- name: code-server | Move directory
-  command:
-    cmd: 'mv {{ downloaded.files[0] }} code-server'
-    creates: '{{ ansible_env.HOME }}/code-server/code-server'
-  when: downloaded.changed
-
-- name: code-server | Link Binary
+- name: code-server | Ensure config dir
   file:
-    src: '{{ ansible_env.HOME }}/code-server/code-server'
-    dest: '{{ ansible_env.HOME }}/bin/code-server'
-    state: link
-
-- name: code-server | Ensure log folder
-  file:
-    path: '{{ ansible_env.HOME }}/log/code-server'
+    path: '{{ ansible_env.HOME }}/.config/code-server'
     state: directory
 
-- name: code-server | Install service
+- name: code-server | Install config
   template:
-    src: code-server.plist
-    dest: '{{ ansible_env.HOME }}/Library/LaunchAgents/code-server.plist'
-  register: install_service
-
-- name: code-server | Unload code-server
-  command: 'launchctl unload {{ ansible_env.HOME }}/Library/LaunchAgents/code-server.plist'
-  when: install_service.changed
-
-- name: code-server | Load code-server
-  command: 'launchctl load {{ ansible_env.HOME }}/Library/LaunchAgents/code-server.plist'
-  when: install_service.changed
-
-- name: code-server | Stop code-server
-  command: 'launchctl stop no.kradalby.code-server'
-  when: downloaded.changed and install_service.changed
-
-- name: code-server | Start code-server
-  command: 'launchctl start no.kradalby.code-server'
-  when: downloaded.changed and install_service.changed
-
-- name: code-server | Check if caddy is installed
-  stat:
-    path: '{{ ansible_env.HOME }}/.config/caddy'
-  register: caddy
-
-- name: code-server | Install Caddyfile
-  template:
-    src: Caddyfile
-    dest: '{{ ansible_env.HOME }}/.config/caddy/code-server'
-  when: caddy.stat.exists and caddy.stat.isdir
-  register: caddyfile
-
-- name: code-server | Reload caddy
-  file:
-    path: '{{ ansible_env.HOME }}/.config/Caddyfile'
-    state: touch
-  when: caddyfile.changed
+    src: config.yaml
+    dest: '{{ ansible_env.HOME }}/.config/code-server/config.yaml'
+  notify: Restart code-server
