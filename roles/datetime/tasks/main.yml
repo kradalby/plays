@@ -2,6 +2,7 @@
 - name: datetime | Set timezone to UTC
   timezone:
     name: UTC
+  ignore_errors: yes
 
 - name: datetime | Ensure chrony
   apt:

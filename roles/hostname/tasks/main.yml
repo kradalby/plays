@@ -1,10 +1,10 @@
 ---
-- name: hostname | Set hostname
-  hostname:
-    name: '{{  inventory_hostname.split(".")[0] }}.{{  inventory_hostname.split(".")[1] }}'
-    use: debian
+# - name: hostname | Set hostname Ubuntu
+#   hostname:
+#     name: '{{  inventory_hostname.split(".")[0] }}.{{  inventory_hostname.split(".")[1] }}'
+#     use: debian
 
-- name: hostname | Set hostname
+- name: hostname | Set hostname Systemd
   hostname:
     name: '{{  inventory_hostname.split(".")[0] }}.{{  inventory_hostname.split(".")[1] }}'
     use: systemd

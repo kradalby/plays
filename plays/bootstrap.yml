@@ -21,7 +21,7 @@
   roles:
     - role: hostname
     - role: repo
-      when: skip_repo is defined or not skip_repo
+      when: skip_repo is undefined or not skip_repo
     - role: datetime
     - role: locale
     - role: dotfiles
