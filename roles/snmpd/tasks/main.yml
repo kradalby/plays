@@ -2,12 +2,12 @@
 - name: install snmpd
   apt:
     name: "{{ packages }}"
-    state: latest
+    state: absent
   vars:
     packages:
     - snmpd
     - snmp-mibs-downloader
 
-- name: configure snmpd
-  template: src=snmpd.conf.j2 dest=/etc/snmp/snmpd.conf
-  notify: restart snmpd
+# - name: configure snmpd
+#   template: src=snmpd.conf.j2 dest=/etc/snmp/snmpd.conf
+#   notify: restart snmpd
