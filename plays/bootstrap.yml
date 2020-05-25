@@ -16,6 +16,7 @@
           - tmux
           - socat
           - tcpdump
+          - silversearcher-ag
         state: latest
 
   roles:
