@@ -4,6 +4,7 @@
   roles:
     - role: roles/rpi_netboot_os_bootstrap
       when: netboot is defined and netboot
+    - role: roles/rpi_trim_ubuntu
     - role: roles/swap-off
     - role: roles/rpi_journald
     - role: roles/rpi_log2ram
