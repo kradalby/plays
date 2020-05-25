@@ -39,3 +39,7 @@ rpi_netboot_nodes:
     ip: 10.65.0.32
     #   - name: rpi4
     #     ip: 10.65.0.33
+    #
+router_bgp_as: '51000'
+router_bgp_neighbour_as: '51030'
+router_bgp_neighbours: '{{ rpi_netboot_nodes }}'

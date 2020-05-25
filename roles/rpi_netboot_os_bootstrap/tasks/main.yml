@@ -17,7 +17,13 @@
 - name: RPi netboot special | Mask unwanted services
   systemd:
     name: '{{ item }}'
-    mask: yes
+    masked: yes
   loop:
     - lvm2-lvmpolld.socket
     - lvm2-monitor.service
+    - multipathd.service
+    - unattended-upgrades.service
+    - firewalld.service
+    - ufw.service
+    - fwupd.service
+    - fwupd-refresh.timer

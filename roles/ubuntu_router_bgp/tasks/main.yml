@@ -1,0 +1,29 @@
+---
+- name: BGP | Ensure bird
+  apt:
+    update_cache: yes
+    pkg: bird
+    state: latest
+
+- name: BGP | ensure bird.conf.d
+  file:
+    path: /etc/bird/bird.conf.d
+    state: directory
+    owner: bird
+    group: bird
+
+- name: BGP | Install bird config
+  template:
+    src: bird.conf
+    dest: /etc/bird/bird.conf
+    mode: '0644'
+    owner: bird
+    group: bird
+  notify: Restart bird
+
+- name: BGP | Ensure bird service
+  systemd:
+    name: bird
+    masked: no
+    enabled: yes
+    state: started
