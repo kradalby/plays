@@ -1,5 +1,5 @@
 ---
-- name: rpi | Hold kernels
+- name: RPi netboot special | Hold kernels
   dpkg_selections:
     name: '{{ item }}'
     selection: hold
@@ -8,6 +8,16 @@
     - linux-image-raspi
     - linux-raspi
 
-- name: rpi | Set hostname
-  hostname:
-    name: '{{  inventory_hostname.split(".")[0] }}'
+- name: RPi netboot special | NFS dependencies
+  apt:
+    pkg:
+      - nfs-common
+    state: latest
+
+- name: RPi netboot special | Mask unwanted services
+  systemd:
+    name: '{{ item }}'
+    mask: yes
+  loop:
+    - lvm2-lvmpolld.socket
+    - lvm2-monitor.service
