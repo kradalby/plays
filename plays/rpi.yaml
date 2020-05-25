@@ -8,5 +8,5 @@
     - role: roles/swap-off
     - role: roles/rpi_journald
     - role: roles/rpi_log2ram
-    - role: roles/rpi_tmpfs_mounts
-      when: netboot is undefined or not netboot
+    # - role: roles/rpi_tmpfs_mounts
+    #   when: netboot is undefined or not netboot
