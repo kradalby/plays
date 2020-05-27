@@ -46,10 +46,10 @@ brew_packages:
   - wireguard-go
 
 brew_cask_packages:
+  # - adobe-creative-cloud
   # - tunnelblick
   - 1password
   - 1password-cli
-  - adobe-creative-cloud
   - adoptopenjdk14
   - adoptopenjdk8
   - altserver
