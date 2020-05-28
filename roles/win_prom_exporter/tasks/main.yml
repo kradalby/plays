@@ -9,6 +9,11 @@
     url: 'https://github.com/martinlindhe/wmi_exporter/releases/download/v0.12.0/wmi_exporter-0.12.0-amd64.msi'
     dest: 'C:\temp\windows_exporter.msi'
 
+# - name: Windows Prometheus | Remove Windows Exporter
+#   win_package:
+#     product_id: '{4DD1D2D3-0038-44C5-8E1B-2C738A8E7E8C}'
+#     state: absent
+
 - name: Windows Prometheus | Install Windows Exporter
   # Product ID: https://stackoverflow.com/questions/29937568/how-can-i-find-the-product-guid-of-an-installed-msi-setup
   win_package:
@@ -16,7 +21,7 @@
     product_id: '{4DD1D2D3-0038-44C5-8E1B-2C738A8E7E8C}'
     state: present
     arguments:
-      - ENABLED_COLLECTORS="memory,process,remote_fx,tcp,vmware"
+      - ENABLED_COLLECTORS="cpu,cs,logical_disk,net,os,service,system,memory,process,remote_fx,tcp,vmware"
 
 - name: Windows Prometheus | Remove Windows Exporter installer
   win_file:
