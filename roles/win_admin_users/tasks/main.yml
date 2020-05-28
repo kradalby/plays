@@ -1,0 +1,10 @@
+---
+- name: Windows Users | Add admin users
+  win_user:
+    name: '{{ item.username }}'
+    password: '{{ item.password }}'
+    state: present
+    groups:
+      - Users
+      - Administrators
+  loop: '{{ win_admin_users }}'
