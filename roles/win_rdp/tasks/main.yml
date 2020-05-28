@@ -34,7 +34,7 @@
     action: allow
     direction: in
     protocol: '{{ item.protocol }}'
-    remoteip: '{{ win_allowed_networks | join(",") }}'
+    remoteip: '{{ win_allowed_networks | join(",") if win_allowed_networks|length else "any" }}'
     state: present
     enabled: true
     service: termservice
