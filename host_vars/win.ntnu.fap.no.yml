@@ -12,6 +12,8 @@ win_admin_users:
   - username: danielle
     password: '{{ lookup("env", "WIN_DANIELLE_PASSWD") }}'
 
+exporter: true
+
 choco_packages:
   # - 1password
   - microsoft-windows-terminal
@@ -21,3 +23,5 @@ choco_packages:
   - vmware-tools
 # choco_packages_privileged:
 # - citrix-workspace
+#
+win_allowed_networks: []
