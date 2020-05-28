@@ -8,6 +8,7 @@
     - role: roles/win_hostname
     - role: roles/win_admin_users
     - role: roles/win_prom_exporter
+      when: exporter is defined and exporter
     - role: roles/win_vnc
     - role: roles/win_ssh
     - role: roles/win_ping
