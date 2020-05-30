@@ -86,7 +86,3 @@
     state: started
     start_mode: auto
   register: vnc_service_installed
-
-- name: Windows VNC | Reboot
-  win_reboot:
-  when: vnc_installed.changed and vnc_service_installed.changed

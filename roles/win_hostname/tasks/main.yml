@@ -3,7 +3,5 @@
   win_hostname:
     name: '{{ hostname }}'
   register: resp
-
-- name: Windows Hostname | Reboot
-  win_reboot:
-  when: resp.reboot_required
+  changed_when: resp.reboot_required
+  notify: Reboot Windows

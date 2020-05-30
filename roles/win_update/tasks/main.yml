@@ -6,8 +6,5 @@
       - CriticalUpdates
       - UpdateRollups
   register: resp
-
-- name: Windows Update | Reboot
-  win_reboot:
-    reboot_timeout: 3600
-  when: resp.reboot_required
+  changed_when: resp.reboot_required
+  notify: Reboot Windows
