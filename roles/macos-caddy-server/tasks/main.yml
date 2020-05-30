@@ -26,17 +26,11 @@
   template:
     src: Caddyfile
     dest: '{{ ansible_env.HOME }}/.config/Caddyfile'
+  when: Reload caddy
 
 - name: caddy | Install service
   template:
     src: caddy.plist
     dest: '{{ ansible_env.HOME }}/Library/LaunchAgents/caddy.plist'
   register: install_service
-
-- name: caddy | Unload caddy
-  command: 'launchctl unload {{ ansible_env.HOME }}/Library/LaunchAgents/caddy.plist'
-  when: install_service.changed
-
-- name: caddy | Load caddy
-  command: 'launchctl load {{ ansible_env.HOME }}/Library/LaunchAgents/caddy.plist'
-  when: install_service.changed
+  when: Reload caddy

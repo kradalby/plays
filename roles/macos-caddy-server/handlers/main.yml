@@ -1,0 +1,16 @@
+---
+- name: Stop caddy
+  command: 'launchctl stop caddy'
+  listen: Restart caddy
+
+- name: Start caddy
+  command: 'launchctl start caddy'
+  listen: Restart caddy
+
+- name: Unload caddy
+  command: 'launchctl unload {{ ansible_env.HOME }}/Library/LaunchAgents/caddy.plist'
+  listen: Reload caddy
+
+- name: Load caddy
+  command: 'launchctl load {{ ansible_env.HOME }}/Library/LaunchAgents/caddy.plist'
+  listen: Reload caddy
