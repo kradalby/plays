@@ -27,6 +27,7 @@
     - role: locale
     - role: dotfiles
     - role: apticron
+    - role: ubuntu_no_snap
     - role: postfix
       when: skip_postfix is not defined
     - role: roles/caddy-server

@@ -1,0 +1,15 @@
+---
+- name: No Snap Ubuntu | Ensure snap is absent
+  apt:
+    update_cache: yes
+    state: absent
+    purge: yes
+    pkg:
+      - snapd
+
+- name: No Snap Ubuntu | Deprioritize snap
+  template:
+    src: apt-preferences
+    dest: /etc/apt/preferences.d/99-Prohibit-Snapd
+
+
