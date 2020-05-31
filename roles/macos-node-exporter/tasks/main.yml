@@ -1,0 +1,12 @@
+---
+- name: macOS node-exporter | Ensure node-exporter
+  homebrew:
+    pkg: node_exporter
+    state: latest
+  register: resp
+  notify: Restart node-exporter
+
+- name: macOS node-exporter | Ensure initial start
+  command: brew services start node_exporter
+  when: resp.changed
+

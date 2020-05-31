@@ -14,6 +14,8 @@
     - role: roles/macos-packages
     - role: roles/macos-caddy-server
       when: caddy is defined and caddy
+    - role: roles/macos-node-exporter
+      when: exporter is defined and exporter
     - role: roles/macos-code-server
       when: code is defined and code
     - role: roles/macos-drone-runner-exec

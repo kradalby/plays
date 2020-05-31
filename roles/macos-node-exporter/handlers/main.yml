@@ -1,0 +1,3 @@
+---
+- name: Restart node-exporter
+  command: brew services restart node_exporter
