@@ -8,6 +8,10 @@ hostname: win-terra
 gr_work: false
 win_vnc_password_hex: '{{ lookup("env", "WIN_VNC_PASSWORD_HEX") }}'
 
+win_admin_users:
+  - username: danielle
+    password: '{{ lookup("env", "WIN_DANIELLE_PASSWD") }}'
+
 exporter: true
 
 choco_packages:
@@ -17,5 +21,6 @@ choco_packages:
   - kubernetes-cli
   - kubernetes-helm
   - vmware-tools
+  - googlechrome
 # choco_packages_privileged:
 # - citrix-workspace

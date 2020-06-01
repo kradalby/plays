@@ -6,6 +6,7 @@
     - role: roles/win_update
     - role: roles/win_debloat
     - role: roles/win_hostname
+    - role: roles/win_time_region
     - role: roles/win_admin_users
     - role: roles/win_prom_exporter
       when: exporter is defined and exporter

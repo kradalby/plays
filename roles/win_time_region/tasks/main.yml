@@ -2,15 +2,9 @@
 - name: Windows timezone | Ensure timezone UTC
   win_timezone:
     timezone: UTC
-  register: resp
-  changed_when: resp.reboot_required
-  notify: Reboot Windows
 
 - name: Windows region | Ensure region settings
   win_region:
     format: en-GB
     lcation: 177
     unicode_language: en-GB
-  register: resp
-  changed_when: resp.reboot_required
-  notify: Reboot Windows

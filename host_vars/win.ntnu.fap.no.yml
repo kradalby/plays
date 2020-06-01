@@ -21,6 +21,7 @@ choco_packages:
   - kubernetes-cli
   - kubernetes-helm
   - vmware-tools
+  - googlechrome
 # choco_packages_privileged:
 # - citrix-workspace
 #
