@@ -1,4 +1,10 @@
 ---
+- name: locale | Ensure locale package
+  apt:
+    pkg:
+      - locales
+    state: latest
+
 - name: locale | Ensure en_US.UTF-8
   locale_gen:
     name: en_US.UTF-8
