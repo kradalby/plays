@@ -28,6 +28,7 @@
     - role: dotfiles
     - role: apticron
     - role: ubuntu_no_snap
+      when: snap is undefined or not snap
     - role: postfix
       when: skip_postfix is not defined
     - role: roles/caddy-server
