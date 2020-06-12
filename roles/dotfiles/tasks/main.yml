@@ -1,11 +1,17 @@
 ---
-- name: Clone dotfiles
+- name: dotfiles | Ensure git
+  apt:
+    pkg:
+      - git
+    state: latest
+
+- name: dotfiles | Clone dotfiles
   git:
     repo: https://github.com/kradalby/dotfiles.git
     dest: '{{ ansible_env.HOME }}/git/dotfiles'
     # force: yes
   register: dotfiles
 
-- name: Install dotfiles
+- name: dotfiles | Run dotfiles deploy.sh
   script: ~/git/dotfiles/deploy.sh
   when: dotfiles.changed
