@@ -14,3 +14,12 @@
     - name: Chrony | Make step
       command: >
         chronyc -a makestep
+
+    - name: Chrony | Wait
+      wait_for:
+        timeout: 10
+      delegate_to: localhost
+
+    - name: Chrony | Sync hwclock
+      command: >
+        hwclock --systohc
