@@ -1,0 +1,9 @@
+---
+- name: Ensure windows exporter is running
+  hosts: windows
+
+  tasks:
+    - win_service:
+        name: WMI exporter
+        state: started
+      when: exporter is defined and exporter
