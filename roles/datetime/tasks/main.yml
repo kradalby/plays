@@ -8,3 +8,9 @@
   apt:
     package: chrony
     state: latest
+
+- name: datetime | Ensure chrony config
+  template:
+    src: chrony.conf
+    dest: /etc/chrony/chrony.conf
+  notify: Restart chrony

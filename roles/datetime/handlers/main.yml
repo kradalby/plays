@@ -1,0 +1,8 @@
+---
+- name: Restart chrony
+  systemd:
+    name: '{{ item }}'
+    state: restarted
+  loop:
+    - chronyd
+    - chrony
