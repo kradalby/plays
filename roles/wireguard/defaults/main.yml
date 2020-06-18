@@ -1,0 +1,10 @@
+---
+wireguard_client:
+  private_key: ''
+  public_key: ''
+  address: ''
+  mask: ''
+
+wireguard_peers: {}
+
+wireguard_keep_alive: 21

@@ -1,24 +1,34 @@
 ---
-- name: 'Install role dependencies'
-  apt:
-    name: "{{ packages }}"
-    state: present
-    install_recommends: false
-  vars:
-    packages:
-      - "apt-transport-https"
-      - "ca-certificates"
+# - name: 'Install role dependencies'
+#   apt:
+#     name: '{{ packages }}'
+#     state: present
+#     install_recommends: false
+#   vars:
+#     packages:
+#       - 'apt-transport-https'
+#       - 'ca-certificates'
+#
+# - name: WireGuard repository
+#   apt_repository:
+#     repo: ppa:wireguard/wireguard
+#     state: present
 
-- name: WireGuard repository
-  apt_repository:
-    repo: ppa:wireguard/wireguard
-    state: present
-
-- name: Install WireGuard
+- name: WireGuard | Install WireGuard
   apt:
-   update_cache: yes
-   name: "{{ packages }}"
-   state: latest
-  vars:
-   packages:
-     - wireguard
+    update_cache: yes
+    pkg:
+      - wireguard
+    state: latest
+
+- name: WireGuard | Ensure wg0 configuration
+  template:
+    src: wg0.conf
+    dest: /etc/wireguard/wg0.conf
+  notify: Restart WireGuard
+
+- name: WireGuard | Ensure wg0 service
+  systemd:
+    name: wg-quick@wg0
+    enabled: yes
+    state: started

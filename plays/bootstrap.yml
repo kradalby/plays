@@ -17,22 +17,25 @@
           - socat
           - tcpdump
           - silversearcher-ag
+          - iputils-ping
         state: latest
 
   roles:
-    - role: hostname
-    - role: repo
+    - role: roles/hostname
+    - role: roles/repo
       when: skip_repo is undefined or not skip_repo
-    - role: datetime
-    - role: locale
-    - role: dotfiles
-    - role: apticron
-    - role: ubuntu_no_snap
+    - role: roles/datetime
+    - role: roles/locale
+    - role: roles/dotfiles
+    - role: roles/apticron
+    - role: roles/ubuntu_no_snap
       when: snap is undefined or not snap
-    - role: postfix
+    - role: roles/wireguard
+      when: wireguard is defined and wireguard
+    - role: roles/postfix
       when: skip_postfix is not defined
     - role: roles/caddy-server
       when: caddy is defined and caddy
-    - role: snmpd
-    - role: prometheus-node-exporter
+    - role: roles/snmpd
+    - role: roles/prometheus-node-exporter
       when: skip_node_exporter is not defined

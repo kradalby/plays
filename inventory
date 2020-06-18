@@ -30,8 +30,8 @@ node01.ntnu.fap.no master=true skip_traefik=true skip_servicelb=true
 node[02:03].ntnu.fap.no agent=true
 
 [prod_oracle_ldn_kubernetes]
-node01.oracle-ldn-public.fap.no master=true skip_traefik=true skip_servicelb=true snap=true
-node02.oracle-ldn-public.fap.no agent=true snap=true
+node01.oracle-ldn.fap.no master=true skip_traefik=true skip_servicelb=true snap=true
+node02.oracle-ldn.fap.no agent=true snap=true
 
 [socat_mdns]
 mdns-socat.terra.fap.no

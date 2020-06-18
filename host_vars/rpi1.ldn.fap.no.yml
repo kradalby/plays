@@ -43,3 +43,9 @@ rpi_netboot_nodes:
 router_bgp_as: '51000'
 router_bgp_neighbour_as: '51030'
 router_bgp_neighbours: '{{ rpi_netboot_nodes }}'
+
+wireguard: yes
+wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
+wireguard_client: '{{ wireguard_config.clients.rpi1ldn }}'
+
+wireguard_peers: '{{ wireguard_config.servers }}'
