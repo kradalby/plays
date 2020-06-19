@@ -1,6 +1,10 @@
 ---
 - name: Install a k3s cluster
-  hosts: prod_terra_kubernetes
+  hosts: kubernetes_clusters
+  # tasks:
+  #   - debug:
+  #       msg: "{{ groups }}"
+  #   - debug:
+  #       msg: "{{ group_names }}"
   roles:
     - role: roles/k3s
-

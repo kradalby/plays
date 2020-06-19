@@ -21,18 +21,6 @@ storage.terra.fap.no
 [packer]
 packer-builder.ntnu.fap.no
 
-[prod_terra_kubernetes]
-node01.terra.fap.no master=true skip_traefik=true skip_servicelb=true skip_node_exporter=true
-node[02:03].terra.fap.no agent=true skip_node_exporter=true
-
-[prod_ntnu_kubernetes]
-node01.ntnu.fap.no master=true skip_traefik=true skip_servicelb=true
-node[02:03].ntnu.fap.no agent=true
-
-[prod_oracle_ldn_kubernetes]
-node01.oracle-ldn.fap.no master=true skip_traefik=true skip_servicelb=true snap=true
-node02.oracle-ldn.fap.no agent=true snap=true
-
 [socat_mdns]
 mdns-socat.terra.fap.no
 mdns-socat.ntnu.fap.no
@@ -50,11 +38,28 @@ mail
 unifi
 docker
 packer
-prod_terra_kubernetes
-prod_ntnu_kubernetes
-prod_oracle_ldn_kubernetes
+terra_kubernetes
+ntnu_kubernetes
+oracle_ldn_kubernetes
 socat_mdns
 rpi
+
+[terra_kubernetes]
+node01.terra.fap.no
+node[02:03].terra.fap.no k3s_agent=true skip_node_exporter=true
+
+[ntnu_kubernetes]
+node01.ntnu.fap.no
+node[02:03].ntnu.fap.no k3s_agent=true
+
+[oracle_ldn_kubernetes]
+node01.oracle-ldn.fap.no
+node02.oracle-ldn.fap.no k3s_agent=true snap=true
+
+[kubernetes_clusters:children]
+terra_kubernetes
+ntnu_kubernetes
+oracle_ldn_kubernetes
 
 [macs]
 kramacbook.vpn.fap.no

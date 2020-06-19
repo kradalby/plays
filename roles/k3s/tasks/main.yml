@@ -2,14 +2,14 @@
 - name: Enable IPv4 forwarding
   sysctl:
     name: net.ipv4.ip_forward
-    value: '1'
+    value: "1"
     state: present
     reload: yes
 
 - name: Enable IPv6 forwarding
   sysctl:
     name: net.ipv6.conf.all.forwarding
-    value: '1'
+    value: "1"
     state: present
     reload: yes
 
@@ -19,54 +19,59 @@
     INSTALL_K3S_CHANNEL=latest \
     INSTALL_K3S_EXEC=" \
       server \
-      {% if skip_traefik %}--disable traefik \{% endif %}
-      {% if skip_servicelb %}--disable servicelb \{% endif %}
+      {% if k3s_skip_traefik %}--disable traefik \{% endif %}
+      {% if k3s_skip_servicelb %}--disable servicelb \{% endif %}
       --disable local-storage" \
     sh -s -
-  when: inventory_hostname in groups[group_names[0]][0]
+  when: k3s_master|bool
 
 - name: Wait for node-token
   wait_for:
     path: /var/lib/rancher/k3s/server/node-token
     state: present
-  when: inventory_hostname in groups[group_names[0]][0]
+  when: k3s_master|bool
 
 - name: Register node-token file access mode
   stat:
     path: /var/lib/rancher/k3s/server
   register: p
-  when: inventory_hostname in groups[group_names[0]][0]
+  when: k3s_master|bool
 
 - name: Change file access node-token
   file:
     path: /var/lib/rancher/k3s/server
-    mode: 'g+rx,o+rx'
-  when: inventory_hostname in groups[group_names[0]][0]
+    mode: "g+rx,o+rx"
+  when: k3s_master|bool
 
 - name: Read node-token from master
   slurp:
     src: /var/lib/rancher/k3s/server/node-token
   register: node_token
-  when: inventory_hostname in groups[group_names[0]][0]
+  when: k3s_master|bool
 
 - name: Store Master node-token
   set_fact:
     token: "{{ node_token.content | b64decode | regex_replace('\n', '') }}"
-  when: inventory_hostname in groups[group_names[0]][0]
+  when: k3s_master|bool
 
 - name: Restore node-token file access
   file:
     path: /var/lib/rancher/k3s/server
-    mode: '{{ p.stat.mode }}'
-  when: inventory_hostname in groups[group_names[0]][0]
+    mode: "{{ p.stat.mode }}"
+  when: k3s_master|bool
 
 - name: Install k3s on workers
+  vars:
+    group_name: "{{ group_names[1] }}"
+    master_ip: "{{ hostvars[groups[group_names[1]][0]].ansible_default_ipv4.address | default(hostvars[groups[group_names[1]][0]].ansible_all_ipv4_addresses[0]) }}"
+    agent_ipv4: "{{ ansible_default_ipv4 }}"
+    token: "{{ hostvars[groups[group_names[1]][0]]['token'] }}"
   shell: >
     curl -sfL https://get.k3s.io |
     INSTALL_K3S_CHANNEL=latest
-    K3S_URL="
-    https://{{ hostvars[groups[group_names[0]][0]].ansible_default_ipv4.address |
-    default(hostvars[groups[group_names[0]][0]].ansible_all_ipv4_addresses[0]) }}:6443"
-    K3S_TOKEN="{{ hostvars[groups[group_names[0]][0]]['token'] }}"
+    K3S_URL="https://{{ master_ip }}:6443"
+    K3S_TOKEN="{{ token }}"
     sh -
-  when: inventory_hostname not in groups[group_names[0]][0]
+  when: >
+    k3s_agent|bool and
+    group_name is match(".+_kubernetes")
