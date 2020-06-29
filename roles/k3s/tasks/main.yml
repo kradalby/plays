@@ -2,33 +2,82 @@
 - name: Enable IPv4 forwarding
   sysctl:
     name: net.ipv4.ip_forward
-    value: "1"
+    value: '1'
     state: present
     reload: yes
 
 - name: Enable IPv6 forwarding
   sysctl:
     name: net.ipv6.conf.all.forwarding
-    value: "1"
+    value: '1'
     state: present
     reload: yes
 
+- name: Add PostgreSQL for local deployment
+  become: yes
+  become_user: postgres
+  block:
+    - name: Ensure psycopg2
+      become_user: root
+      apt:
+        pkg:
+          - python3-psycopg2
+        state: latest
+    - name: Add PostgreSQL database
+      postgresql_db:
+        name: k3s
+        state: present
+
+    - name: Add PostgreSQL user
+      become: yes
+      become_user: postgres
+      postgresql_user:
+        db: k3s
+        user: k3s
+        password: k3s
+        priv: ALL
+        state: present
+
+  when: >
+    k3s_datastore_on_host_postgres is defined and
+    k3s_datastore_on_host_postgres
+
 - name: Install k3s on master
+  vars:
+    params: >-
+      -v 0
+      --disable local-storage
+      {% if k3s_skip_traefik %}--disable traefik{% endif %}
+      {% if k3s_skip_servicelb %}--disable servicelb{% endif %}
+      {% if k3s_datastore_endpoint != "" %}--datastore-endpoint {{ k3s_datastore_endpoint }}{% endif %}
+      {% if k3s_datastore_on_host_postgres %}--datastore-endpoint postgres://k3s:k3s@127.0.0.1:5432/k3s{% endif %}
+  # {% if k3s_logfile is defined %}--log {{ k3s_logfile }}{% endif %}
+  environment:
+    INSTALL_K3S_CHANNEL: latest
   shell: |-
-    curl -sfL https://get.k3s.io | \
-    INSTALL_K3S_CHANNEL=latest \
-    INSTALL_K3S_EXEC=" \
-      server \
-      {% if k3s_skip_traefik %}--disable traefik \{% endif %}
-      {% if k3s_skip_servicelb %}--disable servicelb \{% endif %}
-      --disable local-storage" \
-    sh -s -
+    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server {{ params }}" sh -s -
   when: k3s_master|bool
 
 - name: Wait for node-token
   wait_for:
     path: /var/lib/rancher/k3s/server/node-token
     state: present
+  when: k3s_master|bool
+
+- name: k3s | Get master names
+  command: >-
+    kubectl get node
+    --selector=node-role.kubernetes.io/master
+    --no-headers
+    --output=custom-columns=:.metadata.name
+  register: master_names
+  when: k3s_master|bool
+
+- name: k3s | Taint master nodes
+  command: >-
+    kubectl taint nodes {{ item }}
+    node-role.kubernetes.io/master=effect:NoSchedule
+  loop: "{{ master_names.stdout_lines }}"
   when: k3s_master|bool
 
 - name: Register node-token file access mode
@@ -40,7 +89,7 @@
 - name: Change file access node-token
   file:
     path: /var/lib/rancher/k3s/server
-    mode: "g+rx,o+rx"
+    mode: 'g+rx,o+rx'
   when: k3s_master|bool
 
 - name: Read node-token from master
@@ -57,21 +106,23 @@
 - name: Restore node-token file access
   file:
     path: /var/lib/rancher/k3s/server
-    mode: "{{ p.stat.mode }}"
+    mode: '{{ p.stat.mode }}'
   when: k3s_master|bool
 
 - name: Install k3s on workers
   vars:
-    group_name: "{{ group_names[1] }}"
-    master_ip: "{{ hostvars[groups[group_names[1]][0]].ansible_default_ipv4.address | default(hostvars[groups[group_names[1]][0]].ansible_all_ipv4_addresses[0]) }}"
-    agent_ipv4: "{{ ansible_default_ipv4 }}"
+    group_name: '{{ group_names[1] }}'
+    master_ip: >-
+      {{ hostvars[groups[group_names[1]][0]].ansible_default_ipv4.address |
+      default(hostvars[groups[group_names[1]][0]].ansible_all_ipv4_addresses[0]) }}
+    agent_ipv4: '{{ ansible_default_ipv4 }}'
     token: "{{ hostvars[groups[group_names[1]][0]]['token'] }}"
+  environment:
+    INSTALL_K3S_CHANNEL: latest
+    K3S_URL: 'https://{{ master_ip }}:6443'
+    K3S_TOKEN: '{{ token }}'
   shell: >
-    curl -sfL https://get.k3s.io |
-    INSTALL_K3S_CHANNEL=latest
-    K3S_URL="https://{{ master_ip }}:6443"
-    K3S_TOKEN="{{ token }}"
-    sh -
+    curl -sfL https://get.k3s.io | sh -
   when: >
     k3s_agent|bool and
     group_name is match(".+_kubernetes")

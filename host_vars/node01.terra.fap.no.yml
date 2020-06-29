@@ -2,4 +2,4 @@
 k3s_master: yes
 k3s_skip_traefik: yes
 k3s_skip_servicelb: yes
-skip_node_exporter: yes
+node_exporter: no

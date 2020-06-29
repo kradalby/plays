@@ -37,6 +37,8 @@ brew_packages:
   - shellcheck
   - sleepwatcher
   - sqlite
+  - swift-format
+  - swiftformat
   - swiftlint
   - terraform
   - tflint

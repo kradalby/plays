@@ -1,10 +1,12 @@
 ---
 wireguard: yes
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
-wireguard_client: "{{ wireguard_config.clients.oracleldn1 }}"
-wireguard_peers: "{{ wireguard_config.servers }}"
+wireguard_client: '{{ wireguard_config.clients.oracleldn1 }}'
+wireguard_peers: '{{ wireguard_config.servers }}'
 
 k3s_master: yes
 k3s_skip_traefik: yes
-k3s_skip_servicelb: yes
-skip_node_exporter: yes
+k3s_skip_servicelb: no
+# k3s_logfile: '/var/log/k3s.log'
+k3s_datastore_on_host_postgres: yes
+node_exporter: no

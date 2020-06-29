@@ -46,15 +46,15 @@ rpi
 
 [terra_kubernetes]
 node01.terra.fap.no
-node[02:03].terra.fap.no k3s_agent=true skip_node_exporter=true
+node[02:03].terra.fap.no node_exporter=False k3s_agent=True
 
 [ntnu_kubernetes]
 node01.ntnu.fap.no
-node[02:03].ntnu.fap.no k3s_agent=true
+node[02:03].ntnu.fap.no k3s_agent=True node_exporter=False
 
 [oracle_ldn_kubernetes]
-node01.oracle-ldn.fap.no
-node02.oracle-ldn.fap.no k3s_agent=true snap=true
+node01.oracle-ldn.fap.no ansible_host=node01.oracle-ldn-public.fap.no
+node02.oracle-ldn.fap.no ansible_host=node02.oracle-ldn-public.fap.no
 
 [kubernetes_clusters:children]
 terra_kubernetes
