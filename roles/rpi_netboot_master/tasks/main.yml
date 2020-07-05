@@ -115,6 +115,12 @@
     dest: '/nfs/{{ item.name }}/etc/fstab'
   loop: '{{ rpi_netboot_nodes }}'
 
+- name: RPi netboot master | Ensure eth0 persistent rule
+  template:
+    src: persistent-net.rules
+    dest: '/nfs/{{ item.name }}/etc/udev/rules.d/70-persistent-net.rules'
+  loop: '{{ rpi_netboot_nodes }}'
+
 - name: RPi netboot master | Ensure firmware is absent
   file:
     path: '/nfs/{{ item.name }}/boot/firmware'
