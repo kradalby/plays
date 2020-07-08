@@ -1,0 +1,5 @@
+{{ item.domain }} {
+    root * {{ item.directory }}
+    file_server browse
+    import cf
+}

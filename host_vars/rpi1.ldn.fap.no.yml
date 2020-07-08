@@ -24,19 +24,14 @@ router_ap_ssid: dalby-london-backup
 router_ap_key: Th1sIsForEm3rgency0nly!
 router_ap_if: wlan0
 
-rpi_netboot_static_leases:
-  - mac: dc:a6:32:a8:d3:7c
-    ip: 10.65.0.31
-  - mac: dc:a6:32:a8:e6:6b
-    ip: 10.65.0.32
-    #  - mac: aa:bb:cc:dd:ee:dd
-    #    ip: 10.65.0.33
 
 rpi_netboot_nodes:
   - name: rpi2
     ip: 10.65.0.31
+    mac: dc:a6:32:a8:d3:7c
   - name: rpi3
     ip: 10.65.0.32
+    mac: dc:a6:32:a8:e6:6b
     #   - name: rpi4
     #     ip: 10.65.0.33
     #

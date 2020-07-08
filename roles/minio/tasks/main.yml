@@ -19,7 +19,6 @@
     name: minio
     group: minio
     groups:
-      - storage
     home: '{{ minio_base_directory }}'
     shell: /usr/sbin/nologin
     comment: Minio object storage
@@ -29,7 +28,7 @@
   file:
     path: '{{ minio_base_directory }}/{{ item }}'
     owner: minio
-    group: storage
+    group: minio
     mode: '0755'
     recurse: yes
     state: directory
@@ -51,8 +50,7 @@
   loop: '{{ minio_sub_domains }}'
   loop_control:
     index_var: index
-  notify:
-    Restart minio
+  notify: Restart minio
 - name: minio | Enable systemd service
   systemd:
     name: 'minio-{{ item }}'

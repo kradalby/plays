@@ -1,0 +1,12 @@
+---
+caddy: true
+caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
+
+minio: true
+minio_base_directory: '/var/lib/minio'
+minio_base_domain: s3.fap.no
+minio_sub_domains:
+  - terraform
+  - ldap
+minio_access_key: '{{ lookup("env", "AWS_ACCESS_KEY_ID") }}'
+minio_secret_key: '{{ lookup("env", "AWS_SECRET_ACCESS_KEY") }}'

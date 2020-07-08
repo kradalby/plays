@@ -2,6 +2,12 @@
 # fap.no
 ################################
 
+[minio]
+minio.terra.fap.no
+
+[nfs]
+nfs.terra.fap.no
+
 [storage]
 storage.terra.fap.no
 storage.tjoda.fap.no
@@ -32,17 +38,19 @@ rpi2.ldn.fap.no netboot=true skip_repo=true
 rpi3.ldn.fap.no netboot=true skip_repo=true
 
 [ubuntu:children]
-storage
 database
-mail
-unifi
 docker
-packer
-terra_kubernetes
+mail
+minio
+nfs
 ntnu_kubernetes
 oracle_ldn_kubernetes
-socat_mdns
+packer
 rpi
+socat_mdns
+storage
+terra_kubernetes
+unifi
 
 [terra_kubernetes]
 node01.terra.fap.no

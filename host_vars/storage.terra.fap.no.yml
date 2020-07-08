@@ -1,12 +1,19 @@
 ---
 caddy: true
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
+caddy_serve:
+ - domain: files.kradalby.no
+   directory: /storage/serve/files
+ - domain: screenshots.kradalby.no
+   directory: /storage/serve/screenshots
+ - domain: builds.kradalby.no
+   directory: /storage/serve/builds
 
-minio: true
-minio_base_directory: '/storage/minio'
-minio_base_domain: s3.fap.no
-minio_sub_domains:
-  - terraform
-  - ldap
-minio_access_key: '{{ lookup("env", "AWS_ACCESS_KEY_ID") }}'
-minio_secret_key: '{{ lookup("env", "AWS_SECRET_ACCESS_KEY") }}'
+minio: false
+# minio_base_directory: '/storage/minio'
+# minio_base_domain: s3.fap.no
+# minio_sub_domains:
+#   - terraform
+#   - ldap
+# minio_access_key: '{{ lookup("env", "AWS_ACCESS_KEY_ID") }}'
+# minio_secret_key: '{{ lookup("env", "AWS_SECRET_ACCESS_KEY") }}'

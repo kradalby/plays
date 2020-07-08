@@ -3,6 +3,8 @@
   hosts: ubuntu
 
   pre_tasks:
+    - debug:
+        msg: '{{ caddy_serve }}'
     - name: Upgrade packages
       apt:
         upgrade: yes
@@ -24,21 +26,25 @@
         state: latest
 
   roles:
-    - role: roles/hostname
-    - role: roles/repo
-      when: skip_repo is undefined or not skip_repo
-    - role: roles/datetime
-    - role: roles/locale
-    - role: roles/dotfiles
-    - role: roles/apticron
-    - role: roles/ubuntu_no_snap
-      when: snap is undefined or not snap
-    - role: roles/wireguard
-      when: wireguard is defined and wireguard
-    - role: roles/postfix
-      when: skip_postfix is not defined
-    - role: roles/caddy-server
-      when: caddy is defined and caddy
+    # - role: roles/hostname
+    # - role: roles/repo
+    #   when: skip_repo is undefined or not skip_repo
+    # - role: roles/datetime
+    # - role: roles/locale
+    # - role: roles/dotfiles
+    # - role: roles/apticron
+    # - role: roles/ubuntu_no_snap
+    #   when: snap is undefined or not snap
+    # - role: roles/wireguard
+    #   when: wireguard is defined and wireguard
+    # - role: roles/postfix
+    #   when: skip_postfix is not defined
+    # - role: roles/caddy-server
+    #   when: caddy is defined and caddy
+    - role: roles/caddy_serve_files
+      when: caddy_serve is defined and caddy_serve|length > 0
+    - role: roles/minio
+      when: minio is defined and minio
     - role: roles/snmpd
     - role: roles/prometheus-node-exporter
       when: node_exporter is undefined or node_exporter
