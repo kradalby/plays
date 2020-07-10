@@ -23,6 +23,7 @@ unifi.tjoda.fap.no
 
 [docker]
 storage.terra.fap.no
+swift.ntnu.fap.no
 
 [packer]
 packer-builder.ntnu.fap.no

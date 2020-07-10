@@ -1,0 +1,26 @@
+---
+- name: nfs-export | Ensure NFS server
+  apt:
+    pkg: nfs-kernel-server
+    state: latest
+
+- name: nfs-export | Ensure NFS enabled
+  systemd:
+    name: '{{ item }}'
+    enabled: yes
+  loop:
+    - rpcbind
+    - nfs-kernel-server
+
+- name: nfs-export | Ensure NFS exported directories
+  file:
+    path: '{{ item.directory }}'
+    recurse: yes
+    state: directory
+  loop: '{{ nfs_exports }}'
+
+- name: nfs-export | Ensure NFS exports
+  template:
+    src: nfs_exports
+    dest: /etc/exports
+  notify: Restart nfs

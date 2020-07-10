@@ -1,7 +1,7 @@
 ---
 - name: caddy | Ensure caddy with Cloudflare
   get_url:
-    url: 'https://node01.oracle-ldn-public.fap.no/caddy_linux_{{ ansible_architecture }}'
+    url: 'https://builds.kradalby.no/builds/caddy/caddy_linux_{{ ansible_architecture }}'
     dest: /usr/bin/caddy
     mode: '0755'
   notify: Restart Caddy

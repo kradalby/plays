@@ -3,8 +3,6 @@
   hosts: ubuntu
 
   pre_tasks:
-    - debug:
-        msg: '{{ caddy_serve }}'
     - name: Upgrade packages
       apt:
         upgrade: yes
@@ -41,6 +39,8 @@
     #   when: skip_postfix is not defined
     # - role: roles/caddy-server
     #   when: caddy is defined and caddy
+    - role: roles/nfs-export
+      when: nfs_exports is defined and nfs_exports|length > 0
     - role: roles/caddy_serve_files
       when: caddy_serve is defined and caddy_serve|length > 0
     - role: roles/minio

@@ -1,0 +1,24 @@
+---
+nfs_exports:
+  - directory: '/nfs/kubernetes'
+    hosts:
+      - 10.60.0.0/16
+    options:
+      - rw
+      - fsid=0
+      - insecure
+      - no_subtree_check
+      - no_root_squash
+      - async
+      - crossmnt
+  - directory: '/nfs/test'
+    hosts:
+      - 10.60.0.0/16
+    options:
+      - rw
+      - fsid=0
+      - insecure
+      - no_subtree_check
+      - no_root_squash
+      - async
+      - crossmnt

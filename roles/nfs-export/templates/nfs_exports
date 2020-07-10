@@ -1,0 +1,4 @@
+{% for export in nfs_exports %}
+{{ export.directory }} {% for host in export.hosts %}{{ host }}({{ export.options|join(",") }}) {% endfor %}
+
+{% endfor %}
