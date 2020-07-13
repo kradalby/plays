@@ -1,0 +1,39 @@
+---
+- name: munin | Ensure dependencies
+  apt:
+    pkg:
+      - git
+      - libgd-dev
+      - libexif-dev
+      - libiptcdata0-dev
+    state: latest
+
+- name: munin | Ensure git dir
+  file:
+    path: "{{ ansible_env.HOME }}/git"
+    state: directory
+
+- name: munin | Clone munin
+  git:
+    repo: https://github.com/kradalby/munin.git
+    dest: "{{ ansible_env.HOME }}/git/munin"
+    # force: yes
+  register: munin
+
+- name: munin | make clean
+  make:
+    chdir: "{{ ansible_env.HOME }}/git/munin"
+    target: clean
+  when: munin.changed
+
+- name: munin | make build
+  make:
+    chdir: "{{ ansible_env.HOME }}/git/munin"
+    target: build-release
+  when: munin.changed
+
+- name: munin | Symlink munin to path
+  file:
+    src: "{{ ansible_env.HOME }}/git/munin/.build/release/munin"
+    dest: /usr/local/bin/munin
+    state: link

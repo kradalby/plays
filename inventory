@@ -2,6 +2,9 @@
 # fap.no
 ################################
 
+[hugin]
+hugin.terra.fap.no
+
 [minio]
 minio.terra.fap.no
 
@@ -52,6 +55,7 @@ socat_mdns
 storage
 terra_kubernetes
 unifi
+hugin
 
 [terra_kubernetes]
 node01.terra.fap.no
