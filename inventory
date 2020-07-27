@@ -2,6 +2,9 @@
 # fap.no
 ################################
 
+[misc]
+swift2.ntnu.fap.no swift=true
+
 [hugin]
 hugin.terra.fap.no
 
@@ -56,6 +59,7 @@ storage
 terra_kubernetes
 unifi
 hugin
+misc
 
 [terra_kubernetes]
 node01.terra.fap.no

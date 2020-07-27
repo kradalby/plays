@@ -23,6 +23,12 @@
           - lsof
         state: latest
 
+    - name: Remove packages
+      apt:
+        pkg:
+          - aide
+        state: absent
+
   roles:
     - role: roles/hostname
     - role: roles/repo
@@ -39,6 +45,8 @@
       when: skip_postfix is not defined
     - role: roles/caddy-server
       when: caddy is defined and caddy
+    - role: roles/ubuntu-swift
+      when: swift is defined and swift
     - role: roles/nfs-export
       when: nfs_exports is defined and nfs_exports|length > 0
     - role: roles/caddy_serve_files

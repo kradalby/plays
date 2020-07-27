@@ -1,40 +1,40 @@
 ---
-# - name: ubuntu-swift | Ensure dependencies
-#   apt:
-#     pkg:
-#       - clang
-#       - tar
-#       - libcurl4
-#       - libpython2.7
-#       - libpython2.7-dev
-#       - libdispatch-dev
-#     state: latest
+- name: ubuntu-swift | Ensure dependencies
+  apt:
+    pkg:
+      - clang
+      - tar
+      - libcurl4
+      - libpython2.7
+      - libpython2.7-dev
+      - libdispatch-dev
+    state: latest
 
-# - name: ubuntu-swift | Ensure tmp Swift directory
-#   file:
-#     path: /tmp/swift
-#     recurse: yes
-#     state: directory
+- name: ubuntu-swift | Ensure tmp Swift directory
+  file:
+    path: /tmp/swift
+    recurse: yes
+    state: directory
 
-# - name: ubuntu-swift | Download and extract Swift
-#   unarchive:
-#     src: "{{ swift_url }}"
-#     remote_src: yes
-#     dest: "/tmp/swift"
-#     mode: "0755"
+- name: ubuntu-swift | Download and extract Swift
+  unarchive:
+    src: "{{ swift_url }}"
+    remote_src: yes
+    dest: "/tmp/swift"
+    mode: "0755"
 
-# - name: ubuntu-swift | Ensure old version is removed
-#   file:
-#     path: "/usr/share/swift"
-#     state: absent
+- name: ubuntu-swift | Ensure old version is removed
+  file:
+    path: "/usr/share/swift"
+    state: absent
 
-# - name: ubuntu-swift | Move swift into place
-#   command: "mv /tmp/swift/{{ swift_dir }} /usr/share/swift"
+- name: ubuntu-swift | Move swift into place
+  command: "mv /tmp/swift/{{ swift_dir }} /usr/share/swift"
 
-# - name: ubuntu-swift | Clean up temp
-#   file:
-#     path: /tmp/swift
-#     state: absent
+- name: ubuntu-swift | Clean up temp
+  file:
+    path: /tmp/swift
+    state: absent
 
 - name: ubuntu-swift | Find Swift files to symlink
   find:
