@@ -2,34 +2,36 @@
 - name: Setup base configuration
   hosts: ubuntu
 
-  pre_tasks:
-    - name: Upgrade packages
-      apt:
-        upgrade: yes
-        update_cache: yes
+  # pre_tasks:
+  #   - name: Upgrade packages
+  #     apt:
+  #       upgrade: yes
+  #       update_cache: yes
 
-    - name: Install packages
-      apt:
-        update_cache: yes
-        pkg:
-          - mosh
-          - tmux
-          - socat
-          - tcpdump
-          - silversearcher-ag
-          - iputils-ping
-          - htop
-          - iotop
-          - lsof
-        state: latest
+  #   - name: Install packages
+  #     apt:
+  #       update_cache: yes
+  #       pkg:
+  #         - mosh
+  #         - tmux
+  #         - socat
+  #         - tcpdump
+  #         - silversearcher-ag
+  #         - iputils-ping
+  #         - htop
+  #         - iotop
+  #         - lsof
+  #       state: latest
 
-    - name: Remove packages
-      apt:
-        pkg:
-          - aide
-        state: absent
+  #   - name: Remove packages
+  #     apt:
+  #       pkg:
+  #         - aide
+  #       state: absent
 
   roles:
+    - role: roles/ubuntu-deploy-user
+      when: deploy_user is defined and deploy_user
     - role: roles/hostname
     - role: roles/repo
       when: skip_repo is undefined or not skip_repo

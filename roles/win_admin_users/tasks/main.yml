@@ -3,6 +3,7 @@
   win_user:
     name: '{{ item.username }}'
     password: '{{ item.password }}'
+    password_never_expires: yes
     state: present
     groups:
       - Users

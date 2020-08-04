@@ -1,3 +1,5 @@
 ---
 caddy: true
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
+
+deploy_user: true
