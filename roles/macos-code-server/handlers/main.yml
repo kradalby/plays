@@ -1,16 +1,16 @@
 ---
 - name: Stop code-server
-  command: 'launchctl stop code-server'
+  command: "launchctl stop code-server"
   listen: Restart code-server
 
 - name: Start code-server
-  command: 'launchctl start code-server'
+  command: "launchctl start code-server"
   listen: Restart code-server
 
 - name: Unload code-server
-  command: 'launchctl unload {{ ansible_env.HOME }}/Library/LaunchAgents/code-server.plist'
+  command: "launchctl unload {{ ansible_env.HOME }}/Library/LaunchAgents/code-server.plist"
   listen: Reload code-server
 
 - name: Load code-server
-  command: 'launchctl load {{ ansible_env.HOME }}/Library/LaunchAgents/code-server.plist'
+  command: "launchctl load {{ ansible_env.HOME }}/Library/LaunchAgents/code-server.plist"
   listen: Reload code-server

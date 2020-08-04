@@ -1,8 +1,8 @@
 ---
 - name: Menubar | Ensure menu applets visible 1
   osx_defaults:
-    domain: 'com.apple.systemuiserver'
-    key: 'NSStatusItem Visible {{ item }}'
+    domain: "com.apple.systemuiserver"
+    key: "NSStatusItem Visible {{ item }}"
     type: int
     value: 1
     state: present
@@ -15,32 +15,31 @@
 
 - name: Menubar | Ensure menu applets visible 2
   osx_defaults:
-    domain: 'com.apple.systemuiserver'
-    key: 'menuExtras'
+    domain: "com.apple.systemuiserver"
+    key: "menuExtras"
     type: array
     value:
-      - '/System/Library/CoreServices/Menu Extras/Clock.menu'
-      - '/System/Library/CoreServices/Menu Extras/Battery.menu'
-      - '/System/Library/CoreServices/Menu Extras/AirPort.menu'
-      - '/System/Library/CoreServices/Menu Extras/Bluetooth.menu'
-      - '/System/Library/CoreServices/Menu Extras/Volume.menu'
-      - '/System/Library/CoreServices/Menu Extras/TimeMachine.menu'
-      - '/System/Library/CoreServices/Menu Extras/Displays.menu'
+      - "/System/Library/CoreServices/Menu Extras/Clock.menu"
+      - "/System/Library/CoreServices/Menu Extras/Battery.menu"
+      - "/System/Library/CoreServices/Menu Extras/AirPort.menu"
+      - "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"
+      - "/System/Library/CoreServices/Menu Extras/Volume.menu"
+      - "/System/Library/CoreServices/Menu Extras/TimeMachine.menu"
+      - "/System/Library/CoreServices/Menu Extras/Displays.menu"
     state: present
 
 - name: Menubar | Ensure Siri is not visible
   osx_defaults:
-    domain: 'com.apple.systemuiserver'
-    key: 'NSStatusItem Visible Siri'
+    domain: "com.apple.systemuiserver"
+    key: "NSStatusItem Visible Siri"
     type: int
     value: 0
     state: present
 
 - name: Menubar | DateFormat
   osx_defaults:
-    domain: 'com.apple.menuextra.clock'
-    key: 'DateFormat'
+    domain: "com.apple.menuextra.clock"
+    key: "DateFormat"
     type: string
-    value: 'EEE d MMM  HH:mm:ss'
+    value: "EEE d MMM  HH:mm:ss"
     state: present
-

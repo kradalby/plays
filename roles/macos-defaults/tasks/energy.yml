@@ -48,7 +48,6 @@
   become: yes
   command: systemsetup -setcomputersleep Off
   changed_when: false
-
 # - name: Energy | Remove sleepimage
 #   become: yes
 #   file:

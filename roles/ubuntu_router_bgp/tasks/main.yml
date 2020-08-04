@@ -16,7 +16,7 @@
   template:
     src: bird.conf
     dest: /etc/bird/bird.conf
-    mode: '0644'
+    mode: "0644"
     owner: bird
     group: bird
   notify: Restart bird

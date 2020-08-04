@@ -2,15 +2,15 @@
 - name: Add storage group
   group:
     name: storage
-    gid: '1000'
+    gid: "1000"
     state: present
 
 - name: Add storage user
   user:
     name: storage
     comment: Storage user, owner of /storage
-    uid: '1000'
-    group: '1000'
+    uid: "1000"
+    group: "1000"
     home: /storage
     state: present
 
@@ -18,8 +18,8 @@
   user:
     name: syncthing
     comment: Syncthing user, responsible for syncing
-    uid: '1001'
-    group: '1000'
+    uid: "1001"
+    group: "1000"
     home: /storage
     state: present
 
@@ -33,8 +33,8 @@
   user:
     name: dalby
     comment: Dalby family user
-    uid: '1090'
-    group: '1000'
+    uid: "1090"
+    group: "1000"
     home: /storage
     state: present
     shell: /usr/sbin/nologin

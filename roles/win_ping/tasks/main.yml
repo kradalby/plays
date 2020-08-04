@@ -1,7 +1,7 @@
 ---
 - name: Windows Ping | Firewall rule to allow ICMP v4 (ping)
   win_firewall_rule:
-    name: 'ICMP Allow incoming V4 echo request'
+    name: "ICMP Allow incoming V4 echo request"
     enabled: yes
     state: present
     remoteip: '{{ win_allowed_networks | join(",") if win_allowed_networks|length else "any" }}'

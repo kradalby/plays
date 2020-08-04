@@ -1,8 +1,8 @@
 ---
 - name: Global | Disable smart things as they're annoying when typing code
   osx_defaults:
-    domain: 'NSGlobalDomain'
-    key: '{{ item }}'
+    domain: "NSGlobalDomain"
+    key: "{{ item }}"
     type: bool
     value: false
     state: present
@@ -15,40 +15,40 @@
 
 - name: Global | Set interfarce to Dark mode
   osx_defaults:
-    domain: 'NSGlobalDomain'
-    key: 'AppleInterfaceStyle'
+    domain: "NSGlobalDomain"
+    key: "AppleInterfaceStyle"
     type: string
     value: Dark
     state: present
 
 - name: Global | Set accent color to pink
   osx_defaults:
-    domain: 'NSGlobalDomain'
-    key: 'AppleAccentColor'
+    domain: "NSGlobalDomain"
+    key: "AppleAccentColor"
     type: int
     value: 6
     state: present
 
 - name: Global | Set highlight color to pink
   osx_defaults:
-    domain: 'NSGlobalDomain'
-    key: 'AppleHighlightColor'
+    domain: "NSGlobalDomain"
+    key: "AppleHighlightColor"
     type: string
-    value: '1.000000 0.749020 0.823529 Pink'
+    value: "1.000000 0.749020 0.823529 Pink"
     state: present
 
 - name: Global | Sidebar icon size Small
   osx_defaults:
-    domain: 'NSGlobalDomain'
-    key: 'NSTableViewDefaultSizeMode'
+    domain: "NSGlobalDomain"
+    key: "NSTableViewDefaultSizeMode"
     type: int
     value: 1
     state: present
 
 - name: Global | Set languages
   osx_defaults:
-    domain: 'NSGlobalDomain'
-    key: 'AppleLanguages'
+    domain: "NSGlobalDomain"
+    key: "AppleLanguages"
     type: array
     value:
       - en-NO
@@ -57,8 +57,8 @@
 
 - name: Global | Set locale
   osx_defaults:
-    domain: 'NSGlobalDomain'
-    key: 'AppleLocale'
+    domain: "NSGlobalDomain"
+    key: "AppleLocale"
     type: string
     value: en_NO
     state: present
@@ -83,7 +83,7 @@
   osx_defaults:
     key: NSWindowResizeTime
     type: float
-    value: '0.001'
+    value: "0.001"
     state: present
 
 - name: Global | Enable admin info when clock click
@@ -97,18 +97,18 @@
 
 - name: Siri |  Disable Siri
   osx_defaults:
-    domain: 'com.apple.assistant.support'
-    key: 'Assistant Enabled'
+    domain: "com.apple.assistant.support"
+    key: "Assistant Enabled"
     type: bool
     value: false
     state: present
 
 - name: Global | Show the ~/Library folder
-  command: 'chflags nohidden ~/Library'
+  command: "chflags nohidden ~/Library"
   changed_when: false
 
 - name: Global | Show the /Volumes folder
-  command: 'chflags nohidden /Volumes'
+  command: "chflags nohidden /Volumes"
   become: yes
   changed_when: false
 

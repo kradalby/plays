@@ -1,4 +1,4 @@
 ---
-router_ap_ssid: ''
-router_ap_key: ''
-router_ap_if: ''
+router_ap_ssid: ""
+router_ap_key: ""
+router_ap_if: ""

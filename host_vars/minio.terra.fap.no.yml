@@ -3,7 +3,7 @@ caddy: true
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 
 minio: true
-minio_base_directory: '/var/lib/minio'
+minio_base_directory: "/var/lib/minio"
 minio_base_domain: s3.fap.no
 minio_sub_domains:
   - terraform

@@ -15,9 +15,9 @@
 
 - name: Windows SSH | Firewall rule to allow SSH on port 22
   win_firewall_rule:
-    name: 'OpenSSH SSH Server (sshd)'
-    description: 'Inbound rule for OpenSSH SSH Server (sshd)'
-    localport: '22'
+    name: "OpenSSH SSH Server (sshd)"
+    description: "Inbound rule for OpenSSH SSH Server (sshd)"
+    localport: "22"
     action: allow
     direction: in
     protocol: tcp

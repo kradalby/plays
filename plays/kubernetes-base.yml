@@ -5,5 +5,4 @@
     - role: roles/docker
     - role: roles/swap-off
     - role: roles/kubernetes-install
-
 # kubeadm token create --print-join-command

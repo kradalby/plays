@@ -11,7 +11,7 @@
 
 - name: Windows Debloat | Download Windows 10 Debloater
   win_get_url:
-    url: 'https://raw.githubusercontent.com/Sycnex/Windows10Debloater/master/Windows10SysPrepDebloater.ps1'
+    url: "https://raw.githubusercontent.com/Sycnex/Windows10Debloater/master/Windows10SysPrepDebloater.ps1"
     dest: 'C:\temp\Windows10SysPrepDebloater.ps1'
   register: debloater
   when: >
@@ -22,13 +22,13 @@
 
 - name: Windows Debloat | Run Windows 10 Debloater
   # become: yes
-  win_command: 'powershell -ExecutionPolicy ByPass -File Windows10SysPrepDebloater.ps1 {{ item }}'
+  win_command: "powershell -ExecutionPolicy ByPass -File Windows10SysPrepDebloater.ps1 {{ item }}"
   args:
     chdir: 'C:\temp'
   loop:
-    - '-Sysprep'
-    - '-Debloat'
-    - '-Privacy'
+    - "-Sysprep"
+    - "-Debloat"
+    - "-Privacy"
   when: debloater.changed
 
 - name: Windows Debloat | Remove Windows 10 Debloater script

@@ -1,9 +1,9 @@
 ---
 wireguard_client:
-  private_key: ''
-  public_key: ''
-  address: ''
-  mask: ''
+  private_key: ""
+  public_key: ""
+  address: ""
+  mask: ""
 
 wireguard_peers: {}
 

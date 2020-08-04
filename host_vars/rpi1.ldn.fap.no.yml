@@ -24,7 +24,6 @@ router_ap_ssid: dalby-london-backup
 router_ap_key: Th1sIsForEm3rgency0nly!
 router_ap_if: wlan0
 
-
 rpi_netboot_nodes:
   - name: rpi2
     ip: 10.65.0.31
@@ -35,12 +34,12 @@ rpi_netboot_nodes:
     #   - name: rpi4
     #     ip: 10.65.0.33
     #
-router_bgp_as: '51000'
-router_bgp_neighbour_as: '51030'
-router_bgp_neighbours: '{{ rpi_netboot_nodes }}'
+router_bgp_as: "51000"
+router_bgp_neighbour_as: "51030"
+router_bgp_neighbours: "{{ rpi_netboot_nodes }}"
 
 wireguard: yes
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
-wireguard_client: '{{ wireguard_config.clients.rpi1ldn }}'
+wireguard_client: "{{ wireguard_config.clients.rpi1ldn }}"
 
-wireguard_peers: '{{ wireguard_config.servers }}'
+wireguard_peers: "{{ wireguard_config.servers }}"

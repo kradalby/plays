@@ -4,7 +4,7 @@
   # become_method: runas
   # become_user: administrator
   win_chocolatey:
-    name: 'citrix-workspace'
+    name: "citrix-workspace"
     state: latest
     force: yes
 

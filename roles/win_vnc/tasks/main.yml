@@ -11,52 +11,52 @@
     # http://tigervnc.bphinz.com/nightly/
     path: http://tigervnc.bphinz.com/nightly/windows/tigervnc64-1.10.80.exe
     arguments:
-      - '/VERYSILENT'
-      - '/SUPPRESSMSGBOXES'
-      - '/NORESTART'
-      - '/SP-'
-    product_id: 'TigerVNC 64-bit_is1'
+      - "/VERYSILENT"
+      - "/SUPPRESSMSGBOXES"
+      - "/NORESTART"
+      - "/SP-"
+    product_id: "TigerVNC 64-bit_is1"
     state: present
   register: vnc_installed
 
 - name: Windows VNC | Configure TigerVNC
   win_regedit:
     path: 'HKLM:\SOFTWARE\TigerVNC\WinVNC4\'
-    name: '{{ item.name }}'
-    data: '{{ item.data }}'
-    type: '{{ item.type }}'
+    name: "{{ item.name }}"
+    data: "{{ item.data }}"
+    type: "{{ item.type }}"
     state: present
   loop:
-    - name: 'AcceptCutText'
-      type: 'dword'
-      data: '1'
-    - name: 'AcceptKeyEvents'
-      type: 'dword'
-      data: '1'
-    - name: 'AcceptPointerEvents'
-      type: 'dword'
-      data: '1'
-    - name: 'SendCutText'
-      type: 'dword'
-      data: '1'
-    - name: 'PortNumber'
-      type: 'dword'
-      data: '5900'
-    - name: 'SecurityTypes'
-      type: 'string'
-      data: 'VeNCrypt,TLSVnc,VncAuth'
-    - name: 'Password'
-      type: 'binary'
-      data: '{{ win_vnc_password_hex }}'
+    - name: "AcceptCutText"
+      type: "dword"
+      data: "1"
+    - name: "AcceptKeyEvents"
+      type: "dword"
+      data: "1"
+    - name: "AcceptPointerEvents"
+      type: "dword"
+      data: "1"
+    - name: "SendCutText"
+      type: "dword"
+      data: "1"
+    - name: "PortNumber"
+      type: "dword"
+      data: "5900"
+    - name: "SecurityTypes"
+      type: "string"
+      data: "VeNCrypt,TLSVnc,VncAuth"
+    - name: "Password"
+      type: "binary"
+      data: "{{ win_vnc_password_hex }}"
   notify: Restart TigerVNC
 
 - name: Windows VNC | Firewall rule to allow VNC on port 5900
   win_firewall_rule:
-    name: '{{ item.name }}'
-    localport: '5900'
+    name: "{{ item.name }}"
+    localport: "5900"
     action: allow
     direction: in
-    protocol: '{{ item.protocol }}'
+    protocol: "{{ item.protocol }}"
     remoteip: '{{ win_allowed_networks | join(",") if win_allowed_networks|length else "any" }}'
     state: present
     enabled: true
@@ -79,10 +79,10 @@
 
 - name: Windows VNC | Ensure TigerVNC service
   win_service:
-    name: 'TigerVNC'
+    name: "TigerVNC"
     path: '"C:\Program Files\TigerVNC\winvnc4.exe" -service'
-    display_name: 'TigerVNC Server'
-    description: 'Provides remote access to this machine via the VNC/RFB protocol.'
+    display_name: "TigerVNC Server"
+    description: "Provides remote access to this machine via the VNC/RFB protocol."
     state: started
     start_mode: auto
   register: vnc_service_installed

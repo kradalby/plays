@@ -1,7 +1,7 @@
 ---
 - name: Windows Hostname | Set hostname
   win_hostname:
-    name: '{{ hostname }}'
+    name: "{{ hostname }}"
   register: resp
   changed_when: resp.reboot_required
   notify: Reboot Windows

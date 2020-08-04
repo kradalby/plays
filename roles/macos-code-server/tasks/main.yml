@@ -7,35 +7,35 @@
 
 - name: code-server | Ensure config dir
   file:
-    path: '{{ ansible_env.HOME }}/.config/code-server'
+    path: "{{ ansible_env.HOME }}/.config/code-server"
     state: directory
 
 - name: code-server | Install config
   template:
     src: config.yaml
-    dest: '{{ ansible_env.HOME }}/.config/code-server/config.yaml'
+    dest: "{{ ansible_env.HOME }}/.config/code-server/config.yaml"
   notify: Reload code-server
 
 - name: code-server | Install service
   template:
     src: code-server.plist
-    dest: '{{ ansible_env.HOME }}/Library/LaunchAgents/code-server.plist'
+    dest: "{{ ansible_env.HOME }}/Library/LaunchAgents/code-server.plist"
   notify: Reload code-server
 
 - name: code-server | Check if caddy is installed
   stat:
-    path: '{{ ansible_env.HOME }}/.config/caddy'
+    path: "{{ ansible_env.HOME }}/.config/caddy"
   register: caddy
 
 - name: code-server | Install Caddyfile
   template:
     src: Caddyfile
-    dest: '{{ ansible_env.HOME }}/.config/caddy/code-server'
+    dest: "{{ ansible_env.HOME }}/.config/caddy/code-server"
   when: caddy.stat.exists and caddy.stat.isdir
   register: caddyfile
 
 - name: code-server | Reload caddy
   file:
-    path: '{{ ansible_env.HOME }}/.config/Caddyfile'
+    path: "{{ ansible_env.HOME }}/.config/Caddyfile"
     state: touch
   when: caddyfile.changed

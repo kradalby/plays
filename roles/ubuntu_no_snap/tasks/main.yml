@@ -11,5 +11,3 @@
   template:
     src: apt-preferences
     dest: /etc/apt/preferences.d/99-Prohibit-Snapd
-
-

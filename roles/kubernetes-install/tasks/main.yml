@@ -1,5 +1,5 @@
 ---
-- name: 'Install kubernetes and role dependencies'
+- name: "Install kubernetes and role dependencies"
   become: yes
   apt:
     name: "{{ packages }}"
@@ -13,8 +13,8 @@
 
 - name: add Kubernetes apt-key
   apt_key:
-     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-     state: present
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
 
 - name: add Kubernetes' APT repository
   apt_repository:
@@ -23,9 +23,9 @@
 
 - name: install kubelet
   apt:
-     name: kubelet
-     state: present
-     update_cache: true
+    name: kubelet
+    state: present
+    update_cache: true
 
 - name: hold kubelet
   dpkg_selections:
@@ -34,9 +34,9 @@
 
 - name: install kubectl
   apt:
-     name: kubectl
-     state: present
-     update_cache: true
+    name: kubectl
+    state: present
+    update_cache: true
 
 - name: hold kubectl
   dpkg_selections:
@@ -45,9 +45,9 @@
 
 - name: install kubeadm
   apt:
-     name: kubeadm
-     state: present
-     update_cache: true
+    name: kubeadm
+    state: present
+    update_cache: true
 
 - name: hold kubeadm
   dpkg_selections:

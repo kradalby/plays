@@ -13,7 +13,7 @@
 
 - name: Ensure macOS Homebrew taps
   homebrew_tap:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: present
   loop:
     - AdoptOpenJDK/openjdk
@@ -68,7 +68,7 @@
 
 - name: Ensure macOS Homebrew additional packages
   homebrew:
-    pkg: '{{ brew_packages }}'
+    pkg: "{{ brew_packages }}"
     state: latest
 
     # - name: Ensure HEAD packages
@@ -94,5 +94,5 @@
 
 - name: Ensure macOS Homebrew cask additional packages
   homebrew_cask:
-    pkg: '{{ brew_cask_packages }}'
+    pkg: "{{ brew_cask_packages }}"
     state: latest

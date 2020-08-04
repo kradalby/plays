@@ -9,4 +9,3 @@
 - name: macOS node-exporter | Ensure initial start
   command: brew services start node_exporter
   when: resp.changed
-

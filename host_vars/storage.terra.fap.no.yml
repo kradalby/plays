@@ -2,12 +2,12 @@
 caddy: true
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 caddy_serve:
- - domain: files.kradalby.no
-   directory: /storage/serve/files
- - domain: screenshots.kradalby.no
-   directory: /storage/serve/screenshots
- - domain: builds.kradalby.no
-   directory: /storage/serve/builds
+  - domain: files.kradalby.no
+    directory: /storage/serve/files
+  - domain: screenshots.kradalby.no
+    directory: /storage/serve/screenshots
+  - domain: builds.kradalby.no
+    directory: /storage/serve/builds
 
 minio: false
 # minio_base_directory: '/storage/minio'

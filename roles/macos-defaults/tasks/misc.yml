@@ -1,20 +1,19 @@
 ---
 - name: Accessibility | Control + Scroll zoom 1
   osx_defaults:
-    domain: 'com.apple.driver.AppleBluetoothMultitouch.trackpad'
-    key: 'HIDScrollZoomModifierMask'
+    domain: "com.apple.driver.AppleBluetoothMultitouch.trackpad"
+    key: "HIDScrollZoomModifierMask"
     type: int
     value: 262144
     state: present
 
 - name: Accessibility | Control + Scroll zoom 2
   osx_defaults:
-    domain: 'com.apple.universalaccess'
-    key: 'closeViewScrollWheelToggle'
+    domain: "com.apple.universalaccess"
+    key: "closeViewScrollWheelToggle"
     type: int
     value: 1
     state: present
-
 
 - name: Photos | Prevent Photos from opening automatically when devices are plugged in
   osx_defaults:
@@ -24,7 +23,6 @@
     type: bool
     value: true
     state: present
-
 
 - name: TimeMachine | Prevent Time Machine from prompting to use new hard drives as backup volume
   osx_defaults:

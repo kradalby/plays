@@ -3,4 +3,3 @@
   hosts: prod_ntnu_kubernetes
   roles:
     - role: roles/k3s
-

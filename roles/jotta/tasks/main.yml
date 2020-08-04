@@ -1,5 +1,5 @@
 ---
-- name: 'Install role dependencies'
+- name: "Install role dependencies"
   apt:
     name: "{{ packages }}"
     state: present
@@ -22,9 +22,9 @@
 
 - name: Install JottaCloud
   apt:
-   update_cache: yes
-   name: "{{ packages }}"
-   state: latest
+    update_cache: yes
+    name: "{{ packages }}"
+    state: latest
   vars:
-   packages:
-     - jotta-cli
+    packages:
+      - jotta-cli

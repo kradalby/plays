@@ -9,29 +9,29 @@
 
 - name: vmworkstation | Check if vmrun binary is already present
   stat:
-    path: '/usr/bin/vmrun'
+    path: "/usr/bin/vmrun"
   register: vmrun_binary
 
 - block:
     - name: vmworkstation | Download vmware_workstation
       get_url:
-        url: 'https://download3.vmware.com/software/wkst/file/VMware-Workstation-Full-15.5.2-15785246.x86_64.bundle'
-        dest: '/tmp/vmware-workstation.bundle'
+        url: "https://download3.vmware.com/software/wkst/file/VMware-Workstation-Full-15.5.2-15785246.x86_64.bundle"
+        dest: "/tmp/vmware-workstation.bundle"
         force: no
 
     - name: vmworkstation | Make bundle executable
       file:
-        path: '/tmp/vmware-workstation.bundle'
+        path: "/tmp/vmware-workstation.bundle"
         mode: a+x
 
     - name: vmworkstation | Install
       # VMware complained about the CPU not supporting VT-x, say yes to install
       # anyways
       expect:
-        command: '/tmp/vmware-workstation.bundle --console --required --eulas-agreed'
+        command: "/tmp/vmware-workstation.bundle --console --required --eulas-agreed"
         timeout: 3600
         responses:
-          (.*)Do you still want to install this product?(.*): 'yes'
+          (.*)Do you still want to install this product?(.*): "yes"
 
     - name: vmworkstation | Enter License
       # License from here: https://gist.github.com/gopalindians/94c2c8617028cfe7a5788f760e036fd2

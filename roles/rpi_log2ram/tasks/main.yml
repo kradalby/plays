@@ -20,10 +20,10 @@
 - name: log2ram | Clean journald dir
   file:
     path: /var/log/journal
-    state: '{{ item }}'
+    state: "{{ item }}"
     owner: root
     group: systemd-journal
-    mode: '0755'
+    mode: "0755"
   loop:
     # - absent
     - directory

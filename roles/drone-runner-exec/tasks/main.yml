@@ -4,7 +4,7 @@
     src: https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_linux_amd64.tar.gz
     remote_src: yes
     dest: /usr/local/bin
-    mode: '0755'
+    mode: "0755"
 
 - name: drone-runner-exec | Ensure configuration directory
   file:
@@ -32,7 +32,7 @@
 - name: drone-runner-exec | Ensure service user
   lineinfile:
     path: /etc/systemd/system/drone-runner-exec.service
-    line: 'User=ola'
+    line: "User=ola"
     insertafter: '^\[Service\]$'
     state: present
   notify: Restart drone

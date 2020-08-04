@@ -2,14 +2,14 @@
 - name: Ubuntu router | Enable IPv4 forwarding
   sysctl:
     name: net.ipv4.ip_forward
-    value: '1'
+    value: "1"
     state: present
     reload: yes
 
 - name: Ubuntu router | Enable IPv6 forwarding
   sysctl:
     name: net.ipv6.conf.all.forwarding
-    value: '1'
+    value: "1"
     state: present
     reload: yes
 
@@ -30,7 +30,7 @@
   template:
     src: netplan.yaml
     dest: /etc/netplan/99-rpi-router.yaml
-    mode: '0644'
+    mode: "0644"
   notify: Apply netplan
 
 - name: Ubuntu router | Ensure dnsmasq
@@ -43,21 +43,21 @@
   template:
     src: dnsmasq.conf
     dest: /etc/dnsmasq.conf
-    mode: '0644'
+    mode: "0644"
   notify: Restart dnsmasq
 
 - name: Ubuntu router | Ensure dnsmasq resolv.conf
   template:
     src: resolv.conf
     dest: /etc/resolv.conf
-    mode: '0644'
+    mode: "0644"
   notify: Restart dnsmasq
 
 - name: Ubuntu router | Ensure dnsmasq logrotate
   template:
     src: dnsmasq.logrotate
     dest: /etc/logrotate.d/dnsmasq
-    mode: '0644'
+    mode: "0644"
 
 - name: Ubuntu router | Disable systemd-resolved
   systemd:
@@ -72,7 +72,7 @@
 - name: Ubuntu router | Flush all tables
   iptables:
     flush: yes
-    table: '{{ item }}'
+    table: "{{ item }}"
   loop:
     - filter
     - nat
@@ -91,7 +91,7 @@
 - name: Ubuntu router | Accept NAT chains
   iptables:
     table: nat
-    chain: '{{ item }}'
+    chain: "{{ item }}"
     policy: ACCEPT
   loop:
     - PREROUTING
@@ -102,7 +102,7 @@
 - name: Ubuntu router | Accept mangle chains
   iptables:
     table: mangle
-    chain: '{{ item }}'
+    chain: "{{ item }}"
     policy: ACCEPT
   loop:
     - PREROUTING
@@ -149,7 +149,7 @@
   iptables:
     ctstate:
       - INVALID
-    chain: '{{ item }}'
+    chain: "{{ item }}"
     jump: DROP
   loop:
     - INPUT
@@ -191,11 +191,11 @@
       - NEW
     jump: ACCEPT
     protocol: tcp
-    destination_port: '{{ item }}'
+    destination_port: "{{ item }}"
   loop:
-    - '22' # SSH
-    - '80' # HTTP
-    - '443' # HTTPS
+    - "22" # SSH
+    - "80" # HTTP
+    - "443" # HTTPS
   notify: Save iptables
 
 - name: Ubuntu router | Forward incoming established/related
@@ -204,16 +204,16 @@
       - ESTABLISHED
       - RELATED
     chain: FORWARD
-    in_interface: '{{ router_wan }}'
-    out_interface: '{{ router_lan }}'
+    in_interface: "{{ router_wan }}"
+    out_interface: "{{ router_lan }}"
     jump: ACCEPT
   notify: Save iptables
 
 - name: Ubuntu router | Forward outgoing traffic
   iptables:
     chain: FORWARD
-    in_interface: '{{ router_lan }}'
-    out_interface: '{{ router_wan }}'
+    in_interface: "{{ router_lan }}"
+    out_interface: "{{ router_wan }}"
     jump: ACCEPT
   notify: Save iptables
 
@@ -221,7 +221,7 @@
   iptables:
     table: nat
     chain: POSTROUTING
-    out_interface: '{{ router_wan }}'
+    out_interface: "{{ router_wan }}"
     jump: MASQUERADE
   notify: Save iptables
 

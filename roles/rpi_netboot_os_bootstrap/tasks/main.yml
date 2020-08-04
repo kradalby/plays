@@ -1,7 +1,7 @@
 ---
 - name: RPi netboot special | Hold kernels
   dpkg_selections:
-    name: '{{ item }}'
+    name: "{{ item }}"
     selection: hold
   loop:
     - linux-headers-raspi
@@ -16,7 +16,7 @@
 
 - name: RPi netboot special | Mask unwanted services
   systemd:
-    name: '{{ item }}'
+    name: "{{ item }}"
     masked: yes
   loop:
     - lvm2-lvmpolld.socket

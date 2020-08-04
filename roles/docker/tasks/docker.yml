@@ -1,5 +1,5 @@
 ---
-- name: 'Install docker and role dependencies'
+- name: "Install docker and role dependencies"
   become: yes
   apt:
     name: "{{ packages }}"
@@ -35,7 +35,6 @@
       - "docker-ce-cli"
       - "containerd.io"
   notify: start docker
-
   # - name: hold docker
   #   dpkg_selections:
   #     name: docker-ce

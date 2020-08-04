@@ -1,7 +1,7 @@
 ---
 - name: Windows RDP | Allow users to connect remotely by using Remote Desktop Services
   win_regedit:
-    path: '{{ item }}'
+    path: "{{ item }}"
     name: fDenyTSConnections
     data: 00000000
     type: dword
@@ -24,16 +24,16 @@
   win_regedit:
     path: "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp"
     name: PortNumber
-    data: '3389'
+    data: "3389"
     type: dword
 
 - name: Windows RDP | Firewall rule to allow RDP on port 3389
   win_firewall_rule:
-    name: '{{ item.name }}'
-    localport: '3389'
+    name: "{{ item.name }}"
+    localport: "3389"
     action: allow
     direction: in
-    protocol: '{{ item.protocol }}'
+    protocol: "{{ item.protocol }}"
     remoteip: '{{ win_allowed_networks | join(",") if win_allowed_networks|length else "any" }}'
     state: present
     enabled: true
@@ -72,7 +72,7 @@
   win_regedit:
     path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
     name: NoClose
-    data: '1'
+    data: "1"
     type: dword
     state: present
 

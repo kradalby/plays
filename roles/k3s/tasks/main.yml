@@ -2,14 +2,14 @@
 - name: Enable IPv4 forwarding
   sysctl:
     name: net.ipv4.ip_forward
-    value: '1'
+    value: "1"
     state: present
     reload: yes
 
 - name: Enable IPv6 forwarding
   sysctl:
     name: net.ipv6.conf.all.forwarding
-    value: '1'
+    value: "1"
     state: present
     reload: yes
 
@@ -89,7 +89,7 @@
 - name: Change file access node-token
   file:
     path: /var/lib/rancher/k3s/server
-    mode: 'g+rx,o+rx'
+    mode: "g+rx,o+rx"
   when: k3s_master|bool
 
 - name: Read node-token from master
@@ -106,21 +106,21 @@
 - name: Restore node-token file access
   file:
     path: /var/lib/rancher/k3s/server
-    mode: '{{ p.stat.mode }}'
+    mode: "{{ p.stat.mode }}"
   when: k3s_master|bool
 
 - name: Install k3s on workers
   vars:
-    group_name: '{{ group_names[1] }}'
+    group_name: "{{ group_names[1] }}"
     master_ip: >-
       {{ hostvars[groups[group_names[1]][0]].ansible_default_ipv4.address |
       default(hostvars[groups[group_names[1]][0]].ansible_all_ipv4_addresses[0]) }}
-    agent_ipv4: '{{ ansible_default_ipv4 }}'
+    agent_ipv4: "{{ ansible_default_ipv4 }}"
     token: "{{ hostvars[groups[group_names[1]][0]]['token'] }}"
   environment:
     INSTALL_K3S_CHANNEL: latest
-    K3S_URL: 'https://{{ master_ip }}:6443'
-    K3S_TOKEN: '{{ token }}'
+    K3S_URL: "https://{{ master_ip }}:6443"
+    K3S_TOKEN: "{{ token }}"
   shell: >
     curl -sfL https://get.k3s.io | sh -
   when: >

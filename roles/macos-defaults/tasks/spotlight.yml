@@ -1,16 +1,16 @@
 ---
 - name: Spotlight | Disable Dictionary results
   osx_defaults:
-    domain: 'com.apple.spotlight'
-    key: 'DictionaryLookupEnabled'
+    domain: "com.apple.spotlight"
+    key: "DictionaryLookupEnabled"
     type: bool
     value: false
     state: present
 
 - name: Spotlight | Included items
   osx_defaults:
-    domain: 'com.apple.spotlight'
-    key: 'orderedItems'
+    domain: "com.apple.spotlight"
+    key: "orderedItems"
     type: array
     value:
       - '{"enabled" = 1;"name" = "APPLICATIONS";}'
@@ -63,18 +63,18 @@
     value: true
 
 - name: Spotlight | Kill mds before rebuild
-  command: 'killall mds'
+  command: "killall mds"
   ignore_errors: true
   when: spotlight_included_items.changed
 
 - name: Spotlight | Ensure index of root volume
   become: yes
-  command: 'mdutil -i on'
+  command: "mdutil -i on"
   changed_when: false
   when: spotlight_included_items.changed
 
 - name: Spotlight | Index root volume
   become: yes
-  command: 'mdutil -E /'
+  command: "mdutil -E /"
   changed_when: false
   when: spotlight_included_items.changed

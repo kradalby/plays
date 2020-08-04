@@ -21,4 +21,3 @@
     dest: $HOME/.kube/config
     remote_src: yes
     owner: root
-

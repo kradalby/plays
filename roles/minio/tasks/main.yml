@@ -3,7 +3,7 @@
   get_url:
     url: https://dl.min.io/server/minio/release/linux-amd64/minio
     dest: /usr/local/bin/minio
-    mode: '0755'
+    mode: "0755"
   notify: Restart minio
 
 - name: minio | Ensure minio group
@@ -19,20 +19,20 @@
     name: minio
     group: minio
     groups:
-    home: '{{ minio_base_directory }}'
+    home: "{{ minio_base_directory }}"
     shell: /usr/sbin/nologin
     comment: Minio object storage
     create_home: yes
 
 - name: minio | Ensure minio directory permissions
   file:
-    path: '{{ minio_base_directory }}/{{ item }}'
+    path: "{{ minio_base_directory }}/{{ item }}"
     owner: minio
     group: minio
-    mode: '0755'
+    mode: "0755"
     recurse: yes
     state: directory
-  loop: '{{ minio_sub_domains }}'
+  loop: "{{ minio_sub_domains }}"
 
 - name: minio | Install Caddyfile
   template:
@@ -46,15 +46,15 @@
 - name: minio | Install systemd service description
   template:
     src: minio.service
-    dest: '/etc/systemd/system/minio-{{ item }}.service'
-  loop: '{{ minio_sub_domains }}'
+    dest: "/etc/systemd/system/minio-{{ item }}.service"
+  loop: "{{ minio_sub_domains }}"
   loop_control:
     index_var: index
   notify: Restart minio
 - name: minio | Enable systemd service
   systemd:
-    name: 'minio-{{ item }}'
+    name: "minio-{{ item }}"
     daemon_reload: yes
     enabled: yes
     state: started
-  loop: '{{ minio_sub_domains }}'
+  loop: "{{ minio_sub_domains }}"

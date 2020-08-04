@@ -6,14 +6,14 @@
 
 - name: PostgreSQL repository
   apt_repository:
-    repo: 'deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main'
+    repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main"
     state: present
     filename: postgres
 
 - name: Install PostgreSQL
   apt:
     update_cache: yes
-    name: '{{ packages }}'
+    name: "{{ packages }}"
     state: latest
   vars:
     packages:
@@ -23,13 +23,13 @@
 - name: Allow access from 192.168.0.0/16
   lineinfile:
     path: /etc/postgresql/12/main/pg_hba.conf
-    insertafter: '^# TYPE'
-    line: 'host all all 192.168.0.0/16 md5'
+    insertafter: "^# TYPE"
+    line: "host all all 192.168.0.0/16 md5"
   notify: restart postgres
 
 - name: Allow access from 10.60.0.0/16
   lineinfile:
     path: /etc/postgresql/12/main/pg_hba.conf
-    insertafter: '^# TYPE'
-    line: 'host all all 10.60.0.0/16 md5'
+    insertafter: "^# TYPE"
+    line: "host all all 10.60.0.0/16 md5"
   notify: restart postgres

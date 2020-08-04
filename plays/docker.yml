@@ -3,4 +3,3 @@
   hosts: docker
   roles:
     - role: roles/docker
-

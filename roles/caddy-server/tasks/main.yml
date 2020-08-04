@@ -1,9 +1,9 @@
 ---
 - name: caddy | Ensure caddy with Cloudflare
   get_url:
-    url: 'https://builds.kradalby.no/caddy/caddy_linux_{{ ansible_architecture }}'
+    url: "https://builds.kradalby.no/caddy/caddy_linux_{{ ansible_architecture }}"
     dest: /usr/bin/caddy
-    mode: '0755'
+    mode: "0755"
   notify: Restart Caddy
 
 - name: caddy | Ensure caddy group
@@ -25,14 +25,14 @@
 
 - name: caddy | Ensure caddy config directory
   file:
-    path: '/etc/caddy'
+    path: "/etc/caddy"
     state: directory
     owner: caddy
     group: caddy
 
 - name: caddy | Ensure Caddyfile.d config directory
   file:
-    path: '/etc/caddy/Caddyfile.d'
+    path: "/etc/caddy/Caddyfile.d"
     state: directory
     owner: caddy
     group: caddy

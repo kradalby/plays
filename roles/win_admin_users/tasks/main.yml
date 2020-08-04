@@ -1,11 +1,11 @@
 ---
 - name: Windows Users | Add admin users
   win_user:
-    name: '{{ item.username }}'
-    password: '{{ item.password }}'
+    name: "{{ item.username }}"
+    password: "{{ item.password }}"
     password_never_expires: yes
     state: present
     groups:
       - Users
       - Administrators
-  loop: '{{ win_admin_users }}'
+  loop: "{{ win_admin_users }}"

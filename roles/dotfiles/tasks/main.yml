@@ -8,7 +8,7 @@
 - name: dotfiles | Clone dotfiles
   git:
     repo: https://github.com/kradalby/dotfiles.git
-    dest: '{{ ansible_env.HOME }}/git/dotfiles'
+    dest: "{{ ansible_env.HOME }}/git/dotfiles"
     # force: yes
   register: dotfiles
 

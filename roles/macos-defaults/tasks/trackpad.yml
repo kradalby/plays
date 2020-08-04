@@ -1,16 +1,16 @@
 ---
 - name: Trackpad | Allow tapping on trackpad 1
   osx_defaults:
-    domain: 'com.apple.driver.AppleBluetoothMultitouch.trackpad'
-    key: 'Clicking'
+    domain: "com.apple.driver.AppleBluetoothMultitouch.trackpad"
+    key: "Clicking"
     type: int
     value: 1
     state: present
 
 - name: Trackpad | Allow tapping on trackpad 2
   osx_defaults:
-    domain: 'NSGlobalDomain'
-    key: 'com.apple.mouse.tapBehavior'
+    domain: "NSGlobalDomain"
+    key: "com.apple.mouse.tapBehavior"
     type: int
     value: 1
     state: present
@@ -18,20 +18,19 @@
 - name: Trackpad | Allow tapping on trackpad 3
   osx_defaults:
     host: currentHost
-    domain: 'NSGlobalDomain'
-    key: 'com.apple.mouse.tapBehavior'
+    domain: "NSGlobalDomain"
+    key: "com.apple.mouse.tapBehavior"
     type: int
     value: 1
     state: present
 
 - name: Trackpad | Three finger drag 1
   osx_defaults:
-    domain: 'com.apple.driver.AppleBluetoothMultitouch.trackpad'
-    key: 'TrackpadThreeFingerDrag'
+    domain: "com.apple.driver.AppleBluetoothMultitouch.trackpad"
+    key: "TrackpadThreeFingerDrag"
     type: int
     value: 1
     state: present
-
 # - name: Trackpad | Three finger drag 2
 #   osx_defaults:
 #     domain: 'com.apple.universalaccess'

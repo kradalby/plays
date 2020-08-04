@@ -2,7 +2,7 @@
 - name: Windows Sleep | Disable sleep
   win_regedit:
     path: 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power'
-    name: '{{ item }}'
+    name: "{{ item }}"
     data: 0
     type: dword
     state: present

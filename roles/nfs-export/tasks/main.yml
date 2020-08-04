@@ -6,7 +6,7 @@
 
 - name: nfs-export | Ensure NFS enabled
   systemd:
-    name: '{{ item }}'
+    name: "{{ item }}"
     enabled: yes
   loop:
     - rpcbind
@@ -14,10 +14,10 @@
 
 - name: nfs-export | Ensure NFS exported directories
   file:
-    path: '{{ item.directory }}'
+    path: "{{ item.directory }}"
     recurse: yes
     state: directory
-  loop: '{{ nfs_exports }}'
+  loop: "{{ nfs_exports }}"
 
 - name: nfs-export | Ensure NFS exports
   template:

@@ -1,17 +1,17 @@
 ---
 - name: MenuMeters | Add configuration
   osx_defaults:
-    domain: 'com.ragingmenace.MenuMeters'
-    key: '{{ item.key }}'
-    value: '{{ item.value }}'
-    type: '{{ item.type }}'
+    domain: "com.ragingmenace.MenuMeters"
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+    type: "{{ item.type }}"
     state: present
   loop:
     - key: CPUAverageMultiProcs
       value: 1
       type: bool
     - key: CPUInterval
-      value: '2.5'
+      value: "2.5"
       type: float
     - key: MemDisplayMode
       value: 4
@@ -20,7 +20,7 @@
       value: 2
       type: int
     - key: NetInterval
-      value: '2.5'
+      value: "2.5"
       type: float
     - key: NetThroughput1KBound
       value: 1
@@ -28,6 +28,6 @@
     - key: NetThroughputBits
       value: 1
       type: bool
-    - key: 'com.ragingmenace.MenuMeterDisk'
+    - key: "com.ragingmenace.MenuMeterDisk"
       value: 0
       type: bool

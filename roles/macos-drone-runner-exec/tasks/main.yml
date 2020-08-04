@@ -3,25 +3,25 @@
   unarchive:
     src: https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_darwin_amd64.tar.gz
     remote_src: yes
-    dest: '{{ ansible_env.HOME }}/bin'
-    mode: '0755'
-    creates: '{{ ansible_env.HOME }}/bin/drone-runner-exec'
+    dest: "{{ ansible_env.HOME }}/bin"
+    mode: "0755"
+    creates: "{{ ansible_env.HOME }}/bin/drone-runner-exec"
 
 - name: drone-runner-exec | Ensure configuration directory
   file:
-    path: '{{ ansible_env.HOME }}/.drone-runner-exec'
+    path: "{{ ansible_env.HOME }}/.drone-runner-exec"
     state: directory
 
 - name: drone-runner-exec | Upload configuration
   template:
     src: config
-    dest: '{{ ansible_env.HOME }}/.drone-runner-exec/config'
+    dest: "{{ ansible_env.HOME }}/.drone-runner-exec/config"
   register: config
 
 - name: drone-runner-exec | Install service
   command:
     cmd: drone-runner-exec service install
-    creates: '{{ ansible_env.HOME }}/Library/LaunchAgents/drone-runner-exec.plist'
+    creates: "{{ ansible_env.HOME }}/Library/LaunchAgents/drone-runner-exec.plist"
 
 - name: drone-runner-exec | Stop drone-runner-exec
   command: drone-runner-exec service stop

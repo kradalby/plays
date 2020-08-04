@@ -9,7 +9,7 @@
   template:
     src: hostapd.conf
     dest: /etc/hostapd/hostapd.conf
-    mode: '0644'
+    mode: "0644"
   notify: Restart hostapd
 
 - name: Wireless AP | Ensure hostapd default config

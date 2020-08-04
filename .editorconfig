@@ -1,3 +1,6 @@
+# EditorConfig: http://EditorConfig.org
+# EditorConfig Properties: https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+
 # top-most EditorConfig file
 root = true
 
@@ -16,8 +19,7 @@ trim_trailing_whitespace = true
 
 insert_final_newline = true
 
-quote_type = single
-
+quote_type = double
 
 [*.go]
 indent_style = tab
@@ -39,7 +41,10 @@ indent_size = 2
 
 [*.json]
 indent_size = 2
-insert_final_newline = ignore
+
+[*.{jsonnet,libsonnet}]
+indent_size = 2
+quote_type = single
 
 [*.{yml,yaml}]
 indent_style = space
@@ -58,3 +63,6 @@ indent_style = tab
 
 [*.md]
 indent_size = 4
+
+[*.swift]
+indent_size = 2

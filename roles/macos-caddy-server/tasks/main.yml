@@ -1,36 +1,36 @@
 ---
 - name: caddy | Ensure xcaddy
   command:
-    cmd: 'go get -u github.com/caddyserver/xcaddy/cmd/xcaddy'
-    creates: '{{ ansible_env.HOME }}/go/bin/xcaddy'
+    cmd: "go get -u github.com/caddyserver/xcaddy/cmd/xcaddy"
+    creates: "{{ ansible_env.HOME }}/go/bin/xcaddy"
   register: xcaddy
 
 - name: caddy | Ensure caddy with Cloudflare
   command:
-    cmd: 'xcaddy build --with github.com/caddy-dns/cloudflare --output {{ ansible_env.HOME }}/bin/caddy'
-    creates: '{{ ansible_env.HOME }}/bin/caddy'
+    cmd: "xcaddy build --with github.com/caddy-dns/cloudflare --output {{ ansible_env.HOME }}/bin/caddy"
+    creates: "{{ ansible_env.HOME }}/bin/caddy"
   register: caddy
   when: xcaddy.changed
 
 - name: caddy | Ensure caddy config directory
   file:
-    path: '{{ ansible_env.HOME }}/.config/caddy'
+    path: "{{ ansible_env.HOME }}/.config/caddy"
     state: directory
 
 - name: caddy | Ensure log folder
   file:
-    path: '{{ ansible_env.HOME }}/log/caddy'
+    path: "{{ ansible_env.HOME }}/log/caddy"
     state: directory
 
 - name: caddy | Install configuration
   template:
     src: Caddyfile
-    dest: '{{ ansible_env.HOME }}/.config/Caddyfile'
+    dest: "{{ ansible_env.HOME }}/.config/Caddyfile"
   when: Reload caddy
 
 - name: caddy | Install service
   template:
     src: caddy.plist
-    dest: '{{ ansible_env.HOME }}/Library/LaunchAgents/caddy.plist'
+    dest: "{{ ansible_env.HOME }}/Library/LaunchAgents/caddy.plist"
   register: install_service
   when: Reload caddy

@@ -1,5 +1,5 @@
 ---
-ansible_user: 'Kristoffer Dalby'
+ansible_user: "Kristoffer Dalby"
 ansible_shell_type: powershell
 # ansible_become_method: runas
 # ansible_become_user: System

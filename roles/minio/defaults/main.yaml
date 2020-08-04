@@ -1,6 +1,6 @@
-minio_base_directory: ''
-minio_base_domain: ''
+minio_base_directory: ""
+minio_base_domain: ""
 minio_sub_domains: []
 minio_base_port: 9000
-minio_access_key: ''
-minio_secret_key: ''
+minio_access_key: ""
+minio_secret_key: ""

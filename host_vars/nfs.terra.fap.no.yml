@@ -1,6 +1,6 @@
 ---
 nfs_exports:
-  - directory: '/nfs/kubernetes'
+  - directory: "/nfs/kubernetes"
     hosts:
       - 10.60.0.0/16
     options:
@@ -11,7 +11,7 @@ nfs_exports:
       - no_root_squash
       - async
       - crossmnt
-  - directory: '/nfs/test'
+  - directory: "/nfs/test"
     hosts:
       - 10.60.0.0/16
     options:

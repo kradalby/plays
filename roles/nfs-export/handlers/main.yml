@@ -1,7 +1,7 @@
 ---
 - name: Restart nfs
   service:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: restarted
   loop:
     - rpcbind

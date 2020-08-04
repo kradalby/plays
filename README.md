@@ -1,4 +1,3 @@
-plays
-=====
+# plays
 
 Ansible playbooks

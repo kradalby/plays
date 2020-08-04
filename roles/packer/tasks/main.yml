@@ -2,7 +2,7 @@
 - block:
     - name: packer | Check if binary is already present
       stat:
-        path: '/usr/local/bin/packer'
+        path: "/usr/local/bin/packer"
       register: vmware_binary
 
     - name: packer | download binary

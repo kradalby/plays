@@ -1,5 +1,5 @@
 ---
-router_gateway_addr: ''
-router_bgp_as: ''
-router_bgp_neighbour_as: ''
+router_gateway_addr: ""
+router_bgp_as: ""
+router_bgp_neighbour_as: ""
 router_bgp_neighbours: []
