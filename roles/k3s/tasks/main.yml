@@ -76,6 +76,7 @@
 - name: k3s | Taint master nodes
   command: >-
     kubectl taint nodes {{ item }}
+    --overwrite
     node-role.kubernetes.io/master=effect:NoSchedule
   loop: "{{ master_names.stdout_lines }}"
   when: k3s_master|bool
@@ -103,7 +104,7 @@
     token: "{{ node_token.content | b64decode | regex_replace('\n', '') }}"
   when: k3s_master|bool
 
-- name: Restore node-token file access
+- name: restore node-token file access
   file:
     path: /var/lib/rancher/k3s/server
     mode: "{{ p.stat.mode }}"
@@ -126,3 +127,30 @@
   when: >
     k3s_agent|bool and
     group_name is match(".+_kubernetes")
+
+# Prevent k3s from eating all resources
+# https://github.com/rancher/k3s/issues/294#issuecomment-670372870
+- name: k3s | Set SystemD CPU limits on master
+  blockinfile:
+    path: /etc/systemd/system/k3s.service
+    insertafter: "[Service]"
+    marker: "# --- {mark} Ansible managed block ---"
+    block: |-
+      CPUQuota=30%
+      CPUQuotaPeriodSec=50ms
+      AllowedCPUs=0
+  when: k3s_master|bool
+  notify: Restart k3s
+
+- name: k3s | Set SystemD CPU limits on agent
+  blockinfile:
+    path: /etc/systemd/system/k3s-agent.service
+    insertafter: "[Service]"
+    marker: "# --- {mark} Ansible managed block ---"
+    block: |-
+      CPUQuota=30%
+      CPUQuotaPeriodSec=50ms
+      AllowedCPUs=0
+  when: >
+    k3s_agent|bool
+  notify: Restart k3s-agent
