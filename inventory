@@ -2,8 +2,6 @@
 # fap.no
 ################################
 
-[misc]
-swift2.ntnu.fap.no swift=true
 
 [hugin]
 hugin.terra.fap.no
@@ -29,7 +27,6 @@ unifi.tjoda.fap.no
 
 [docker]
 storage.terra.fap.no
-swift.ntnu.fap.no
 
 [packer]
 packer-builder.ntnu.fap.no
@@ -40,9 +37,10 @@ mdns-socat.ntnu.fap.no
 mdns-socat.tjoda.fap.no
 
 [rpi]
-rpi1.ldn.fap.no skip_repo=true
+rpi1.ldn.fap.no skip_repo=true # ansible_host=192.168.1.109
 rpi2.ldn.fap.no netboot=true skip_repo=true
 rpi3.ldn.fap.no netboot=true skip_repo=true
+rpi4.ldn.fap.no netboot=true skip_repo=true
 
 [ubuntu:children]
 database
@@ -59,7 +57,6 @@ storage
 terra_kubernetes
 unifi
 hugin
-misc
 
 [terra_kubernetes]
 node01.terra.fap.no
