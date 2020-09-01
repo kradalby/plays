@@ -31,9 +31,10 @@ rpi_netboot_nodes:
   - name: rpi3
     ip: 10.65.0.32
     mac: dc:a6:32:a8:e6:6b
-    #   - name: rpi4
-    #     ip: 10.65.0.33
-    #
+  - name: rpi4
+    ip: 10.65.0.33
+    mac: dc:a6:32:a8:e8:f9
+
 router_bgp_as: "51000"
 router_bgp_neighbour_as: "51030"
 router_bgp_neighbours: "{{ rpi_netboot_nodes }}"
@@ -43,3 +44,4 @@ wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_
 wireguard_client: "{{ wireguard_config.clients.rpi1ldn }}"
 
 wireguard_peers: "{{ wireguard_config.servers }}"
+wireguard_jumps: "{{ wireguard_config.jumps }}"

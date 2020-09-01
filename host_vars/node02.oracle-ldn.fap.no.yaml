@@ -6,4 +6,4 @@ wireguard_client: "{{ wireguard_config.clients.oracleldn2 }}"
 wireguard_peers: "{{ wireguard_config.servers }}"
 
 k3s_agent: yes
-node_exporter: yes
+node_exporter: no

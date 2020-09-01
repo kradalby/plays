@@ -16,6 +16,7 @@ brew_packages:
   - fdupes
   - go-jsonnet
   - golangci-lint
+  - gpg
   - haskell-stack
   - helm
   - ipcalc
