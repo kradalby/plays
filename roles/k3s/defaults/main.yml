@@ -1,5 +1,6 @@
 ---
 k3s_master: no
+k3s_master_schedule: no
 k3s_agent: no
 k3s_skip_traefik: no
 k3s_skip_servicelb: no

@@ -79,7 +79,9 @@
     --overwrite
     node-role.kubernetes.io/master=effect:NoSchedule
   loop: "{{ master_names.stdout_lines }}"
-  when: k3s_master|bool
+  when: > 
+      k3s_master|bool and
+      not k3s_master_schedule|bool
 
 - name: Register node-token file access mode
   stat:
