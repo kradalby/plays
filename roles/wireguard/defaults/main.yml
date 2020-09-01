@@ -6,5 +6,6 @@ wireguard_client:
   mask: ""
 
 wireguard_peers: {}
+wireguard_jumps: []
 
 wireguard_keep_alive: 21
