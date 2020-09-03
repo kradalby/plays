@@ -11,13 +11,13 @@
 
 - name: get prometheus node exporter
   unarchive:
-    src: "https://github.com/prometheus/node_exporter/releases/download/v{{ version }}/node_exporter-{{ version }}.linux-{{ deb_architecture.stdout }}.tar.gz"
+    src: "https://github.com/prometheus/node_exporter/releases/download/v{{ version }}/node_exporter-{{ version }}.linux-{{ arch or deb_architecture.stdout }}.tar.gz"
     dest: /tmp
     remote_src: yes
 
 - name: replace prometheus node exporter binary
   copy:
-    src: /tmp/node_exporter-{{ version }}.linux-{{ deb_architecture.stdout }}/node_exporter
+    src: /tmp/node_exporter-{{ version }}.linux-{{ arch or deb_architecture.stdout }}/node_exporter
     dest: /usr/bin/prometheus-node-exporter
     mode: 0755
     remote_src: yes
@@ -25,5 +25,5 @@
 
 - name: clean up node_exporter folder
   file:
-    path: /tmp/node_exporter-{{ version }}.linux-{{ deb_architecture.stdout }}
+    path: /tmp/node_exporter-{{ version }}.linux-{{ arch or deb_architecture.stdout }}
     state: absent
