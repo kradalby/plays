@@ -1,0 +1,104 @@
+---
+- name: RPi Shairport | Ensure dependencies
+  apt:
+    pkg:
+      - build-essential
+      - git
+      - xmltoman
+      - autoconf
+      - automake
+      - libtool
+      - libpopt-dev
+      - libconfig-dev
+      - libasound2-dev
+      - avahi-daemon
+      - libavahi-client-dev
+      - libssl-dev
+      - libsoxr-dev
+    state: latest
+
+# - name: RPi Shairport | Ensure Shairport Sync
+#   apt:
+#     pkg:
+#       - shairport-sync
+#     state: latest
+#   notify: Restart Shairport
+#
+# - name: RPi Shairport | Ensure SystemD override dir
+#   file:
+#     path: /etc/systemd/system/shairport-sync.service.d
+#     state: directory
+#
+# - name: RPi Shairport | Ensure SystemD override
+#   blockinfile:
+#     path: /etc/systemd/system/shairport-sync.service.d/override.conf
+#     create: yes
+#     block: |
+#       [Service]
+#       # Avahi daemon needs some time until fully ready
+#       ExecStartPre=/bin/sleep 3
+#   notify: Reload SystemD
+
+- name: RPi Shairport | Ensure git dir
+  file:
+    dest: "{{ ansible_env.HOME }}/git"
+    state: directory
+
+- name: RPi Shairport | Clone source code
+  git:
+    repo: https://github.com/mikebrady/shairport-sync.git
+    version: master
+    dest: "{{ ansible_env.HOME }}/git/shairport-sync"
+    force: yes
+    depth: "1"
+
+- name: RPi Shairport | autoreconf
+  command:
+    chdir: "{{ ansible_env.HOME }}/git/shairport-sync"
+    cmd: >-
+      autoreconf -fi
+
+- name: RPi Shairport | ./configure
+  command:
+    chdir: "{{ ansible_env.HOME }}/git/shairport-sync"
+    cmd: >-
+      ./configure
+      --sysconfdir=/etc
+      --with-alsa
+      --with-soxr
+      --with-avahi
+      --with-ssl=openssl
+      --with-systemd
+
+- name: RPi Shairport | Build
+  make:
+    chdir: "{{ ansible_env.HOME }}/git/shairport-sync"
+
+- name: RPi Shairport | Check if installed
+  stat:
+    path: /usr/local/bin/shairport-sync
+  register: binary
+
+- name: RPi Shairport | Uninstall previous
+  make:
+    chdir: "{{ ansible_env.HOME }}/git/shairport-sync"
+    target: uninstall
+  when: binary.stat.exists
+
+- name: RPi Shairport | Install
+  make:
+    chdir: "{{ ansible_env.HOME }}/git/shairport-sync"
+    target: install
+
+- name: RPi Shairport | Enable SystemD service
+  systemd:
+    name: shairport-sync
+    daemon_reload: yes
+    enabled: yes
+    state: started
+
+- name: RPi Shairport | Ensure Shairport configuration
+  template:
+    src: shairpoint-sync.conf
+    dest: /etc/shairport-sync.conf
+  notify: Restart Shairport

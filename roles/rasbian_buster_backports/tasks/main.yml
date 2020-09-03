@@ -1,0 +1,14 @@
+---
+- name: Rasbian | Ensure buster backports key
+  apt_key:
+    state: present
+    id: "{{ item }}"
+    keyserver: keyserver.ubuntu.com
+  loop:
+    - 04EE7237B7D453EC
+    - 648ACFD622F3D138
+
+- name: Rasbian | Ensure buster backports
+  apt_repository:
+    repo: deb http://deb.debian.org/debian buster-backports main
+    state: present
