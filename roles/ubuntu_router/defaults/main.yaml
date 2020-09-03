@@ -12,3 +12,6 @@ router_bridge: []
 router_upstream_dns: []
 router_dhcp_start: ""
 router_dhcp_end: ""
+router_static_leases: []
+#  - mac: b8:27:eb:0b:ef:ed
+#    ip: 192.168.0.10

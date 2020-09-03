@@ -17,8 +17,14 @@ router_bridge:
 router_upstream_dns:
   - 1.1.1.1
   - 1.0.0.1
-router_dhcp_start: 10.65.0.151
-router_dhcp_end: 10.65.0.220
+router_dhcp_start: 10.65.0.171
+router_dhcp_end: 10.65.0.250
+
+router_static_leases:
+  # Media devices
+  ## RPi speaker
+  - ip: 10.65.0.100
+    mac: b8:27:eb:0b:ef:ed
 
 router_ap_ssid: dalby-london-backup
 router_ap_key: Th1sIsForEm3rgency0nly!
