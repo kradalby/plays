@@ -1,0 +1,6 @@
+---
+- name: Configure Raspberry Pi Speakers
+  hosts: rpi_speaker
+  roles:
+    # - role: roles/rasbian_shairport_sync
+    - role: roles/rasbian_spotifyd
