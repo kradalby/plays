@@ -36,6 +36,9 @@ mdns-socat.terra.fap.no
 mdns-socat.ntnu.fap.no
 mdns-socat.tjoda.fap.no
 
+[rpi_speaker]
+rpi-speaker1.ldn.fap.no skip_repo=true
+
 [rpi]
 rpi1.ldn.fap.no skip_repo=true # ansible_host=192.168.1.109
 rpi2.ldn.fap.no netboot=true skip_repo=true
@@ -57,6 +60,7 @@ storage
 terra_kubernetes
 unifi
 hugin
+rpi_speaker
 
 [terra_kubernetes]
 node01.terra.fap.no
