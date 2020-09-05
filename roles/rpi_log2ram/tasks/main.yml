@@ -17,6 +17,12 @@
     pkg: log2ram
   notify: Restart log2ram
 
+- name: log2ram | Ensure log2ram configuration
+  template:
+    src: log2ram.conf
+    dest: /etc/log2ram.conf
+  notify: Restart log2ram
+
 - name: log2ram | Clean journald dir
   file:
     path: /var/log/journal
