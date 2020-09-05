@@ -39,11 +39,13 @@ mdns-socat.tjoda.fap.no
 [rpi_speaker]
 rpi-speaker1.ldn.fap.no skip_repo=true
 
-[rpi]
+[ldn_kubernetes]
 rpi1.ldn.fap.no skip_repo=true # ansible_host=192.168.1.109
-rpi2.ldn.fap.no netboot=true skip_repo=true
-rpi3.ldn.fap.no netboot=true skip_repo=true
-rpi4.ldn.fap.no netboot=true skip_repo=true
+rpi[2:4].ldn.fap.no netboot=true skip_repo=true node_exporter=false k3s_agent=true
+
+[rpi:children]
+rpi_speaker
+ldn_kubernetes
 
 [ubuntu:children]
 database
@@ -54,13 +56,13 @@ nfs
 ntnu_kubernetes
 oracle_ldn_kubernetes
 packer
-rpi
 socat_mdns
 storage
 terra_kubernetes
 unifi
 hugin
 rpi_speaker
+ldn_kubernetes
 
 [terra_kubernetes]
 node01.terra.fap.no
