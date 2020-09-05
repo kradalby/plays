@@ -1,0 +1,2 @@
+journald_system_max_use: 20
+journald_runtime_max_use: 15
