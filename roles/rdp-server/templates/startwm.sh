@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# {{ ansible_managed }}
+
 if [ -r /etc/default/locale ]; then
 
   . /etc/default/locale

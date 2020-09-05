@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 syncthing.{{ inventory_hostname }} {
     reverse_proxy 127.0.0.1:8384
     import cf

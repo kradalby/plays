@@ -1,1 +1,3 @@
+# {{ ansible_managed }}
+
 SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="{{ item.mac }}", ATTR{dev_id}=="0x0", ATTR{type}=="1", NAME:="eth0"

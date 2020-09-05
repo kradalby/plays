@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 [pi4]
 
 # By default, Ubuntu loads its own u-boot loader, but we want to use

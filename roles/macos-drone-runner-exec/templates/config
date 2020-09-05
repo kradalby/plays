@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 DRONE_RPC_PROTO=https
 DRONE_RPC_HOST=drone.fap.no
 DRONE_RPC_SECRET={{ drone_secret }}

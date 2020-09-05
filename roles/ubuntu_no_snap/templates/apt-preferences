@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 Package: snapd
 Pin: release a=*
 Pin-Priority: -10

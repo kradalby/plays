@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 {{ item.domain }} {
     root * {{ item.directory }}
     file_server browse

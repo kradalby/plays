@@ -4,6 +4,8 @@
 # For initialisation of a fresh Pi:
 # Add to "user-data" on boot partition
 
+# {{ ansible_managed }}
+
 hostname: {{ item.name }}
 
 disable_root: false

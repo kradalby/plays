@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 [Unit]
 Description=MinIO
 Documentation=https://docs.min.io

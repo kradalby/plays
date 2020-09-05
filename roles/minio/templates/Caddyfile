@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 {% for sub in minio_sub_domains %}
 {{ sub }}.{{ minio_base_domain }} {
     reverse_proxy 127.0.0.1:{{ minio_base_port + loop.index0 }}

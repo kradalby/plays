@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 AuthorizedKeysFile      .ssh/authorized_keys
 PubkeyAuthentication yes
 
