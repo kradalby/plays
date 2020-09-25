@@ -1,0 +1,14 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      addresses:
+        - {{ item.ip }}/24
+      gateway4: {{ router_gateway_addr }}
+      nameservers:
+          search:
+            - ldn.fap.no
+            - fap.no
+          addresses:
+            - {{ router_gateway_addr }}

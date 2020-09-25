@@ -1,1 +1,1 @@
-console=serial0,115200 console=tty1 root=/dev/nfs nfsroot={{ router_gateway_addr }}:/nfs/{{ item.name }},vers=4.1,proto=tcp rw ip=dhcp rootwait elevator=deadline
+console=serial0,115200 console=tty1 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1 root=/dev/nfs nfsroot={{ router_gateway_addr }}:/nfs/{{ item.name }},vers=4.1,proto=tcp rw ip=dhcp rootwait elevator=deadline

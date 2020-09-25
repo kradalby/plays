@@ -1,0 +1,53 @@
+---
+- name: rest-server | Ensure rest-server
+  unarchive:
+    src: "https://github.com/restic/rest-server/releases/download/v{{ restic_rest_server_version }}/rest-server_{{ restic_rest_server_version }}_linux_amd64.tar.gz"
+    remote_src: yes
+    dest: "/usr/local/bin"
+    mode: "0755"
+    extra_opts:
+      - --wildcards
+      - "*/rest-server"
+      - --strip=1
+      - --no-anchored
+    creates: "/usr/local/bin/rest-server"
+  notify: Restart rest-server
+
+- name: rest-server | Ensure rest-server group
+  group:
+    gid: 1997
+    name: restic
+    system: no
+    state: present
+
+- name: rest-server | Ensure rest-server user
+  user:
+    uid: 1997
+    name: restic
+    group: restic
+    home: "{{ restic_rest_server_base_directory }}"
+    shell: /usr/sbin/nologin
+    comment: Restic backup server
+    create_home: yes
+
+- name: rest-server | Install Caddyfile
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile.d/rest-server
+    owner: caddy
+    group: caddy
+  when: caddy is defined and caddy
+  notify: Restart Caddy
+
+- name: rest-server | Install systemd service description
+  template:
+    src: rest-server.service
+    dest: "/etc/systemd/system/rest-server.service"
+  notify: Restart rest-server
+
+- name: rest-server | Enable systemd service
+  systemd:
+    name: "rest-server"
+    daemon_reload: yes
+    enabled: yes
+    state: started

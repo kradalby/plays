@@ -41,7 +41,7 @@ rpi-speaker1.ldn.fap.no skip_repo=true
 
 [ldn_kubernetes]
 rpi1.ldn.fap.no skip_repo=true # ansible_host=192.168.1.109
-rpi[2:4].ldn.fap.no netboot=true skip_repo=true node_exporter=false k3s_agent=true
+rpi[2:4].ldn.fap.no netboot=true skip_repo=true node_exporter=false k3s_agent=true k3s_snapshotter=native
 
 [rpi:children]
 rpi_speaker
@@ -80,6 +80,7 @@ node02.oracle-ldn.fap.no ansible_host=node02.oracle-ldn-public.fap.no
 terra_kubernetes
 ntnu_kubernetes
 oracle_ldn_kubernetes
+ldn_kubernetes
 
 [macs]
 kramacbook.vpn.fap.no

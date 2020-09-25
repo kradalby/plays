@@ -6,4 +6,5 @@ wireguard_client: "{{ wireguard_config.clients.oracleldn2 }}"
 wireguard_peers: "{{ wireguard_config.servers }}"
 
 k3s_agent: yes
+k3s_cpu_quota: 10%
 node_exporter: no

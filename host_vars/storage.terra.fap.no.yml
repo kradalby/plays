@@ -17,3 +17,6 @@ minio: false
 #   - ldap
 # minio_access_key: '{{ lookup("env", "AWS_ACCESS_KEY_ID") }}'
 # minio_secret_key: '{{ lookup("env", "AWS_SECRET_ACCESS_KEY") }}'
+#
+restic_rest_server: true
+restic_rest_server_base_directory: /storage/restic

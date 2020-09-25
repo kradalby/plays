@@ -1,0 +1,26 @@
+[Unit]
+Description=Rest Server
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+ExecStart=/usr/local/bin/rest-server \
+  --path {{ restic_rest_server_base_directory }} \
+  --no-auth \
+  --listen :{{ restic_rest_server_port }} \
+  --prometheus
+Restart=always
+RestartSec=5
+
+# Optional security enhancements
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths={{ restic_rest_server_base_directory }}
+
+[Install]
+WantedBy=multi-user.target

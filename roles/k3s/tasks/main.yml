@@ -6,12 +6,18 @@
     state: present
     reload: yes
 
+- name: Check if IPv6 is enabled
+  stat:
+    path: /proc/sys/net/ipv6/conf/all/forwarding
+  register: ipv6
+
 - name: Enable IPv6 forwarding
   sysctl:
     name: net.ipv6.conf.all.forwarding
     value: "1"
     state: present
     reload: yes
+  when: ipv6.stat.exists
 
 - name: Add PostgreSQL for local deployment
   become: yes
@@ -47,6 +53,7 @@
     params: >-
       -v 0
       --disable local-storage
+      {% if k3s_master_ip is defined and k3s_master_ip %}--advertise-address {{ k3s_master_ip }} {% endif %}
       {% if k3s_skip_traefik %}--disable traefik{% endif %}
       {% if k3s_skip_servicelb %}--disable servicelb{% endif %}
       {% if k3s_datastore_endpoint != "" %}--datastore-endpoint {{ k3s_datastore_endpoint }}{% endif %}
@@ -79,7 +86,7 @@
     --overwrite
     node-role.kubernetes.io/master=effect:NoSchedule
   loop: "{{ master_names.stdout_lines }}"
-  when: > 
+  when: >
       k3s_master|bool and
       not k3s_master_schedule|bool
 
@@ -116,13 +123,16 @@
   vars:
     group_name: "{{ group_names[1] }}"
     master_ip: >-
-      {{ hostvars[groups[group_names[1]][0]].ansible_default_ipv4.address |
-      default(hostvars[groups[group_names[1]][0]].ansible_all_ipv4_addresses[0]) }}
+      {{ hostvars[groups[group_names[1]][0]].ansible_default_ipv4.address or hostvars[groups[group_names[1]][0]].ansible_all_ipv4_addresses[0] }}
+    master_ip_override: >-
+      {{ hostvars[groups[group_names[1]][0]].k3s_master_ip is defined and hostvars[groups[group_names[1]][0]].k3s_master_ip  or "" }}
     agent_ipv4: "{{ ansible_default_ipv4 }}"
     token: "{{ hostvars[groups[group_names[1]][0]]['token'] }}"
   environment:
     INSTALL_K3S_CHANNEL: latest
-    K3S_URL: "https://{{ master_ip }}:6443"
+    INSTALL_K3S_EXEC: >-
+      {% if k3s_snapshotter %}--snapshotter {{ k3s_snapshotter }}{% endif %}
+    K3S_URL: "https://{{ master_ip_override or master_ip }}:6443"
     K3S_TOKEN: "{{ token }}"
   shell: >
     curl -sfL https://get.k3s.io | sh -
@@ -138,7 +148,7 @@
     insertafter: "[Service]"
     marker: "# --- {mark} Ansible managed block ---"
     block: |-
-      CPUQuota=30%
+      CPUQuota={{ k3s_cpu_quota }}
       CPUQuotaPeriodSec=50ms
       AllowedCPUs=0
   when: k3s_master|bool
@@ -150,7 +160,7 @@
     insertafter: "[Service]"
     marker: "# --- {mark} Ansible managed block ---"
     block: |-
-      CPUQuota=30%
+      CPUQuota={{ k3s_cpu_quota }}
       CPUQuotaPeriodSec=50ms
       AllowedCPUs=0
   when: >

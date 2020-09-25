@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+
+restic.{{ inventory_hostname }} {
+    reverse_proxy 127.0.0.1:{{ restic_rest_server_port }}
+    import cf
+}
