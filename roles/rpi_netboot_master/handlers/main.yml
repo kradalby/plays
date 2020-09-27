@@ -12,6 +12,11 @@
     name: dnsmasq
     state: restarted
 
+- name: Restart tgt
+  service:
+    name: tgt
+    state: restarted
+
 - name: Save iptables
   # command: iptables-save -f /etc/iptables/rules.v4
   command: echo "test"

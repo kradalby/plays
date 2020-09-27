@@ -1,0 +1,20 @@
+---
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
+- name: restic | Ensure restic package
+  get_url:
+    url: "https://github.com/restic/restic/releases/download/v{{ restic_version }}/restic_{{ restic_version }}_linux_{{ arch or deb_architecture.stdout }}.bz2"
+    dest: "/usr/local/bin/restic.bz2"
+
+- name: restic | Extract restic
+  command:
+    cmd: >-
+      bzip2 --decompress /usr/local/bin/restic.bz2
+    creates: /usr/local/bin/restic
+
+- name: restic | Ensure restic is executable
+  file:
+    path: /usr/local/bin/restic
+    mode: "0755"

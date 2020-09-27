@@ -1,0 +1,9 @@
+---
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
+- name: rclone | Ensure rclone package
+  apt:
+    deb: "https://github.com/rclone/rclone/releases/download/v{{ rclone_version }}/rclone-v{{ rclone_version }}-linux-{{ arch or deb_architecture.stdout }}.deb"
+    state: present

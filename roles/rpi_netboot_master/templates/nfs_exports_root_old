@@ -1,5 +1,6 @@
 # {{ ansible_managed }}
 
 {% for node in rpi_netboot_nodes -%}
+/nfs/{{ node.name }} {{ node.ip }}(rw,sync,no_subtree_check,no_root_squash)
 /tftpboot/{{ node.ip }} {{ node.ip }}(rw,sync,no_subtree_check,no_root_squash)
 {% endfor %}

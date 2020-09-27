@@ -1,3 +1,4 @@
 ---
 router_gateway_addr: ""
 rpi_netboot_nodes: []
+rpi_netboot_disk_size: 32G

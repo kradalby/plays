@@ -1,7 +1,11 @@
 ---
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
 - name: rest-server | Ensure rest-server
   unarchive:
-    src: "https://github.com/restic/rest-server/releases/download/v{{ restic_rest_server_version }}/rest-server_{{ restic_rest_server_version }}_linux_amd64.tar.gz"
+    src: "https://github.com/restic/rest-server/releases/download/v{{ restic_rest_server_version }}/rest-server_{{ restic_rest_server_version }}_linux_{{ arch or deb_architecture.stdout }}.tar.gz"
     remote_src: yes
     dest: "/usr/local/bin"
     mode: "0755"

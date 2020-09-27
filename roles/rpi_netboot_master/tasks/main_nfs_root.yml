@@ -1,0 +1,180 @@
+---
+#
+# Node pis
+#
+- name: RPi netboot master | Ensure dependencies
+  apt:
+    pkg:
+      - tar
+      - unzip
+      - tgt
+      - qemu-utils
+    state: latest
+
+- name: RPi netboot master | Install dnsmasq config
+  template:
+    src: dnsmasq.conf
+    dest: /etc/dnsmasq.d/rpi_netboot.conf
+    mode: "0644"
+  notify: Restart dnsmasq
+
+- name: RPi netboot master | Ensure NFS server
+  apt:
+    pkg: nfs-kernel-server
+    state: latest
+
+- name: RPi netboot master | Ensure NFS enabled
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  loop:
+    - rpcbind
+    - nfs-kernel-server
+
+- name: RPi netboot master | Ensure /etc/exports.d
+  file:
+    path: /etc/exports.d
+    state: directory
+
+- name: RPi netboot master | Ensure NFS exports
+  template:
+    src: nfs_exports
+    dest: /etc/exports.d/rpi-netboot.exports
+  notify: Restart nfs
+
+- name: RPi netboot master | Ensure /tftpboot
+  file:
+    path: /tftpboot
+    owner: dnsmasq
+    group: root
+    mode: "0777"
+    state: directory
+
+- name: RPi netboot master | Ensure tftpboot directories
+  file:
+    path: "/tftpboot/{{ item.ip }}"
+    mode: "0777"
+    owner: dnsmasq
+    group: root
+    state: directory
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Ensure NFS directories
+  file:
+    path: "/nfs/{{ item.name }}"
+    mode: "0777"
+    owner: root
+    group: root
+    state: directory
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Ensure Node boot
+  git:
+    repo: https://github.com/Hexxeh/rpi-firmware.git
+    version: stable
+    dest: "/tftpboot/{{ item.ip }}"
+    force: yes
+    depth: "1"
+  loop: "{{ rpi_netboot_nodes }}"
+
+  # - name: RPi netboot master | Ensure Node boot
+  #   unarchive:
+  #     remote_src: yes
+  #     # src: /root/ubuntu_2004_rpi_bootfs.tar.xz
+  #     src: /root/raspbian_rpi_bootfs.tar.xz
+  #     dest: '/tftpboot/{{ item.ip }}'
+  #     # mode: preserve
+  #     creates: '/tftpboot/{{ item.ip }}/cmdline.txt'
+  #   loop: '{{ rpi_netboot_nodes }}'
+- name: RPi netboot master | Ensure config.txt
+  template:
+    src: node_config_raspb.txt
+    dest: "/tftpboot/{{ item.ip }}/config.txt"
+    mode: "0644"
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Ensure cmdline.txt
+  template:
+    src: node_cmdline_raspb.txt
+    dest: "/tftpboot/{{ item.ip }}/cmdline.txt"
+    mode: "0644"
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Ensure ssh on boot
+  file:
+    path: "/tftpboot/{{ item.ip }}/ssh"
+    state: touch
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Ensure Node root
+  unarchive:
+    remote_src: yes
+    src: /root/ubuntu_2004_rpi_rootfs.tar.xz
+    dest: "/nfs/{{ item.name }}"
+    # extra_opts:
+    #   - --numeric-owner
+    #   - --preserve
+    # mode: preserve
+    creates: "/nfs/{{ item.name }}/etc/fstab"
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Ensure fstab
+  template:
+    src: node_fstab
+    dest: "/nfs/{{ item.name }}/etc/fstab"
+    mode: "0644"
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Ensure netplan
+  template:
+    src: node_netplan.yaml
+    dest: "/nfs/{{ item.name }}/etc/netplan/99-ldn-ip.yaml"
+    mode: "0644"
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Ensure eth0 persistent rule
+  template:
+    src: persistent-net.rules
+    dest: "/nfs/{{ item.name }}/etc/udev/rules.d/70-persistent-net.rules"
+    mode: "0644"
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Ensure firmware is absent
+  file:
+    path: "/nfs/{{ item.name }}/boot/firmware"
+    state: absent
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Symlink boot directory
+  file:
+    src: "/tftpboot/{{ item.ip }}"
+    path: "/nfs/{{ item.name }}/boot/firmware"
+    state: link
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netbook master | Find kernel module folders
+  find:
+    paths: "/tftpboot/{{ rpi_netboot_nodes[0].ip }}/modules"
+    file_type: directory
+  register: kernel_folders
+
+- name: RPi netboot master | Symlink kernel modules
+  file:
+    src: "/tftpboot/{{ item.0.ip }}/modules/{{ item.1.path | basename }}"
+    path: "/nfs/{{ item.0.name }}/lib/modules/{{ item.1.path | basename }}"
+    state: link
+  loop: "{{ rpi_netboot_nodes | product(kernel_folders.files) | list }}"
+
+- name: RPi netboot master | Ensure .ssh
+  file:
+    path: "/nfs/{{ item.name }}/root/.ssh"
+    state: directory
+  loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Ensure authorized_keys
+  copy:
+    remote_src: yes
+    src: "/root/.ssh/authorized_keys"
+    dest: "/nfs/{{ item.name }}/root/.ssh/authorized_keys"
+    mode: "0644"
+  loop: "{{ rpi_netboot_nodes }}"

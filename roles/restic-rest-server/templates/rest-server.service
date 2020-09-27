@@ -5,8 +5,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=www-data
-Group=www-data
+User=restic
+Group=restic
 ExecStart=/usr/local/bin/rest-server \
   --path {{ restic_rest_server_base_directory }} \
   --no-auth \

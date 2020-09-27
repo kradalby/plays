@@ -1,0 +1,151 @@
+---
+- name: RPi netboot master | Ensure /iscsi
+  file:
+    path: /iscsi
+    owner: root
+    group: root
+    mode: "0777"
+    state: directory
+
+- name: RPi netboot master | Ensure iSCSI disk img
+  command:
+    cmd: >-
+      truncate -s {{ rpi_netboot_disk_size }} /iscsi/{{ item.name }}.img
+    creates: "/iscsi/{{ item.name }}.img"
+  notify: Restart tgt
+  register: img_create
+
+- name: RPi netboot master | Get UUID from image
+  shell: >-
+    blkid --probe --output value --match-tag UUID /iscsi/{{ item.name }}.img
+  register: uuid
+
+- name: RPi netboot master | Ensure iSCSI disk ext4
+  command:
+    cmd: >-
+      mkfs.ext4 /iscsi/{{ item.name }}.img
+  notify: Restart tgt
+  when: img_create.changed
+
+# - name: RPi netboot master | Ensure tmp mount dir
+#   file:
+#     path: "/tmp/{{ item.name }}_root"
+#     state: directory
+
+- name: RPi netboot master | Mount sparse image
+  mount:
+    src: "/iscsi/{{ item.name }}.img"
+    path: "/tmp/{{ item.name }}_root"
+    fstype: ext4
+    opts: loop
+    state: mounted
+
+- name: RPi netboot master | Ensure Node root
+  unarchive:
+    remote_src: yes
+    src: /root/ubuntu_2004_rpi_rootfs.tar.xz
+    dest: "/tmp/{{ item.name }}_root"
+    # extra_opts:
+    #   - --numeric-owner
+    #   - --preserve
+    # mode: preserve
+    creates: "/tmp/{{ item.name }}_root/etc/fstab"
+
+- name: RPi netboot master | Ensure fstab
+  template:
+    src: node_fstab_iscsi
+    dest: "/tmp/{{ item.name }}_root/etc/fstab"
+    mode: "0644"
+
+- name: RPi netboot master | Ensure netplan
+  template:
+    src: node_netplan.yaml
+    dest: "/tmp/{{ item.name }}_root/etc/netplan/99-ldn-ip.yaml"
+    mode: "0644"
+
+- name: RPi netboot master | Ensure eth0 persistent rule
+  template:
+    src: persistent-net.rules
+    dest: "/tmp/{{ item.name }}_root/etc/udev/rules.d/70-persistent-net.rules"
+    mode: "0644"
+
+- name: RPi netboot master | Ensure firmware is absent
+  file:
+    path: "/tmp/{{ item.name }}_root/boot/firmware"
+    state: absent
+
+# - name: RPi netboot master | Symlink boot directory
+#   file:
+#     src: "/tftpboot/{{ item.ip }}"
+#     path: "/nfs/{{ item.name }}/boot/firmware"
+#     state: link
+#   loop: "{{ rpi_netboot_nodes }}"
+
+- name: RPi netboot master | Add kernel modules
+  copy:
+    remote_src: yes
+    src: "/tftpboot/{{ item.ip }}/modules/"
+    dest: "/tmp/{{ item.name }}_root/lib/modules/"
+
+- name: RPi netboot master | Ensure .ssh
+  file:
+    path: "/tmp/{{ item.name }}_root/root/.ssh"
+    state: directory
+
+- name: RPi netboot master | Ensure authorized_keys
+  copy:
+    remote_src: yes
+    src: "/root/.ssh/authorized_keys"
+    dest: "/tmp/{{ item.name }}_root/root/.ssh/authorized_keys"
+    mode: "0644"
+
+- name: RPi netboot master | Unmount sparse image
+  mount:
+    path: "/tmp/{{ item.name }}_root"
+    state: absent
+
+- name: RPi netboot master | Ensure iSCSI targets
+  template:
+    src: iscsi_target.conf
+    dest: "/etc/tgt/conf.d/{{ item.name }}.conf"
+    mode: "0644"
+  notify: Restart tgt
+
+- name: RPi netboot master | Ensure tftpboot directories
+  file:
+    path: "/tftpboot/{{ item.ip }}"
+    mode: "0777"
+    owner: dnsmasq
+    group: root
+    state: directory
+
+- name: RPi netboot master | Ensure Node boot
+  git:
+    repo: https://github.com/Hexxeh/rpi-firmware.git
+    version: stable
+    dest: "/tftpboot/{{ item.ip }}"
+    force: yes
+    depth: "1"
+
+- name: RPi netboot master | Add iSCSI initrd image
+  copy:
+    remote_src: yes
+    src: /root/initrd.img-5.4.51-v8+
+    dest: "/tftpboot/{{ item.ip }}/initrd.img"
+
+- name: RPi netboot master | Ensure config.txt
+  template:
+    src: node_config_raspb.txt
+    dest: "/tftpboot/{{ item.ip }}/config.txt"
+    mode: "0644"
+
+- name: RPi netboot master | Ensure cmdline.txt
+  template:
+    src: node_cmdline_raspb_iscsi_root.txt
+    dest: "/tftpboot/{{ item.ip }}/cmdline.txt"
+    mode: "0644"
+
+- name: RPi netboot master | Ensure ssh on boot
+  file:
+    path: "/tftpboot/{{ item.ip }}/ssh"
+    state: touch
