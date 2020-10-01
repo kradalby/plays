@@ -12,20 +12,20 @@
     cmd: >-
       truncate -s {{ rpi_netboot_disk_size }} /iscsi/{{ item.name }}.img
     creates: "/iscsi/{{ item.name }}.img"
-  notify: Restart tgt
+  notify: Reload tgt
   register: img_create
-
-- name: RPi netboot master | Get UUID from image
-  shell: >-
-    blkid --probe --output value --match-tag UUID /iscsi/{{ item.name }}.img
-  register: uuid
 
 - name: RPi netboot master | Ensure iSCSI disk ext4
   command:
     cmd: >-
       mkfs.ext4 /iscsi/{{ item.name }}.img
-  notify: Restart tgt
+  notify: Reload tgt
   when: img_create.changed
+
+- name: RPi netboot master | Get UUID from image
+  shell: >-
+    blkid --probe --output value --match-tag UUID /iscsi/{{ item.name }}.img
+  register: uuid
 
 # - name: RPi netboot master | Ensure tmp mount dir
 #   file:
@@ -84,8 +84,22 @@
 - name: RPi netboot master | Add kernel modules
   copy:
     remote_src: yes
-    src: "/tftpboot/{{ item.ip }}/modules/"
+    # src: "/tftpboot/{{ item.ip }}/modules/"
+    src: "/root/rpi-kernel/modules/{{ rpi_netboot_kernel_version }}"
     dest: "/tmp/{{ item.name }}_root/lib/modules/"
+
+- name: RPi netboot master | Add kernel headers
+  block:
+    - file:
+        path: "/tmp/{{ item.name }}_root/lib/modules/{{ rpi_netboot_kernel_version }}/source"
+        state: absent
+    - file:
+        path: "/tmp/{{ item.name }}_root/lib/modules/{{ rpi_netboot_kernel_version }}/build"
+        state: absent
+    - copy:
+        remote_src: yes
+        src: "/root/rpi-kernel/headers/linux-headers-{{ rpi_netboot_kernel_version }}/"
+        dest: "/tmp/{{ item.name }}_root/lib/modules/{{ rpi_netboot_kernel_version }}/build/"
 
 - name: RPi netboot master | Ensure .ssh
   file:
@@ -98,6 +112,43 @@
     src: "/root/.ssh/authorized_keys"
     dest: "/tmp/{{ item.name }}_root/root/.ssh/authorized_keys"
     mode: "0644"
+
+# CloudInit is not ran when we mount the iSCSI, this means that
+# SSH host keys is not generated, and SSH wont start. We will
+# therefor generate them.
+- name: Generate SSH host keys
+  block:
+    - name: Generate /etc/ssh/ RSA host key
+      command:
+        cmd: >-
+          ssh-keygen -q -t rsa -f /tmp/{{ item.name }}_root/etc/ssh/ssh_host_rsa_key -C "" -N ""
+        creates: /tmp/{{ item.name }}_root/etc/ssh/ssh_host_rsa_key
+
+    - name: Generate /etc/ssh/ DSA host key
+      command:
+        cmd: >-
+          ssh-keygen -q -t dsa -f /tmp/{{ item.name }}_root/etc/ssh/ssh_host_dsa_key -C "" -N ""
+        creates: /tmp/{{ item.name }}_root/etc/ssh/ssh_host_dsa_key
+
+    - name: Generate /etc/ssh/ ECDSA host key
+      command:
+        cmd: >-
+          ssh-keygen -q -t ecdsa -f /tmp/{{ item.name }}_root/etc/ssh/ssh_host_ecdsa_key -C "" -N ""
+        creates: /tmp/{{ item.name }}_root/etc/ssh/ssh_host_ecdsa_key
+
+    - name: Generate /etc/ssh/ ED25519 host key
+      command:
+        cmd: >-
+          ssh-keygen -q -t ed25519 -f /tmp/{{ item.name }}_root/etc/ssh/ssh_host_ed25519_key -C "" -N ""
+        creates: /tmp/{{ item.name }}_root/etc/ssh/ssh_host_ed25519_key
+
+- name: RPi netboot master | Ensure root login
+  blockinfile:
+    path: "/tmp/{{ item.name }}_root/etc/ssh/sshd_config.d/permit_root"
+    create: yes
+    mode: "0644"
+    block: |
+      PermitRootLogin without-password
 
 - name: RPi netboot master | Unmount sparse image
   mount:
@@ -127,11 +178,17 @@
     force: yes
     depth: "1"
 
-- name: RPi netboot master | Add iSCSI initrd image
+# - name: RPi netboot master | Add iSCSI initrd image
+#   copy:
+#     remote_src: yes
+#     src: /root/initrd.img-5.4.51-v8+
+#     dest: "/tftpboot/{{ item.ip }}/initrd.img"
+
+- name: RPi netboot master | Add RPi custom kernel
   copy:
     remote_src: yes
-    src: /root/initrd.img-5.4.51-v8+
-    dest: "/tftpboot/{{ item.ip }}/initrd.img"
+    src: /root/rpi-kernel/boot/custom
+    dest: "/tftpboot/{{ item.ip }}/"
 
 - name: RPi netboot master | Ensure config.txt
   template:

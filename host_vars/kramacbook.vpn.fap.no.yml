@@ -47,10 +47,17 @@ brew_packages:
   - tmuxinator
   - unrar
   - wireguard-go
+  - silicon
+
+brew_taps:
+  - lukakerr/things
 
 brew_cask_packages:
   # - adobe-creative-cloud
   # - tunnelblick
+  - pine # Markdown editor
+  - lunar # Sync brightness for external monitors
+  - maccy # Clipboard manager
   - 1password
   - 1password-cli
   - adoptopenjdk14

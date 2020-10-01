@@ -17,6 +17,11 @@
     name: tgt
     state: restarted
 
+- name: Reload tgt
+  service:
+    name: tgt
+    state: reloaded
+
 - name: Save iptables
   # command: iptables-save -f /etc/iptables/rules.v4
   command: echo "test"

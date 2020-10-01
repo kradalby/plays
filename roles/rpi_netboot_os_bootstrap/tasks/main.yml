@@ -12,7 +12,15 @@
   apt:
     pkg:
       - nfs-common
+      - open-iscsi
+      - v4l2loopback-dkms
     state: latest
+
+- name: RPi netboot special | Add v4l2loopback module
+  lineinfile:
+    dest: /etc/modules
+    regexp: "^v4l2loopback"
+    line: "v4l2loopback"
 
 - name: RPi netboot special | Mask unwanted services
   systemd:

@@ -2,3 +2,4 @@
 router_gateway_addr: ""
 rpi_netboot_nodes: []
 rpi_netboot_disk_size: 32G
+rpi_netboot_kernel_version: "5.4.68-v8+"
