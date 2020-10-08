@@ -60,13 +60,9 @@ k3s_master_ip: "{{ router_gateway_addr }}"
 k3s_skip_traefik: yes
 k3s_skip_servicelb: yes
 
-k3s_master_memory_quota: 512M
-k3s_master_io_read_bandwidth: 2M
-k3s_master_io_write_bandwidth: 2M
-
-k3s_agent_memory_quota: 512M
-k3s_agent_io_read_bandwidth: 2M
-k3s_agent_io_write_bandwidth: 2M
+k3s_master_memory_quota: 768M
+k3s_master_io_read_bandwidth: 3M
+k3s_master_io_write_bandwidth: 3M
 
 node_exporter: no
 skip_repo: true
