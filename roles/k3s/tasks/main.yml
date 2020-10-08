@@ -148,9 +148,12 @@
     insertafter: "[Service]"
     marker: "# --- {mark} Ansible managed block ---"
     block: |-
-      CPUQuota={{ k3s_cpu_quota }}
+      CPUQuota={{ k3s_master_cpu_quota }}
       CPUQuotaPeriodSec=50ms
       AllowedCPUs=0
+      MemoryLimit={{ k3s_master_memory_quota }}
+      IOReadBandwidthMax={{ k3s_master_io_read_bandwidth }}
+      IOWriteBandwidthMax={{ k3s_master_io_write_bandwidth }}
   when: k3s_master|bool
   notify: Restart k3s
 
@@ -160,9 +163,12 @@
     insertafter: "[Service]"
     marker: "# --- {mark} Ansible managed block ---"
     block: |-
-      CPUQuota={{ k3s_cpu_quota }}
+      CPUQuota={{ k3s_agent_cpu_quota }}
       CPUQuotaPeriodSec=50ms
       AllowedCPUs=0
+      MemoryLimit={{ k3s_agent_memory_quota }}
+      IOReadBandwidthMax={{ k3s_agent_io_read_bandwidth }}
+      IOWriteBandwidthMax={{ k3s_agent_io_write_bandwidth }}
   when: >
     k3s_agent|bool
   notify: Restart k3s-agent

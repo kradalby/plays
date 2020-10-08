@@ -7,5 +7,9 @@ wireguard_peers: "{{ wireguard_config.servers }}"
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
 k3s_agent: yes
-k3s_cpu_quota: 10%
+k3s_agent_cpu_quota: 10%
+k3s_agent_memory_quota: 512M
+k3s_agent_io_read_bandwidth: 2M
+k3s_agent_io_write_bandwidth: 2M
+
 node_exporter: no

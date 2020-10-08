@@ -2,12 +2,21 @@
 k3s_master: no
 k3s_master_ip: ""
 k3s_master_schedule: no
+k3s_master_cpu_quota: 30%
+k3s_master_memory_quota: 1536M
+k3s_master_io_read_bandwidth: 5M
+k3s_master_io_write_bandwidth: 5M
+
 k3s_agent: no
+k3s_agent_cpu_quota: 30%
+k3s_agent_memory_quota: 1536M
+k3s_agent_io_read_bandwidth: 5M
+k3s_agent_io_write_bandwidth: 5M
+
 k3s_snapshotter: ""
 k3s_skip_traefik: no
 k3s_skip_servicelb: no
 k3s_logfile: ""
 k3s_datastore_endpoint: ""
 k3s_datastore_on_host_postgres: no
-k3s_cpu_quota: 30%
 node_exporter: no
