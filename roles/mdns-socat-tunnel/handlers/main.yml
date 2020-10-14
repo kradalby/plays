@@ -1,3 +1,10 @@
 ---
-- name: Restart Avahi
-  service: name=avahi-daemon state=restarted
+- name: Restart Receiver
+  service:
+    name: socat-mdns-receiver
+    state: restarted
+
+- name: Restart Sender
+  service:
+    name: socat-mdns-sender
+    state: restarted

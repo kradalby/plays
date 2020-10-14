@@ -9,23 +9,29 @@
     src: socat_mdns_receiver.sh
     dest: /usr/local/bin/socat_mdns_receiver.sh
     owner: root
-    mode: 655
-    # notify: Restart Receiver
+    mode: "0655"
+  notify: Restart Receiver
 
 - name: Install sender
   template:
     src: socat_mdns_sender.sh
     dest: /usr/local/bin/socat_mdns_sender.sh
     owner: root
-    mode: 655
-    # notify: Restart Sender
+    mode: "0655"
+  notify: Restart Sender
 
 - name: SystemD receiver unit
-  template: src=socat-mdns-receiver.service.j2 dest=/lib/systemd/system/socat-mdns-receiver.service mode=644
+  template:
+    src: socat-mdns-receiver.service.j2
+    dest: /lib/systemd/system/socat-mdns-receiver.service
+    mode: "0644"
   register: systemd_receiver
 
 - name: SystemD sender unit
-  template: src=socat-mdns-sender.service.j2 dest=/lib/systemd/system/socat-mdns-sender.service mode=644
+  template:
+    src: socat-mdns-sender.service.j2
+    dest: /lib/systemd/system/socat-mdns-sender.service
+    mode: "0644"
   register: systemd_sender
 
 - name: SystemD daemon reload
