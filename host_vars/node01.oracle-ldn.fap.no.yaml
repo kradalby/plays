@@ -11,6 +11,7 @@ k3s_master_cpu_quota: 10%
 k3s_master_memory_quota: 512M
 k3s_master_io_read_bandwidth: 2M
 k3s_master_io_write_bandwidth: 2M
+k3s_master_scheduled_restart: daily
 
 k3s_skip_traefik: yes
 k3s_skip_servicelb: no

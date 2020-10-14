@@ -55,16 +55,7 @@ wireguard_client: "{{ wireguard_config.clients.rpi1ldn }}"
 wireguard_peers: "{{ wireguard_config.servers }}"
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
-k3s_master: yes
-k3s_master_ip: "{{ router_gateway_addr }}"
-k3s_skip_traefik: yes
-k3s_skip_servicelb: yes
-
-k3s_master_memory_quota: 768M
-k3s_master_io_read_bandwidth: 3M
-k3s_master_io_write_bandwidth: 3M
-
-node_exporter: no
+node_exporter: yes
 skip_repo: true
 
 restic_config: "{{ lookup('file', '~/Sync/config/restic.yaml') | from_yaml }}"
@@ -74,3 +65,8 @@ restic_backup_job: true
 restic_backup_job_repos: "{{ restic_host_config.repos }}"
 restic_backup_job_password: "{{ restic_host_config.password }}"
 restic_backup_job_directories: "{{ restic_host_config.directories }}"
+
+mdns_override_ip: "{{ router_gateway_addr }}"
+
+udpbroadcastrelay_ip: "{{ router_gateway_addr }}"
+udpbroadcastrelay_interface: "{{ router_lan }}"

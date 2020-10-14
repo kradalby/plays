@@ -7,6 +7,9 @@ k3s_master_memory_quota: 1536M
 k3s_master_io_read_bandwidth: 5M
 k3s_master_io_write_bandwidth: 5M
 
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/cron_module.html#parameter-special_time
+k3s_master_scheduled_restart: ""
+
 k3s_agent: no
 k3s_agent_cpu_quota: 30%
 k3s_agent_memory_quota: 1536M

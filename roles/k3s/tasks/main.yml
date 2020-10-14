@@ -65,6 +65,15 @@
     curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server {{ params }}" sh -s -
   when: k3s_master|bool
 
+- name: Restart k3s master on schedule
+  cron:
+    name: "Restart k3s master"
+    special_time: "{{ k3s_master_scheduled_restart }}"
+    job: "/usr/bin/systemctl restart k3s.service"
+  when: >
+    k3s_master|bool and
+    k3s_master_scheduled_restart is defined
+
 - name: Wait for node-token
   wait_for:
     path: /var/lib/rancher/k3s/server/node-token
@@ -157,6 +166,10 @@
   when: k3s_master|bool
   notify: Restart k3s
 
+- name: k3s | Reload systemd daemon on master
+  systemd:
+    daemon_reload: yes
+
 - name: k3s | Set SystemD CPU limits on agent
   blockinfile:
     path: /etc/systemd/system/k3s-agent.service
@@ -172,3 +185,7 @@
   when: >
     k3s_agent|bool
   notify: Restart k3s-agent
+
+- name: k3s | Reload systemd daemon on master
+  systemd:
+    daemon_reload: yes
