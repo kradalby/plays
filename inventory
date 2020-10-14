@@ -35,12 +35,13 @@ packer-builder.ntnu.fap.no
 mdns-socat.terra.fap.no
 mdns-socat.ntnu.fap.no
 mdns-socat.tjoda.fap.no
+rpi1.ldn.fap.no
 
 [rpi_speaker]
 rpi-speaker1.ldn.fap.no skip_repo=true
 
 [ldn_kubernetes]
-rpi1.ldn.fap.no # ansible_host=192.168.1.109
+# rpi1.ldn.fap.no # ansible_host=192.168.1.109
 rpi[2:4].ldn.fap.no
 
 [rpi:children]
