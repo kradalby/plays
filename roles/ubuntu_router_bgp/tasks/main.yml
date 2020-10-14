@@ -2,7 +2,7 @@
 - name: BGP | Ensure bird
   apt:
     update_cache: yes
-    pkg: bird
+    pkg: bird2
     state: latest
 
 - name: BGP | ensure bird.conf.d
