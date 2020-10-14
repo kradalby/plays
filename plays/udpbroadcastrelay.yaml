@@ -1,0 +1,5 @@
+---
+- name: Setup UDP broadcast relay
+  hosts: socat_mdns
+  roles:
+    - role: roles/udpbroadcastrelay

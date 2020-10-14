@@ -1,0 +1,32 @@
+{%- set current = namespace(index=0) -%}
+{%- for neighbour in udpbroadcastrelay_neighbours -%}
+{%- if neighbour.ip == udpbroadcastrelay_ip -%}
+  {% set current.index = loop.index %}
+{%- endif -%}
+{%- endfor -%}
+{%- set sites = udpbroadcastrelay_neighbours | map(attribute='site') -%}
+{% set device_args | wordwrap %}
+  {%- for site in sites %}
+    {%- if current.index != loop.index %}
+ --dev {{ "tun_%s0" % site }}
+    {%- endif %}
+  {%- endfor %}
+{% endset %}
+
+# {{ ansible_managed }}
+
+[Unit]
+Description=UDP broadcast relay
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+RuntimeMaxSec=10800
+User=root
+ExecStart=/usr/local/sbin/udpbroadcastrelay --id {{ current.index + 1 }} --port 5353 --dev {{ udpbroadcastrelay_interface }} {{ device_args }} --multicast 224.0.0.251
+
+[Install]
+WantedBy=multi-user.target

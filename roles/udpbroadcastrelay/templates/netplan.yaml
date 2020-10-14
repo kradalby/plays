@@ -1,0 +1,24 @@
+{%- set current = namespace(index=0) -%}
+{%- for neighbour in udpbroadcastrelay_neighbours -%}
+{%- if neighbour.ip == udpbroadcastrelay_ip -%}
+  {% set current.index = loop.index %}
+{%- endif -%}
+{%- endfor -%}
+
+
+
+network:
+  version: 2
+  renderer: networkd
+  tunnels:
+{% for neighbour in udpbroadcastrelay_neighbours %}
+{% if neighbour.ip != udpbroadcastrelay_ip %}
+    {%- set ip_num = (neighbour.ip | site_code) + ( udpbroadcastrelay_ip | site_code) %}
+    {{ "tun_" + neighbour.site + "0" }}:
+      mode: ipip
+      remote: {{ neighbour.ip }}
+      local: {{ udpbroadcastrelay_ip }}
+      addresses:
+        - {{ "192.168.%s.%d/24" % (ip_num, current.index + 10) }}
+{% endif %}
+{% endfor %}

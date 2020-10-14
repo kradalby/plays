@@ -1,0 +1,4 @@
+---
+udpbroadcastrelay_ip: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"
+udpbroadcastrelay_interface: "{{ ansible_default_ipv4.interface }}"
+udpbroadcastrelay_neighbours: []

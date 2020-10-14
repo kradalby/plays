@@ -1,0 +1,8 @@
+---
+- name: Apply netplan
+  command: netplan apply
+
+- name: Restart udpbroadcastrelay
+  service:
+    name: udpbroadcastrelay
+    state: restarted

@@ -1,0 +1,64 @@
+---
+# TODO:
+# - stop and disable avahi
+# - add all tun devices to udprelay service
+# - add main device to udprelay
+# - ensure netplan is loaded
+# - ensure unique ID for udprelay
+# - ensure IP pairs are unique
+
+- name: udpbroadcastrelay | Ensure dependencies
+  apt:
+    pkg:
+      - git
+    state: latest
+
+- name: udpbroadcastrelay | Ensure git dir
+  file:
+    path: "{{ ansible_env.HOME }}/git"
+    state: directory
+
+- name: udpbroadcastrelay | Clone udpbroadcastrelay
+  git:
+    repo: https://github.com/marjohn56/udpbroadcastrelay.git
+    dest: "{{ ansible_env.HOME }}/git/udpbroadcastrelay"
+    # force: yes
+  register: udpbroadcastrelay
+
+- name: udpbroadcastrelay | make clean
+  make:
+    chdir: "{{ ansible_env.HOME }}/git/udpbroadcastrelay"
+    target: "{{ item }}"
+  when: udpbroadcastrelay.changed
+  loop:
+    - clean
+    - all
+    - install
+
+- name: udpbroadcastrelay | Ensure tunnels
+  template:
+    src: netplan.yaml
+    dest: /etc/netplan/90-udprelay-tunnels.yaml
+  notify: Apply netplan
+
+- name: udpbroadcastrelay | Ensure udpbroadcastrelay service
+  template:
+    src: udpbroadcastrelay.service
+    dest: /lib/systemd/system/udpbroadcastrelay.service
+    mode: "0644"
+  register: systemd_udpbroadcastrelay
+  # notify: Restart udpbroadcastrelay
+
+# - name: udpbroadcastrelay | Enable receiver service
+#   systemd:
+#     name: udpbroadcastrelay
+#     daemon_reload: yes
+#     state: restarted
+#     enabled: yes
+
+- name: udpbroadcastrelay | Ensure no avahi service
+  systemd:
+    name: avahi-daemon
+    state: stopped
+    enabled: no
+  ignore_errors: yes
