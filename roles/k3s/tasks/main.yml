@@ -149,6 +149,16 @@
     k3s_agent|bool and
     group_name is match(".+_kubernetes")
 
+- name: Restart k3s agent on schedule
+  cron:
+    name: "Restart k3s agent"
+    special_time: "{{ k3s_agent_scheduled_restart }}"
+    job: "/usr/bin/systemctl restart k3s-agent.service"
+  when: >
+    k3s_agent|bool and
+    k3s_agent_scheduled_restart is defined
+
+
 # Prevent k3s from eating all resources
 # https://github.com/rancher/k3s/issues/294#issuecomment-670372870
 - name: k3s | Set SystemD CPU limits on master
