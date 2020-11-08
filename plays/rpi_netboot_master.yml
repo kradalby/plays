@@ -1,0 +1,5 @@
+---
+- name: Configure rpi netboot master
+  hosts: rpi1.ldn.fap.no
+  roles:
+    - role: roles/rpi_netboot_master

@@ -15,6 +15,6 @@ k3s_master_memory_quota: 768M
 k3s_master_io_read_bandwidth: 3M
 k3s_master_io_write_bandwidth: 3M
 
-node_exporter: no
+node_exporter: yes
 netboot: yes
 skip_repo: yes

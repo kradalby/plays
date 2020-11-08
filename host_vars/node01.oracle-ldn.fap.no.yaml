@@ -17,4 +17,4 @@ k3s_skip_traefik: yes
 k3s_skip_servicelb: no
 # k3s_logfile: '/var/log/k3s.log'
 k3s_datastore_on_host_postgres: no
-node_exporter: no
+node_exporter: yes

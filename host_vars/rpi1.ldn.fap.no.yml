@@ -1,11 +1,17 @@
 ---
+apt_update_cache: no
+
 caddy: true
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 
-router_vlan_wan: true
-router_vlan_wan_id: 317
-router_vlan_wan_if: eth0
-router_wan: uplink
+# router_vlan_wan: true
+# router_vlan_wan_id: 317
+# router_vlan_wan_if: eth0
+# router_wan: uplink
+# router_wan: wlan0
+
+# iPhone interface
+router_wan: eth1
 router_wan_dhcp: true
 router_lan: br0
 router_gateway_addr: 10.65.0.1
@@ -13,19 +19,46 @@ router_gateway_mask: 24
 router_domain: ldn.fap.no
 router_bridge:
   - eth0
-  - wlan0
+  # - wlan0
 router_upstream_dns:
   - 1.1.1.1
   - 1.0.0.1
 router_dhcp_start: 10.65.0.171
 router_dhcp_end: 10.65.0.250
 
-# Note: 10.65.0.140-10.65.0.169 is used by Metallb/K3S
 router_static_leases:
+  # Users
+  ## kramacbook
+  - ip: 10.65.0.50
+    mac: b8:e8:56:3e:8f:da
+  ## kPhone
+  - ip: 10.65.0.51
+    mac: c8:e0:eb:16:7a:d9
+  ## DSO iPhone
+  - ip: 10.65.0.52
+    mac: 9a:4a:7f:aa:97:13
+
+  # IoT
+  ## Vacuum
+  - ip: 10.65.0.80
+    mac: 78:11:dc:5f:f6:05
+  ## IKEA
+  - ip: 10.65.0.81
+    mac: 44:91:60:30:f9:c3
+
   # Media devices
   ## RPi speaker
   - ip: 10.65.0.100
     mac: b8:27:eb:0b:ef:ed
+  ## Sonos Boost
+  - ip: 10.65.0.101
+    mac: b8:e9:37:0b:5a:7a
+  ## Apple TV
+  - ip: 10.65.0.102
+    mac: 90:dd:5d:9b:46:49
+  ## Philips TV
+  - ip: 10.65.0.103
+    mac: 70:af:24:b8:4e:7b
 
 router_ap_ssid: dalby-london-backup
 router_ap_key: Th1sIsForEm3rgency0nly!

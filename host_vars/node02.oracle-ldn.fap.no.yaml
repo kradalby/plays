@@ -12,4 +12,4 @@ k3s_agent_memory_quota: 512M
 k3s_agent_io_read_bandwidth: 2M
 k3s_agent_io_write_bandwidth: 2M
 
-node_exporter: no
+node_exporter: yes

@@ -3,8 +3,7 @@
   hosts: rpi1.ldn.fap.no
   roles:
     # - role: roles/caddy-server
-    # - role: roles/ubuntu_router
-    # - role: roles/ubuntu_router_ap
-    # - role: roles/ubuntu_router_bgp
-    # - role: roles/ubuntu_router_bgp_kube_neighbours
-    - role: roles/rpi_netboot_master
+    - role: roles/ubuntu_router
+    - role: roles/ubuntu_router_ap
+    - role: roles/ubuntu_router_bgp
+    - role: roles/ubuntu_router_bgp_kube_neighbours

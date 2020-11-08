@@ -15,3 +15,5 @@ router_dhcp_end: ""
 router_static_leases: []
 #  - mac: b8:27:eb:0b:ef:ed
 #    ip: 192.168.0.10
+
+apt_update_cache: yes

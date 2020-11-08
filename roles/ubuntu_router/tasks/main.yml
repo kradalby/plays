@@ -15,7 +15,7 @@
 
 - name: Ubuntu router | Ensure WireGuard
   apt:
-    update_cache: yes
+    update_cache: "{{ apt_update_cache }}"
     pkg: wireguard
     state: latest
 
@@ -29,12 +29,13 @@
 - name: Ubuntu router | Install netplan config
   template:
     src: netplan.yaml
-    dest: /etc/netplan/99-rpi-router.yaml
+    dest: /etc/netplan/51-rpi-router.yaml
     mode: "0644"
   notify: Apply netplan
 
 - name: Ubuntu router | Ensure dnsmasq
   apt:
+    update_cache: "{{ apt_update_cache }}"
     pkg: dnsmasq
     state: latest
   notify: Restart dnsmasq
@@ -228,5 +229,6 @@
 
 - name: Ubuntu router | Ensure iptables-persistent
   apt:
+    update_cache: "{{ apt_update_cache }}"
     pkg: iptables-persistent
     state: latest

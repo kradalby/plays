@@ -1,7 +1,7 @@
 ---
 - name: Wireless AP | Ensure hostapd
   apt:
-    update_cache: yes
+    update_cache: "{{ apt_update_cache }}"
     pkg: hostapd
     state: latest
 
@@ -23,5 +23,5 @@
   systemd:
     name: hostapd
     masked: no
-    enabled: yes
-    state: started
+    enabled: "{{ router_wan != 'wlan0' }}"
+    state: "{% if router_wan == 'wlan0' %}stopped{% else %}started{% endif %}"
