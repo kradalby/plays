@@ -14,6 +14,7 @@ network:
       id: {{ router_vlan_wan_id }}
       link: {{ router_vlan_wan_if }}
       dhcp4: {{ router_wan_dhcp }}
+      link-local: [ ]
 {% endif %}
   bridges:
     br0:
