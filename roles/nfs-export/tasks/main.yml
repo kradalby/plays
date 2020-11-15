@@ -11,6 +11,7 @@
   loop:
     - rpcbind
     - nfs-kernel-server
+    - rpc-statd
 
 - name: nfs-export | Ensure NFS exported directories
   file:

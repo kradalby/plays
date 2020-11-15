@@ -6,3 +6,4 @@
   loop:
     - rpcbind
     - nfs-kernel-server
+    - rpc-statd

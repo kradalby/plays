@@ -1,6 +1,6 @@
 ---
 - name: datetime | Set timezone to UTC
-  timezone:
+  community.general.timezone:
     name: UTC
   ignore_errors: yes
 
