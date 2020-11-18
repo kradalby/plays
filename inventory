@@ -44,6 +44,9 @@ rpi-speaker1.ldn.fap.no skip_repo=true
 # rpi1.ldn.fap.no # ansible_host=192.168.1.109
 rpi[2:4].ldn.fap.no
 
+[misc]
+bastard.terra.fap.no
+
 [rpi:children]
 rpi_speaker
 ldn_kubernetes
@@ -64,6 +67,7 @@ unifi
 hugin
 rpi_speaker
 ldn_kubernetes
+misc
 
 [terra_kubernetes]
 node01.terra.fap.no
