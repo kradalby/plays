@@ -23,3 +23,8 @@
   loop:
     - rpcbind
     - nfs-kernel-server
+
+- name: Restart nftables
+  service:
+    name: nftables
+    state: restarted
