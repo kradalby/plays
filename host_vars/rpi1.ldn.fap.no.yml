@@ -27,6 +27,14 @@ router_upstream_dns:
 router_dhcp_start: 10.65.0.171
 router_dhcp_end: 10.65.0.250
 
+router_nftable_allow_incoming:
+  - port: https
+    protocol: tcp
+  - port: http
+    protocol: tcp
+  - port: ssh
+    protocol: tcp
+
 router_static_leases:
   # Users
   ## kramacbook
