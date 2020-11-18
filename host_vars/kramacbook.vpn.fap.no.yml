@@ -9,6 +9,7 @@ brew_packages:
   - aria2
   - cloc
   - diff-so-fancy
+  - dog
   - dos2unix
   - drone
   - elm-format
