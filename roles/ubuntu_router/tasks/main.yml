@@ -118,6 +118,38 @@
       After=sys-devices-virtual-net-br0.device
   notify: Restart nftables
 
+- name: Ubuntu router | Ensure wide-dhcp6
+  apt:
+    update_cache: "{{ apt_update_cache }}"
+    pkg: wide-dhcpv6-client
+    state: latest
+  when: router_wan_dhcp6
+
+- name: Ubuntu router | Install DHCPv6 config
+  template:
+    src: wide-dhcp6.conf
+    dest: /etc/wide-dhcpv6/dhcp6c.conf
+    mode: "0644"
+  notify: Restart wide-dhcpv6-client
+  when: router_wan_dhcp6
+
+- name: Ubuntu router | Enable DHCPv6
+  systemd:
+    name: wide-dhcpv6-client
+    enabled: true
+    state: started
+  when: router_wan_dhcp6
+
+
+- name: Ubuntu router | Enable IPv6 forwarding
+  ansible.posix.sysctl:
+    name: "net.ipv6.conf.{{ router_wan }}.forwarding"
+    value: "2"
+    state: present
+    reload: yes
+  when: router_wan_dhcp6
+
+
 # - name: Ubuntu router | Flush all tables
 #   iptables:
 #     flush: yes

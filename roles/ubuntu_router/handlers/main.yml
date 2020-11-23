@@ -28,3 +28,8 @@
   service:
     name: nftables
     state: restarted
+
+- name: Restart wide-dhcpv6-client
+  service:
+    name: wide-dhcpv6-client
+    state: restarted

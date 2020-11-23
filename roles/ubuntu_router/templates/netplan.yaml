@@ -8,13 +8,25 @@ network:
     {{ inf }}:
       dhcp4: no
 {% endfor %}
-{% if router_vlan_wan %}
+{% if not router_vlan_wan %}
+    {{ router_wan }}:
+      {% if router_wan_static %}
+      {{- router_wan_static | to_nice_yaml(indent=2) | trim | indent(6) }}
+      {% endif -%}
+      # link-local: [ ]
+      dhcp4: {{ router_wan_dhcp }}
+      # dhcp6: {{ router_wan_dhcp6 }}
+{% else %}
   vlans:
     {{ router_wan }}:
+      {% if router_wan_static %}
+      {{- router_wan_static | to_nice_yaml(indent=2) | trim | indent(6) }}
+      {% endif -%}
+      # link-local: [ ]
       id: {{ router_vlan_wan_id }}
       link: {{ router_vlan_wan_if }}
       dhcp4: {{ router_wan_dhcp }}
-      link-local: [ ]
+      # dhcp6: {{ router_wan_dhcp6 }}
 {% endif %}
   bridges:
     br0:

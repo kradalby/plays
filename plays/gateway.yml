@@ -1,0 +1,9 @@
+---
+- name: Configure gateways
+  hosts: gateway
+  roles:
+    - role: roles/wireguard
+      when: wireguard is defined and wireguard
+    - role: roles/ubuntu_router
+    - role: roles/ubuntu_router_bgp
+    - role: roles/ubuntu_router_bgp_kube_neighbours

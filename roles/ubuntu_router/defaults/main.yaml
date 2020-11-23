@@ -4,7 +4,10 @@ router_vlan_wan_id: 317
 router_vlan_wan_if: ""
 router_wan: uplink
 router_wan_dhcp: true
+router_wan_dhcp6: true
+router_wan_static: {}
 router_lan: br0
+router_ipv6_prefix_delegation_length: 0
 router_gateway_addr: ""
 router_gateway_mask: ""
 router_domain: ""
@@ -19,5 +22,10 @@ router_static_leases: []
 router_nftable_allow_incoming: []
   # - port: https
   #   protocol: tcp
+
+router_nftable_port_redirects: []
+  # - destination: 500
+  #   target: 51820
+  #   protocol: udp
 
 apt_update_cache: yes

@@ -1,11 +1,11 @@
 ---
-wireguard_client:
+wireguard_current_host:
   private_key: ""
   public_key: ""
   address: ""
   mask: ""
+wireguard_current_host_name: ""
 
-wireguard_peers: {}
 wireguard_jumps: []
 
 wireguard_keep_alive: 21
