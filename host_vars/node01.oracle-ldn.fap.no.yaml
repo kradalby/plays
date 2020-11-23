@@ -1,8 +1,8 @@
 ---
 wireguard: yes
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
-wireguard_client: "{{ wireguard_config.clients.oracleldn1 }}"
-wireguard_peers: "{{ wireguard_config.servers }}"
+wireguard_current_host: "{{ wireguard_config.clients.oracleldn1 }}"
+wireguard_current_host_name: "oracleldn1"
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
 k3s_master: yes
