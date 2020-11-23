@@ -67,6 +67,7 @@
       --with-alsa
       --with-soxr
       --with-avahi
+      --with-metadata
       --with-ssl=openssl
       --with-systemd
 
