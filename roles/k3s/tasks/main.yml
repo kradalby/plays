@@ -71,8 +71,9 @@
     special_time: "{{ k3s_master_scheduled_restart }}"
     job: "/usr/bin/systemctl restart k3s.service"
   when: >
-    k3s_master|bool and
-    k3s_master_scheduled_restart is defined
+    k3s_master|bool
+      and k3s_master_scheduled_restart is defined
+      and k3s_master_scheduled_restart != ""
 
 - name: Wait for node-token
   wait_for:
@@ -155,8 +156,9 @@
     special_time: "{{ k3s_agent_scheduled_restart }}"
     job: "/usr/bin/systemctl restart k3s-agent.service"
   when: >
-    k3s_agent|bool and
-    k3s_agent_scheduled_restart is defined
+    k3s_agent|bool
+      and k3s_agent_scheduled_restart is defined
+      and k3s_agent_scheduled_restart != ""
 
 
 # Prevent k3s from eating all resources
@@ -176,6 +178,15 @@
   when: k3s_master|bool
   notify: Restart k3s
 
+- name: k3s | Start master after time is synced
+  lineinfile:
+    path: /etc/systemd/system/k3s.service
+    insertafter: "After="
+    line: After=time-sync.target
+  when: >
+    k3s_master|bool
+  notify: Restart k3s
+
 - name: k3s | Reload systemd daemon on master
   systemd:
     daemon_reload: yes
@@ -192,6 +203,15 @@
       MemoryLimit={{ k3s_agent_memory_quota }}
       IOReadBandwidthMax={{ k3s_agent_io_read_bandwidth }}
       IOWriteBandwidthMax={{ k3s_agent_io_write_bandwidth }}
+  when: >
+    k3s_agent|bool
+  notify: Restart k3s-agent
+
+- name: k3s | Start agent after time is synced
+  lineinfile:
+    path: /etc/systemd/system/k3s-agent.service
+    insertafter: "After="
+    line: After=time-sync.target
   when: >
     k3s_agent|bool
   notify: Restart k3s-agent
