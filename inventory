@@ -31,6 +31,9 @@ storage.terra.fap.no
 [packer]
 packer-builder.ntnu.fap.no
 
+[gateway]
+gateway.ntnu.fap.no
+
 [socat_mdns]
 mdns-socat.terra.fap.no
 mdns-socat.ntnu.fap.no
@@ -68,6 +71,7 @@ hugin
 rpi_speaker
 ldn_kubernetes
 misc
+gateway
 
 [terra_kubernetes]
 node01.terra.fap.no
