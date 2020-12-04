@@ -7,8 +7,9 @@ network:
         - {{ item.ip }}/24
       gateway4: {{ router_gateway_addr }}
       nameservers:
-          search:
-            - ldn.fap.no
-            - fap.no
+          # This makes loads of trouble in Kubernetes
+          # search:
+          #   - ldn.fap.no
+          #   - fap.no
           addresses:
             - {{ router_gateway_addr }}

@@ -62,16 +62,16 @@ router_static_leases:
   ## IKEA
   - ip: 10.65.0.81
     mac: 44:91:60:30:f9:c3
-  ## Socket: Reading light
+  ## Socket: Bedroom Desk light
   - ip: 10.65.0.82
     mac: a4:cf:12:c3:87:21
-  ## Socket: Fairy light
+  ## Socket: Living Room Fairy light
   - ip: 10.65.0.83
     mac: 2c:f4:32:6b:b3:57
-  ## Socket: Lamp
+  ## Socket: Kitchen Fairy light
   - ip: 10.65.0.84
     mac: a4:cf:12:c3:94:99
-  ## Socket: Nook
+  ## Socket: Bedroom Nook light
   - ip: 10.65.0.85
     mac: 50:02:91:5e:a5:90
 
@@ -132,3 +132,9 @@ mdns_override_ip: "{{ router_gateway_addr }}"
 
 udpbroadcastrelay_ip: "{{ router_gateway_addr }}"
 udpbroadcastrelay_interface: "{{ router_lan }}"
+
+cloudflare_token: '{{ lookup("env", "CLOUDFLARE_FAP_NO_API_TOKEN") }}'
+cloudflare_dns_name: "ldn.fap.no"
+cloudflare_zone_id: "6467f74f10e206068c311e586104ebe0"
+cloudflare_ipv4_dns_id: "1bf1d2b7b029c3e7cbd7190c65fbdffc"
+cloudflare_ipv6_dns_id: "4145e034d486a8b275cef0c71c2ec2dd"

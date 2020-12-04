@@ -2,6 +2,7 @@
 - name: Configure Raspberry Pi
   hosts: rpi
   roles:
+    - role: roles/udev
     - role: roles/rpi_netboot_os_bootstrap
       when: netboot is defined and netboot
     - role: roles/rpi_trim_ubuntu

@@ -1,0 +1,22 @@
+---
+- name: Cloudflare DDNS | Ensure dependencies
+  apt:
+    pkg:
+      - jq
+      - dnsutils
+      - curl
+    state: present
+
+- name: Cloudflare DDNS | Ensure ddns.sh script
+  template:
+    src: ddns.sh
+    dest: /usr/local/bin/ddns.sh
+    mode: "0755"
+
+- name: Cloudflare DDNS | Ensure Cron Job
+  cron:
+    name: "Cloudflare Dynamic DNS"
+    minute: "*/5"
+    job: >
+      /usr/local/bin/ddns.sh
+    state: present

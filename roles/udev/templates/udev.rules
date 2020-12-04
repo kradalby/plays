@@ -1,0 +1,5 @@
+{{ ansible_managed }}
+
+{% for rule in udev_rules %}
+{% if "kernel" in rule %}KERNEL=="{{ rule.kernel }}" {% endif -%} SUBSYSTEM=="{{ rule.subsystem }}", ATTRS{idVendor}=="{{ rule.vendor_id }}", ATTRS{idProduct}=="{{ rule.product_id }}", SYMLINK+="{{ rule.name }}"
+{% endfor %}

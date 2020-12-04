@@ -41,7 +41,7 @@ mdns-socat.tjoda.fap.no
 rpi1.ldn.fap.no ansible_host=10.65.0.1
 
 [rpi_speaker]
-rpi-speaker1.ldn.fap.no skip_repo=true
+# rpi-speaker1.ldn.fap.no skip_repo=true
 
 [ldn_kubernetes]
 # rpi1.ldn.fap.no # ansible_host=192.168.1.109

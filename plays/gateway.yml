@@ -2,6 +2,7 @@
 - name: Configure gateways
   hosts: gateway
   roles:
+    - role: roles/cloudflare_ddns
     - role: roles/wireguard
       when: wireguard is defined and wireguard
     - role: roles/ubuntu_router

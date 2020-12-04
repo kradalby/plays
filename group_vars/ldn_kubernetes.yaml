@@ -1,0 +1,13 @@
+---
+udev_rules:
+  - subsystem: video4linux
+    kernel: video0
+    vendor_id: 046d
+    product_id: "0825"
+    name: alias/camera-$attr{idVendor}-$attr{idProduct}
+  - subsystem: tty
+    vendor_id: 1a86
+    product_id: 7523
+    name: alias/zigbee-$attr{idVendor}-$attr{idProduct}
+
+udev_v4l2loopback_rules: yes

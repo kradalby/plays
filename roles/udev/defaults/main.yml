@@ -1,0 +1,7 @@
+udev_rules: []
+  # - subsystem: tty
+  #   vendor_id: aaaa
+  #   product_id: bbbb
+  #   name: zigbee
+
+udev_v4l2loopback_rules: no
