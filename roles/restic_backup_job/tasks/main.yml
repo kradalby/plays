@@ -2,13 +2,26 @@
 - name: restic | Ensure restic backup job
   template:
     src: backup_restic.sh
-    dest: /usr/local/bin/backup_restic.sh
+    dest: "{{ restic_backup_job_base_path }}/backup_restic_{{ item | restic_repo_friendly_name }}.sh"
     mode: "0755"
+  loop: "{{ restic_backup_job_repos }}"
 
 - name: restic | Ensure restic backup cron
   cron:
-    name: "Backup with restic"
+    name: "Backup with restic to {{ item | restic_repo_friendly_name }}"
     special_time: "daily"
     job: >
-      /usr/bin/flock -n /tmp/backup_restic.lockfile /usr/local/bin/backup_restic.sh
+      /usr/bin/flock -n /tmp/backup_restic_{{ item | restic_repo_friendly_name }}.lockfile {{ restic_backup_job_base_path }}/backup_restic_{{ item | restic_repo_friendly_name }}.sh
     state: present
+  loop: "{{ restic_backup_job_repos }}"
+  when: restic_backup_job_cronjob
+
+- name: restic | Ensure old restic backup cron absent
+  cron:
+    name: "Backup with restic"
+    state: absent
+
+- name: restic | Ensure old restic backup script absent
+  file:
+    path: "/usr/local/bin/backup_restic.sh"
+    state: absent

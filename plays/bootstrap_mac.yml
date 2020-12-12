@@ -2,18 +2,14 @@
 - name: Setup base configuration for macOS
   hosts: macs
 
-  # pre_tasks:
-  #   - name: Upgrade packages
-  #     apt:
-  #       upgrade: true
-  #       update_cache: true
-
   roles:
     - role: roles/dotfiles
     - role: roles/macos-defaults
     - role: roles/macos-packages
     - role: roles/macos-caddy-server
       when: caddy is defined and caddy
+    - role: roles/restic_backup_job
+      when: restic_backup_job is defined and restic_backup_job
     - role: roles/macos-node-exporter
       when: exporter is defined and exporter
     - role: roles/macos-code-server

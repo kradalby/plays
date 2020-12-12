@@ -68,3 +68,5 @@
     - role: roles/snmpd
     - role: roles/prometheus-node-exporter
       when: node_exporter is undefined or node_exporter
+    - role: roles/blackbox_exporter
+      when: blackbox_exporter is defined and blackbox_exporter

@@ -1,3 +1,5 @@
 restic_backup_job_repos: []
 restic_backup_job_password: ""
 restic_backup_job_directories: []
+restic_backup_job_cronjob: true
+restic_backup_job_base_path: "/usr/bin/local"
