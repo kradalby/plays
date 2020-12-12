@@ -1,0 +1,16 @@
+[Unit]
+Description=Blackbox exporter
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=blackbox_exporter
+Group=blackbox_exporter
+ExecStart=/usr/local/bin/blackbox_exporter --config.file=/etc/blackbox.yaml
+Restart=always
+RestartSec=5
+CapabilityBoundingSet=CAP_NET_RAW
+
+[Install]
+WantedBy=multi-user.target
