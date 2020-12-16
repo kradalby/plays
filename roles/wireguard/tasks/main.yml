@@ -27,8 +27,8 @@
     dest: /etc/wireguard/wg0.conf
   notify: Restart WireGuard
 
-- name: WireGuard | Ensure wg0 service
-  systemd:
-    name: wg-quick@wg0
-    enabled: yes
-    state: started
+  # - name: WireGuard | Ensure wg0 service
+  #   systemd:
+  #     name: wg-quick@wg0
+  #     enabled: yes
+  #     state: started

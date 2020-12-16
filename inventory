@@ -15,6 +15,7 @@ nfs.terra.fap.no
 [storage]
 storage.terra.fap.no
 storage.tjoda.fap.no
+storage.bassan.fap.no ansible_host=192.168.2.2
 
 [database]
 database.terra.fap.no

@@ -1,0 +1,9 @@
+---
+- name: Mount | Mount up devices by UUID
+  ansible.posix.mount:
+    path: "{{ item.path }}"
+    src: "UUID={{ item.uuid }}"
+    fstype: "{{ item.fs }}"
+    opts: "{{ item.options }}"
+    state: mounted
+  loop: "{{ mounts }}"

@@ -1,0 +1,22 @@
+---
+# arch: armv6
+skip_repo: true
+
+wireguard: yes
+wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
+wireguard_current_host: "{{ wireguard_config.clients.storagebassan }}"
+wireguard_current_host_name: "storagebassan"
+wireguard_jumps: "{{ wireguard_config.jumps }}"
+wireguard_prefer_ip: true
+
+mounts:
+  - path: /storage
+    uuid: "d9581462-f3c6-4111-86f7-fad90d39d228"
+    fs: xfs
+    options: "defaults,noauto,noatime"
+
+caddy: true
+caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
+
+restic_rest_server: true
+restic_rest_server_base_directory: /storage/restic

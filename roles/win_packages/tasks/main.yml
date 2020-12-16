@@ -51,13 +51,6 @@
     state: latest
   when: choco_packages_privileged is defined
 
-- name: Windows Packages | Install WireGuard
-  # Product ID: https://stackoverflow.com/questions/29937568/how-can-i-find-the-product-guid-of-an-installed-msi-setup
-  win_package:
-    path: https://download.wireguard.com/windows-client/wireguard-amd64-0.1.0.msi
-    product_id: "{35135D76-D98E-4C20-A084-468F2A948019}"
-    state: present
-
 - name: Windows Packages | Prevent applications from starting automatically
   win_regedit:
     path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'

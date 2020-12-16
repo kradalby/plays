@@ -1,0 +1,36 @@
+- name: Windows WireGuard | Ensure temp directory
+  win_file:
+    path: 'C:\temp'
+    state: directory
+
+- name: Windows WireGuard | Ensure wg0 configuration
+  win_template:
+    src: wg0.conf
+    dest: 'C:\temp\wg0.conf'
+    # newline_sequence: '\n'
+    backup: yes
+  register: wireguard_config
+
+- name: Windows WireGuard | Install WireGuard
+  # Product ID: https://stackoverflow.com/questions/29937568/how-can-i-find-the-product-guid-of-an-installed-msi-setup
+  # WireGuard instlal: https://r-pufky.github.io/docs/services/wireguard/windows-setup.html
+  win_package:
+    path: https://download.wireguard.com/windows-client/wireguard-installer.exe
+    product_id: "{35135D76-D98E-4C20-A084-468F2A948019}"
+    arguments:
+      - "/q"
+      - "/I"
+    state: present
+  register: wireguard_install
+
+- name: Windows WireGuard | Uninstall WireGuard config
+  win_command: '"C:\Program Files\WireGuard\wireguard.exe" /uninstallmanagerservice'
+  args:
+    chdir: 'C:\temp'
+  when: wireguard_config.changed or wireguard_install.changed
+
+- name: Windows WireGuard | Install WireGuard config
+  win_command: 'C:\Program Files\WireGuard\wireguard.exe" /installtunnelservice C:\temp\wg0.conf'
+  args:
+    chdir: 'C:\temp'
+  when: wireguard_config.changed or wireguard_install.changed

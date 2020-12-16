@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+{% set excludes = restic_backup_job_excludes | map('regex_replace', '^', '--exclude=') | list | join(" ") -%}
+
 set -euo pipefail
 
 RESTIC=/usr/local/bin/restic
@@ -13,7 +15,7 @@ $RESTIC snapshots > /dev/null || $RESTIC init
 
 $RESTIC unlock
 
-$RESTIC backup --verbose {{ restic_backup_job_directories | join(" ") }}
+$RESTIC backup --verbose {{ excludes }} {{ restic_backup_job_directories | join(" ") }}
 
 $RESTIC check
 $RESTIC snapshots

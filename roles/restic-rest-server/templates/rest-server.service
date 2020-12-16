@@ -3,6 +3,13 @@ Description=Rest Server
 After=syslog.target
 After=network.target
 
+{% if mounts is defined %}
+{% for mount in mounts %}
+After={{ mount.path | path_to_systemd_mount }}
+Requires={{ mount.path | path_to_systemd_mount }}
+{% endfor %}
+{% endif %}
+
 [Service]
 Type=simple
 User=restic

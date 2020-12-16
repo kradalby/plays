@@ -36,9 +36,14 @@ def restic_repo_friendly_name(repo: str) -> str:
         return "_".join([type_, rest[0]])
 
 
+def path_to_systemd_mount(path: str) -> str:
+    return path.replace("/", "-")[1:] + ".mount"
+
+
 class FilterModule(object):
     def filters(self):
         return {
             "site_code": site_code,
             "restic_repo_friendly_name": restic_repo_friendly_name,
+            "path_to_systemd_mount": path_to_systemd_mount,
         }

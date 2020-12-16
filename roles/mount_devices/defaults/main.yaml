@@ -1,0 +1,5 @@
+mounts: []
+# - path: /storage
+#   uuid: ""
+#   fs: xfs
+#   options: ""

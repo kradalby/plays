@@ -43,6 +43,8 @@
     - role: roles/locale
     - role: roles/dotfiles
     - role: roles/apticron
+    - role: roles/mount_devices
+      when: mounts is defined and mounts|length > 0
     - role: roles/restic
     - role: roles/restic_backup_job
       when: restic_backup_job is defined and restic_backup_job

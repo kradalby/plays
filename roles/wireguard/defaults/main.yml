@@ -9,3 +9,5 @@ wireguard_current_host_name: ""
 wireguard_jumps: []
 
 wireguard_keep_alive: 21
+
+wireguard_prefer_ip: false
