@@ -1,0 +1,29 @@
+---
+- name: libvirt | Install dependencies
+  apt:
+    pkg:
+      - libvirt-clients
+      - mkisofs
+      - qemu-kvm
+      - libvirt-daemon-system
+      - bridge-utils
+      - virtinst
+      - libvirt-dev
+    state: latest
+
+- name: libvirt | Enable daemon
+  systemd:
+    enabled: yes
+    state: restarted
+
+- name: libvirt | Allow terraform
+  lineinfile:
+    dest: /etc/libvirt/qemu.conf
+    line: 'security_driver = "none"'
+  notify: Restart libvirtd
+
+- name: libvirt | Set VNC password
+  lineinfile:
+    dest: /etc/libvirt/qemu.conf
+    line: 'vnc_password = "letmein"'
+  notify: Restart libvirtd

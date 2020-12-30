@@ -3,3 +3,8 @@
   service:
     name: caddy
     state: reloaded
+
+- name: Restart Syncthing
+  service:
+    name: syncthing@storage
+    state: restart

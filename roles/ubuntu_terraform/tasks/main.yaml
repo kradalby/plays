@@ -1,0 +1,35 @@
+---
+
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
+- name: Terraform | Hashicorp signing key
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Terraform | Hashicorp repository
+  apt_repository:
+    repo: "deb [arch={{ deb_architecture.stdout }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+    filename: terraform
+
+- name: Terraform | libvirt signing key
+  apt_key:
+    url: https://download.opensuse.org/repositories/systemsmanagement:terraform/Ubuntu_20.04/Release.key
+    state: present
+
+- name: Terraform | libvirt repository
+  apt_repository:
+    repo: deb http://download.opensuse.org/repositories/systemsmanagement:/terraform/Ubuntu_20.04/ /
+    state: present
+    filename: terraform-libvirt
+
+- name: Terraform | Install Terraform
+  apt:
+    pkg:
+      - terraform
+      - terraform-provider-libvirt
+    state: latest
+    update_cache: yes

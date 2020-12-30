@@ -7,17 +7,24 @@ ansible_shell_type: powershell
 hostname: kontor-pc
 win_vnc_password_hex: '{{ lookup("env", "WIN_VNC_PASSWORD_HEX") }}'
 
+exporter: true
+
 choco_packages:
-  # - barrier
-  - cutepdf
-  - microsoft-windows-terminal
+  # - cutepdf
   - spotify
   - thunderbird
   - adobereader
   - vlc
-  - teamviewer
-  - putty
+  # - teamviewer
   - dropbox
-  - 7zip
+
   # choco_packages_privileged:
   # - citrix-workspace
+
+restic_config: "{{ lookup('file', '~/Sync/config/restic.yaml') | from_yaml }}"
+restic_host_config: "{{ restic_config[inventory_hostname] }}"
+
+restic_backup_job: true
+restic_backup_job_repos: "{{ restic_host_config.repos }}"
+restic_backup_job_password: "{{ restic_host_config.password }}"
+restic_backup_job_directories: "{{ restic_host_config.directories }}"

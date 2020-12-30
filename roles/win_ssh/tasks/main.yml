@@ -1,12 +1,6 @@
 ---
-# - name: Windows VNC | Ensure TigerVNC
-#   win_chocolatey:
-#     name: tigervnc
-#     state: latest
-#   notify: Restart TigerVNC
-
 - name: Windows SSH | Install SSHd config
-  win_template:
+  ansible.windows.win_template:
     src: sshd_config
     dest: 'C:\ProgramData\ssh\sshd_config'
     newline_sequence: '\n'
@@ -14,7 +8,7 @@
   notify: Restart SSH
 
 - name: Windows SSH | Firewall rule to allow SSH on port 22
-  win_firewall_rule:
+  community.windows.win_firewall_rule:
     name: "OpenSSH SSH Server (sshd)"
     description: "Inbound rule for OpenSSH SSH Server (sshd)"
     localport: "22"

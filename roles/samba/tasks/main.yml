@@ -50,6 +50,7 @@
   notify: Restart Avahi
   when: time_machine|bool
 
+# Remember to add users to samba: smbpasswd -a <user>
 - name: Add Time Machine client users
   user:
     name: "{{ item }}"

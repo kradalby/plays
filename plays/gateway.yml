@@ -3,6 +3,7 @@
   hosts: gateway
   roles:
     - role: roles/cloudflare_ddns
+      when: cloudflare_dns_name is defined and cloudflare_dns_name|length
     - role: roles/wireguard
       when: wireguard is defined and wireguard
     - role: roles/ubuntu_router

@@ -1,0 +1,202 @@
+---
+apt_update_cache: no
+
+caddy: true
+caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
+
+router_vlan_wan: false
+
+router_interfaces:
+  - name: enp1s0f0
+    vlan: false
+    bridge: false
+    wan: true
+    netplan:
+      dhcp4: true
+      dhcp6: false
+  - name: selskap300
+    vlan: true
+    bridge: false
+    wan: false
+    restricted: true
+    lan: true
+    dhcp_start: 192.168.200.20
+    dhcp_end: 192.168.200.200
+    netplan:
+      link: enp1s0f1
+      id: 300
+      addresses:
+        - 192.168.200.1/24
+      dhcp4: false
+      dhcp6: false
+  - name: br0
+    vlan: false
+    bridge: true
+    wan: false
+    lan: true
+    dhcp_start: 10.62.0.150
+    dhcp_end: 10.62.0.250
+    netplan:
+      addresses:
+        - 10.62.0.1/24
+      dhcp4: false
+      dhcp6: false
+      interfaces:
+        - enp3s0
+        - enp1s0f1
+  - name: enp1s0f1
+    vlan: false
+    bridge: false
+    wan: false
+    netplan:
+      dhcp4: false
+  - name: enp3s0
+    vlan: false
+    bridge: false
+    wan: false
+    netplan:
+      dhcp4: false
+
+router_ipv6_prefix_delegation_length: 56
+
+# router_wan: eth0
+# router_wan_dhcp: true
+# router_wan_dhcp6: false
+# router_wan_static:
+#   addresses:
+#     - 129.241.210.106/25
+#     - 2001:700:300:2000::106/64
+#   gateway4: 129.241.210.1
+#   gateway6: 2001:700:300:2000::1
+router_gateway_addr: 10.62.0.1
+router_domain: tjoda.fap.no
+
+router_upstream_dns:
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+  - 2001:4860:4860::8888
+  - 2001:4860:4860::8844
+  - 1.1.1.1
+  - 1.0.0.1
+  - 8.8.8.8
+  - 8.8.4.4
+
+
+router_nftable_allow_incoming:
+  - port: https
+    protocol: tcp
+  - port: http
+    protocol: tcp
+  - port: 51820
+    protocol: udp
+  - port: 500
+    protocol: udp
+  - port: 4500
+    protocol: udp
+  - port: "60000-60100"
+    protocol: udp
+  - port: 64322
+    protocol: tcp
+
+router_nftable_port_redirects:
+  - source: 4500
+    destination: 51820
+    protocol: udp
+  - source: 500
+    destination: 51820
+    protocol: udp
+  - source: 64322
+    destination: 22
+    protocol: tcp
+
+router_static_leases:
+  # Unifi switch - hus-kontor
+  - ip: 10.62.0.14
+    mac: b4:fb:e4:24:f9:61
+    # interface: br0
+  # Unifi switch - hus-kontor
+  - ip: 10.62.0.19
+    mac: 04:18:d6:86:72:a4
+  # Kristines Air
+  - ip: 10.62.0.90
+    mac: 34:36:3b:6d:42:ee
+  # kramacbook
+  - ip: 10.62.0.91
+    mac: b8:e8:56:3e:8f:da
+  # Anders dock
+  - ip: 10.62.0.145
+    mac: a4:4c:c8:f2:19:8a
+  # Anders laptop (wifi)
+  - ip: 10.62.0.144
+    mac: f8:94:c2:9b:61:44
+  # kontor-pc
+  - ip: 10.62.0.146
+    mac: 78:2b:cb:84:02:96
+  # Apple TV stua
+  - ip: 10.62.0.92
+    mac: d0:03:4b:51:08:ff
+  # #
+  # - ip:
+  #   mac:
+
+kubernetes_nodes: []
+#   - name: node01
+#     ip: 10.61.0.111
+#   - name: node02
+#     ip: 10.61.0.112
+#   - name: node03
+#     ip: 10.61.0.113
+
+router_bgp_as: "52000"
+router_bgp_neighbour_as: "52001"
+router_bgp_neighbours: "{{ kubernetes_nodes }}"
+
+wireguard: yes
+wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
+wireguard_current_host: "{{ wireguard_config.servers.tjoda }}"
+wireguard_current_host_name: "tjoda"
+wireguard_prefer_ip: true
+
+wireguard_jumps: "{{ wireguard_config.jumps }}"
+
+node_exporter: yes
+
+# udpbroadcastrelay_ip: "{{ router_gateway_addr }}"
+# udpbroadcastrelay_interfaces:
+#   - br0
+#   - selskap300
+
+restic_rest_server: true
+restic_rest_server_base_directory: /storage/restic
+
+restic_config: "{{ lookup('file', '~/Sync/config/restic.yaml') | from_yaml }}"
+restic_host_config: "{{ restic_config[inventory_hostname] }}"
+
+restic_backup_job: true
+restic_backup_job_repos: "{{ restic_host_config.repos }}"
+restic_backup_job_password: "{{ restic_host_config.password }}"
+restic_backup_job_directories: "{{ restic_host_config.directories }}"
+restic_backup_job_excludes: "{{ restic_host_config.exclude }}"
+
+time_machine: true
+time_machine_size: 600G
+
+mounts:
+  - path: /storage
+    uuid: "b6c32a6c-428f-4f58-858c-1659bcf103f6"
+    fs: xfs
+    options: "defaults,noatime"
+  - path: /vm
+    uuid: "ad248c71-8d62-44bb-8351-50c4cf494f9b"
+    fs: ext4
+    options: "defaults,discard"
+
+
+terraform: true
+
+
+cloudflare_token: '{{ lookup("env", "CLOUDFLARE_FAP_NO_API_TOKEN") }}'
+cloudflare_dns_name: "tjoda.fap.no"
+cloudflare_zone_id: "6467f74f10e206068c311e586104ebe0"
+cloudflare_ipv4_dns_id: "30b9d64eb7ee200491fa99b26143736a"
+cloudflare_ipv6_dns_id: ""

@@ -4,12 +4,16 @@
 #     name: tigervnc
 #     state: latest
 #   notify: Restart TigerVNC
+- name: Windows VNC | Remove old TigerVNC
+  ansible.windows.win_package:
+    product_id: "TigerVNC 64-bit_is1"
+    state: absent
 
 - name: Windows VNC | Ensure TigerVNC
   # Product ID: https://stackoverflow.com/questions/29937568/how-can-i-find-the-product-guid-of-an-installed-msi-setup
-  win_package:
+  ansible.windows.win_package:
     # http://tigervnc.bphinz.com/nightly/
-    path: http://tigervnc.bphinz.com/nightly/windows/tigervnc64-1.10.80.exe
+    path: http://tigervnc.bphinz.com/nightly/windows/tigervnc64-winvnc-1.11.80.exe
     arguments:
       - "/VERYSILENT"
       - "/SUPPRESSMSGBOXES"
@@ -20,7 +24,7 @@
   register: vnc_installed
 
 - name: Windows VNC | Configure TigerVNC
-  win_regedit:
+  ansible.windows.win_regedit:
     path: 'HKLM:\SOFTWARE\TigerVNC\WinVNC4\'
     name: "{{ item.name }}"
     data: "{{ item.data }}"
@@ -51,7 +55,7 @@
   notify: Restart TigerVNC
 
 - name: Windows VNC | Firewall rule to allow VNC on port 5900
-  win_firewall_rule:
+  community.windows.win_firewall_rule:
     name: "{{ item.name }}"
     localport: "5900"
     action: allow
@@ -68,17 +72,17 @@
       protocol: udp
 
 - name: Windows VNC | Ensure UltraVNC service
-  win_service:
+  ansible.windows.win_service:
     name: uvnc_service
     state: absent
 
 - name: Windows VNC | Ensure TightVNC service
-  win_service:
+  ansible.windows.win_service:
     name: tvnserver
     state: absent
 
 - name: Windows VNC | Ensure TigerVNC service
-  win_service:
+  ansible.windows.win_service:
     name: "TigerVNC"
     path: '"C:\Program Files\TigerVNC\winvnc4.exe" -service'
     display_name: "TigerVNC Server"

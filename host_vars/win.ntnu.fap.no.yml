@@ -4,8 +4,9 @@ ansible_shell_type: powershell
 # ansible_become_method: runas
 # ansible_become_user: System
 
+virtual_machine: yes
+
 hostname: win-ntnu
-gr_work: false
 win_vnc_password_hex: '{{ lookup("env", "WIN_VNC_PASSWORD_HEX") }}'
 
 win_admin_users:
@@ -16,12 +17,10 @@ exporter: true
 
 choco_packages:
   # - 1password
-  - microsoft-windows-terminal
   - golang
   - kubernetes-cli
   - kubernetes-helm
   - vmware-tools
-  - googlechrome
 # choco_packages_privileged:
 # - citrix-workspace
 #

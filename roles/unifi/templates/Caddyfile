@@ -1,10 +1,11 @@
 # {{ ansible_managed }}
 
 {{ inventory_hostname }} {
+    import cf
+    import local_only
     reverse_proxy https://127.0.0.1:8443 {
         transport http {
             tls_insecure_skip_verify
         }
     }
-    import cf
 }

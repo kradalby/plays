@@ -4,33 +4,29 @@ network:
   version: 2
   renderer: networkd
   ethernets:
-{% for inf in router_bridge %}
-    {{ inf }}:
-      dhcp4: no
-{% endfor %}
-{% if not router_vlan_wan %}
-    {{ router_wan }}:
-      {% if router_wan_static %}
-      {{- router_wan_static | to_nice_yaml(indent=2) | trim | indent(6) }}
-      {% endif -%}
-      # link-local: [ ]
-      dhcp4: {{ router_wan_dhcp }}
-      # dhcp6: {{ router_wan_dhcp6 }}
+{% for interface in router_interfaces | filter_ethernets  %}
+    {{ interface.name }}:
+      {% if interface.netplan %}
+      {{- interface.netplan | to_nice_yaml(indent=2) | indent(6) }}
+      {%- endif %}
 {% else %}
+    {}
+{% endfor %}
   vlans:
-    {{ router_wan }}:
-      {% if router_wan_static %}
-      {{- router_wan_static | to_nice_yaml(indent=2) | trim | indent(6) }}
-      {% endif -%}
-      # link-local: [ ]
-      id: {{ router_vlan_wan_id }}
-      link: {{ router_vlan_wan_if }}
-      dhcp4: {{ router_wan_dhcp }}
-      # dhcp6: {{ router_wan_dhcp6 }}
-{% endif %}
+{% for interface in router_interfaces | filter_vlans %}
+    {{ interface.name }}:
+      {% if interface.netplan %}
+      {{- interface.netplan | to_nice_yaml(indent=2) | indent(6) }}
+      {%- endif %}
+{% else %}
+    {}
+{% endfor %}
   bridges:
-    br0:
-      interfaces: {{ router_bridge }}
-      dhcp4: false
-      addresses:
-        - {{ router_gateway_addr }}/{{ router_gateway_mask }}
+{% for interface in router_interfaces | filter_bridges %}
+    {{ interface.name }}:
+      {% if interface.netplan %}
+      {{- interface.netplan | to_nice_yaml(indent=2) | indent(6) }}
+      {%- endif %}
+{% else %}
+    {}
+{% endfor %}

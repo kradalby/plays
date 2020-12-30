@@ -9,6 +9,6 @@
     - role: roles/minio
       when: minio is defined and minio
     - role: roles/syncthing
-    - role: roles/jotta
+    # - role: roles/jotta
     - role: roles/avahi
     - role: roles/samba

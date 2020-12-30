@@ -1,4 +1,17 @@
 ---
 udpbroadcastrelay_ip: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"
-udpbroadcastrelay_interface: "{{ ansible_default_ipv4.interface }}"
+udpbroadcastrelay_interfaces: []
 udpbroadcastrelay_neighbours: []
+
+
+udpbroadcastrelay_serivces:
+  - name: mDNS
+    arguments: --port 5353 --multicast 224.0.0.251
+  - name: SSDP
+    arguments: --port 1900 --multicast 239.255.255.250
+  - name: Syncthing
+    arguments: --port 21027
+  - name: SMBBrowser
+    arguments: --port 138
+  - name: NetBios
+    arguments: --port 137

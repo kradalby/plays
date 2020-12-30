@@ -1,6 +1,6 @@
 ---
 - name: Windows RDP | Allow users to connect remotely by using Remote Desktop Services
-  win_regedit:
+  ansible.windows.win_regedit:
     path: "{{ item }}"
     name: fDenyTSConnections
     data: 00000000
@@ -21,14 +21,14 @@
     #     - configuration
 
 - name: Windows RDP | Set then Remote Desktop Port
-  win_regedit:
+  ansible.windows.win_regedit:
     path: "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp"
     name: PortNumber
     data: "3389"
     type: dword
 
 - name: Windows RDP | Firewall rule to allow RDP on port 3389
-  win_firewall_rule:
+  community.windows.win_firewall_rule:
     name: "{{ item.name }}"
     localport: "3389"
     action: allow
@@ -47,7 +47,7 @@
 
 # https://getadmx.com/?Category=Windows_10_2016&Policy=Microsoft.Policies.TerminalServer::TS_SECURITY_LAYER_POLICY
 - name: Windows RDP | Require use of specific security layer for remote (RDP) connections
-  win_regedit:
+  ansible.windows.win_regedit:
     path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services
     name: SecurityLayer
     data: 1
@@ -58,7 +58,7 @@
 
 # https://getadmx.com/?Category=Windows_10_2016&Policy=Microsoft.Policies.TerminalServer::TS_ENCRYPTION_POLICY
 - name: Windows RDP | Set client connection encryption level
-  win_regedit:
+  ansible.windows.win_regedit:
     path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services
     name: MinEncryptionLevel
     data: 3
@@ -69,17 +69,19 @@
 
 # https://www.winfaq.de/faq_html/Content/tip1000/onlinefaq.php?h=tip1368.htm
 - name: Windows RDP | Disable Shutdown Butten from Windows Start
-  win_regedit:
+  ansible.windows.win_regedit:
     path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
     name: NoClose
     data: "1"
     type: dword
     state: present
+  when: virtual_machine is defined and virtual_machine|bool
 
 # https://www.howtogeek.com/246728/how-to-remove-the-shutdown-button-from-the-windows-login-screen/
 - name: Windows RDP | Disable Shutdown Butten from Windows login screen
-  win_regedit:
+  ansible.windows.win_regedit:
     path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
     name: shutdownwithoutlogon
     data: 0
     type: dword
+  when: virtual_machine is defined and virtual_machine|bool

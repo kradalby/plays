@@ -11,12 +11,15 @@
  --dev {{ "tun_%s0" % site }}
     {%- endif %}
   {%- endfor %}
+  {%- for inf in udpbroadcastrelay_interfaces %}
+ --dev {{ inf }}
+  {%- endfor %}
 {% endset %}
 
 # {{ ansible_managed }}
 
 [Unit]
-Description=UDP broadcast relay
+Description=UDP broadcast relay {{ item.name }}
 After=network.target
 StartLimitIntervalSec=0
 
@@ -26,7 +29,7 @@ Restart=always
 RestartSec=1
 RuntimeMaxSec=10800
 User=root
-ExecStart=/usr/local/sbin/udpbroadcastrelay --id {{ current.index + 1 }} --port 5353 --dev {{ udpbroadcastrelay_interface }} {{ device_args }} --multicast 224.0.0.251
+ExecStart=/usr/local/sbin/udpbroadcastrelay --id {{ item_index + 1 }}{{ current.index + 1 }} {{ device_args }} {{ item.arguments }}
 
 [Install]
 WantedBy=multi-user.target

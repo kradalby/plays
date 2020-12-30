@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
+from typing import Mapping, Sequence
+
 import ipaddress
+import itertools
 
 
 def site_code(ipv4):
@@ -40,10 +43,78 @@ def path_to_systemd_mount(path: str) -> str:
     return path.replace("/", "-")[1:] + ".mount"
 
 
+def filter_ethernets(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
+    return [
+        inf
+        for inf in interfaces
+        if "vlan" in inf and not inf["vlan"] and "bridge" in inf and not inf["bridge"]
+    ]
+
+
+def filter_bridges(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
+    return [inf for inf in interfaces if "bridge" in inf and inf["bridge"]]
+
+
+def filter_vlans(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
+    return [inf for inf in interfaces if "vlan" in inf and inf["vlan"]]
+
+
+def filter_dhcp(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
+    return [inf for inf in interfaces if "dhcp_start" in inf and "dhcp_end" in inf]
+
+
+def filter_wan(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
+    for inf in interfaces:
+        if "wan" in inf and inf["wan"]:
+            return inf
+
+
+def filter_lan(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
+    return [inf for inf in interfaces if "lan" in inf and inf["lan"]]
+
+
+def filter_restricted(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
+    return [
+        inf
+        for inf in filter_lan(interfaces)
+        if "restricted" in inf and inf["restricted"]
+    ]
+
+
+def filter_nonrestricted(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
+    return [
+        inf
+        for inf in filter_lan(interfaces)
+        if not "restricted" in inf or not inf["restricted"]
+    ]
+
+
+def interfaces_names(interfaces: Sequence[Mapping]) -> Sequence[str]:
+    return [inf["name"] for inf in interfaces]
+
+
+def interfaces_addresses(interfaces: Sequence[Mapping]) -> Sequence[str]:
+    return list(
+        itertools.chain.from_iterable(
+            [inf["netplan"]["addresses"] for inf in interfaces]
+        )
+    )
+
+
 class FilterModule(object):
     def filters(self):
         return {
             "site_code": site_code,
             "restic_repo_friendly_name": restic_repo_friendly_name,
             "path_to_systemd_mount": path_to_systemd_mount,
+            "filter_ethernets": filter_ethernets,
+            "filter_bridges": filter_bridges,
+            "filter_vlans": filter_vlans,
+            "filter_dhcp": filter_dhcp,
+            "filter_wan": filter_wan,
+            "filter_lan": filter_lan,
+            "filter_restricted": filter_restricted,
+            "filter_nonrestricted": filter_nonrestricted,
+            "filter_inf_names": interfaces_names,
+            "filter_inf_addresses": interfaces_addresses,
         }

@@ -1,3 +1,5 @@
+.pyre/
+
 # Byte-compiled / optimized / DLL files
 .eggs/
 __pycache__/

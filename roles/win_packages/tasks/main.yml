@@ -1,25 +1,6 @@
 ---
-- name: Windows Packages | Install base packages
-  win_chocolatey:
-    name:
-      # - ccleaner
-      - 7zip.install
-      - angryip
-      - curl
-      - dos2unix
-      - firefox
-      - git
-      - kitty
-      - python
-      - rufus
-      - vim
-      - vivaldi
-      - vscode
-      - windirstat
-    state: latest
-
 - name: Windows Packages | Remove unwanted choco packages
-  win_chocolatey:
+  chocolatey.chocolatey.win_chocolatey:
     name:
       - tightvnc
     state: absent
@@ -33,23 +14,21 @@
     - "{AC76BA86-7AD7-1044-7B44-AC0F074E4100}"
     - "{26A24AE4-039D-4CA4-87B4-2F86416029FF}"
 
-- name: Windows Packages | Install additional packages
+- name: Windows Packages | Install packages
   # become: yes
   # become_method: runas
   # become_user: administrator
-  win_chocolatey:
-    name: "{{ choco_packages }}"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ choco_packages_base + choco_packages }}"
     state: latest
-  when: choco_packages is defined
 
 - name: Windows Packages | Install additional packages with privileges
   # become: yes
   # become_method: runas
   # become_user: administrator
-  win_chocolatey:
-    name: "{{ choco_packages_priv }}"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ choco_packages_priv_base + choco_packages_priv }}"
     state: latest
-  when: choco_packages_privileged is defined
 
 - name: Windows Packages | Prevent applications from starting automatically
   win_regedit:

@@ -22,6 +22,7 @@ router_static_leases: []
 router_nftable_allow_incoming: []
   # - port: https
   #   protocol: tcp
+  #   interface?: ""
 
 router_nftable_port_redirects: []
   # - destination: 500

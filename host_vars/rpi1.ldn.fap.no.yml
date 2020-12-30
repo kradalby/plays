@@ -4,6 +4,7 @@ apt_update_cache: no
 caddy: true
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 
+# TODO: Rewrite to new pattern (core.t*)
 router_vlan_wan: true
 router_vlan_wan_id: 317
 router_vlan_wan_if: eth0
@@ -110,6 +111,7 @@ router_bgp_as: "51000"
 router_bgp_neighbour_as: "51030"
 router_bgp_neighbours: "{{ rpi_netboot_nodes }}"
 
+# TODO: Become a site
 wireguard: yes
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.clients.rpi1ldn }}"

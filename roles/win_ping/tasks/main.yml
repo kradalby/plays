@@ -1,6 +1,6 @@
 ---
 - name: Windows Ping | Firewall rule to allow ICMP v4 (ping)
-  win_firewall_rule:
+  community.windows.win_firewall_rule:
     name: "ICMP Allow incoming V4 echo request"
     enabled: yes
     state: present

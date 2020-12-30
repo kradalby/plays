@@ -1,6 +1,6 @@
 ---
 - name: Windows Hostname | Set hostname
-  win_hostname:
+  ansible.windows.win_hostname:
     name: "{{ hostname }}"
   register: resp
   changed_when: resp.reboot_required

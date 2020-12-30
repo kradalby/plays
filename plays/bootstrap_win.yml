@@ -4,16 +4,16 @@
 
   roles:
     - role: roles/win_update
-    - role: roles/win_debloat
     - role: roles/win_hostname
-    - role: roles/win_time_region
+    - role: roles/win_debloat
+    - role: roles/win_packages
+    - role: roles/win_restic
+      when: restic_backup_job is defined and restic_backup_job
+    # - role: roles/win_time_region
     - role: roles/win_admin_users
-    - role: roles/win_prom_exporter
-      when: exporter is defined and exporter
-    - role: roles/win_vnc
     - role: roles/win_ssh
     - role: roles/win_ping
     - role: roles/win_rdp
-    - role: roles/win_packages
-    # - role: roles/win_g_research
-    #   when: gr_work is defined and gr_work
+    - role: roles/win_prom_exporter
+      when: exporter is defined and exporter
+    - role: roles/win_vnc

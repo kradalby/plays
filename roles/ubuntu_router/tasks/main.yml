@@ -75,14 +75,14 @@
     path: /etc/iptables
     state: absent
 
-- name: Ubuntu router | Flush all iptables tables
-  iptables:
-    flush: yes
-    table: "{{ item }}"
-  loop:
-    - filter
-    - nat
-    - mangle
+# - name: Ubuntu router | Flush all iptables tables
+#   iptables:
+#     flush: yes
+#     table: "{{ item }}"
+#   loop:
+#     - filter
+#     - nat
+#     - mangle
 
 - name: Ubuntu router | Ensure nftables
   apt:
@@ -107,23 +107,48 @@
     enabled: true
     state: started
 
-- name: Ubuntu router | Ensure nftables starts after bridge
-  blockinfile:
-    path: /lib/systemd/system/nftables.service
-    # insertafter: "[Unit]"
-    insertbefore: "[Service]"
-    marker: "# --- {mark} Ansible managed block ---"
-    block: |-
-      Requires=sys-devices-virtual-net-br0.device
-      After=sys-devices-virtual-net-br0.device
-  notify: Restart nftables
+# - name: Ubuntu router | Install nftables service
+#   template:
+#     src: nftables.service
+#     dest: /lib/systemd/system/nftables.service
+#     mode: "0644"
+#   notify: Restart nftables
+
+- name: Ubuntu router | Enable nftables
+  systemd:
+    daemon_reload: yes
+    name: nftables
+    enabled: true
+    state: started
+
+# - name: Ubuntu router | Restart nftables on reboot
+#   cron:
+#     name: "Restart nftable on reboot"
+#     special_time: "reboot"
+#     job: >
+#       /usr/bin/systemctl restart nftables
+#     state: present
+
+
+# - name: Ubuntu router | Ensure nftables starts after bridge
+#   blockinfile:
+#     path: /lib/systemd/system/nftables.service
+#     # insertafter: "[Unit]"
+#     insertbefore: "[Service]"
+#     marker: "# --- {mark} Ansible managed block ---"
+#     block: |-
+#       {% for inf in router_interfaces | filter_lan %}
+#       Requires=sys-devices-virtual-net-{{ inf.name }}.device
+#       After=sys-devices-virtual-net-{{ inf.name }}.device
+#       {% endfor %}
+#   notify: Restart nftables
 
 - name: Ubuntu router | Ensure wide-dhcp6
   apt:
     update_cache: "{{ apt_update_cache }}"
     pkg: wide-dhcpv6-client
     state: latest
-  when: router_wan_dhcp6
+  when: (router_interfaces | filter_wan).netplan.dhcp6
 
 - name: Ubuntu router | Install DHCPv6 config
   template:
@@ -131,184 +156,21 @@
     dest: /etc/wide-dhcpv6/dhcp6c.conf
     mode: "0644"
   notify: Restart wide-dhcpv6-client
-  when: router_wan_dhcp6
+  when: (router_interfaces | filter_wan).netplan.dhcp6
 
 - name: Ubuntu router | Enable DHCPv6
   systemd:
     name: wide-dhcpv6-client
     enabled: true
     state: started
-  when: router_wan_dhcp6
-
+  when: (router_interfaces | filter_wan).netplan.dhcp6
 
 - name: Ubuntu router | Enable IPv6 forwarding
   ansible.posix.sysctl:
-    name: "net.ipv6.conf.{{ router_wan }}.forwarding"
+    name: "net.ipv6.conf.{{ (router_interfaces | filter_wan).name }}.forwarding"
     value: "2"
     state: present
     reload: yes
-  when: router_wan_dhcp6
+  when: (router_interfaces | filter_wan).netplan.dhcp6
 
 
-# - name: Ubuntu router | Flush all tables
-#   iptables:
-#     flush: yes
-#     table: "{{ item }}"
-#   loop:
-#     - filter
-#     - nat
-#     - mangle
-
-#     # - name: Ubuntu router | Drop incoming traffic
-#     #   iptables:
-#     #     chain: '{{ item }}'
-#     #     policy: DROP
-#     #   loop:
-#     #     - INPUT
-#     #     - FORWARD
-#     #     - OUTPUT
-#     #   notify: Save iptables
-
-# - name: Ubuntu router | Accept NAT chains
-#   iptables:
-#     table: nat
-#     chain: "{{ item }}"
-#     policy: ACCEPT
-#   loop:
-#     - PREROUTING
-#     - OUTPUT
-#     - POSTROUTING
-#   notify: Save iptables
-
-# - name: Ubuntu router | Accept mangle chains
-#   iptables:
-#     table: mangle
-#     chain: "{{ item }}"
-#     policy: ACCEPT
-#   loop:
-#     - PREROUTING
-#     - INPUT
-#     - FORWARD
-#     - OUTPUT
-#     - POSTROUTING
-#   notify: Save iptables
-
-# - name: Ubuntu router | Allow loopback to do anything
-#   iptables:
-#     chain: OUTPUT
-#     out_interface: lo
-#     jump: ACCEPT
-#   notify: Save iptables
-
-# - name: Ubuntu router | Allow loopback to do anything
-#   iptables:
-#     chain: INPUT
-#     in_interface: lo
-#     jump: ACCEPT
-#   notify: Save iptables
-
-# - name: Ubuntu router | Allow incoming established
-#   iptables:
-#     ctstate:
-#       - ESTABLISHED
-#       - RELATED
-#     chain: INPUT
-#     jump: ACCEPT
-#   notify: Save iptables
-
-# - name: Ubuntu router | Allow outgoing
-#   iptables:
-#     ctstate:
-#       - NEW
-#       - ESTABLISHED
-#       - RELATED
-#     chain: OUTPUT
-#     jump: ACCEPT
-#   notify: Save iptables
-
-# - name: Ubuntu router | Drop invalid packets
-#   iptables:
-#     ctstate:
-#       - INVALID
-#     chain: "{{ item }}"
-#     jump: DROP
-#   loop:
-#     - INPUT
-#     - FORWARD
-#     - OUTPUT
-#   notify: Save iptables
-
-# # - name: Ubuntu router | Drop spoofed source packets
-# #   iptables:
-# #     chain: INPUT
-# #     jump: DROP
-# #     source: '{{ item }}'
-# #   loop:
-# #     - 169.254.0.0/16
-# #     - 172.16.0.0/12
-# #     - 127.0.0.0/8
-# #     - 224.0.0.0/4
-# #     - 240.0.0.0/5
-# #     - 0.0.0.0/8
-# #   notify: Save iptables
-
-# # - name: Ubuntu router | Drop spoofed destination packets
-# #   iptables:
-# #     chain: INPUT
-# #     jump: DROP
-# #     destination: '{{ item }}'
-# #   loop:
-# #     - 224.0.0.0/4
-# #     - 240.0.0.0/5
-# #     - 0.0.0.0/8
-# #     - 239.255.255.0/24
-# #     - 255.255.255.255
-# #   notify: Save iptables
-
-# - name: Ubuntu router | Open ports to services
-#   iptables:
-#     chain: INPUT
-#     ctstate:
-#       - NEW
-#     jump: ACCEPT
-#     protocol: tcp
-#     destination_port: "{{ item }}"
-#   loop:
-#     - "22" # SSH
-#     - "80" # HTTP
-#     - "443" # HTTPS
-#     # - "6443" # Kubernetes
-#   notify: Save iptables
-
-# - name: Ubuntu router | Forward incoming established/related
-#   iptables:
-#     ctstate:
-#       - ESTABLISHED
-#       - RELATED
-#     chain: FORWARD
-#     in_interface: "{{ router_wan }}"
-#     out_interface: "{{ router_lan }}"
-#     jump: ACCEPT
-#   notify: Save iptables
-
-# - name: Ubuntu router | Forward outgoing traffic
-#   iptables:
-#     chain: FORWARD
-#     in_interface: "{{ router_lan }}"
-#     out_interface: "{{ router_wan }}"
-#     jump: ACCEPT
-#   notify: Save iptables
-
-# - name: Ubuntu router | Masquerade
-#   iptables:
-#     table: nat
-#     chain: POSTROUTING
-#     out_interface: "{{ router_wan }}"
-#     jump: MASQUERADE
-#   notify: Save iptables
-
-# - name: Ubuntu router | Ensure iptables-persistent
-#   apt:
-#     update_cache: "{{ apt_update_cache }}"
-#     pkg: iptables-persistent
-#     state: latest

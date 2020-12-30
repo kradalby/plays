@@ -1,0 +1,28 @@
+[Unit]
+Description=nftables
+Documentation=man:nft(8) http://wiki.nftables.org
+Wants=network-online.target
+Before=network-online.target shutdown.target
+Conflicts=shutdown.target
+DefaultDependencies=no
+# {% for inf in router_interfaces | filter_lan %}
+# Requires=sys-devices-virtual-net-{{ inf.name }}.device
+# After=sys-devices-virtual-net-{{ inf.name }}.device
+# {% endfor %}
+# {% if wireguard is defined and wireguard %}
+# Requires=sys-devices-virtual-net-wg0.device
+# After=sys-devices-virtual-net-wg0.device
+# {% endif %}
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+StandardInput=null
+ProtectSystem=full
+ProtectHome=true
+ExecStart=/usr/sbin/nft -f /etc/nftables.conf
+ExecReload=/usr/sbin/nft -f /etc/nftables.conf
+ExecStop=/usr/sbin/nft flush ruleset
+
+[Install]
+WantedBy=sysinit.target

@@ -1,0 +1,52 @@
+---
+- name: Windows restic | Ensure no restic job
+  community.windows.win_scheduled_task:
+    name: Restic Backup
+    state: absent
+
+- name: Windows restic | Remove restic
+  win_file:
+    path: C:\restic
+    state: absent
+  loop:
+    - C:\restic
+    - C:\resticVSS
+
+- name: Windows restic | Download restic
+  win_command: >
+    git clone https://github.com/kmwoley/restic-windows-backup.git C:\restic
+  args:
+    creates: C:\restic\backup.ps1
+
+# - name: Windows restic | Clone restic scripts
+#   win_git:
+#     repo: https://github.com/kmwoley/restic-windows-backup.git
+#     dest: "C:\restic"
+#     # force: yes
+#   register: restic_scripts
+
+- name: Windows restic | Ensure restic secrets
+  ansible.windows.win_template:
+    src: secrets.ps1
+    dest: 'C:\restic\secrets.ps1'
+
+- name: Windows restic | Ensure restic config
+  ansible.windows.win_template:
+    src: config.ps1
+    dest: 'C:\restic\config.ps1'
+
+- name: Windows restic | Ensure log dir
+  win_file:
+    path: C:\restic\logs
+    state: directory
+
+- name: Windows restic | Install restic job
+  win_command: >
+    powershell.exe .\install.ps1
+  args:
+    chdir: C:\restic
+
+- name: Windows restic | Ensure restic job
+  community.windows.win_scheduled_task:
+    name: Restic Backup
+    state: present

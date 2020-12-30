@@ -20,6 +20,23 @@
     state: present
     filename: syncthing
 
+- name: Add syncthing user
+  user:
+    name: syncthing
+    comment: Syncthing user, responsible for syncing
+    uid: "1993"
+    group: "1992"
+    home: /storage
+    state: present
+
+- name: Ensure config directory
+  file:
+    path: /storage/.config
+    owner: syncthing
+    group: storage
+    mode: "0755"
+    state: directory
+
 - name: Install Syncthing
   apt:
     update_cache: yes
@@ -37,3 +54,18 @@
     group: caddy
   when: caddy is defined and caddy
   notify: Reload Caddy
+
+- name: Syncthing | Install Syncthing service
+  template:
+    src: syncthing.service
+    dest: /lib/systemd/system/syncthing@.service
+    mode: "0644"
+  notify: Restart Syncthing
+
+- name: Syncthing | Ensure Syncthing service
+  systemd:
+    daemon_reload: yes
+    name: syncthing@syncthing
+    masked: no
+    enabled: yes
+    state: started

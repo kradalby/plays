@@ -7,3 +7,22 @@ win_allowed_networks:
   - 10.64.0.0/16
   - 10.65.0.0/16
   - 10.69.0.0/16
+
+
+choco_packages_base:
+  - 7zip.install
+  - angryip
+  - curl
+  - dos2unix
+  - firefox
+  - git
+  - kitty
+  - python
+  - rufus
+  - vim
+  - vivaldi
+  - vscode
+  - windirstat
+  - microsoft-windows-terminal
+  - putty
+  - restic

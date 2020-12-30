@@ -1,29 +1,8 @@
 ---
-- name: Windows Prometheus | Ensure temp directory
-  win_file:
-    path: 'C:\temp'
-    state: directory
-
-- name: Windows Prometheus | Download Windows Exporter
-  win_get_url:
-    url: "https://github.com/prometheus-community/windows_exporter/releases/download/v{{ windows_exporter_version }}/windows_exporter-{{ windows_exporter_version }}-amd64.msi"
-    dest: 'C:\temp\windows_exporter.msi'
-
-# - name: Windows Prometheus | Remove Windows Exporter
-#   win_package:
-#     product_id: '{4DD1D2D3-0038-44C5-8E1B-2C738A8E7E8C}'
-#     state: absent
-
-- name: Windows Prometheus | Install Windows Exporter
-  # Product ID: https://stackoverflow.com/questions/29937568/how-can-i-find-the-product-guid-of-an-installed-msi-setup
-  win_package:
-    path: 'C:\temp\windows_exporter.msi'
-    product_id: "{4DD1D2D3-0038-44C5-8E1B-2C738A8E7E8C}"
-    state: present
-    arguments:
-      - ENABLED_COLLECTORS="cpu,cs,logical_disk,net,os,service,system,memory,process,remote_fx,tcp,vmware"
-
-- name: Windows Prometheus | Remove Windows Exporter installer
-  win_file:
-    path: 'C:\temp\windows_exporter.msi'
-    state: absent
+- name: Windows Prometheus | Install
+  chocolatey.chocolatey.win_chocolatey:
+    name:
+      - prometheus-windows-exporter.install
+    package_params: >
+      "/EnabledCollectors:cpu,cs,logical_disk,net,os,service,system,memory,process,remote_fx,tcp,vmware"
+    state: latest

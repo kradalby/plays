@@ -1,7 +1,11 @@
 ---
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
 - name: caddy | Ensure caddy with Cloudflare
   get_url:
-    url: "https://builds.kradalby.no/caddy/caddy_linux_{{ ansible_architecture }}"
+    url: "https://caddyserver.com/api/download?os=linux&arch={{ deb_architecture.stdout }}&p=github.com%2Fcaddy-dns%2Fcloudflare"
     dest: /usr/bin/caddy
     mode: "0755"
   notify: Restart Caddy

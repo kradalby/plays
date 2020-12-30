@@ -4,42 +4,44 @@
 
 
 [hugin]
-hugin.terra.fap.no
+# hugin.terra.fap.no
 
 [minio]
-minio.terra.fap.no
+# minio.terra.fap.no
 
 [nfs]
-nfs.terra.fap.no
+# nfs.terra.fap.no
 
 [storage]
-storage.terra.fap.no
-storage.tjoda.fap.no
+# storage.terra.fap.no
+# storage.tjoda.fap.no
 storage.bassan.fap.no ansible_host=192.168.2.2
+core.tjoda.fap.no ansible_host=10.62.0.1
+core.terra.fap.no ansible_host=185.243.216.95
 
 [database]
-database.terra.fap.no
-
-[mail]
-mail.terra.fap.no skip_postfix=true
+# database.terra.fap.no
 
 [unifi]
 unifi.tjoda.fap.no
 
 [docker]
-storage.terra.fap.no
+# storage.terra.fap.no
 
 [packer]
 packer-builder.ntnu.fap.no
 
 [gateway]
 gateway.ntnu.fap.no
+core.tjoda.fap.no ansible_host=10.62.0.1
+core.terra.fap.no ansible_host=185.243.216.95
 
 [socat_mdns]
-mdns-socat.terra.fap.no
-mdns-socat.ntnu.fap.no
-mdns-socat.tjoda.fap.no
+# mdns-socat.terra.fap.no
+# mdns-socat.ntnu.fap.no
+# mdns-socat.tjoda.fap.no
 rpi1.ldn.fap.no ansible_host=10.65.0.1
+core.tjoda.fap.no ansible_host=10.62.0.1
 
 [rpi_speaker]
 # rpi-speaker1.ldn.fap.no skip_repo=true
@@ -49,7 +51,7 @@ rpi1.ldn.fap.no ansible_host=10.65.0.1
 rpi[2:4].ldn.fap.no
 
 [misc]
-bastard.terra.fap.no
+# bastard.terra.fap.no
 
 [rpi:children]
 rpi_speaker
@@ -58,7 +60,6 @@ ldn_kubernetes
 [ubuntu:children]
 database
 docker
-mail
 minio
 nfs
 ntnu_kubernetes
@@ -75,8 +76,8 @@ misc
 gateway
 
 [terra_kubernetes]
-node01.terra.fap.no
-node[02:03].terra.fap.no node_exporter=False k3s_agent=True
+# node01.terra.fap.no
+# node[02:03].terra.fap.no node_exporter=False k3s_agent=True
 
 [ntnu_kubernetes]
 node01.ntnu.fap.no
@@ -93,12 +94,12 @@ oracle_ldn_kubernetes
 ldn_kubernetes
 
 [macs]
-kramacbook.vpn.fap.no
+kramacbook.vpn.fap.no ansible_host=localhost
 vmac.terra.fap.no
 vmac.ntnu.fap.no
 
 [windows]
-kranovo.vpn.fap.no
-win.terra.fap.no
+# kranovo.vpn.fap.no
 win.ntnu.fap.no
 kontor-pc.tjoda.fap.no
+anders-laptop.tjoda.fap.no

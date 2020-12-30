@@ -2,3 +2,6 @@
 collections:
   - name: ansible.posix
   - name: community.general
+  - name: ansible.windows
+  - name: community.windows
+  - name: chocolatey.chocolatey
