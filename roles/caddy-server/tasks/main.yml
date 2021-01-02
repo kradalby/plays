@@ -1,5 +1,5 @@
 ---
-- name: Get DEB architecture
+- name: caddy | Get DEB architecture
   shell: dpkg --print-architecture
   register: deb_architecture
 
@@ -47,7 +47,7 @@
     dest: /etc/caddy/Caddyfile
     owner: caddy
     group: caddy
-  notify: Reload Caddy
+  notify: Restart Caddy
 
 - name: caddy | Install systemd service description
   template:

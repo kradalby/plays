@@ -2,12 +2,18 @@
 - name: Prepare storage
   hosts: storage
   roles:
+    - role: roles/ubuntu-deploy-user
+      when: deploy_user is defined and deploy_user
     - role: roles/max-user-watches
     - role: roles/storage-users-groups
     - role: roles/caddy-server
       when: caddy is defined and caddy
+    - role: roles/caddy_serve_files
+      when: caddy_serve is defined and caddy_serve|length > 0
     - role: roles/minio
       when: minio is defined and minio
+    - role: roles/restic-rest-server
+      when: restic_rest_server is defined and restic_rest_server
     - role: roles/syncthing
     # - role: roles/jotta
     - role: roles/avahi

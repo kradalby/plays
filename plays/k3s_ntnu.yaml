@@ -1,5 +1,0 @@
----
-- name: Install a k3s cluster
-  hosts: prod_ntnu_kubernetes
-  roles:
-    - role: roles/k3s

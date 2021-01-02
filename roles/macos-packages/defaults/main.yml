@@ -1,3 +1,9 @@
 ---
+brew_packages_base_absent: []
+brew_packages_absent: []
+brew_cask_packages_base_absent: []
+brew_cask_packages_absent: []
+brew_packages_base: []
 brew_packages: []
+brew_cask_packages_base: []
 brew_cask_packages: []

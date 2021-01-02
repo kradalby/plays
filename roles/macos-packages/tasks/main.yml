@@ -1,75 +1,25 @@
 ---
 - name: Ensure macOS Homebrew packages cleaned
   homebrew:
-    pkg:
-      - jsonnet
+    pkg: "{{ brew_packages_base_absent + brew_packages_absent }}"
     state: absent
 
 - name: Ensure macOS Homebrew Cask packages cleaned
   homebrew_cask:
-    pkg:
-      - zoomus
+    pkg: "{{ brew_cask_packages_base_absent + brew_cask_packages_absent }}"
     state: absent
 
 - name: Ensure macOS Homebrew taps
   homebrew_tap:
     name: "{{ item }}"
     state: present
-  loop:
-    - AdoptOpenJDK/openjdk
-    - drone/drone
-    - golangci/tap
-    - homebrew/cask
-    - homebrew/cask-drivers
-    - homebrew/services
-    - ibm-swift/kitura
-    - jotta/cli
-    - kradalby/tap
+  loop: "{{ brew_taps }}"
 
-- name: Ensure macOS Homebrew base packages
+- name: Ensure macOS Homebrew packages
   homebrew:
-    pkg:
-      - bat
-      - cask
-      - coreutils
-      - elm
-      - findutils
-      - fish
-      - fzf
-      - git
-      - git-extras
-      - gnu-sed
-      - gnu-tar
-      - go
-      - htop
-      - jotta-cli
-      - jq
-      - mas
-      - mosh
-      - ncdu
-      - neovim
-      - node
-      - pipx
-      - prettyping
-      - python3
-      - socat
-      - starship
-      - the_silver_searcher
-      - tmux
-      - tree
-      - vim
-      - watch
-      - wget
-      - xz
-      - yarn
-      - yq
+    pkg: "{{ brew_packages_base + brew_packages }}"
     state: latest
     update_homebrew: yes
-
-- name: Ensure macOS Homebrew additional packages
-  homebrew:
-    pkg: "{{ brew_packages }}"
-    state: latest
 
     # - name: Ensure HEAD packages
     #   homebrew:
@@ -78,21 +28,7 @@
     #     install_options:
     #       - '--HEAD'
 
-- name: Ensure macOS Homebrew Cask base packages
+- name: Ensure macOS Homebrew Case packages
   homebrew_cask:
-    pkg:
-      - firefox
-      - google-chrome
-      - iina
-      - iterm2
-      - jumpcut
-      - spotify
-      - teamviewer
-      - visual-studio-code
-      - adoptopenjdk8
-    state: latest
-
-- name: Ensure macOS Homebrew cask additional packages
-  homebrew_cask:
-    pkg: "{{ brew_cask_packages }}"
-    state: latest
+    pkg: "{{ brew_cask_packages_base + brew_cask_packages }}"
+    state: upgraded

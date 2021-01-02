@@ -4,11 +4,6 @@
     name: caddy
     state: restarted
 
-- name: Reload Caddy
-  service:
-    name: caddy
-    state: reloaded
-
 - name: Restart minio
   service:
     name: "minio-{{ item }}"

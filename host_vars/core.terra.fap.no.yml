@@ -5,11 +5,19 @@ caddy: true
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 caddy_serve:
   - domain: files.kradalby.no
-    directory: /storage/serve/files
+    directory: /fastest/serve/files
   - domain: screenshots.kradalby.no
-    directory: /storage/serve/screenshots
+    directory: /fastest/serve/screenshots
   - domain: builds.kradalby.no
-    directory: /storage/serve/builds
+    directory: /fastest/serve/builds
+  - domain: hugin.kradalby.no
+    directory: /fastest/serve/hugin
+    basicauth:
+      - path: "/"
+        users:
+          - username: "gjest"
+            passhash: '{{ lookup("env", "CADDY_SERVE_GJEST") }}'
+
 
 minio: true
 minio_base_directory: "/storage/minio"
@@ -129,15 +137,14 @@ mounts:
     uuid: "3ecffaff-ee1a-45d6-b0a2-bab64e496b67"
     fs: xfs
     options: "defaults,noatime"
-  - path: /vm
+  - path: /fast
     uuid: "e6732873-448c-4554-a765-036b931ae8ff"
     fs: xfs
     options: "defaults,noatime"
-  - path: /hugin
+  - path: /fastest
     uuid: "1d6dd06a-ecc9-43a3-865e-c4b1f89be7c8"
     fs: ext4
     options: "defaults,discard"
-
 
 mail_relayhost: spamvask.terrahost.no
 mail_interface: all
@@ -146,3 +153,5 @@ mail_networks:
   - 127.0.0.0/8
   - "[::ffff:127.0.0.0]/104"
   - "[::1]/128"
+
+docker: yes

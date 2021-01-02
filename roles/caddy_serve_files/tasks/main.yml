@@ -1,5 +1,11 @@
 ---
 - name: caddy_serve_files | Ensure Caddyfiles
+  file:
+    path: "{{ item.directory }}"
+    state: directory
+  loop: "{{ caddy_serve }}"
+
+- name: caddy_serve_files | Ensure Caddyfiles
   template:
     src: Caddyfile
     dest: "/etc/caddy/Caddyfile.d/{{ item.domain }}"
@@ -7,4 +13,4 @@
     group: caddy
   loop: "{{ caddy_serve }}"
   when: caddy is defined and caddy
-  notify: Reload Caddy
+  notify: Restart Caddy

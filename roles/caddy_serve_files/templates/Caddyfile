@@ -4,4 +4,14 @@
     root * {{ item.directory }}
     file_server browse
     import cf
+
+{% if "basicauth" in item and item.basicauth|length %}
+{% for auth in item.basicauth %}
+    basicauth {{ auth.path }} {
+{% for user in auth.users %}
+    	{{ user.username }} {{ user.passhash }}
+{% endfor %}
+    }
+{% endfor %}
+{% endif %}
 }

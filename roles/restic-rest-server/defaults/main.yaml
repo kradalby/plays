@@ -1,3 +1,4 @@
+arch: ""
 restic_rest_server_base_directory: ""
 restic_rest_server_version: "0.10.0"
 restic_rest_server_port: 18080

@@ -1,5 +1,5 @@
 ---
-- name: Reload Caddy
+- name: Restart Caddy
   service:
     name: caddy
-    state: reloaded
+    state: restarted

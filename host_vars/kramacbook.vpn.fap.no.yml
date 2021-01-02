@@ -13,6 +13,7 @@ brew_packages:
   - dos2unix
   - drone
   - elm-format
+  - exiftool
   - fd
   - fdupes
   - go-jsonnet
@@ -30,8 +31,6 @@ brew_packages:
   - ninja
   - nload
   - nmap
-  - ocaml
-  - opam
   - packer
   - postgresql
   - readline
@@ -40,7 +39,6 @@ brew_packages:
   - sleepwatcher
   - sqlite
   - swift-format
-  - swiftformat
   - swiftlint
   - terraform
   - tflint
@@ -50,8 +48,6 @@ brew_packages:
   - wireguard-go
   - silicon
 
-brew_taps:
-  - lukakerr/things
 
 brew_cask_packages:
   # - adobe-creative-cloud
@@ -61,13 +57,9 @@ brew_cask_packages:
   - maccy # Clipboard manager
   - 1password
   - 1password-cli
-  - adoptopenjdk14
-  - adoptopenjdk8
-  - altserver
   - balenaetcher
   - barrier
   - calibre
-  - chrome-remote-desktop-host
   - discord
   - docker
   - dotnet-sdk
@@ -92,7 +84,16 @@ brew_cask_packages:
   - transmit
   - tripmode
   - turbo-boost-switcher
+  - multipass
+  - protonmail-bridge
+  - prolific-pl2303
+  - font-jetbrains-mono
+
+brew_cask_packages_absent:
+  - teamviewer
   - webex-meetings
+  - zoom
+  - zoomus
 
 restic_config: "{{ lookup('file', '~/Sync/config/restic.yaml') | from_yaml }}"
 restic_host_config: "{{ restic_config[inventory_hostname] }}"

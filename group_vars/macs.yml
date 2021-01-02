@@ -1,0 +1,69 @@
+---
+brew_taps:
+  - AdoptOpenJDK/openjdk
+  - drone/drone
+  - golangci/tap
+  - homebrew/cask
+  - homebrew/cask-drivers
+  - homebrew/services
+  - ibm-swift/kitura
+  - jotta/cli
+  - kradalby/tap
+  - lukakerr/things
+
+brew_packages_base:
+  - bat
+  - cask
+  - coreutils
+  - elm
+  - findutils
+  - fish
+  - fzf
+  - git
+  - git-extras
+  - gnu-sed
+  - gnu-tar
+  - go
+  - htop
+  - jotta-cli
+  - jq
+  - mas
+  - mosh
+  - ncdu
+  - neovim
+  - node
+  - pipx
+  - prettyping
+  - python3
+  - socat
+  - starship
+  - the_silver_searcher
+  - tmux
+  - tree
+  - vim
+  - watch
+  - wget
+  - xz
+  - yarn
+  - yq
+
+brew_cask_packages_base:
+  - firefox
+  - iina
+  - iterm2
+  - maccy
+  - spotify
+  - visual-studio-code
+  - hyper
+  - discord
+
+
+brew_cask_packages_base_absent:
+  - beardedspice
+  - bluestacks
+  - chrome-remote-desktop-host
+  - google-chrome
+  - skype-for-business
+
+brew_packages_base_absent:
+  - jsonnet

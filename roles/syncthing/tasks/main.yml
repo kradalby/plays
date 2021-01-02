@@ -53,7 +53,7 @@
     owner: caddy
     group: caddy
   when: caddy is defined and caddy
-  notify: Reload Caddy
+  notify: Restart Caddy
 
 - name: Syncthing | Install Syncthing service
   template:

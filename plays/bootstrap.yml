@@ -25,6 +25,7 @@
           - unzip
           - bzip2
           - xz-utils
+          - ncdu
         state: latest
 
     - name: Remove packages
@@ -34,8 +35,6 @@
         state: absent
 
   roles:
-    - role: roles/ubuntu-deploy-user
-      when: deploy_user is defined and deploy_user
     - role: roles/hostname
     - role: roles/repo
       when: skip_repo is undefined or not skip_repo
@@ -43,12 +42,14 @@
     - role: roles/locale
     - role: roles/dotfiles
     - role: roles/apticron
+    - role: roles/rclone
+    - role: roles/restic
+    # - role: roles/snmpd
+
     - role: roles/mount_devices
       when: mounts is defined and mounts|length > 0
-    - role: roles/restic
     - role: roles/restic_backup_job
       when: restic_backup_job is defined and restic_backup_job
-    - role: roles/rclone
     - role: roles/ubuntu_no_snap
       when: snap is undefined or not snap
     - role: roles/wireguard
@@ -61,13 +62,6 @@
       when: swift is defined and swift
     - role: roles/nfs-export
       when: nfs_exports is defined and nfs_exports|length > 0
-    - role: roles/caddy_serve_files
-      when: caddy_serve is defined and caddy_serve|length > 0
-    - role: roles/restic-rest-server
-      when: restic_rest_server is defined and restic_rest_server
-    - role: roles/minio
-      when: minio is defined and minio
-    - role: roles/snmpd
     - role: roles/prometheus-node-exporter
       when: node_exporter is undefined or node_exporter
     - role: roles/ubuntu_terraform
