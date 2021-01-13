@@ -26,6 +26,8 @@
           - bzip2
           - xz-utils
           - ncdu
+          - iftop
+          - fd-find
         state: latest
 
     - name: Remove packages

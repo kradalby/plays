@@ -47,6 +47,7 @@ brew_packages:
   - unrar
   - wireguard-go
   - silicon
+  - exiftrans
 
 
 brew_cask_packages:

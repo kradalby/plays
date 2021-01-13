@@ -6,12 +6,17 @@
     mode: "0755"
   loop: "{{ restic_backup_job_repos }}"
 
+- name: restic | Ensure log directory
+  file:
+    path: /var/log/restic
+    state: directory
+
 - name: restic | Ensure restic backup cron
   cron:
     name: "Backup with restic to {{ item | restic_repo_friendly_name }}"
     special_time: "daily"
     job: >
-      /usr/bin/flock -n /tmp/backup_restic_{{ item | restic_repo_friendly_name }}.lockfile {{ restic_backup_job_base_path }}/backup_restic_{{ item | restic_repo_friendly_name }}.sh
+      /usr/bin/flock -n /tmp/backup_restic_{{ item | restic_repo_friendly_name }}.lockfile {{ restic_backup_job_base_path }}/backup_restic_{{ item | restic_repo_friendly_name }}.sh | tee /var/log/restic/{{ item | restic_repo_friendly_name }}.txt
     state: present
   loop: "{{ restic_backup_job_repos }}"
   when: restic_backup_job_cronjob
