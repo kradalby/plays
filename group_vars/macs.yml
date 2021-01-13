@@ -25,7 +25,7 @@ brew_packages_base:
   - gnu-tar
   - go
   - htop
-  - jotta-cli
+  # - jotta-cli
   - jq
   - mas
   - mosh
@@ -36,11 +36,10 @@ brew_packages_base:
   - prettyping
   - python3
   - socat
-  - starship
   - the_silver_searcher
   - tmux
   - tree
-  - vim
+  # - vim
   - watch
   - wget
   - xz
@@ -50,11 +49,11 @@ brew_packages_base:
 brew_cask_packages_base:
   - firefox
   - iina
-  - iterm2
+  # - iterm2
   - maccy
-  - spotify
+  # - spotify
   - visual-studio-code
-  - hyper
+  # - hyper
   - discord
   - sloth
 

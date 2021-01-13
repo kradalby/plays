@@ -6,37 +6,45 @@ code: false
 drone: false
 
 brew_packages:
+  # - dog
+  # - go-jsonnet
+  # - haskell-stack
+  # - kitura
+  # - kompose
+  # - mono
+  # - netcat
+  # - netcat6
+  # - ninja
+  # - postgresql
+  # - redis
+  # - sleepwatcher
+  # - wireguard-go
   - aria2
   - cloc
   - diff-so-fancy
-  - dog
   - dos2unix
   - drone
   - elm-format
   - exiftool
+  - exiftrans
   - fd
   - fdupes
-  - go-jsonnet
   - golangci-lint
   - gpg
-  - haskell-stack
   - helm
   - ipcalc
-  - kitura
-  - kompose
+  - iperf3
   - kubernetes-cli
-  - mono
-  - netcat
-  - netcat6
-  - ninja
   - nload
   - nmap
   - packer
-  - postgresql
+  - rclone
   - readline
-  - redis
+  - restic
   - shellcheck
-  - sleepwatcher
+  - silicon
+  - sourcery
+  - speedtest-cli
   - sqlite
   - swift-format
   - swiftlint
@@ -45,49 +53,48 @@ brew_packages:
   - tidy-html5
   - tmuxinator
   - unrar
-  - wireguard-go
-  - silicon
-  - exiftrans
 
 
 brew_cask_packages:
   # - adobe-creative-cloud
   # - tunnelblick
   - pine # Markdown editor
-  - lunar # Sync brightness for external monitors
+  # - lunar # Sync brightness for external monitors
   - maccy # Clipboard manager
   - 1password
-  - 1password-cli
+  # - 1password-cli
   - balenaetcher
-  - barrier
-  - calibre
+  # - barrier
+  # - calibre
   - discord
   - docker
-  - dotnet-sdk
+  # - dotnet-sdk
   - free-ruler
   - gas-mask
-  - little-snitch
-  - menubar-colors
-  - menumeters
-  - openttd
-  - powershell
-  - psequel
-  - sequel-pro
-  - signal
+  # - little-snitch
+  # - menubar-colors
+  # - menumeters
+  - eul
+  # - openttd
+  # - powershell
+  # - psequel
+  # - sequel-pro
+  # - signal
   - slack
   - spectacle
-  - steam
-  - steveschow-gfxcardstatus
+  # - steam
+  # - steveschow-gfxcardstatus
+  - gfxcardstatus
   - syncthing
   - the-unarchiver
-  - tor-browser
-  - transmission
+  # - tor-browser
+  # - transmission
   - transmit
   - tripmode
-  - turbo-boost-switcher
+  # - turbo-boost-switcher
   - multipass
   - protonmail-bridge
-  - prolific-pl2303
+  # - prolific-pl2303
   - font-jetbrains-mono
 
 brew_cask_packages_absent:
