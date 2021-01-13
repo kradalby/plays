@@ -155,7 +155,7 @@ wireguard: yes
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.servers.tjoda }}"
 wireguard_current_host_name: "tjoda"
-wireguard_prefer_ip: true
+wireguard_prefer_ip: no
 
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 

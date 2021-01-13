@@ -21,14 +21,22 @@
       - wireguard
     state: latest
 
+# If no success, do this: https://serverfault.com/a/867845
+- name: WireGuard | Ensure wg0 custom service
+  template:
+    src: wg-quick@.service
+    dest: /lib/systemd/system/wg-quick@.service
+  notify: Restart WireGuard
+
 - name: WireGuard | Ensure wg0 configuration
   template:
     src: wg0.conf
     dest: /etc/wireguard/wg0.conf
   notify: Restart WireGuard
 
-  # - name: WireGuard | Ensure wg0 service
-  #   systemd:
-  #     name: wg-quick@wg0
-  #     enabled: yes
-  #     state: started
+- name: WireGuard | Ensure wg0 service
+  systemd:
+    daemon-reload: yes
+    name: wg-quick@wg0
+    enabled: yes
+    state: started
