@@ -58,7 +58,7 @@ brew_packages:
 brew_cask_packages:
   # - adobe-creative-cloud
   # - tunnelblick
-  - pine # Markdown editor
+  # - pine # Markdown editor
   # - lunar # Sync brightness for external monitors
   - maccy # Clipboard manager
   - 1password
@@ -67,7 +67,7 @@ brew_cask_packages:
   # - barrier
   # - calibre
   - discord
-  - docker
+  # - docker
   # - dotnet-sdk
   - free-ruler
   - gas-mask
