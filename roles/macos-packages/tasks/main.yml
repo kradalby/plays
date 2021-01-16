@@ -30,5 +30,7 @@
 
 - name: Ensure macOS Homebrew Case packages
   homebrew_cask:
-    pkg: "{{ brew_cask_packages_base + brew_cask_packages }}"
+    pkg: "{{ item }}"
     state: upgraded
+  loop: "{{ brew_cask_packages_base + brew_cask_packages }}" 
+

@@ -1,10 +1,11 @@
 ---
 brew_taps:
   - AdoptOpenJDK/openjdk
-  - drone/drone
+  # - drone/drone
   - golangci/tap
   - homebrew/cask
   - homebrew/cask-drivers
+  - homebrew/cask-fonts
   - homebrew/services
   - ibm-swift/kitura
   - jotta/cli
@@ -56,7 +57,7 @@ brew_cask_packages_base:
   - visual-studio-code
   # - hyper
   - discord
-  - sloth
+  # - sloth
 
 
 brew_cask_packages_base_absent:

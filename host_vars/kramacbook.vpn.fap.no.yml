@@ -23,10 +23,10 @@ brew_packages:
   - cloc
   - diff-so-fancy
   - dos2unix
-  - drone
+  # - drone
   - elm-format
   - exiftool
-  - exiftrans
+  - exiftran
   - fd
   - fdupes
   - golangci-lint
@@ -52,7 +52,7 @@ brew_packages:
   - tflint
   - tidy-html5
   - tmuxinator
-  - unrar
+  # - unrar
 
 
 brew_cask_packages:
@@ -81,7 +81,7 @@ brew_cask_packages:
   # - sequel-pro
   # - signal
   - slack
-  - spectacle
+  - rectangle
   # - steam
   # - steveschow-gfxcardstatus
   - gfxcardstatus
