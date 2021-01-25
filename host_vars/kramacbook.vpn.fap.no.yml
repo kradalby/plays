@@ -35,6 +35,7 @@ brew_packages:
   - ipcalc
   - iperf3
   - kubernetes-cli
+  - kind
   - nload
   - nmap
   - packer
