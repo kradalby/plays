@@ -30,6 +30,7 @@ packer-builder.ntnu.fap.no
 
 [gateway]
 # gateway.ntnu.fap.no
+rpi1.ldn.fap.no # ansible_host=10.65.0.1
 core.tjoda.fap.no ansible_host=10.62.0.1
 core.terra.fap.no ansible_host=185.243.216.95
 

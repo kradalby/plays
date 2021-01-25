@@ -101,6 +101,11 @@ def interfaces_addresses(interfaces: Sequence[Mapping]) -> Sequence[str]:
     )
 
 
+def router_id(interfaces: Sequence[Mapping]) -> Sequence[str]:
+    main = [inf for inf in filter_lan(interfaces) if inf["name"] == "br0"][0]
+    return main["netplan"]["addresses"][0].split("/")[0]
+
+
 class FilterModule(object):
     def filters(self):
         return {
@@ -117,4 +122,5 @@ class FilterModule(object):
             "filter_nonrestricted": filter_nonrestricted,
             "filter_inf_names": interfaces_names,
             "filter_inf_addresses": interfaces_addresses,
+            "filter_router_id": router_id,
         }
