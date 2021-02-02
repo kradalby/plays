@@ -20,8 +20,13 @@
     state: directory
   loop: "{{ nfs_exports }}"
 
+- name: nfs-export | Ensure NFS /etc/exports.d
+  file:
+    path: "/etc/exports.d"
+    state: directory
+
 - name: nfs-export | Ensure NFS exports
   template:
     src: nfs_exports
-    dest: /etc/exports
+    dest: /etc/exports.d/ansible-nfs-exports.exports
   notify: Restart nfs

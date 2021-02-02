@@ -1,0 +1,6 @@
+---
+- name: libvirt VM host
+  hosts: ubuntu
+  roles:
+    - role: roles/ubuntu-libvirt
+      when: libvirt is defined and libvirt

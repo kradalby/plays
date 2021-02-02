@@ -1,7 +1,7 @@
 ---
 brew_taps:
   - AdoptOpenJDK/openjdk
-  # - drone/drone
+  - drone/drone
   - golangci/tap
   - homebrew/cask
   - homebrew/cask-drivers

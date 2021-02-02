@@ -18,7 +18,6 @@ caddy_serve:
           - username: "gjest"
             passhash: '{{ lookup("env", "CADDY_SERVE_GJEST") }}'
 
-
 minio: true
 minio_base_directory: "/storage/minio"
 minio_base_domain: s3.fap.no
@@ -40,14 +39,26 @@ router_interfaces:
         - 185.243.216.95/24
       gateway4: 185.243.216.1
       dhcp6: false
-  - name: enp2s0f0
+  - name: br0
     vlan: false
-    bridge: false
-    lan: true
+    bridge: true
     wan: false
+    lan: true
+    dhcp_start: 10.60.0.220
+    dhcp_end: 10.60.0.250
     netplan:
       addresses:
         - 10.60.0.1/24
+      dhcp4: false
+      dhcp6: false
+      interfaces:
+        - enp2s0f1
+  - name: enp2s0f1
+    vlan: false
+    bridge: false
+    wan: false
+    netplan:
+      dhcp4: false
 
 # router_ipv6_prefix_delegation_length: 56
 
@@ -94,13 +105,13 @@ router_static_leases:
   #   - ip: 10.62.0.14
   #     mac: b4:fb:e4:24:f9:61
 
-kubernetes_nodes: []
-#   - name: node01
-#     ip: 10.61.0.111
-#   - name: node02
-#     ip: 10.61.0.112
-#   - name: node03
-#     ip: 10.61.0.113
+kubernetes_nodes:
+  - name: node01
+    ip: 10.60.0.101
+  - name: node02
+    ip: 10.60.0.102
+  - name: node03
+    ip: 10.60.0.103
 
 router_bgp_as: "50000"
 router_bgp_neighbour_as: "50001"
@@ -154,4 +165,17 @@ mail_networks:
   - "[::ffff:127.0.0.0]/104"
   - "[::1]/128"
 
-docker: yes
+libvirt: true
+
+nfs_exports:
+  - directory: "/fastest/nfs/kubernetes"
+    hosts:
+      - 10.60.0.0/16
+    options:
+      - rw
+      - fsid=0
+      - insecure
+      - no_subtree_check
+      - no_root_squash
+      - async
+      - crossmnt

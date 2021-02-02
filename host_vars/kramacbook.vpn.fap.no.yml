@@ -50,6 +50,9 @@ brew_packages:
   - swift-format
   - swiftlint
   - terraform
+  - terraform-provider-libvirt
+  - cdrtools
+  - terraform-ls
   - tflint
   - tidy-html5
   - tmuxinator

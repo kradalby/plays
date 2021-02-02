@@ -81,7 +81,6 @@ router_upstream_dns:
   - 8.8.8.8
   - 8.8.4.4
 
-
 router_nftable_allow_incoming:
   - port: https
     protocol: tcp
@@ -191,9 +190,8 @@ mounts:
     fs: ext4
     options: "defaults,discard"
 
-
-terraform: true
-
+terraform: false
+libvirt: true
 
 cloudflare_token: '{{ lookup("env", "CLOUDFLARE_FAP_NO_API_TOKEN") }}'
 cloudflare_dns_name: "tjoda.fap.no"

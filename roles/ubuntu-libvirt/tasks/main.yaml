@@ -13,6 +13,7 @@
 
 - name: libvirt | Enable daemon
   systemd:
+    name: libvirtd
     enabled: yes
     state: restarted
 
