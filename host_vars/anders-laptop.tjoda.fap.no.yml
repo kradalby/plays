@@ -20,7 +20,6 @@ choco_packages:
 # choco_packages_privileged:
 # - citrix-workspace
 
-
 restic_config: "{{ lookup('file', '~/Sync/config/restic.yaml') | from_yaml }}"
 restic_host_config: "{{ restic_config[inventory_hostname] }}"
 

@@ -59,7 +59,6 @@ brew_cask_packages_base:
   - discord
   # - sloth
 
-
 brew_cask_packages_base_absent:
   - beardedspice
   - bluestacks

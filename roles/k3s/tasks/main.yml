@@ -160,7 +160,6 @@
       and k3s_agent_scheduled_restart is defined
       and k3s_agent_scheduled_restart != ""
 
-
 # Prevent k3s from eating all resources
 # https://github.com/rancher/k3s/issues/294#issuecomment-670372870
 - name: k3s | Set SystemD CPU limits on master

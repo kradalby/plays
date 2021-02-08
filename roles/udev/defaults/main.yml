@@ -1,4 +1,5 @@
-udev_rules: []
+udev_rules:
+  []
   # - subsystem: tty
   #   vendor_id: aaaa
   #   product_id: bbbb

@@ -3,7 +3,6 @@ udpbroadcastrelay_ip: "{{ ansible_default_ipv4.address | default(ansible_all_ipv
 udpbroadcastrelay_interfaces: []
 udpbroadcastrelay_neighbours: []
 
-
 udpbroadcastrelay_serivces:
   - name: mDNS
     arguments: --port 5353 --multicast 224.0.0.251

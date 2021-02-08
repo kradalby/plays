@@ -1,5 +1,6 @@
 ---
-caddy_serve: []
+caddy_serve:
+  []
   # - domain: files.kradalby.no
   #   directory: /storage/files
   #   basicauth:

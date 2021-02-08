@@ -34,8 +34,8 @@
 - name: Unifi | Install unifi
   apt:
     pkg:
-    - openjdk-8-jdk-headless
-    - unifi
+      - openjdk-8-jdk-headless
+      - unifi
     update_cache: yes
     state: present
 

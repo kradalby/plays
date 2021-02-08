@@ -32,5 +32,4 @@
   homebrew_cask:
     pkg: "{{ item }}"
     state: upgraded
-  loop: "{{ brew_cask_packages_base + brew_cask_packages }}" 
-
+  loop: "{{ brew_cask_packages_base + brew_cask_packages }}"

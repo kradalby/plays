@@ -1,5 +1,4 @@
 ---
-
 - name: Get DEB architecture
   shell: dpkg --print-architecture
   register: deb_architecture

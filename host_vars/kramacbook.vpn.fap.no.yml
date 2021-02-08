@@ -58,7 +58,6 @@ brew_packages:
   - tmuxinator
   # - unrar
 
-
 brew_cask_packages:
   # - adobe-creative-cloud
   # - tunnelblick

@@ -22,7 +22,6 @@
     path: /tmp/blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ arch or deb_architecture.stdout }}
     state: absent
 
-
 - name: blackbox_exporter | Ensure blackbox_exporter group
   group:
     gid: 1998

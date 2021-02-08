@@ -19,12 +19,14 @@ router_static_leases: []
 #  - mac: b8:27:eb:0b:ef:ed
 #    ip: 192.168.0.10
 
-router_nftable_allow_incoming: []
+router_nftable_allow_incoming:
+  []
   # - port: https
   #   protocol: tcp
   #   interface?: ""
 
-router_nftable_port_redirects: []
+router_nftable_port_redirects:
+  []
   # - destination: 500
   #   target: 51820
   #   protocol: udp

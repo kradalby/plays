@@ -129,7 +129,6 @@
 #       /usr/bin/systemctl restart nftables
 #     state: present
 
-
 # - name: Ubuntu router | Ensure nftables starts after bridge
 #   blockinfile:
 #     path: /lib/systemd/system/nftables.service
@@ -172,5 +171,3 @@
     state: present
     reload: yes
   when: (router_interfaces | filter_wan).netplan.dhcp6
-
-
