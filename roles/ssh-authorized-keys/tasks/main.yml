@@ -1,0 +1,23 @@
+---
+- name: authorized-keys | Ensure path to authorized_keys
+  file:
+    path: "{{ item.path | dirname }}"
+    owner: "{{ item.user }}"
+    group: "{{ item.group }}"
+    recurse: yes
+    state: directory
+  loop: "{{ authorized_keys }}"
+
+- name: authorized-keys | Add keys to authorized_keys
+  blockinfile:
+    path: "{{ item.path }}"
+    create: yes
+    owner: "{{ item.user }}"
+    group: "{{ item.group }}"
+    mode: "0700"
+    marker: "# --- {mark} Ansible managed block ---"
+    block: |-
+      {% for key in item.ssh_keys %}
+      {{ key }}
+      {% endfor %}
+  loop: "{{ authorized_keys }}"

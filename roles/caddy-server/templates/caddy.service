@@ -9,7 +9,8 @@ After=network.target
 User=caddy
 Group=caddy
 Environment=CLOUDFLARE_API_TOKEN={{ caddy_cloudflare_api_token }}
-ExecStart=/usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
+# ExecStartPre=/etc/caddy/build_config.sh
+ExecStart=/usr/bin/caddy run --environ --config /etc/caddy/Caddyfile.json
 ExecReload=/usr/bin/caddy reload --config /etc/caddy/Caddyfile
 TimeoutStopSec=5s
 LimitNOFILE=1048576

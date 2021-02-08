@@ -1,0 +1,23 @@
+---
+apps:
+  layer4:
+    servers:
+      srv:
+        listen:
+            - :80
+            - :443
+        routes:
+        - match:
+          - http: []
+          handle:
+          - handler: proxy
+            upstreams:
+            - dial:
+              - 127.0.0.1:40080
+        - match:
+          - tls: {}
+          handle:
+          - handler: proxy
+            upstreams:
+            - dial:
+              - 127.0.0.1:40443

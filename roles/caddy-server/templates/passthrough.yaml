@@ -1,0 +1,22 @@
+---
+apps:
+  layer4:
+    servers:
+      srv:
+        routes:
+        - match:
+          - http:
+            - host: {{ item.domains }}
+          handle:
+          - handler: proxy
+            upstreams:
+            - dial:
+              - {{ item.target_ip }}:80
+        - match:
+          - tls:
+              sni: {{ item.domains }}
+          handle:
+          - handler: proxy
+            upstreams:
+            - dial:
+              - {{ item.target_ip }}:443

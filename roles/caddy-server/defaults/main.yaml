@@ -1,1 +1,4 @@
 caddy_cloudflare_api_token: ""
+caddy_passthroughs: []
+# - domain: ""
+#   target_ip: ""

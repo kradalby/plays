@@ -17,6 +17,23 @@ caddy_serve:
         users:
           - username: "gjest"
             passhash: '{{ lookup("env", "CADDY_SERVE_GJEST") }}'
+caddy_passthroughs:
+  - domains:
+      - dfekt.no
+      - drone.fap.no
+      - git.kradalby.no
+      - hugindemo.kradalby.no
+      - kradalby.no
+      - lan.recess.no
+      - okse.fap.no
+      - pelican.kradalby.no
+      - pp25.p0sx.fap.no
+      - pp26.p0sx.fap.no
+      - pp27.p0sx.fap.no
+      - pp28.p0sx.fap.no
+      - presentations.kradalby.no
+      - source.fap.no
+    target_ip: 10.60.6.1
 
 minio: true
 minio_base_directory: "/storage/minio"
@@ -37,7 +54,9 @@ router_interfaces:
     netplan:
       addresses:
         - 185.243.216.95/24
+        - 2a03:94e0:ffff:185:243:216::95/118
       gateway4: 185.243.216.1
+      gateway6: 2a03:94e0:ffff:185:243:216::1
       dhcp6: false
   - name: br0
     vlan: false
@@ -49,6 +68,7 @@ router_interfaces:
     netplan:
       addresses:
         - 10.60.0.1/24
+        - 2a03:94e0:200d:0::1/64
       dhcp4: false
       dhcp6: false
       interfaces:

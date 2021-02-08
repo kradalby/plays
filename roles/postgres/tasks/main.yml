@@ -17,19 +17,69 @@
     state: latest
   vars:
     packages:
-      - postgresql-12
-      - postgresql-client-12
+      - postgresql-13
+      - postgresql-client-13
 
-- name: Allow access from 192.168.0.0/16
+# - name: Allow access from 192.168.0.0/16
+#   lineinfile:
+#     path: /etc/postgresql/12/main/pg_hba.conf
+#     insertafter: "^# TYPE"
+#     line: "host all all 192.168.0.0/16 md5"
+#   notify: restart postgres
+
+- name: Listen to all interfaces
   lineinfile:
-    path: /etc/postgresql/12/main/pg_hba.conf
-    insertafter: "^# TYPE"
-    line: "host all all 192.168.0.0/16 md5"
+    path: /etc/postgresql/13/main/postgresql.conf
+    insertbefore: "^port"
+    line: "listen_addresses = '*'"
   notify: restart postgres
 
 - name: Allow access from 10.60.0.0/16
   lineinfile:
-    path: /etc/postgresql/12/main/pg_hba.conf
+    path: /etc/postgresql/13/main/pg_hba.conf
     insertafter: "^# TYPE"
     line: "host all all 10.60.0.0/16 md5"
   notify: restart postgres
+
+- name: Ensure backup scripts
+  template:
+    src: "{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: "0755"
+  loop:
+    - psqldump.sh
+    - clean_psqldump.sh
+    - check_backups_exists.sh
+
+- name: Ensure backup directory
+  file:
+    path: "{{ postgres_backup_dir }}"
+    owner: postgres
+    group: postgres
+    recurse: yes
+    state: directory
+
+- name: Ensure daily database dump backup
+  cron:
+    name: "Dump all postgres databases"
+    user: postgres
+    special_time: "daily"
+    job: >
+      /usr/local/bin/psqldump.sh
+    state: present
+
+- name: Ensure daily database dump cleanup
+  cron:
+    name: "Clean up old database backups"
+    special_time: "daily"
+    job: >
+      /usr/local/bin/clean_psqldump.sh
+    state: present
+
+- name: Ensure daily database dump count check
+  cron:
+    name: "Check if we have a number of backups"
+    special_time: "daily"
+    job: >
+      /usr/local/bin/check_backups_exists.sh
+    state: present

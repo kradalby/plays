@@ -6,3 +6,11 @@ restic_backup_job: true
 restic_backup_job_repos: "{{ restic_host_config.repos }}"
 restic_backup_job_password: "{{ restic_host_config.password }}"
 restic_backup_job_directories: "{{ restic_host_config.directories }}"
+
+authorized_keys:
+  # Login to postgres user
+  - path: /var/lib/postgresql/.ssh/authorized_keys
+    user: postgres
+    group: postgres
+    ssh_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBV4ZjlUvRDs70qHD/Ldi6OTkFpDEFgfbXbqSnaL2Qup # kramacbook

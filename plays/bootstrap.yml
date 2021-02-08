@@ -50,6 +50,8 @@
 
     - role: roles/mount_devices
       when: mounts is defined and mounts|length > 0
+    - role: roles/ssh-authorized-keys
+      when: authorized_keys is defined and authorized_keys|length > 0
     - role: roles/restic_backup_job
       when: restic_backup_job is defined and restic_backup_job
     - role: roles/ubuntu_no_snap

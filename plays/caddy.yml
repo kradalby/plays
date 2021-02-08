@@ -1,0 +1,6 @@
+---
+- name: Caddy
+  hosts: ubuntu
+  roles:
+    - role: roles/caddy-server
+      when: caddy is defined and caddy

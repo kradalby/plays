@@ -2,6 +2,8 @@
 
 {
     email kradalby@kradalby.no
+    http_port 40080
+    https_port 40443
 }
 
 (cf) {
@@ -12,9 +14,11 @@
 
 (local_only) {
     @external {
-        not remote_ip 10.0.0.0/8
+        not remote_ip forwarded 10.0.0.0/8 127.0.0.1 
     }
-    respond @external 403
+    respond @external "Unauthorized" 403 {
+    	close
+    }
 }
 
 import /etc/caddy/Caddyfile.d/*
