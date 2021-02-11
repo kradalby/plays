@@ -55,6 +55,7 @@ router_interfaces:
       addresses:
         - 185.243.216.95/24
         - 2a03:94e0:ffff:185:243:216::95/118
+        - 2a03:94e0:200d:0::1/64
       gateway4: 185.243.216.1
       gateway6: 2a03:94e0:ffff:185:243:216::1
       dhcp6: false
@@ -68,7 +69,7 @@ router_interfaces:
     netplan:
       addresses:
         - 10.60.0.1/24
-        - 2a03:94e0:200d:0::1/64
+        - 2a03:94e0:200d:1::1/64
       dhcp4: false
       dhcp6: false
       interfaces:
