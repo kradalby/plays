@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-rm /etc/caddy/Caddyfile.json.d/*.json
+rm -f /etc/caddy/Caddyfile.json.d/*.json
 
 /usr/bin/caddy adapt --config /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.json.d/Caddyfile.json
 
