@@ -19,26 +19,30 @@ brew_packages:
   # - redis
   # - sleepwatcher
   # - wireguard-go
+  # - drone
   - aria2
+  - cdrtools
   - cloc
+  - coreutils
   - diff-so-fancy
   - dos2unix
-  # - drone
   - elm-format
   - exiftool
   - exiftran
   - fd
   - fdupes
+  - gawk
   - golangci-lint
   - gpg
   - helm
   - ipcalc
   - iperf3
-  - kubernetes-cli
   - kind
+  - kubernetes-cli
   - nload
   - nmap
   - packer
+  - pre-commit
   - rclone
   - readline
   - restic
@@ -50,13 +54,13 @@ brew_packages:
   - swift-format
   - swiftlint
   - terraform
-  - terraform-provider-libvirt
-  - cdrtools
+  - terraform-docs
   - terraform-ls
+  - terraform-provider-libvirt
   - tflint
+  - tfsec
   - tidy-html5
   - tmuxinator
-  - pre-commit
   # - unrar
 
 brew_cask_packages:

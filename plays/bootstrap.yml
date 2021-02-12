@@ -56,6 +56,8 @@
       when: restic_backup_job is defined and restic_backup_job
     - role: roles/ubuntu_no_snap
       when: snap is undefined or not snap
+    - role: roles/ubuntu-deploy-user
+      when: deploy_user is defined and deploy_user
     - role: roles/wireguard
       when: wireguard is defined and wireguard
     - role: roles/postfix

@@ -11,6 +11,7 @@
     dest: "/etc/caddy/Caddyfile.d/{{ item.domain }}"
     owner: caddy
     group: caddy
+    mode: "0775"
   loop: "{{ caddy_serve }}"
   when: caddy is defined and caddy
   notify: Restart Caddy

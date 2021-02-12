@@ -1,1 +1,6 @@
 caddy_cloudflare_api_token: ""
+deploy_user_directories:
+  []
+  # - owner: caddy
+  #   group: caddy
+  #   path: /fastest/serve/hugin

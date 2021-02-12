@@ -4,12 +4,22 @@
     uid: 1990
     name: deploy
     home: /var/lib/deploy
+    groups: "{{ deploy_user_directories | map(attribute='group') | join(',') }}"
     shell: /bin/sh
     comment: Deploy user
     create_home: yes
 
-- name: Set authorized key taken from file
+- name: deploy | Set authorized key taken from file
   authorized_key:
     user: deploy
     state: present
     key: "{{ lookup('file', '~/Sync/config/ssh/deploy/id_ed25519.pub') }}"
+
+- name: deploy | Ensure group permissions
+  file:
+    path: "{{ item.path }}"
+    mode: "0775"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    recurse: yes
+  loop: "{{ deploy_user_directories }}"

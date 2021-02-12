@@ -9,4 +9,3 @@ if [ "$BACKUP_COUNT" -lt "{{ postgres_minimum_total_backups }}" ] || [ "$BACKUP_
 fi
 
 exit 0
-

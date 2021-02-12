@@ -1,9 +1,9 @@
 #!/usr/bin/python
-
-from typing import Mapping, Sequence
-
 import ipaddress
 import itertools
+from typing import Any
+from typing import Mapping
+from typing import Sequence
 
 
 def site_code(ipv4):
@@ -63,10 +63,11 @@ def filter_dhcp(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
     return [inf for inf in interfaces if "dhcp_start" in inf and "dhcp_end" in inf]
 
 
-def filter_wan(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
+def filter_wan(interfaces: Sequence[Mapping]) -> Mapping[Any, Any]:
     for inf in interfaces:
         if "wan" in inf and inf["wan"]:
             return inf
+    return {}
 
 
 def filter_lan(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
@@ -85,7 +86,7 @@ def filter_nonrestricted(interfaces: Sequence[Mapping]) -> Sequence[Mapping]:
     return [
         inf
         for inf in filter_lan(interfaces)
-        if not "restricted" in inf or not inf["restricted"]
+        if "restricted" not in inf or not inf["restricted"]
     ]
 
 
@@ -96,8 +97,8 @@ def interfaces_names(interfaces: Sequence[Mapping]) -> Sequence[str]:
 def interfaces_addresses(interfaces: Sequence[Mapping]) -> Sequence[str]:
     return list(
         itertools.chain.from_iterable(
-            [inf["netplan"]["addresses"] for inf in interfaces]
-        )
+            [inf["netplan"]["addresses"] for inf in interfaces],
+        ),
     )
 
 
@@ -106,7 +107,7 @@ def router_id(interfaces: Sequence[Mapping]) -> Sequence[str]:
     return main["netplan"]["addresses"][0].split("/")[0]
 
 
-class FilterModule(object):
+class FilterModule:
     def filters(self):
         return {
             "site_code": site_code,

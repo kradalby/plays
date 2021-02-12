@@ -17,11 +17,11 @@
     module: ansible.builtin.command
     chdir: /tmp
     cmd: >
-      xcaddy build 
+      xcaddy build
       --output /tmp/caddy_linux_{{ deb_architecture.stdout }}
-      --with github.com/abiosoft/caddy-json-schema 
-      --with github.com/abiosoft/caddy-yaml 
-      --with github.com/caddy-dns/cloudflare 
+      --with github.com/abiosoft/caddy-json-schema
+      --with github.com/abiosoft/caddy-yaml
+      --with github.com/caddy-dns/cloudflare
       --with github.com/mholt/caddy-l4
     creates: "/tmp/caddy_linux_{{ deb_architecture.stdout }}"
 

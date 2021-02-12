@@ -12,15 +12,23 @@ repos:
       - id: check-docstring-first
       - id: check-json
       - id: check-added-large-files
-      - id: check-yaml
       - id: check-case-conflict
       - id: check-ast
       - id: check-executables-have-shebangs
       - id: check-symlinks
       - id: debug-statements
       - id: name-tests-test
-      - id: double-quote-string-fixer
       - id: requirements-txt-fixer
+
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.12
+    hooks:
+      - id: terraform-fmt
+      - id: terraform-validate
+      - id: tflint
+      # - id: shellcheck
+      - id: gofmt
+      - id: golint
 
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.8.4

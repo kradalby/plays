@@ -35,6 +35,18 @@ caddy_passthroughs:
       - source.fap.no
     target_ip: 10.60.6.1
 
+deploy_user: true
+deploy_user_directories:
+  - owner: caddy
+    group: caddy
+    path: /fastest/serve/hugin
+  - owner: caddy
+    group: caddy
+    path: /fastest/serve/builds
+  - owner: caddy
+    group: caddy
+    path: /fastest/serve/files
+
 minio: true
 minio_base_directory: "/storage/minio"
 minio_base_domain: s3.fap.no
