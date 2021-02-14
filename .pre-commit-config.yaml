@@ -30,6 +30,22 @@ repos:
       - id: gofmt
       - id: golint
 
+  # Go -------------------------
+  - repo: https://github.com/golangci/golangci-lint
+    rev: v1.36.0
+    hooks:
+      - id: golangci-lint
+
+  - repo: https://github.com/lietu/go-pre-commit
+    rev: master
+    hooks:
+      - id: go-test
+      - id: go-vet
+      - id: gofumports
+      - id: gofumpt
+      - id: golint
+
+  # Python ------------------------------
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.8.4
     hooks:

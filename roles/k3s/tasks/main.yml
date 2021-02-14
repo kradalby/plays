@@ -1,4 +1,10 @@
 ---
+- name: Ensure dependencies
+  apt:
+    pkg:
+      - nfs-common
+    state: present
+
 - name: Enable IPv4 forwarding
   sysctl:
     name: net.ipv4.ip_forward
