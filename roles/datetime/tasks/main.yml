@@ -2,12 +2,12 @@
 - name: datetime | Set timezone to UTC
   community.general.timezone:
     name: UTC
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: datetime | Ensure chrony
   apt:
     package: chrony
-    state: latest
+    state: present
 
 - name: datetime | Ensure chrony config
   template:

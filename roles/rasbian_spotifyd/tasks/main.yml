@@ -2,7 +2,7 @@
 - name: RPi Spotifyd | Ensure spotifyd binary
   unarchive:
     src: "https://github.com/Spotifyd/spotifyd/releases/download/{{ spotifyd_version }}/spotifyd-linux-{{ arch or deb_architecture.stdout }}-slim.tar.gz"
-    remote_src: yes
+    remote_src: true
     dest: "/usr/local/bin"
     mode: "0755"
   notify: Restart Spotifyd
@@ -16,8 +16,8 @@
 - name: RPi Spotifyd | Enable SystemD service
   systemd:
     name: spotifyd
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
     state: started
 
 - name: RPi Spotifyd | Ensure Spotifyd configuration

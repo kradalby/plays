@@ -30,5 +30,5 @@
     pkg:
       - terraform
       - terraform-provider-libvirt
-    state: latest
-    update_cache: yes
+    state: present
+    update_cache: true

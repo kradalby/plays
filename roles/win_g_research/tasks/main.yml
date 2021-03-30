@@ -1,12 +1,12 @@
 ---
 - name: Windows G-Research | Install Citrix Workspace
-  # become: yes
+  # become: true
   # become_method: runas
   # become_user: administrator
   win_chocolatey:
     name: "citrix-workspace"
-    state: latest
-    force: yes
+    state: present
+    force: true
 
 - name: Windows G-Research | Citrix Alt+Tab passthrough
   win_regedit:

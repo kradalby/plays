@@ -5,4 +5,4 @@ udev_rules:
   #   product_id: bbbb
   #   name: zigbee
 
-udev_v4l2loopback_rules: no
+udev_v4l2loopback_rules: false

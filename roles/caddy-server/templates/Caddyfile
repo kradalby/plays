@@ -4,6 +4,7 @@
     email kradalby@kradalby.no
     http_port 40080
     https_port 40443
+    admin 0.0.0.0:2019
 }
 
 (cf) {

@@ -2,7 +2,7 @@
 - name: code-server | Ensure code-server
   homebrew:
     pkg: code-server
-    state: latest
+    state: present
   notify: Reload code-server
 
 - name: code-server | Ensure config dir

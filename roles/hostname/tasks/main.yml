@@ -8,7 +8,7 @@
   hostname:
     name: '{{  inventory_hostname.split(".")[0] }}.{{  inventory_hostname.split(".")[1] }}'
     use: systemd
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: hostname | Ensure /etc/hosts
   template:

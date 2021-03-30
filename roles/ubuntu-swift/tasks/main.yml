@@ -8,18 +8,18 @@
       - libpython2.7
       - libpython2.7-dev
       - libdispatch-dev
-    state: latest
+    state: present
 
 - name: ubuntu-swift | Ensure tmp Swift directory
   file:
     path: /tmp/swift
-    recurse: yes
+    recurse: true
     state: directory
 
 - name: ubuntu-swift | Download and extract Swift
   unarchive:
     src: "{{ swift_url }}"
-    remote_src: yes
+    remote_src: true
     dest: "/tmp/swift"
     mode: "0755"
 

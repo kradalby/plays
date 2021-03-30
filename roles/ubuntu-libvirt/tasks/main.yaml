@@ -9,12 +9,12 @@
       - bridge-utils
       - virtinst
       - libvirt-dev
-    state: latest
+    state: present
 
 - name: libvirt | Enable daemon
   systemd:
     name: libvirtd
-    enabled: yes
+    enabled: true
     state: restarted
 
 - name: libvirt | Allow terraform

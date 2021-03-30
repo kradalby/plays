@@ -1,6 +1,6 @@
 ---
 - hosts: legacyservers
-  gather_facts: yes
+  gather_facts: true
 
   tasks:
     # Use a block to perform tasks conditionally—only if running Ubuntu 18.04.
@@ -21,7 +21,7 @@
 
         - name: Upgrade all packages to the latest version
           apt:
-            update_cache: yes
+            update_cache: true
             upgrade: full
 
         - name: Ensure update-manager-core is installed.
@@ -33,7 +33,7 @@
           lineinfile:
             path: /etc/apt/apt.conf.d/000-local-do-release-upgrade
             line: 'DPkg::options { "--force-confdef"; "--force-confnew"; }'
-            create: yes
+            create: true
             mode: 0644
 
         - name: Remove deprecated UsePrivilegeSeparation from SSH
@@ -56,8 +56,8 @@
 
         - name: Autoremove unused packages
           apt:
-            update_cache: yes
-            autoremove: yes
+            update_cache: true
+            autoremove: true
 
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
 # After the playbook is finished, it's a good idea to confirm all the servers

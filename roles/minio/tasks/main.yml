@@ -10,7 +10,7 @@
   group:
     gid: 1996
     name: minio
-    system: no
+    system: false
     state: present
 
 - name: minio | Ensure minio user
@@ -22,7 +22,7 @@
     home: "{{ minio_base_directory }}"
     shell: /usr/sbin/nologin
     comment: Minio object storage
-    create_home: yes
+    create_home: true
 
 - name: minio | Ensure minio directory permissions
   file:
@@ -30,7 +30,7 @@
     owner: minio
     group: minio
     mode: "0755"
-    recurse: yes
+    recurse: true
     state: directory
   loop: "{{ minio_sub_domains }}"
 
@@ -54,7 +54,7 @@
 - name: minio | Enable systemd service
   systemd:
     name: "minio-{{ item }}"
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
     state: started
   loop: "{{ minio_sub_domains }}"

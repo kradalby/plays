@@ -1,9 +1,9 @@
 ---
 - name: No Snap Ubuntu | Ensure snap is absent
   apt:
-    update_cache: yes
+    update_cache: true
     state: absent
-    purge: yes
+    purge: true
     pkg:
       - snapd
 

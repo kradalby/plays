@@ -1,9 +1,9 @@
 ---
 - name: Trim Ubuntu | Remove packages
   apt:
-    update_cache: yes
+    update_cache: true
     state: absent
-    purge: yes
+    purge: true
     pkg:
       - snapd
       - docker

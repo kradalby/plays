@@ -5,12 +5,12 @@
 - name: Install Samba
   apt:
     name: samba
-    state: latest
+    state: present
 
 - name: Install Avahi
   apt:
     name: avahi-daemon
-    state: latest
+    state: present
   when: time_machine|bool
 
 - name: Add Time Machine user

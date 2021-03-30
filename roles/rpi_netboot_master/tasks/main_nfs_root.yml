@@ -9,7 +9,7 @@
       - unzip
       - tgt
       - qemu-utils
-    state: latest
+    state: present
 
 - name: RPi netboot master | Install dnsmasq config
   template:
@@ -21,12 +21,12 @@
 - name: RPi netboot master | Ensure NFS server
   apt:
     pkg: nfs-kernel-server
-    state: latest
+    state: present
 
 - name: RPi netboot master | Ensure NFS enabled
   systemd:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
   loop:
     - rpcbind
     - nfs-kernel-server
@@ -73,13 +73,13 @@
     repo: https://github.com/Hexxeh/rpi-firmware.git
     version: stable
     dest: "/tftpboot/{{ item.ip }}"
-    force: yes
+    force: true
     depth: "1"
   loop: "{{ rpi_netboot_nodes }}"
 
   # - name: RPi netboot master | Ensure Node boot
   #   unarchive:
-  #     remote_src: yes
+  #     remote_src: true
   #     # src: /root/ubuntu_2004_rpi_bootfs.tar.xz
   #     src: /root/raspbian_rpi_bootfs.tar.xz
   #     dest: '/tftpboot/{{ item.ip }}'
@@ -108,7 +108,7 @@
 
 - name: RPi netboot master | Ensure Node root
   unarchive:
-    remote_src: yes
+    remote_src: true
     src: /root/ubuntu_2004_rpi_rootfs.tar.xz
     dest: "/nfs/{{ item.name }}"
     # extra_opts:
@@ -173,7 +173,7 @@
 
 - name: RPi netboot master | Ensure authorized_keys
   copy:
-    remote_src: yes
+    remote_src: true
     src: "/root/.ssh/authorized_keys"
     dest: "/nfs/{{ item.name }}/root/.ssh/authorized_keys"
     mode: "0644"

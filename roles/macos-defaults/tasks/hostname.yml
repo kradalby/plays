@@ -9,17 +9,17 @@
 
 - name: Hostname | Set ComputerName
   command: "scutil --set ComputerName {{ hostname }}"
-  become: yes
+  become: true
   changed_when: false
 
 - name: Hostname | Set HostName
   command: "scutil --set HostName {{ hostname }}"
-  become: yes
+  become: true
   changed_when: false
 
 - name: Hostname | Set LocalHostName
   command: "scutil --set LocalHostName {{ hostname | replace('.', '-') }}"
-  become: yes
+  become: true
   changed_when: false
 
 - name: Hostname | Set NetBIOSName name

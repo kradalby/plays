@@ -8,7 +8,7 @@
     src: wg0.conf
     dest: 'C:\temp\wg0.conf'
     # newline_sequence: '\n'
-    backup: yes
+    backup: true
   register: wireguard_config
 
 - name: Windows WireGuard | Install WireGuard

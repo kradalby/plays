@@ -13,15 +13,21 @@
   unarchive:
     src: "https://github.com/prometheus/node_exporter/releases/download/v{{ version }}/node_exporter-{{ version }}.linux-{{ arch or deb_architecture.stdout }}.tar.gz"
     dest: /tmp
-    remote_src: yes
+    remote_src: true
 
 - name: replace prometheus node exporter binary
   copy:
     src: /tmp/node_exporter-{{ version }}.linux-{{ arch or deb_architecture.stdout }}/node_exporter
     dest: /usr/bin/prometheus-node-exporter
     mode: 0755
-    remote_src: yes
+    remote_src: true
   notify: restart node_exporter
+
+- name: Add node exporter configuration
+  template:
+    src: defaults
+    dest: /etc/default/prometheus-node-exporter
+    mode: 0644
 
 - name: clean up node_exporter folder
   file:

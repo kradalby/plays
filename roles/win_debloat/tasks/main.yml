@@ -21,7 +21,7 @@
     (1 * 60 * 60 * 24)))
 
 - name: Windows Debloat | Run Windows 10 Debloater
-  # become: yes
+  # become: true
   win_command: "powershell -ExecutionPolicy ByPass -File Windows10SysPrepDebloater.ps1 {{ item }}"
   args:
     chdir: 'C:\temp'

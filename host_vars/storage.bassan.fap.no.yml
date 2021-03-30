@@ -2,12 +2,12 @@
 # arch: armv6
 skip_repo: true
 
-wireguard: yes
+wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.clients.storagebassan }}"
 wireguard_current_host_name: "storagebassan"
 wireguard_jumps: "{{ wireguard_config.jumps }}"
-wireguard_prefer_ip: no
+wireguard_prefer_ip: false
 
 mounts:
   - path: /storage

@@ -15,20 +15,20 @@
     - "{26A24AE4-039D-4CA4-87B4-2F86416029FF}"
 
 - name: Windows Packages | Install packages
-  # become: yes
+  # become: true
   # become_method: runas
   # become_user: administrator
   chocolatey.chocolatey.win_chocolatey:
     name: "{{ choco_packages_base + choco_packages }}"
-    state: latest
+    state: present
 
 - name: Windows Packages | Install additional packages with privileges
-  # become: yes
+  # become: true
   # become_method: runas
   # become_user: administrator
   chocolatey.chocolatey.win_chocolatey:
     name: "{{ choco_packages_priv_base + choco_packages_priv }}"
-    state: latest
+    state: present
 
 - name: Windows Packages | Prevent applications from starting automatically
   win_regedit:

@@ -1,4 +1,6 @@
 ---
+prometheus_bash_client_path: "{{ ansible_env.HOME }}/git/client_bash"
+
 ansible_user: kradalby
 hostname: kramacbook
 caddy: false
@@ -61,6 +63,8 @@ brew_packages:
   - tfsec
   - tidy-html5
   - tmuxinator
+  - smartmontools
+  - logcli
   # - unrar
 
 brew_cask_packages:
@@ -104,6 +108,7 @@ brew_cask_packages:
   - protonmail-bridge
   # - prolific-pl2303
   - font-jetbrains-mono
+  - mailtrackerblocker
 
 brew_cask_packages_absent:
   - teamviewer

@@ -12,8 +12,8 @@
 
 - name: log2ram | Install log2ram
   apt:
-    update_cache: yes
-    state: latest
+    update_cache: true
+    state: present
     pkg: log2ram
   notify: Restart log2ram
 

@@ -36,8 +36,22 @@
     pkg:
       - openjdk-8-jdk-headless
       - unifi
-    update_cache: yes
+    update_cache: true
     state: present
+
+- name: Unifi | Set Unifi memory limit
+  lineinfile:
+    path: /var/lib/unifi/system.properties
+    line: >
+      unifi.xms={{ unifi_controller_memory }}
+  notify: Restart unifi
+
+- name: Unifi | Set Unifi memory limit
+  lineinfile:
+    path: /var/lib/unifi/system.properties
+    line: >
+      unifi.xmx={{ unifi_controller_memory }}
+  notify: Restart unifi
 
 - name: Unifi | Ensure caddy proxy
   template:

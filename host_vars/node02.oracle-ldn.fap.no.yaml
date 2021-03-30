@@ -1,15 +1,15 @@
 ---
-wireguard: yes
+wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.clients.oracleldn2 }}"
 wireguard_current_host_name: "oracleldn2"
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
-k3s_agent: yes
+k3s_agent: true
 k3s_agent_cpu_quota: 10%
 k3s_agent_memory_quota: 512M
 k3s_agent_io_read_bandwidth: 2M
 k3s_agent_io_write_bandwidth: 2M
 
-node_exporter: yes
-blackbox_exporter: yes
+node_exporter: true
+blackbox_exporter: true

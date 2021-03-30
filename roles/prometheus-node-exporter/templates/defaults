@@ -1,0 +1,1 @@
+ARGS="--collector.textfile.directory=\"/var/lib/prometheus/node-exporter\""

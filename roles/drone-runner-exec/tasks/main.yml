@@ -2,7 +2,7 @@
 - name: drone-runner-exec | Ensure runner
   unarchive:
     src: https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_linux_amd64.tar.gz
-    remote_src: yes
+    remote_src: true
     dest: /usr/local/bin
     mode: "0755"
 

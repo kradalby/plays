@@ -3,7 +3,7 @@
   apt:
     update_cache: "{{ apt_update_cache }}"
     pkg: bird2
-    state: latest
+    state: present
 
 - name: BGP | ensure bird.conf.d
   file:
@@ -24,6 +24,6 @@
 - name: BGP | Ensure bird service
   systemd:
     name: bird
-    masked: no
-    enabled: yes
+    masked: false
+    enabled: true
     state: started

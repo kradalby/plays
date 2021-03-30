@@ -3,7 +3,7 @@
   apt:
     pkg:
       - locales
-    state: latest
+    state: present
 
 - name: locale | Ensure en_US.UTF-8
   locale_gen:

@@ -39,9 +39,9 @@
 
 - name: Install Syncthing
   apt:
-    update_cache: yes
+    update_cache: true
     name: "{{ packages }}"
-    state: latest
+    state: present
   vars:
     packages:
       - syncthing
@@ -64,8 +64,8 @@
 
 - name: Syncthing | Ensure Syncthing service
   systemd:
-    daemon_reload: yes
+    daemon_reload: true
     name: syncthing@syncthing
-    masked: no
-    enabled: yes
+    masked: false
+    enabled: true
     state: started

@@ -4,7 +4,7 @@
     src: sshd_config
     dest: 'C:\ProgramData\ssh\sshd_config'
     newline_sequence: '\n'
-    backup: yes
+    backup: true
   notify: Restart SSH
 
 - name: Windows SSH | Firewall rule to allow SSH on port 22

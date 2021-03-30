@@ -48,14 +48,14 @@
 #     state: present
 
 - name: Spotlight | Disable Spotlight indexing of network volumes
-  become: yes
+  become: true
   osx_defaults:
     domain: /Library/Preferences/com.apple.SpotlightServer.plist
     key: ExternalVolumesDefaultOff
     value: true
 
 - name: Spotlight | Turn off network indexing
-  become: yes
+  become: true
   osx_defaults:
     domain: /Library/Preferences/com.apple.SpotlightServer.plist
     key: ExternalVolumesIgnore
@@ -68,13 +68,13 @@
   when: spotlight_included_items.changed
 
 - name: Spotlight | Ensure index of root volume
-  become: yes
+  become: true
   command: "mdutil -i on"
   changed_when: false
   when: spotlight_included_items.changed
 
 - name: Spotlight | Index root volume
-  become: yes
+  become: true
   command: "mdutil -E /"
   changed_when: false
   when: spotlight_included_items.changed

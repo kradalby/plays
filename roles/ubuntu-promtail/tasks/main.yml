@@ -1,0 +1,38 @@
+---
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
+- name: promtail | Ensure promtail
+  unarchive:
+    src: "https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-{{ arch or deb_architecture.stdout }}.zip"
+    remote_src: true
+    dest: "/usr/local/bin"
+    mode: "0755"
+    creates: "/usr/local/bin/promtail"
+  notify: Restart promtail
+
+- name: promtail | Symlink binary
+  file:
+    src: "/usr/local/bin/promtail-linux-{{ arch or deb_architecture.stdout }}"
+    dest: /usr/local/bin/promtail
+    state: link
+
+- name: promtail | Ensure promtail configuration
+  template:
+    src: promtail.yaml
+    dest: "/etc/promtail.yaml"
+  notify: Restart promtail
+
+- name: promtail | Install systemd service description
+  template:
+    src: promtail.service
+    dest: "/etc/systemd/system/promtail.service"
+  notify: Restart promtail
+
+- name: promtail | Enable systemd service
+  systemd:
+    name: "promtail"
+    daemon_reload: true
+    enabled: true
+    state: started

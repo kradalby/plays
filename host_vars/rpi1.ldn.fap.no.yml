@@ -1,5 +1,5 @@
 ---
-apt_update_cache: no
+apt_update_cache: false
 
 caddy: true
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
@@ -149,15 +149,15 @@ router_bgp_as: "51000"
 router_bgp_neighbour_as: "51030"
 router_bgp_neighbours: "{{ rpi_netboot_nodes }}"
 
-wireguard: yes
+wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.servers.ldn }}"
 wireguard_current_host_name: "ldn"
-wireguard_prefer_ip: no
+wireguard_prefer_ip: false
 
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
-node_exporter: yes
+node_exporter: true
 skip_repo: true
 
 restic_config: "{{ lookup('file', '~/Sync/config/restic.yaml') | from_yaml }}"

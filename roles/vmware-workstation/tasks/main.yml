@@ -5,7 +5,7 @@
       - libaio1
       # Ansible expect module dependency
       - python3-pexpect
-    state: latest
+    state: present
 
 - name: vmworkstation | Check if vmrun binary is already present
   stat:
@@ -17,7 +17,7 @@
       get_url:
         url: "https://download3.vmware.com/software/wkst/file/VMware-Workstation-Full-15.5.2-15785246.x86_64.bundle"
         dest: "/tmp/vmware-workstation.bundle"
-        force: no
+        force: false
 
     - name: vmworkstation | Make bundle executable
       file:

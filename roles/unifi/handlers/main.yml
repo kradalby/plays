@@ -3,3 +3,8 @@
   service:
     name: caddy
     state: restarted
+
+- name: Restart unifi
+  service:
+    name: unifi
+    state: restarted

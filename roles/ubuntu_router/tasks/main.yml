@@ -4,31 +4,31 @@
     name: net.ipv4.ip_forward
     value: "1"
     state: present
-    reload: yes
+    reload: true
 
 - name: Ubuntu router | Enable IPv6 forwarding
   ansible.posix.sysctl:
     name: net.ipv6.conf.all.forwarding
     value: "1"
     state: present
-    reload: yes
+    reload: true
 
 - name: Ubuntu router | Ensure WireGuard
   apt:
     update_cache: "{{ apt_update_cache }}"
     pkg: wireguard
-    state: latest
+    state: present
 
 - name: Ubuntu router | Ensure WireGuard service
   systemd:
     name: wg-quick@wg0
-    masked: no
-    enabled: yes
+    masked: false
+    enabled: true
     state: started
 
 - name: Ubuntu router | Install netplan config
   template:
-    src: netplan.yaml
+    src: netplan.yaml.jinja2
     dest: /etc/netplan/51-rpi-router.yaml
     mode: "0644"
   notify: Apply netplan
@@ -37,7 +37,7 @@
   apt:
     update_cache: "{{ apt_update_cache }}"
     pkg: dnsmasq
-    state: latest
+    state: present
   notify: Restart dnsmasq
 
 - name: Ubuntu router | Install dnsmasq config
@@ -77,7 +77,7 @@
 
 # - name: Ubuntu router | Flush all iptables tables
 #   iptables:
-#     flush: yes
+#     flush: true
 #     table: "{{ item }}"
 #   loop:
 #     - filter
@@ -88,7 +88,7 @@
   apt:
     update_cache: "{{ apt_update_cache }}"
     pkg: nftables
-    state: latest
+    state: present
 
 - name: Ubuntu router | Install nftables config
   template:
@@ -116,7 +116,7 @@
 
 - name: Ubuntu router | Enable nftables
   systemd:
-    daemon_reload: yes
+    daemon_reload: true
     name: nftables
     enabled: true
     state: started
@@ -146,7 +146,7 @@
   apt:
     update_cache: "{{ apt_update_cache }}"
     pkg: wide-dhcpv6-client
-    state: latest
+    state: present
   when: (router_interfaces | filter_wan).netplan.dhcp6
 
 - name: Ubuntu router | Install DHCPv6 config
@@ -169,5 +169,5 @@
     name: "net.ipv6.conf.{{ (router_interfaces | filter_wan).name }}.forwarding"
     value: "2"
     state: present
-    reload: yes
+    reload: true
   when: (router_interfaces | filter_wan).netplan.dhcp6

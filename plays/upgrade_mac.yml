@@ -5,10 +5,10 @@
   tasks:
     - name: Upgrade Homebrew
       homebrew:
-        update_homebrew: yes
-        upgrade_all: yes
+        update_homebrew: true
+        upgrade_all: true
 
     - name: Upgrade Homebrew cask
       homebrew:
-        update_homebrew: yes
-        upgrade_all: yes
+        update_homebrew: true
+        upgrade_all: true

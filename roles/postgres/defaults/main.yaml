@@ -1,4 +1,4 @@
 ---
-postgres_minimum_unique_backups: 100
-postgres_minimum_total_backups: 100
+postgres_minimum_unique_backups: 15
+postgres_minimum_total_backups: 150
 postgres_backup_dir: /backup/psql

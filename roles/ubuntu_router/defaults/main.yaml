@@ -31,4 +31,10 @@ router_nftable_port_redirects:
   #   target: 51820
   #   protocol: udp
 
-apt_update_cache: yes
+router_nftable_port_forwards:
+  []
+  # - destination: ip:500
+  #   target: 51820
+  #   protocol: udp
+
+apt_update_cache: true

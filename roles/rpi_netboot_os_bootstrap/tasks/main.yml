@@ -14,7 +14,7 @@
       - nfs-common
       - open-iscsi
       - v4l2loopback-dkms
-    state: latest
+    state: present
 
 - name: RPi netboot special | Add v4l2loopback module
   lineinfile:
@@ -25,7 +25,7 @@
 - name: RPi netboot special | Mask unwanted services
   systemd:
     name: "{{ item }}"
-    masked: yes
+    masked: true
   loop:
     - lvm2-lvmpolld.socket
     - lvm2-monitor.service

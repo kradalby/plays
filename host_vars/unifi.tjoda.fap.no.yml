@@ -1,3 +1,4 @@
 ---
 caddy: true
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
+unifi_controller_memory: 256

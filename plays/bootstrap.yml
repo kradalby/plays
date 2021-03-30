@@ -5,13 +5,15 @@
   pre_tasks:
     - name: Upgrade packages
       apt:
-        upgrade: yes
-        update_cache: yes
+        upgrade: true
+        update_cache: true
 
     - name: Install packages
       apt:
-        update_cache: yes
+        update_cache: true
         pkg:
+          - jq
+          - curl
           - iputils-ping
           - mosh
           - tmux
@@ -28,7 +30,7 @@
           - ncdu
           - nload
           - fd-find
-        state: latest
+        state: present
 
     - name: Remove packages
       apt:
@@ -42,10 +44,13 @@
       when: skip_repo is undefined or not skip_repo
     - role: roles/datetime
     - role: roles/locale
+    - role: roles/prometheus_bash_client
     - role: roles/dotfiles
     - role: roles/apticron
     - role: roles/rclone
     - role: roles/restic
+    - role: roles/ubuntu-promtail
+    - role: roles/swap-off
     # - role: roles/snmpd
 
     - role: roles/mount_devices
@@ -68,9 +73,12 @@
       when: swift is defined and swift
     - role: roles/nfs-export
       when: nfs_exports is defined and nfs_exports|length > 0
+    - role: roles/ubuntu-promtail
     - role: roles/prometheus-node-exporter
       when: node_exporter is undefined or node_exporter
     - role: roles/ubuntu_terraform
       when: terraform is defined and terraform
     - role: roles/blackbox_exporter
       when: blackbox_exporter is defined and blackbox_exporter
+    - role: roles/ubuntu-hp-ssacli
+      when: hp is defined and hp

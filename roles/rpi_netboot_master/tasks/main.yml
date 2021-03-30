@@ -8,7 +8,7 @@
       - tar
       - unzip
       - tgt
-    state: latest
+    state: present
 
 - name: RPi netboot master | Install dnsmasq config
   template:
@@ -20,12 +20,12 @@
 - name: RPi netboot master | Ensure NFS server
   apt:
     pkg: nfs-kernel-server
-    state: latest
+    state: present
 
 - name: RPi netboot master | Ensure NFS enabled
   systemd:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
   loop:
     - rpcbind
     - nfs-kernel-server

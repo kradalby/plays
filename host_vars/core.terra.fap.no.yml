@@ -1,5 +1,5 @@
 ---
-apt_update_cache: no
+apt_update_cache: false
 
 caddy: true
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
@@ -22,9 +22,11 @@ caddy_passthroughs:
       - dfekt.no
       - drone.fap.no
       - git.kradalby.no
+      - grocy.kradalby.no
       - hugindemo.kradalby.no
       - kradalby.no
       - lan.recess.no
+      - jaeger.fap.no
       - okse.fap.no
       - pelican.kradalby.no
       - pp25.p0sx.fap.no
@@ -33,7 +35,15 @@ caddy_passthroughs:
       - pp28.p0sx.fap.no
       - presentations.kradalby.no
       - source.fap.no
+      - prometheus.terra.fap.no
+      - grafana.terra.fap.no
+      - alertmanager.terra.fap.no
+      - pushgateway.terra.fap.no
+      - thanos-gateway.terra.fap.no
+      - loki.terra.fap.no
     target_ip: 10.60.6.1
+
+hp: true
 
 deploy_user: true
 deploy_user_directories:
@@ -53,6 +63,9 @@ minio_base_domain: s3.fap.no
 minio_sub_domains:
   - terraform
   - ldap
+  - loki
+  - tempo
+  - thanos
 minio_access_key: '{{ lookup("env", "AWS_ACCESS_KEY_ID") }}'
 minio_secret_key: '{{ lookup("env", "AWS_SECRET_ACCESS_KEY") }}'
 
@@ -113,6 +126,8 @@ router_nftable_allow_incoming:
     protocol: tcp
   - port: http
     protocol: tcp
+  - port: http
+    protocol: udp
   - port: 51820
     protocol: udp
   - port: 500
@@ -121,6 +136,10 @@ router_nftable_allow_incoming:
     protocol: udp
   - port: 64322
     protocol: tcp
+  - port: 3979
+    protocol: tcp
+  - port: 3979
+    protocol: udp
 
 router_nftable_port_redirects:
   - source: 4500
@@ -132,6 +151,14 @@ router_nftable_port_redirects:
   - source: 64322
     destination: 22
     protocol: tcp
+
+router_nftable_port_forwards:
+  - source: 3979
+    destination: 10.60.6.2:3979
+    protocol: tcp
+  - source: 3979
+    destination: 10.60.6.2:3979
+    protocol: udp
 
 router_static_leases:
   []
@@ -150,15 +177,15 @@ router_bgp_as: "50000"
 router_bgp_neighbour_as: "50001"
 router_bgp_neighbours: "{{ kubernetes_nodes }}"
 
-wireguard: yes
+wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.servers.terra }}"
 wireguard_current_host_name: "terra"
-wireguard_prefer_ip: no
+wireguard_prefer_ip: false
 
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
-node_exporter: yes
+node_exporter: true
 # udpbroadcastrelay_ip: "{{ router_gateway_addr }}"
 # udpbroadcastrelay_interface: "{{ router_lan }}"
 

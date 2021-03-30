@@ -22,9 +22,9 @@
 
 - name: Install JottaCloud
   apt:
-    update_cache: yes
+    update_cache: true
     name: "{{ packages }}"
-    state: latest
+    state: present
   vars:
     packages:
       - jotta-cli

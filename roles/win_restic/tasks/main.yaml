@@ -22,7 +22,7 @@
 #   win_git:
 #     repo: https://github.com/kmwoley/restic-windows-backup.git
 #     dest: "C:\restic"
-#     # force: yes
+#     # force: true
 #   register: restic_scripts
 
 - name: Windows restic | Ensure restic secrets

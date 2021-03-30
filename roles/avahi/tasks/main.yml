@@ -2,7 +2,7 @@
 - name: Install Avahi
   apt:
     name: avahi-daemon
-    state: latest
+    state: present
 
 - name: Configure Avahi
   template:

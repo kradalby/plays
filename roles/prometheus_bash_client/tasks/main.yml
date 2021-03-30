@@ -1,0 +1,21 @@
+- name: Prometheus Bash | Ensure dependencies
+  apt:
+    pkg:
+      - jq
+      - curl
+    state: present
+
+- name: Prometheus Bash | Ensure /opt/git
+  file:
+    path: /opt/git
+    recurse: true
+    state: directory
+  when: '"/opt/git" in prometheus_bash_client_path'
+
+- name: Prometheus Bash | Ensure prometheus.bash
+  git:
+    # repo: https://github.com/aecolley/client_bash.git
+    # repo: https://github.com/asksven/client_bash.git # HTTPS friendly fork
+    repo: https://github.com/kradalby/client_bash.git # Bash 5 friendly fork
+    dest: "{{ prometheus_bash_client_path }}"
+    force: true

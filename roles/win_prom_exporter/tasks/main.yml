@@ -5,4 +5,4 @@
       - prometheus-windows-exporter.install
     package_params: >
       "/EnabledCollectors:cpu,cs,logical_disk,net,os,service,system,memory,process,remote_fx,tcp,vmware"
-    state: latest
+    state: present

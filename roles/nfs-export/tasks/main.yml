@@ -2,12 +2,12 @@
 - name: nfs-export | Ensure NFS server
   apt:
     pkg: nfs-kernel-server
-    state: latest
+    state: present
 
 - name: nfs-export | Ensure NFS enabled
   systemd:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
   loop:
     - rpcbind
     - nfs-kernel-server
@@ -16,7 +16,7 @@
 - name: nfs-export | Ensure NFS exported directories
   file:
     path: "{{ item.directory }}"
-    recurse: yes
+    recurse: true
     state: directory
   loop: "{{ nfs_exports }}"
 

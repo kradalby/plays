@@ -10,7 +10,7 @@
     name: net.ipv4.ip_forward
     value: "1"
     state: present
-    reload: yes
+    reload: true
 
 - name: Check if IPv6 is enabled
   stat:
@@ -22,11 +22,11 @@
     name: net.ipv6.conf.all.forwarding
     value: "1"
     state: present
-    reload: yes
+    reload: true
   when: ipv6.stat.exists
 
 - name: Add PostgreSQL for local deployment
-  become: yes
+  become: true
   become_user: postgres
   block:
     - name: Ensure psycopg2
@@ -34,14 +34,14 @@
       apt:
         pkg:
           - python3-psycopg2
-        state: latest
+        state: present
     - name: Add PostgreSQL database
       postgresql_db:
         name: k3s
         state: present
 
     - name: Add PostgreSQL user
-      become: yes
+      become: true
       become_user: postgres
       postgresql_user:
         db: k3s
@@ -67,8 +67,9 @@
   # {% if k3s_logfile is defined %}--log {{ k3s_logfile }}{% endif %}
   environment:
     INSTALL_K3S_CHANNEL: latest
+    INSTALL_K3S_EXEC: "server {{ params }}"
   shell: |-
-    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server {{ params }}" sh -s -
+    curl -sfL https://get.k3s.io | sh -s -
   when: k3s_master|bool
 
 - name: Restart k3s master on schedule
@@ -194,7 +195,7 @@
 
 - name: k3s | Reload systemd daemon on master
   systemd:
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: k3s | Set SystemD CPU limits on agent
   blockinfile:
@@ -223,4 +224,4 @@
 
 - name: k3s | Reload systemd daemon on master
   systemd:
-    daemon_reload: yes
+    daemon_reload: true

@@ -4,3 +4,4 @@ restic_backup_job_directories: []
 restic_backup_job_excludes: []
 restic_backup_job_cronjob: true
 restic_backup_job_base_path: "/usr/local/bin"
+pushgateway: ""

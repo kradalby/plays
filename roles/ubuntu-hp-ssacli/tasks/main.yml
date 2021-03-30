@@ -1,0 +1,34 @@
+- name: HP ssacli | Add repo key
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  loop:
+    - http://downloads.linux.hpe.com/SDR/hpPublicKey1024.pub
+    - http://downloads.linux.hpe.com/SDR/hpPublicKey2048.pub
+    - http://downloads.linux.hpe.com/SDR/hpPublicKey2048_key1.pub
+    - http://downloads.linux.hpe.com/SDR/hpePublicKey2048_key1.pub
+
+- name: HP ssacli | Add repo
+  apt_repository:
+    repo: deb http://downloads.linux.hpe.com/SDR/repo/mcp stretch/current non-free
+    state: present
+
+- name: HP ssacli | Ensure ssacli
+  apt:
+    pkg:
+      - ssacli
+    state: present
+
+- name: HP ssacli | Ensure metrics script
+  copy:
+    src: templates/ssacli-metrics.py
+    dest: /usr/local/bin/ssacli-metrics.py
+    mode: "0755"
+
+- name: HP ssacli | Ensure metrics cron
+  cron:
+    name: "HP Smart Array metrics"
+    special_time: "hourly"
+    job: >
+      /usr/local/bin/ssacli-metrics.py
+    state: present

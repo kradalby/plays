@@ -3,7 +3,7 @@
   apt:
     update_cache: "{{ apt_update_cache }}"
     pkg: hostapd
-    state: latest
+    state: present
 
 - name: Wireless AP | Install hostapd config
   template:
@@ -16,12 +16,12 @@
   lineinfile:
     path: /etc/default/hostapd
     line: 'DAEMON_CONF="/etc/hostapd/hostapd.conf"'
-    create: yes
+    create: true
     mode: 0644
 
 - name: Wireless AP | Ensure hostapd service
   systemd:
     name: hostapd
-    masked: no
+    masked: false
     enabled: "{{ router_wan != 'wlan0' }}"
     state: "{% if router_wan == 'wlan0' %}stopped{% else %}started{% endif %}"

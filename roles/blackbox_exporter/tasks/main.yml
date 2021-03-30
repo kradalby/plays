@@ -7,14 +7,14 @@
   unarchive:
     src: "https://github.com/prometheus/blackbox_exporter/releases/download/v{{ blackbox_exporter_version }}/blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ arch or deb_architecture.stdout }}.tar.gz"
     dest: /tmp
-    remote_src: yes
+    remote_src: true
 
 - name: Prober | replace prometheus node exporter binary
   copy:
     src: /tmp/blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ arch or deb_architecture.stdout }}/blackbox_exporter
     dest: /usr/local/bin/blackbox_exporter
     mode: 0755
-    remote_src: yes
+    remote_src: true
   notify: restart blackbox_exporter
 
 - name: Prober | clean up blackbox_exporter folder
@@ -26,7 +26,7 @@
   group:
     gid: 1998
     name: blackbox_exporter
-    system: no
+    system: false
     state: present
 
 - name: blackbox_exporter | Ensure blackbox_exporter user
@@ -37,7 +37,7 @@
     # home: /home/blackbox_exporter
     shell: /usr/sbin/nologin
     comment: Blackbox exporter
-    # create_home: yes
+    # create_home: true
 
 - name: Prober | Install blackbox configuration
   template:
@@ -53,6 +53,6 @@
 - name: Prober | Enable systemd service
   systemd:
     name: "blackbox_exporter"
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
     state: started

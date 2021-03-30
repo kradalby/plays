@@ -2,7 +2,7 @@
 # - name: Windows VNC | Ensure TigerVNC
 #   win_chocolatey:
 #     name: tigervnc
-#     state: latest
+#     state: present
 #   notify: Restart TigerVNC
 - name: Windows VNC | Remove old TigerVNC
   ansible.windows.win_package:

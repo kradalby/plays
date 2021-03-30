@@ -2,7 +2,7 @@
 - name: macOS node-exporter | Ensure node-exporter
   homebrew:
     pkg: node_exporter
-    state: latest
+    state: present
   register: resp
   notify: Restart node-exporter
 

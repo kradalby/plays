@@ -22,6 +22,7 @@ Environment=MINIO_ACCESS_KEY="{{ minio_access_key }}"
 # Secret key of the server.
 Environment=MINIO_SECRET_KEY="{{ minio_secret_key }}"
 Environment=MINIO_DOMAIN="{{ item }}.{{ minio_base_domain }}"
+Environment=MINIO_PROMETHEUS_AUTH_TYPE="public"
 
 ExecStartPre=/bin/bash -c "if [ -z \"${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not\"; exit 1; fi"
 

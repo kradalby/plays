@@ -1,21 +1,21 @@
 ---
-wireguard: yes
+wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.clients.oracleldn1 }}"
 wireguard_current_host_name: "oracleldn1"
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
-k3s_master: yes
-k3s_master_schedule: no
+k3s_master: true
+k3s_master_schedule: false
 k3s_master_cpu_quota: 10%
 k3s_master_memory_quota: 512M
 k3s_master_io_read_bandwidth: 2M
 k3s_master_io_write_bandwidth: 2M
 k3s_master_scheduled_restart: daily
 
-k3s_skip_traefik: yes
-k3s_skip_servicelb: no
+k3s_skip_traefik: true
+k3s_skip_servicelb: false
 # k3s_logfile: '/var/log/k3s.log'
-k3s_datastore_on_host_postgres: no
-node_exporter: yes
-blackbox_exporter: yes
+k3s_datastore_on_host_postgres: false
+node_exporter: true
+blackbox_exporter: true

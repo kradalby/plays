@@ -6,4 +6,4 @@
 
 - name: Verify repositories
   apt:
-    update_cache: yes
+    update_cache: true

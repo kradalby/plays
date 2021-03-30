@@ -15,13 +15,13 @@
       - libavahi-client-dev
       - libssl-dev
       - libsoxr-dev
-    state: latest
+    state: present
 
 # - name: RPi Shairport | Ensure Shairport Sync
 #   apt:
 #     pkg:
 #       - shairport-sync
-#     state: latest
+#     state: present
 #   notify: Restart Shairport
 #
 # - name: RPi Shairport | Ensure SystemD override dir
@@ -32,7 +32,7 @@
 # - name: RPi Shairport | Ensure SystemD override
 #   blockinfile:
 #     path: /etc/systemd/system/shairport-sync.service.d/override.conf
-#     create: yes
+#     create: true
 #     block: |
 #       [Service]
 #       # Avahi daemon needs some time until fully ready
@@ -49,7 +49,7 @@
     repo: https://github.com/mikebrady/shairport-sync.git
     version: master
     dest: "{{ ansible_env.HOME }}/git/shairport-sync"
-    force: yes
+    force: true
     depth: "1"
 
 - name: RPi Shairport | autoreconf
@@ -94,8 +94,8 @@
 - name: RPi Shairport | Enable SystemD service
   systemd:
     name: shairport-sync
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
     state: started
 
 - name: RPi Shairport | Ensure Shairport configuration

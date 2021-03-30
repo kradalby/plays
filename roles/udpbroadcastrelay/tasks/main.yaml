@@ -12,7 +12,7 @@
     pkg:
       - git
       - build-essential
-    state: latest
+    state: present
 
 - name: udpbroadcastrelay | Ensure git dir
   file:
@@ -23,7 +23,7 @@
   git:
     repo: https://github.com/marjohn56/udpbroadcastrelay.git
     dest: "{{ ansible_env.HOME }}/git/udpbroadcastrelay"
-    # force: yes
+    # force: true
   register: udpbroadcastrelay
 
 - name: udpbroadcastrelay | make install
@@ -38,7 +38,7 @@
 
 # - name: udpbroadcastrelay | Ensure tunnels
 #   template:
-#     src: netplan.yaml
+#     src: netplan.yaml.jinja2
 #     dest: /etc/netplan/90-udprelay-tunnels.yaml
 #   notify: Apply netplan
 
@@ -55,14 +55,14 @@
 # - name: udpbroadcastrelay | Enable receiver service
 #   systemd:
 #     name: "udpbroadcastrelay-{{ udpbroadcastrelay_serivces.name }}"
-#     daemon_reload: yes
+#     daemon_reload: true
 #     state: restarted
-#     enabled: yes
+#     enabled: true
 #   loop: "{{ udpbroadcastrelay_serivces }}"
 
 # - name: udpbroadcastrelay | Ensure no avahi service
 #   systemd:
 #     name: avahi-daemon
 #     state: stopped
-#     enabled: no
-#   ignore_errors: yes
+#     enabled: false
+#   ignore_errors: true

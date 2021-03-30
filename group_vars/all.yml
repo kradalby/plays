@@ -1,0 +1,3 @@
+pushgateway: https://pushgateway.terra.fap.no
+
+prometheus_bash_client_path: /opt/git/client_bash

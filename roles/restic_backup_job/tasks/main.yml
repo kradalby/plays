@@ -26,7 +26,9 @@
 - name: restic | Ensure restic hourly backup cron
   cron:
     name: "Backup with restic to {{ item | restic_repo_friendly_name }} hourly"
-    special_time: "hourly"
+    # special_time: "hourly"
+    minute: "5"
+    hour: "2-22"
     job: >
       /usr/bin/flock -n /tmp/backup_restic_{{ item | restic_repo_friendly_name }}.lockfile
       {{ restic_backup_job_base_path }}/backup_restic_{{ item | restic_repo_friendly_name }}.sh

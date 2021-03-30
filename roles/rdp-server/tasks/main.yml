@@ -1,8 +1,8 @@
 ---
 - name: rdp-server | Ensure xrdp and desktop env
   apt:
-    state: latest
-    update_cache: yes
+    state: present
+    update_cache: true
     pkg:
       # - lightdm
       # - ubuntu-mate-desktop
@@ -14,7 +14,7 @@
 #   lineinfile:
 #     path: /home/ola/.xsession
 #     line: 'xfce4-session'
-#     create: yes
+#     create: true
 #     mode: 0644
 #     owner: ola
 #     group: ola
@@ -31,7 +31,7 @@
 #   lineinfile:
 #     path: /etc/skel/.xsession
 #     line: 'mate-session'
-#     create: yes
+#     create: true
 #     mode: 0644
 
 # - name: rdp-server | Add xrdp configuration
@@ -55,4 +55,4 @@
 - name: rdp-server | setup password for default user
   user:
     name: ola
-    password_lock: no
+    password_lock: false

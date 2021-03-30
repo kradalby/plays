@@ -18,8 +18,8 @@
 - name: Ensure macOS Homebrew packages
   homebrew:
     pkg: "{{ brew_packages_base + brew_packages }}"
-    state: latest
-    update_homebrew: yes
+    state: present
+    update_homebrew: true
 
     # - name: Ensure HEAD packages
     #   homebrew:

@@ -12,9 +12,9 @@
 
 - name: Install PostgreSQL
   apt:
-    update_cache: yes
+    update_cache: true
     name: "{{ packages }}"
-    state: latest
+    state: present
   vars:
     packages:
       - postgresql-13
@@ -56,7 +56,7 @@
     path: "{{ postgres_backup_dir }}"
     owner: postgres
     group: postgres
-    recurse: yes
+    recurse: true
     state: directory
 
 - name: Ensure daily database dump backup

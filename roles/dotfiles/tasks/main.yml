@@ -3,13 +3,13 @@
   apt:
     pkg:
       - git
-    state: latest
+    state: present
 
 - name: dotfiles | Clone dotfiles
   git:
     repo: https://github.com/kradalby/dotfiles.git
     dest: "{{ ansible_env.HOME }}/git/dotfiles"
-    # force: yes
+    # force: true
   register: dotfiles
 
 - name: dotfiles | Run dotfiles deploy.sh

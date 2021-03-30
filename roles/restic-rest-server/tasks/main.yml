@@ -6,7 +6,7 @@
 - name: rest-server | Ensure rest-server
   unarchive:
     src: "https://github.com/restic/rest-server/releases/download/v{{ restic_rest_server_version }}/rest-server_{{ restic_rest_server_version }}_linux_{{ arch or deb_architecture.stdout }}.tar.gz"
-    remote_src: yes
+    remote_src: true
     dest: "/usr/local/bin"
     mode: "0755"
     extra_opts:
@@ -21,7 +21,7 @@
   group:
     gid: 1997
     name: restic
-    system: no
+    system: false
     state: present
 
 - name: rest-server | Ensure rest-server user
@@ -32,7 +32,7 @@
     home: "{{ restic_rest_server_base_directory }}"
     shell: /usr/sbin/nologin
     comment: Restic backup server
-    create_home: yes
+    create_home: true
 
 - name: rest-server | Install Caddyfile
   template:
@@ -52,6 +52,6 @@
 - name: rest-server | Enable systemd service
   systemd:
     name: "rest-server"
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
     state: started

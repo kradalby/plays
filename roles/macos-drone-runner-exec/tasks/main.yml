@@ -2,7 +2,7 @@
 - name: drone-runner-exec | Ensure runner
   unarchive:
     src: https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_darwin_amd64.tar.gz
-    remote_src: yes
+    remote_src: true
     dest: "{{ ansible_env.HOME }}/bin"
     mode: "0755"
     creates: "{{ ansible_env.HOME }}/bin/drone-runner-exec"

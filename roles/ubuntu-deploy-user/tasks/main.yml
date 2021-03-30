@@ -7,7 +7,7 @@
     groups: "{{ deploy_user_directories | map(attribute='group') | join(',') }}"
     shell: /bin/sh
     comment: Deploy user
-    create_home: yes
+    create_home: true
 
 - name: deploy | Set authorized key taken from file
   authorized_key:
@@ -21,5 +21,5 @@
     mode: "0775"
     owner: "{{ item.owner }}"
     group: "{{ item.group }}"
-    recurse: yes
+    recurse: true
   loop: "{{ deploy_user_directories }}"

@@ -39,7 +39,7 @@
   group:
     gid: 1995
     name: caddy
-    system: yes
+    system: true
     state: present
 
 - name: caddy | Ensure caddy user
@@ -50,7 +50,7 @@
     home: /var/lib/caddy
     shell: /usr/sbin/nologin
     comment: Caddy web server
-    create_home: yes
+    create_home: true
 
 - name: caddy | Ensure caddy config directory
   file:
@@ -75,11 +75,12 @@
 
 - name: caddy | Add HTTP(S) Passthroughs
   template:
-    src: passthrough.yaml
+    src: passthrough.yaml.jinja2
     dest: "/etc/caddy/Caddyfile.yaml.d/passthrough_{{ item.target_ip }}.yaml"
     owner: caddy
     group: caddy
   loop: "{{ caddy_passthroughs }}"
+  notify: Restart Caddy
 
 - name: caddy | Ensure Caddyfile.json.d config directory
   file:
@@ -117,6 +118,7 @@
     cmd: /etc/caddy/build_config.sh
   environment:
     CLOUDFLARE_API_TOKEN: "{{ caddy_cloudflare_api_token }}"
+  notify: Restart Caddy
 
 - name: caddy | Install systemd service description
   template:
@@ -126,6 +128,6 @@
 - name: cadde | Enable systemd service
   systemd:
     name: caddy
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
     state: started

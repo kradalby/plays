@@ -10,4 +10,4 @@ udev_rules:
     product_id: 7523
     name: alias/zigbee-$attr{idVendor}-$attr{idProduct}
 
-udev_v4l2loopback_rules: yes
+udev_v4l2loopback_rules: true

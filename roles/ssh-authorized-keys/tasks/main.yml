@@ -4,14 +4,14 @@
     path: "{{ item.path | dirname }}"
     owner: "{{ item.user }}"
     group: "{{ item.group }}"
-    recurse: yes
+    recurse: true
     state: directory
   loop: "{{ authorized_keys }}"
 
 - name: authorized-keys | Add keys to authorized_keys
   blockinfile:
     path: "{{ item.path }}"
-    create: yes
+    create: true
     owner: "{{ item.user }}"
     group: "{{ item.group }}"
     mode: "0700"

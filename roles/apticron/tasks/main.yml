@@ -2,7 +2,7 @@
 - name: Install apticron
   apt:
     package: apticron
-    state: latest
+    state: present
 
 - name: /etc/cron.d/apticron
   template:

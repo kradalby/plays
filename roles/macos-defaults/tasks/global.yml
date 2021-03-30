@@ -87,7 +87,7 @@
     state: present
 
 - name: Global | Enable admin info when clock click
-  become: yes
+  become: true
   osx_defaults:
     domain: /Library/Preferences/com.apple.loginwindow
     key: AdminHostInfo
@@ -109,7 +109,7 @@
 
 - name: Global | Show the /Volumes folder
   command: "chflags nohidden /Volumes"
-  become: yes
+  become: true
   changed_when: false
 
 - name: Internationalization | Setting measurement unit

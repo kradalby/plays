@@ -42,7 +42,7 @@
 
 - name: RPi netboot master | Ensure Node root
   unarchive:
-    remote_src: yes
+    remote_src: true
     src: /root/ubuntu_2004_rpi_rootfs.tar.xz
     dest: "/tmp/{{ item.name }}_root"
     # extra_opts:
@@ -83,7 +83,7 @@
 
 - name: RPi netboot master | Add kernel modules
   copy:
-    remote_src: yes
+    remote_src: true
     # src: "/tftpboot/{{ item.ip }}/modules/"
     src: "/root/rpi-kernel/modules/{{ rpi_netboot_kernel_version }}"
     dest: "/tmp/{{ item.name }}_root/lib/modules/"
@@ -97,7 +97,7 @@
         path: "/tmp/{{ item.name }}_root/lib/modules/{{ rpi_netboot_kernel_version }}/build"
         state: absent
     - copy:
-        remote_src: yes
+        remote_src: true
         src: "/root/rpi-kernel/headers/linux-headers-{{ rpi_netboot_kernel_version }}/"
         dest: "/tmp/{{ item.name }}_root/lib/modules/{{ rpi_netboot_kernel_version }}/build/"
 
@@ -108,7 +108,7 @@
 
 - name: RPi netboot master | Ensure authorized_keys
   copy:
-    remote_src: yes
+    remote_src: true
     src: "/root/.ssh/authorized_keys"
     dest: "/tmp/{{ item.name }}_root/root/.ssh/authorized_keys"
     mode: "0644"
@@ -145,7 +145,7 @@
 - name: RPi netboot master | Ensure root login
   blockinfile:
     path: "/tmp/{{ item.name }}_root/etc/ssh/sshd_config.d/permit_root"
-    create: yes
+    create: true
     mode: "0644"
     block: |
       PermitRootLogin without-password
@@ -175,18 +175,18 @@
     repo: https://github.com/Hexxeh/rpi-firmware.git
     version: stable
     dest: "/tftpboot/{{ item.ip }}"
-    force: yes
+    force: true
     depth: "1"
 
 # - name: RPi netboot master | Add iSCSI initrd image
 #   copy:
-#     remote_src: yes
+#     remote_src: true
 #     src: /root/initrd.img-5.4.51-v8+
 #     dest: "/tftpboot/{{ item.ip }}/initrd.img"
 
 - name: RPi netboot master | Add RPi custom kernel
   copy:
-    remote_src: yes
+    remote_src: true
     src: /root/rpi-kernel/boot/custom
     dest: "/tftpboot/{{ item.ip }}/"
 
