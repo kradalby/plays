@@ -3,3 +3,11 @@ k3s_master: true
 k3s_skip_traefik: true
 k3s_skip_servicelb: true
 node_exporter: false
+k3s_master_cpu_allowed:
+  - 0
+  - 1
+  - 2
+k3s_master_cpu_quota: 80%
+k3s_master_memory_quota: 6144M
+k3s_master_io_read_bandwidth: 15M
+k3s_master_io_write_bandwidth: 15M

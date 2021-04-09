@@ -11,7 +11,11 @@ k3s_skip_servicelb: true
 
 k3s_master_schedule: true
 k3s_master_scheduled_restart: daily
-k3s_master_memory_quota: 768M
+k3s_master_cpu_quota: 80%
+k3s_master_cpu_allowed:
+  - 0
+  - 1
+k3s_master_memory_quota: 2048M
 k3s_master_io_read_bandwidth: 3M
 k3s_master_io_write_bandwidth: 3M
 

@@ -3,6 +3,8 @@ k3s_master: false
 k3s_master_ip: ""
 k3s_master_schedule: false
 k3s_master_cpu_quota: 30%
+k3s_master_cpu_allowed:
+  - 0
 k3s_master_memory_quota: 1536M
 k3s_master_io_read_bandwidth: 5M
 k3s_master_io_write_bandwidth: 5M
@@ -13,6 +15,8 @@ k3s_agent_scheduled_restart: ""
 
 k3s_agent: false
 k3s_agent_cpu_quota: 30%
+k3s_agent_cpu_allowed:
+  - 0
 k3s_agent_memory_quota: 1536M
 k3s_agent_io_read_bandwidth: 5M
 k3s_agent_io_write_bandwidth: 5M

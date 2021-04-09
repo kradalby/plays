@@ -177,7 +177,7 @@
     block: |-
       CPUQuota={{ k3s_master_cpu_quota }}
       CPUQuotaPeriodSec=50ms
-      AllowedCPUs=0
+      AllowedCPUs={{ k3s_master_cpu_allowed | join(" ") }}
       MemoryLimit={{ k3s_master_memory_quota }}
       IOReadBandwidthMax={{ k3s_master_io_read_bandwidth }}
       IOWriteBandwidthMax={{ k3s_master_io_write_bandwidth }}
@@ -205,7 +205,7 @@
     block: |-
       CPUQuota={{ k3s_agent_cpu_quota }}
       CPUQuotaPeriodSec=50ms
-      AllowedCPUs=0
+      AllowedCPUs={{ k3s_agent_cpu_allowed | join(" ") }}
       MemoryLimit={{ k3s_agent_memory_quota }}
       IOReadBandwidthMax={{ k3s_agent_io_read_bandwidth }}
       IOWriteBandwidthMax={{ k3s_agent_io_write_bandwidth }}
