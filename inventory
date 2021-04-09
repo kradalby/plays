@@ -2,7 +2,6 @@
 # fap.no
 ################################
 
-
 [hugin]
 # hugin.terra.fap.no
 
@@ -50,6 +49,7 @@ rpi[2:4].ldn.fap.no
 
 [misc]
 # bastard.terra.fap.no
+swift-dev.terra.fap.no swift=true docker=true
 
 [rpi:children]
 rpi_speaker
