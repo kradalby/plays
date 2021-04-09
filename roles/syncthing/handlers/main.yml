@@ -6,5 +6,10 @@
 
 - name: Restart Syncthing
   service:
-    name: syncthing@storage
-    state: restart
+    name: syncthing@syncthing
+    state: restarted
+
+- name: Restart syncthing_exporter
+  service:
+    name: syncthing_exporter
+    state: restarted

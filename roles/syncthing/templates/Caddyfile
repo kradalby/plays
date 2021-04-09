@@ -3,6 +3,9 @@
 syncthing.{{ inventory_hostname }} {
     import cf
     import local_only
+
+    reverse_proxy /metrics 127.0.0.1:9093
+
     reverse_proxy 127.0.0.1:8384 {
         header_up Host "localhost"
     }

@@ -6,8 +6,9 @@
     install_recommends: false
   vars:
     packages:
-      - "apt-transport-https"
-      - "ca-certificates"
+      - apt-transport-https
+      - ca-certificates
+      - python3-lxml
 
 - name: Syncthing signing key
   apt_key:
@@ -46,15 +47,6 @@
     packages:
       - syncthing
 
-- name: Syncthing | Ensure caddy proxy
-  template:
-    src: Caddyfile
-    dest: /etc/caddy/Caddyfile.d/syncthing
-    owner: caddy
-    group: caddy
-  when: caddy is defined and caddy
-  notify: Restart Caddy
-
 - name: Syncthing | Install Syncthing service
   template:
     src: syncthing.service
@@ -66,6 +58,56 @@
   systemd:
     daemon_reload: true
     name: syncthing@syncthing
+
     masked: false
     enabled: true
     state: started
+
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
+- name: Syncthing | Get API token
+  community.general.xml:
+    path: /storage/.config/syncthing/config.xml
+    xpath: /configuration/gui/apikey
+    content: text
+  register: syncthing_token
+
+- name: Syncthing | Ensure exporter
+  unarchive:
+    src: "https://github.com/f100024/syncthing_exporter/releases/download/v{{ syncthing_exporter_version }}/syncthing_exporter-{{ syncthing_exporter_version }}.linux-{{ arch or deb_architecture.stdout }}.tar.gz"
+    remote_src: true
+    dest: "/usr/local/bin"
+    mode: "0755"
+    extra_opts:
+      - --wildcards
+      - "*/syncthing_exporter"
+      - --strip=1
+      - --no-anchored
+    creates: "/usr/local/bin/syncthing_exporter"
+  notify: Restart syncthing_exporter
+
+- name: Syncthing | Install Syncthing exporter service
+  template:
+    src: syncthing_exporter.service
+    dest: /lib/systemd/system/syncthing_exporter.service
+    mode: "0644"
+  notify: Restart syncthing_exporter
+
+- name: Syncthing | Ensure Syncthing exporter service
+  systemd:
+    daemon_reload: true
+    name: syncthing_exporter
+    masked: false
+    enabled: true
+    state: started
+
+- name: Syncthing | Ensure caddy proxy
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile.d/syncthing
+    owner: caddy
+    group: caddy
+  when: caddy is defined and caddy
+  notify: Restart Caddy
