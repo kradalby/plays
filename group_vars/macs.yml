@@ -11,6 +11,7 @@ brew_taps:
   - jotta/cli
   - kradalby/tap
   - lukakerr/things
+  - dteoh/sqa
 
 brew_packages_base:
   - bat
