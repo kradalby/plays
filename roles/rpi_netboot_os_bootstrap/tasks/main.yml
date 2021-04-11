@@ -16,6 +16,21 @@
       - v4l2loopback-dkms
     state: present
 
+# https://github.com/open-iscsi/open-iscsi/blob/a8fcb3737cabcf79a3a3663f43930a158d606782/README#L1557
+- name: RPi netboot special | Set iSCSI timeouts
+  lineinfile:
+    path: /etc/iscsi/iscsid.conf
+    regexp: "^{{ item.key }}"
+    line: "{{ item.key }} = {{ item.value }}"
+    backrefs: true
+  loop:
+    - key: node.conn[0].timeo.noop_out_interval
+      value: 0
+    - key: node.conn[0].timeo.noop_out_timeout
+      value: 0
+    - key: node.session.timeo.replacement_timeout
+      value: 86400
+
 - name: RPi netboot special | Add v4l2loopback module
   lineinfile:
     dest: /etc/modules
