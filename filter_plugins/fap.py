@@ -21,7 +21,6 @@ def site_code(ipv4):
 def restic_repo_friendly_name(repo: str) -> str:
     if "https://" in repo:
         repo = repo.replace("https://", "")
-        print(repo)
         type_, address, *_ = repo.split(":")
         (r, *_) = address.split("/")
         return "_".join([type_, r]).replace(".", "_")

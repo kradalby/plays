@@ -14,7 +14,7 @@ set -euo pipefail
 
 RESTIC=/usr/local/bin/restic
 export RESTIC_PASSWORD='{{ restic_backup_job_password }}'
-export RESTIC_REPOSITORY='{{ item }}'
+export RESTIC_REPOSITORY='{{ item.repo }}'
 export GOMAXPROCS=1
 
 RESTIC_BACKUP_JSON=""
@@ -33,12 +33,20 @@ if [ "$ACTION" = "backup" ] || [ "$ACTION" = "full" ]; then
         $RESTIC check
         $RESTIC snapshots
 
+        {% if 'retention' in item and item.retention == 'short' %}
+        $RESTIC forget \
+            --keep-hourly 8 \
+            --keep-daily 7 \
+            --keep-weekly 4 \
+        {% else %}
         $RESTIC forget \
             --keep-hourly 8 \
             --keep-daily 7 \
             --keep-weekly 4 \
             --keep-monthly 6 \
             --keep-yearly 10
+        {% endif %}
+
 
         RESTIC_PRUNE_JSON=`$RESTIC prune --json`
 
@@ -101,7 +109,7 @@ io::prometheus::PushAdd \
     job="restic_backup" \
     instance="{{ inventory_hostname }}" \
     gateway="{{ pushgateway }}" \
-    path="target/{{ item | restic_repo_friendly_name }}"
+    path="target/{{ item.repo | restic_repo_friendly_name }}"
 
 echo "Total time spend is pasted below:"
 echo "$(($DURATION / 60)) minutes and $(($DURATION % 60)) seconds elapsed."

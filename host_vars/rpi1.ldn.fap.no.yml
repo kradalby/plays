@@ -17,6 +17,21 @@ router_interfaces:
       id: 317
       dhcp4: true
       dhcp6: true
+  - name: iot156
+    vlan: true
+    bridge: false
+    wan: false
+    restricted: true
+    lan: true
+    dhcp_start: 192.168.156.100
+    dhcp_end: 192.168.156.200
+    netplan:
+      link: eth0
+      id: 156
+      addresses:
+        - 192.168.156.1/24
+      dhcp4: false
+      dhcp6: false
   - name: br0
     vlan: false
     bridge: true
@@ -95,6 +110,24 @@ router_static_leases:
     mac: 9a:4a:7f:aa:97:13
 
   # IoT
+  # ## Vacuum
+  # - ip: 192.168.156.20
+  #   mac: 78:11:dc:5f:f6:05
+  # ## IKEA
+  # - ip: 192.168.156.25
+  #   mac: 44:91:60:30:f9:c3
+  # ## Socket: Bedroom Desk light
+  # - ip: 192.168.156.21
+  #   mac: a4:cf:12:c3:87:21
+  # ## Socket: Living Room Fairy light
+  # - ip: 192.168.156.22
+  #   mac: 2c:f4:32:6b:b3:57
+  # ## Socket: Kitchen Fairy light
+  # - ip: 192.168.156.23
+  #   mac: a4:cf:12:c3:94:99
+  # ## Socket: Bedroom Nook light
+  # - ip: 192.168.156.24
+  #   mac: 50:02:91:5e:a5:90
   ## Vacuum
   - ip: 10.65.0.80
     mac: 78:11:dc:5f:f6:05
@@ -169,10 +202,12 @@ restic_backup_job_password: "{{ restic_host_config.password }}"
 restic_backup_job_directories: "{{ restic_host_config.directories }}"
 restic_backup_job_excludes: "{{ restic_host_config.exclude }}"
 
-mdns_override_ip: "{{ router_gateway_addr }}"
+# mdns_override_ip: "{{ router_gateway_addr }}"
 
-udpbroadcastrelay_ip: "{{ router_gateway_addr }}"
-udpbroadcastrelay_interface: "{{ router_lan }}"
+udpbroadcastrelay_ip: "10.65.0.1"
+udpbroadcastrelay_interfaces:
+  - br0
+  - iot156
 
 cloudflare_token: '{{ lookup("env", "CLOUDFLARE_FAP_NO_API_TOKEN") }}'
 cloudflare_dns_name: "ldn.fap.no"

@@ -40,6 +40,7 @@ caddy_passthroughs:
       - alertmanager.terra.fap.no
       - pushgateway.terra.fap.no
       - thanos-gateway.terra.fap.no
+      - thanos.terra.fap.no
       - loki.terra.fap.no
     target_ip: 10.60.6.1
 

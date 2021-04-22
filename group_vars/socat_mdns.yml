@@ -1,13 +1,13 @@
-udpbroadcastrelay_neighbours:
-  - site: terra
-    ip: 10.60.0.22
-    siteCode: 60
-  - site: ntnu
-    ip: 10.61.0.22
-    siteCode: 61
-  - site: tjoda
-    ip: 10.62.0.22
-    siteCode: 62
-  - site: ldn
-    ip: 10.65.0.1
-    siteCode: 65
+udpbroadcastrelay_neighbours: []
+#   - site: terra
+#     ip: 10.60.0.22
+#     siteCode: 60
+#   - site: ntnu
+#     ip: 10.61.0.22
+#     siteCode: 61
+#   - site: tjoda
+#     ip: 10.62.0.22
+#     siteCode: 62
+#   - site: ldn
+#     ip: 10.65.0.1
+#     siteCode: 65

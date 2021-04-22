@@ -52,14 +52,14 @@
   loop: "{{ udpbroadcastrelay_serivces }}"
   loop_control:
     index_var: item_index
-# - name: udpbroadcastrelay | Enable receiver service
-#   systemd:
-#     name: "udpbroadcastrelay-{{ udpbroadcastrelay_serivces.name }}"
-#     daemon_reload: true
-#     state: restarted
-#     enabled: true
-#   loop: "{{ udpbroadcastrelay_serivces }}"
 
+- name: udpbroadcastrelay | Enable receiver service
+  systemd:
+    name: "udpbroadcastrelay-{{ item.name }}"
+    daemon_reload: true
+    state: restarted
+    enabled: true
+  loop: "{{ udpbroadcastrelay_serivces }}"
 # - name: udpbroadcastrelay | Ensure no avahi service
 #   systemd:
 #     name: avahi-daemon

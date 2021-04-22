@@ -2,7 +2,7 @@
 - name: restic | Ensure restic backup job
   template:
     src: backup_restic.sh
-    dest: "{{ restic_backup_job_base_path }}/backup_restic_{{ item | restic_repo_friendly_name }}.sh"
+    dest: "{{ restic_backup_job_base_path }}/backup_restic_{{ item.repo | restic_repo_friendly_name }}.sh"
     mode: "0755"
   loop: "{{ restic_backup_job_repos }}"
 
@@ -13,25 +13,25 @@
 
 - name: restic | Ensure restic daily backup cron
   cron:
-    name: "Backup with restic to {{ item | restic_repo_friendly_name }}"
+    name: "Backup with restic to {{ item.repo | restic_repo_friendly_name }}"
     special_time: "daily"
     job: >
-      /usr/bin/flock -n /tmp/backup_restic_{{ item | restic_repo_friendly_name }}.lockfile
-      {{ restic_backup_job_base_path }}/backup_restic_{{ item | restic_repo_friendly_name }}.sh full
-      | tee /var/log/restic/{{ item | restic_repo_friendly_name }}.txt
+      /usr/bin/flock -n /tmp/backup_restic_{{ item.repo | restic_repo_friendly_name }}.lockfile
+      {{ restic_backup_job_base_path }}/backup_restic_{{ item.repo | restic_repo_friendly_name }}.sh full
+      | tee /var/log/restic/{{ item.repo | restic_repo_friendly_name }}.txt
     state: present
   loop: "{{ restic_backup_job_repos }}"
   when: restic_backup_job_cronjob
 
 - name: restic | Ensure restic hourly backup cron
   cron:
-    name: "Backup with restic to {{ item | restic_repo_friendly_name }} hourly"
+    name: "Backup with restic to {{ item.repo | restic_repo_friendly_name }} hourly"
     # special_time: "hourly"
     minute: "5"
     hour: "2-22"
     job: >
-      /usr/bin/flock -n /tmp/backup_restic_{{ item | restic_repo_friendly_name }}.lockfile
-      {{ restic_backup_job_base_path }}/backup_restic_{{ item | restic_repo_friendly_name }}.sh
+      /usr/bin/flock -n /tmp/backup_restic_{{ item.repo | restic_repo_friendly_name }}.lockfile
+      {{ restic_backup_job_base_path }}/backup_restic_{{ item.repo | restic_repo_friendly_name }}.sh
       > /dev/null
     state: present
   loop: "{{ restic_backup_job_repos }}"
