@@ -2,6 +2,24 @@
 #
 # Node pis
 #
+
+# Ensure we dont get timeout kernel panics by not being able to write
+# pages to disk
+# https://www.blackmoreops.com/2014/09/22/linux-kernel-panic-issue-fix-hung_task_timeout_secs-blocked-120-seconds-problem/
+# https://stackoverflow.com/questions/27900221/difference-between-vm-dirty-ratio-and-vm-dirty-background-ratio
+- name: RPi netboot master | Set vm.dirty_ratio
+  ansible.posix.sysctl:
+    name: vm.dirty_ratio
+    value: "10"
+    state: present
+    reload: true
+- name: RPi netboot master | Set vm.dirty_background_ratio
+  ansible.posix.sysctl:
+    name: vm.dirty_background_ratio
+    value: "5"
+    state: present
+    reload: true
+
 - name: RPi netboot master | Ensure dependencies
   apt:
     pkg:
