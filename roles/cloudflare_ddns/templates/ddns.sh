@@ -18,9 +18,9 @@ IPv4_FILE="/tmp/last_ipv4.txt"
 IPv6_FILE="/tmp/last_ipv6.txt"
 {% endif %}
 
-IPv4_STORED="$(cat $IPv4_FILE)"
+{ IPv4_STORED=$(<$IPv4_FILE); } 2>/dev/null
 {% if cloudflare_ipv6_dns_id | length %}
-IPv6_STORED="$(cat $IPv6_FILE)"
+{ IPv6_STORED=$(<$IPv6_FILE); } 2>/dev/null
 {% endif %}
 
 {% if cloudflare_ipv4_dns_id | length %}
