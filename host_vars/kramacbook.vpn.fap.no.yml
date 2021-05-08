@@ -65,6 +65,7 @@ brew_packages:
   - tmuxinator
   - smartmontools
   - logcli
+  - entr
   # - unrar
 
 brew_cask_packages:
@@ -110,6 +111,7 @@ brew_cask_packages:
   - font-jetbrains-mono
   - mailtrackerblocker
   - slowquitapps
+  - handbrake
 
 
 brew_cask_packages_absent:
