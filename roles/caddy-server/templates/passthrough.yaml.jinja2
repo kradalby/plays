@@ -9,6 +9,7 @@ apps:
             - host: {{ item.domains }}
           handle:
           - handler: proxy
+            proxy_protocol: v1
             upstreams:
             - dial:
               - {{ item.target_ip }}:80
@@ -17,6 +18,7 @@ apps:
               sni: {{ item.domains }}
           handle:
           - handler: proxy
+            proxy_protocol: v1
             upstreams:
             - dial:
               - {{ item.target_ip }}:443

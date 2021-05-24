@@ -23,6 +23,7 @@ caddy_passthroughs:
       - drone.fap.no
       - git.kradalby.no
       - grocy.kradalby.no
+      - umami.kradalby.no
       - hugindemo.kradalby.no
       - kradalby.no
       - lan.recess.no
