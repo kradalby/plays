@@ -66,6 +66,7 @@ brew_packages:
   - smartmontools
   - logcli
   - entr
+  - hadolint
   # - unrar
 
 brew_cask_packages:
