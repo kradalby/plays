@@ -1,2 +1,3 @@
 rclone_version: "1.53.3"
 arch: ""
+rclone_jotta: false

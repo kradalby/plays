@@ -8,3 +8,16 @@
     # deb: "https://github.com/rclone/rclone/releases/download/v{{ rclone_version }}/rclone-v{{ rclone_version }}-linux-{{ arch or deb_architecture.stdout }}.deb"
     deb: "https://downloads.rclone.org/rclone-current-linux-{{ arch or deb_architecture.stdout }}.deb"
     state: present
+
+- name: rclone | Ensure rclone directory
+  file:
+    path: "{{ ansible_env.HOME }}/.config/rclone"
+    recurse: true
+    state: directory
+  when: rclone_jotta
+
+- name: rclone | Ensure rclone config
+  copy:
+    src: "~/.config/rclone/rclone.conf"
+    dest: "{{ ansible_env.HOME }}/.config/rclone/rclone.conf"
+  when: rclone_jotta
