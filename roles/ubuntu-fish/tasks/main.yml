@@ -1,0 +1,13 @@
+---
+- name: fish | Ensure fish
+  apt:
+    pkg:
+      - fish
+    update_cache: true
+    state: latest
+
+- name: fish | Set fish as root shell
+  user:
+    name: root
+    shell: /usr/bin/fish
+

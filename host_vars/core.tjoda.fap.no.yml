@@ -176,6 +176,7 @@ restic_backup_job_repos: "{{ restic_host_config.repos }}"
 restic_backup_job_password: "{{ restic_host_config.password }}"
 restic_backup_job_directories: "{{ restic_host_config.directories }}"
 restic_backup_job_excludes: "{{ restic_host_config.exclude }}"
+restic_max_age: 5
 
 rclone_jotta: true
 

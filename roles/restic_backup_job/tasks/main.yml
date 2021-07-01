@@ -1,10 +1,22 @@
 ---
-- name: restic | Ensure restic backup job
+- name: restic | Ensure restic config directory
+  file:
+    path: "{{ restic_backup_job_configuration_path }}"
+    recurse: true
+    state: directory
+
+- name: restic | Ensure restic backup config
+  template:
+    src: restic_settings.sh
+    dest: "{{ restic_backup_job_configuration_path }}/{{ item.repo | restic_repo_friendly_name }}"
+    mode: "0644"
+  loop: "{{ restic_backup_job_repos }}"
+
+- name: restic | Ensure restic backup script
   template:
     src: backup_restic.sh
-    dest: "{{ restic_backup_job_base_path }}/backup_restic_{{ item.repo | restic_repo_friendly_name }}.sh"
+    dest: "{{ restic_backup_job_base_path }}/restic_backup_job.sh"
     mode: "0755"
-  loop: "{{ restic_backup_job_repos }}"
 
 - name: restic | Ensure log directory
   file:
@@ -17,8 +29,8 @@
     special_time: "daily"
     job: >
       /usr/bin/flock -n /tmp/backup_restic_{{ item.repo | restic_repo_friendly_name }}.lockfile
-      {{ restic_backup_job_base_path }}/backup_restic_{{ item.repo | restic_repo_friendly_name }}.sh full
-      | tee /var/log/restic/{{ item.repo | restic_repo_friendly_name }}.txt
+      {{ restic_backup_job_base_path }}/restic_backup_job.sh {{ item.repo | restic_repo_friendly_name }} full
+      > /var/log/restic/{{ item.repo | restic_repo_friendly_name }}.txt
     state: present
   loop: "{{ restic_backup_job_repos }}"
   when: restic_backup_job_cronjob
@@ -31,7 +43,7 @@
     hour: "2-22"
     job: >
       /usr/bin/flock -n /tmp/backup_restic_{{ item.repo | restic_repo_friendly_name }}.lockfile
-      {{ restic_backup_job_base_path }}/backup_restic_{{ item.repo | restic_repo_friendly_name }}.sh
+      {{ restic_backup_job_base_path }}/restic_backup_job.sh {{ item.repo | restic_repo_friendly_name }} 
       > /dev/null
     state: present
   loop: "{{ restic_backup_job_repos }}"
@@ -46,3 +58,9 @@
   file:
     path: "/usr/local/bin/backup_restic.sh"
     state: absent
+
+- name: restic | Ensure old restic backup script absent
+  file:
+    path: "{{ restic_backup_job_base_path }}/backup_restic_{{ item.repo | restic_repo_friendly_name }}.sh"
+    state: absent
+  loop: "{{ restic_backup_job_repos }}"

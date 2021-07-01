@@ -1,0 +1,10 @@
+---
+- name: Go | Ensure PPA
+  apt_repository:
+    repo: ppa:longsleep/golang-backports
+
+- name: Go | Ensure Go
+  apt:
+    pkg:
+      - golang-go
+    state: latest

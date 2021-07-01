@@ -5,3 +5,6 @@ restic_backup_job_excludes: []
 restic_backup_job_cronjob: true
 restic_backup_job_base_path: "/usr/local/bin"
 pushgateway: ""
+restic_max_age: 14 # days
+restic_cache_dir: ""
+restic_backup_job_configuration_path: /etc/restic

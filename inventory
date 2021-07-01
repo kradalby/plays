@@ -49,7 +49,7 @@ rpi[2:4].ldn.fap.no
 
 [misc]
 # bastard.terra.fap.no
-swift-dev.terra.fap.no swift=true docker=true
+dev.terra.fap.no
 
 [rpi:children]
 rpi_speaker
@@ -100,3 +100,4 @@ vmac.ntnu.fap.no
 win.ntnu.fap.no
 kontor-pc.tjoda.fap.no
 anders-laptop.tjoda.fap.no
+kradell.vpn.fap.no

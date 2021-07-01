@@ -71,6 +71,18 @@
       when: caddy is defined and caddy
     - role: roles/ubuntu-swift
       when: swift is defined and swift
+    - role: roles/ubuntu-go
+      when: go is defined and go
+    - role: roles/ubuntu-nodejs
+      when: nodejs is defined and nodejs
+    - role: roles/ubuntu-neovim
+      when: neovim is defined and neovim
+    - role: roles/ubuntu-fish
+      when: fish is defined and fish
+    - role: roles/ubuntu-starship
+      when: starship is defined and starship
+    - role: roles/yarn-install
+      when: yarn_packages is defined and yarn_packages|length > 0
     - role: roles/nfs-export
       when: nfs_exports is defined and nfs_exports|length > 0
     - role: roles/ubuntu-promtail

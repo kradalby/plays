@@ -1,0 +1,14 @@
+---
+- name: Install yarn pkg
+  community.general.npm:
+    name: yarn
+    global: yes
+    state: latest
+
+- name: Install yarn packages
+  community.general.yarn:
+    executable: "{{ ansible_env.HOME }}/.npm-packages/bin/yarn"
+    name: "{{ item }}"
+    global: yes
+    state: latest
+  loop: "{{ yarn_packages }}"

@@ -1,0 +1,28 @@
+---
+- name: Starship | Check installed version
+  slurp:
+    src: /var/misc/ansible/starship_version
+  register: installed_starship_version
+  ignore_errors: true
+
+- name: Starship | Download starship
+  unarchive:
+    src: "https://github.com/starship/starship/releases/download/{{ starship_version }}/starship-{{ arch or ansible_architecture }}-unknown-linux-gnu.tar.gz"
+    remote_src: true
+    dest: "/usr/local/bin"
+    mode: "0755"
+  when: >
+    starship_version != 
+    (
+      installed_starship_version is defined and 
+      "content" in installed_starship_version and
+      installed_starship_version.content | b64decode
+    )
+  register: downloaded_starship
+
+- name: Starship | Update install state
+  lineinfile:
+    path: /var/misc/ansible/starship_version
+    line: "{{ starship_version }}"
+    create: true
+    regexp: ".*"

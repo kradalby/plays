@@ -1,0 +1,10 @@
+---
+- name: Neovim | Ensure PPA
+  apt_repository:
+    repo: ppa:neovim-ppa/unstable
+
+- name: Neovim | Ensure Neovim
+  apt:
+    pkg:
+      - neovim
+    state: latest

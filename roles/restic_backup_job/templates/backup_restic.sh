@@ -1,21 +1,17 @@
 #!/usr/bin/env bash
-{% set excludes = restic_backup_job_excludes | map('regex_replace', '^', '--exclude=') | list | join(" ") -%}
 
 source {{ prometheus_bash_client_path }}/prometheus.bash
 io::prometheus::NewGauge name=restic_backup_start_time_seconds help='Start time of the process since unix epoch in seconds.'
 restic_backup_start_time_seconds set `date +%s`
 
 
-ACTION=${1:-backup}
+ACTION=${2:-backup}
+
+source "{{ restic_backup_job_configuration_path }}/$1"
 
 SECONDS=0
 
 set -euo pipefail
-
-RESTIC=/usr/local/bin/restic
-export RESTIC_PASSWORD='{{ restic_backup_job_password }}'
-export RESTIC_REPOSITORY='{{ item.repo }}'
-export GOMAXPROCS=1
 
 RESTIC_BACKUP_JSON=""
 RESTIC_PRUNE_JSON=""
@@ -27,44 +23,24 @@ if [ "$ACTION" = "backup" ] || [ "$ACTION" = "full" ]; then
 
     $RESTIC unlock
 
-    RESTIC_BACKUP_JSON=`$RESTIC backup --json --verbose {{ excludes }} {{ restic_backup_job_directories | join(" ") }} | jq -r 'select(.message_type=="summary")'`
+    RESTIC_BACKUP_JSON=`$RESTIC backup --json --verbose $RESTIC_EXCLUDES $RESTIC_DIRECTORIES | jq -r 'select(.message_type=="summary")'`
 
     if [ "$ACTION" = "full" ]; then
         $RESTIC check
         $RESTIC snapshots
 
-        {% if 'retention' in item and item.retention == 'short' %}
-        $RESTIC forget \
-            --keep-hourly 8 \
-            --keep-daily 7 \
-            --keep-weekly 4 \
-        {% else %}
-        $RESTIC forget \
-            --keep-hourly 8 \
-            --keep-daily 7 \
-            --keep-weekly 4 \
-            --keep-monthly 6 \
-            --keep-yearly 10
-        {% endif %}
+        $RESTIC forget $RESTIC_RETENTION
 
 
         RESTIC_PRUNE_JSON=`$RESTIC prune --json`
 
-        $RESTIC cache --cleanup
+        $RESTIC cache --cleanup --max-age $RESTIC_CACHE_MAX_AGE
     fi
 fi
 
 DURATION=$SECONDS
 END_TIME=`date +%s`
 
-echo "BACKUP JSON"
-echo $RESTIC_BACKUP_JSON
-echo
-echo "PRUNE JSON"
-echo $RESTIC_PRUNE_JSON
-echo
-
-echo $RESTIC_PRUNE_JSON > /tmp/prune.json
 
 files=$(echo $RESTIC_BACKUP_JSON | jq -r '.total_files_processed')
 bytes=$(echo $RESTIC_BACKUP_JSON | jq -r '.total_bytes_processed')
@@ -109,7 +85,7 @@ io::prometheus::PushAdd \
     job="restic_backup" \
     instance="{{ inventory_hostname }}" \
     gateway="{{ pushgateway }}" \
-    path="target/{{ item.repo | restic_repo_friendly_name }}"
+    path="target/$RESTIC_REPOSITORY_FRIENDLY_NAME"
 
 echo "Total time spend is pasted below:"
 echo "$(($DURATION / 60)) minutes and $(($DURATION % 60)) seconds elapsed."

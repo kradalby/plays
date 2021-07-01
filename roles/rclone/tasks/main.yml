@@ -16,8 +16,8 @@
     state: directory
   when: rclone_jotta
 
-- name: rclone | Ensure rclone config
-  copy:
-    src: "~/.config/rclone/rclone.conf"
-    dest: "{{ ansible_env.HOME }}/.config/rclone/rclone.conf"
-  when: rclone_jotta
+# - name: rclone | Ensure rclone config
+#   copy:
+#     src: "~/.config/rclone/rclone.conf"
+#     dest: "{{ ansible_env.HOME }}/.config/rclone/rclone.conf"
+#   when: rclone_jotta
