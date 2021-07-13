@@ -36,14 +36,14 @@
           - python3-psycopg2
         state: present
     - name: Add PostgreSQL database
-      postgresql_db:
+      community.postgresql.postgresql_db:
         name: k3s
         state: present
 
     - name: Add PostgreSQL user
       become: true
       become_user: postgres
-      postgresql_user:
+      community.postgresql.postgresql_user:
         db: k3s
         user: k3s
         password: k3s

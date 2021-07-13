@@ -171,3 +171,41 @@
     state: present
     reload: true
   when: (router_interfaces | filter_wan).netplan.dhcp6
+
+- name: Ubuntu router | Network repair script
+  block:
+    - name: Ubuntu router | Ensure repair script
+      template:
+        src: network-repair.sh
+        dest: /usr/local/bin/network_repair.sh
+        mode: "0755"
+
+    - name: Ubuntu router | Ensure repair cron
+      cron:
+        name: "Network repair script from {{ item.interface }} to {{ item.ips | join(', ') }}"
+        minute: "*/10"
+        job: >
+          /usr/local/bin/network_repair.sh
+          {{ item.reboot | bool | lower }}
+          {{ item.interface }}
+          {{ item.ips | join(' ') }}
+          >> /var/log/netcheck.log 2>&1
+      loop: "{{ router_network_repair }}"
+
+    - name: Ubuntu router | Ensure repair logrotate
+      blockinfile:
+        path: /etc/logrotate.d/netcheck
+        create: true
+        marker: "# --- {mark} Ansible managed block ---"
+        block: |-
+          /var/log/netcheck.log {
+            daily
+            rotate 1
+            compress
+            missingok
+            notifempty
+            sharedscripts
+          }
+  when: >
+    router_network_repair is defined 
+    and router_network_repair|length > 0

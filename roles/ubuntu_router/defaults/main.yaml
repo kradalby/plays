@@ -38,3 +38,9 @@ router_nftable_port_forwards:
   #   protocol: udp
 
 apt_update_cache: true
+
+router_network_repair: []
+#  - interface: wg0
+#    ips:
+#      - 10.60.0.1
+#    reboot: false

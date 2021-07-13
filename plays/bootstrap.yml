@@ -12,24 +12,24 @@
       apt:
         update_cache: true
         pkg:
-          - jq
+          - bzip2
           - curl
-          - iputils-ping
-          - mosh
-          - tmux
-          - socat
-          - tcpdump
-          - silversearcher-ag
-          - iputils-ping
+          - fd-find
+          - git
           - htop
           - iotop
+          - iputils-ping
+          - jq
           - lsof
-          - unzip
-          - bzip2
-          - xz-utils
+          - mosh
           - ncdu
           - nload
-          - fd-find
+          - silversearcher-ag
+          - socat
+          - tcpdump
+          - tmux
+          - unzip
+          - xz-utils
         state: present
 
     - name: Remove packages

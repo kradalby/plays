@@ -43,6 +43,7 @@ brew_packages:
   - kubernetes-cli
   - nload
   - nmap
+  - ninja
   - packer
   - pre-commit
   - rclone
@@ -68,6 +69,11 @@ brew_packages:
   - entr
   - hadolint
   # - unrar
+  # Better unix
+  - ripgrep
+  - exa
+  - git-delta
+  - procs
 
 brew_cask_packages:
   # - adobe-creative-cloud
@@ -113,7 +119,6 @@ brew_cask_packages:
   - mailtrackerblocker
   - slowquitapps
   - handbrake
-
 
 brew_cask_packages_absent:
   - teamviewer

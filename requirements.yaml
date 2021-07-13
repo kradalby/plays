@@ -4,4 +4,5 @@ collections:
   - name: community.general
   - name: ansible.windows
   - name: community.windows
+  - name: community.postgresql
   - name: chocolatey.chocolatey

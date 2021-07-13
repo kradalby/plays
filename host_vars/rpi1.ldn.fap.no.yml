@@ -182,6 +182,22 @@ router_bgp_as: "51000"
 router_bgp_neighbour_as: "51030"
 router_bgp_neighbours: "{{ rpi_netboot_nodes }}"
 
+router_network_repair:
+  - interface: wg0
+    ips:
+      - 10.60.0.1
+    reboot: false
+  - interface: wg0
+    ips:
+      - 10.62.0.1
+      - 10.61.0.1
+    reboot: false
+  - interface: uplink
+    ips:
+      - 1.1.1.1
+      - 8.8.8.8
+    reboot: true
+
 wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.servers.ldn }}"

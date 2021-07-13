@@ -2,6 +2,12 @@
 - name: Neovim | Ensure PPA
   apt_repository:
     repo: ppa:neovim-ppa/unstable
+    state: absent
+
+- name: Neovim | Ensure PPA
+  apt_repository:
+    repo: ppa:neovim-ppa/stable
+    state: present
 
 - name: Neovim | Ensure Neovim
   apt:
