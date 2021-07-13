@@ -115,7 +115,8 @@ brew_cask_packages:
   - multipass
   - protonmail-bridge
   # - prolific-pl2303
-  - font-jetbrains-mono
+  # - font-jetbrains-mono
+  - font-jetbrains-mono-nerd-font
   - mailtrackerblocker
   - slowquitapps
   - handbrake
