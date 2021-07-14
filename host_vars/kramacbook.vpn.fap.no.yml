@@ -74,6 +74,7 @@ brew_packages:
   - exa
   - git-delta
   - procs
+  - gswitch
 
 brew_cask_packages:
   # - adobe-creative-cloud
@@ -104,7 +105,7 @@ brew_cask_packages:
   - rectangle
   # - steam
   # - steveschow-gfxcardstatus
-  - gfxcardstatus
+  # - gfxcardstatus
   - syncthing
   - the-unarchiver
   # - tor-browser
