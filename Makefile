@@ -1,8 +1,8 @@
 upgrade:
-	ansible-playbook upgrade.yml -i inventory
+	ansible-playbook upgrade.yaml -i inventory
 
 boot:
-	ansible-playbook bootstrap.yml -i inventory
+	ansible-playbook bootstrap.yaml -i inventory
 
 ping:
 	ansible all -m ping -i inventory

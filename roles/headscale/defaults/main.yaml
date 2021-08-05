@@ -1,0 +1,6 @@
+arch: ""
+headscale_version: "0.4.0"
+headscale_base_directory: /var/lib/headscale
+headscale_config_directory: /etc/headscale
+headscale_domain: ""
+headscale_port: 443 # 8000

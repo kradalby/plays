@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+
+{% if headscale_domain != "" %}{{ headscale_domain }} {% endif -%} {{ inventory_hostname }} {
+    import cf
+    reverse_proxy 127.0.0.1:{{ headscale_port }}
+}

@@ -6,6 +6,7 @@ nodejs: true
 neovim: true
 fish: true
 starship: true
+tailscale: true
 
 yarn_packages:
   - typescript

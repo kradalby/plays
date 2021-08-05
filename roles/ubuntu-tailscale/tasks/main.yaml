@@ -1,0 +1,82 @@
+---
+- name: Tailscale | signing key
+  apt_key:
+    url: https://pkgs.tailscale.com/stable/ubuntu/focal.gpg
+    state: present
+  when: >
+    headscale is not defined or not headscale|bool
+
+- name: Tailscale | repository
+  apt_repository:
+    repo: "deb https://pkgs.tailscale.com/stable/ubuntu {{ ansible_distribution_release }} main"
+    state: present
+    filename: tailscale
+  when: >
+    headscale is not defined or not headscale|bool
+
+- name: Tailscale | Ensure tailscale
+  apt:
+    pkg:
+      - tailscale
+    state: latest
+  when: >
+    headscale is not defined or not headscale|bool
+
+- name: Tailscale | Create key
+  become: true
+  become_user: headscale
+  command:
+    cmd: >
+      headscale -n {{ tailscale_namespace }} preauthkeys create --reusable --expiration 30m --output json
+  register: tailscale_key
+  when: >
+    headscale is defined and headscale|bool
+
+- name: Tailscale | Store token
+  set_fact:
+    tailscale_auth_key: "{{ (tailscale_key.stdout | from_json).Key }}"
+  when: >
+    headscale is defined and headscale|bool
+
+- name: Tailscale | Stop tailscale
+  service:
+    name: tailscaled
+    state: stopped
+  when: >
+    tailscale_reset and
+    headscale is not defined or not headscale|bool
+
+- name: Tailscale | Remove files dir
+  file:
+    path: "{{ item }}"
+    state: absent
+  when: >
+    tailscale_reset and
+    headscale is not defined or not headscale|bool
+  loop:
+    - /var/lib/tailscale/files
+    - /var/cache/tailscale
+
+- name: Tailscale | Start tailscale
+  service:
+    name: tailscaled
+    state: started
+  when: >
+    headscale is not defined or not headscale|bool
+
+- name: Tailscale | Join network
+  vars:
+    tailscale_auth_key: >
+      {{ hostvars['headscale.oracle-ldn.fap.no']['tailscale_auth_key'] or "" }}
+  command:
+    cmd: >
+      tailscale up 
+      -login-server {{ tailscale_login_server }} 
+      --hostname {{ inventory_hostname }}
+      --authkey {{ tailscale_auth_key }}
+      {% if tailscale_exit_node %}--advertise-exit-node{% endif %}
+      {% if tailscale_reset %}--reset{% endif %}
+    creates: /var/lib/tailscale/files
+  when: >
+    tailscale_auth_key is defined and tailscale_auth_key != "" and
+    headscale is not defined or not headscale|bool

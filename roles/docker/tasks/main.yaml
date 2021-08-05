@@ -1,4 +1,4 @@
 ---
-- include: docker.yml
+- include: docker.yaml
 
-- include: docker-compose.yml
+- include: docker-compose.yaml

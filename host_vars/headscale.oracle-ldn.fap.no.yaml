@@ -1,0 +1,8 @@
+---
+caddy: true
+caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
+
+headscale: true
+headscale_domain: headscale.kradalby.no
+
+tailscale: true

@@ -88,6 +88,11 @@ function restart_nic {
     date_log "Re-applying netplan configuration"
     /usr/sbin/netplan apply
 
+    # We need to restart WireGuard after netplan to ensure the routes
+    # are in-place
+    # TODO: not hardcode wg0
+    systemctl restart "wg-quick@wg0.service"
+
     if ! check_gateways; then
         date_log "Network was not working for the previous $network_check_tries checks."
         date_log "Restarting $nic"
@@ -119,7 +124,7 @@ while [ $network_check_tries -lt $network_check_threshold ]; do
         exit 0
     else
         # Network is down.
-        date_log "Network is down, failed check number $network_check_tries of $network_check_threshold"
+        date_log "Network is down, failed to connect to ${gateway_ips[*]}, failed check number $network_check_tries of $network_check_threshold"
     fi
 
     # Once the network_check_threshold is reached call restart_wlan.
@@ -128,7 +133,7 @@ while [ $network_check_tries -lt $network_check_threshold ]; do
             restart_wireguard
         else
             restart_nic
-        fi  
+        fi
     fi
     sleep 5
 done

@@ -32,7 +32,7 @@ packer-builder.ntnu.fap.no
 rpi1.ldn.fap.no # ansible_host=10.65.0.1
 core.tjoda.fap.no ansible_host=10.62.0.1
 core.terra.fap.no ansible_host=185.243.216.95
-node01.oracle-ldn.fap.no ansible_host=node01.oracle-ldn-public.fap.no
+core.oracle-ldn.fap.no ansible_host=core.oracle-ldn-public.fap.no
 
 [socat_mdns]
 mdns-socat.terra.fap.no
@@ -51,6 +51,9 @@ rpi[2:4].ldn.fap.no
 [misc]
 # bastard.terra.fap.no
 dev.terra.fap.no
+
+[headscale]
+headscale.oracle-ldn.fap.no ansible_host=headscale.oracle-ldn-public.fap.no
 
 [rpi:children]
 rpi_speaker
@@ -72,6 +75,7 @@ rpi_speaker
 ldn_kubernetes
 misc
 gateway
+headscale
 
 [terra_kubernetes]
 node01.terra.fap.no
@@ -82,9 +86,8 @@ node01.ntnu.fap.no
 node[02:03].ntnu.fap.no k3s_agent=True node_exporter=False
 
 [oracle_ldn_kubernetes]
-node01.oracle-ldn.fap.no ansible_host=node01.oracle-ldn-public.fap.no
+core.oracle-ldn.fap.no ansible_host=core.oracle-ldn-public.fap.no
 node02.oracle-ldn.fap.no
-node03.oracle-ldn.fap.no 
 
 [kubernetes_clusters:children]
 terra_kubernetes

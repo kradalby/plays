@@ -11,3 +11,12 @@
     owner: root
     mode: 644
   notify: Restart Avahi
+
+- name: Enable remote Timemachine
+  template:
+    src: timemachine.service
+    dest: "/etc/avahi/services/timemachine_{{ item.hostname | replace('.', '-') }}.service"
+    owner: root
+    mode: 644
+  notify: Restart Avahi
+  loop: "{{ avahi_remote_timemachines }}"

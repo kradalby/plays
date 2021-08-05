@@ -1,0 +1,9 @@
+---
+- name: Setup tailscale
+  hosts: ubuntu
+
+  roles:
+    - role: roles/headscale
+      when: headscale is defined and headscale
+    - role: roles/ubuntu-tailscale
+      # when: tailscale is defined and tailscale

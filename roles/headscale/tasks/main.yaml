@@ -1,0 +1,136 @@
+---
+- name: WireGuard | Enable IPv4 forwarding
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+    reload: true
+
+- name: WireGuard | Enable IPv6 forwarding
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: "1"
+    state: present
+    reload: true
+
+- name: WireGuard | Install WireGuard
+  apt:
+    update_cache: true
+    pkg:
+      - wireguard
+    state: present
+
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
+- name: headscale | Check installed version
+  slurp:
+    src: /var/misc/ansible/headscale_version
+  register: installed_headscale_version
+  ignore_errors: true
+
+- name: headscale | Ensure headscale
+  get_url:
+    url: "https://github.com/juanfont/headscale/releases/download/v{{ headscale_version }}/headscale_{{ headscale_version }}_linux_{{ arch or deb_architecture.stdout }}"
+    dest: "/usr/local/bin/headscale"
+    mode: "0755"
+    # creates: "/usr/local/bin/headscale"
+  when: >
+    headscale_version != 
+    (
+      installed_headscale_version is defined and 
+      "content" in installed_headscale_version and
+      installed_headscale_version.content | b64decode
+    )
+  register: downloaded_headscale
+  notify: Restart headscale
+
+- name: headscale | Update install state
+  lineinfile:
+    path: /var/misc/ansible/headscale_version
+    line: "{{ headscale_version }}"
+    create: true
+    regexp: ".*"
+  when: downloaded_headscale.changed
+
+- name: headscale | Ensure headscale group
+  group:
+    gid: 1997
+    name: headscale
+    system: false
+    state: present
+
+- name: headscale | Ensure headscale user
+  user:
+    uid: 1997
+    name: headscale
+    group: headscale
+    home: "{{ headscale_base_directory }}"
+    shell: /usr/sbin/nologin
+    comment: tailscale coordinator
+    create_home: true
+
+- name: headscale | Ensure WireGuard private key
+  become: true
+  become_user: headscale
+  shell: >
+    wg genkey > {{ headscale_base_directory }}/private.key
+  args:
+    creates: "{{ headscale_base_directory }}/private.key"
+
+# - name: headscale | Install Caddyfile
+#   template:
+#     src: Caddyfile
+#     dest: /etc/caddy/Caddyfile.d/headscale
+#     owner: caddy
+#     group: caddy
+#   when: caddy is defined and caddy
+#   notify: Restart Caddy
+
+- name: headscale | Ensure /etc directory
+  file:
+    path: "{{ headscale_config_directory }}"
+    owner: headscale
+    group: headscale
+    state: directory
+
+- name: headscale | Ensure configuration
+  template:
+    src: config.yaml
+    dest: "{{ headscale_config_directory }}/config.yaml"
+    owner: headscale
+    group: headscale
+    mode: "0644"
+  notify: Restart headscale
+
+- name: headscale | Ensure ACL
+  template:
+    src: ACL.hujson
+    dest: "{{ headscale_config_directory }}/ACL.hujson"
+    owner: headscale
+    group: headscale
+    mode: "0644"
+  notify: Restart headscale
+
+- name: headscale | Ensure DERP configuration
+  get_url:
+    url: "https://github.com/juanfont/headscale/raw/main/derp.yaml"
+    dest: "{{ headscale_config_directory }}/derp.yaml"
+    owner: headscale
+    group: headscale
+    mode: "0644"
+  notify: Restart headscale
+
+- name: headscale | Install systemd service description
+  template:
+    src: headscale.service
+    dest: "/etc/systemd/system/headscale.service"
+  notify: Restart headscale
+
+- name: headscale | Enable systemd service
+  systemd:
+    name: "headscale"
+    daemon_reload: true
+    enabled: true
+    state: started

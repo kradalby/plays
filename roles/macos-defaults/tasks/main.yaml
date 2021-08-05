@@ -3,21 +3,21 @@
   command: osascript -e 'tell application "System Preferences" to quit'
   changed_when: false
 
-- include: global.yml
-- include: activity.yml
-- include: desktop.yml
-- include: dock.yml
-- include: finder.yml
-- include: hostname.yml
-- include: menubar.yml
-- include: misc.yml
-- include: safari.yml
-- include: mail.yml
-- include: screencapture.yml
-- include: screensaver.yml
-- include: swupdate.yml
-- include: third-party.yml
-- include: trackpad.yml
-- include: keyboard.yml
-- include: spotlight.yml
-- include: energy.yml
+- include: global.yaml
+- include: activity.yaml
+- include: desktop.yaml
+- include: dock.yaml
+- include: finder.yaml
+- include: hostname.yaml
+- include: menubar.yaml
+- include: misc.yaml
+- include: safari.yaml
+- include: mail.yaml
+- include: screencapture.yaml
+- include: screensaver.yaml
+- include: swupdate.yaml
+- include: third-party.yaml
+- include: trackpad.yaml
+- include: keyboard.yaml
+- include: spotlight.yaml
+- include: energy.yaml

@@ -206,6 +206,8 @@ wireguard_prefer_ip: false
 
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
+tailscale_exit_node: true
+
 node_exporter: true
 skip_repo: true
 
@@ -220,13 +222,16 @@ restic_backup_job_excludes: "{{ restic_host_config.exclude }}"
 
 # mdns_override_ip: "{{ router_gateway_addr }}"
 
-udpbroadcastrelay_ip: "10.65.0.1"
-udpbroadcastrelay_interfaces:
-  - br0
-  - iot156
+# udpbroadcastrelay_ip: "10.65.0.1"
+# udpbroadcastrelay_interfaces:
+#   - br0
+#   - iot156
 
 cloudflare_token: '{{ lookup("env", "CLOUDFLARE_FAP_NO_API_TOKEN") }}'
 cloudflare_dns_name: "ldn.fap.no"
 cloudflare_zone_id: "6467f74f10e206068c311e586104ebe0"
 cloudflare_ipv4_dns_id: "1bf1d2b7b029c3e7cbd7190c65fbdffc"
 cloudflare_ipv6_dns_id: "4145e034d486a8b275cef0c71c2ec2dd"
+
+avahi_remote_timemachines:
+  - hostname: core.tjoda.fap.no

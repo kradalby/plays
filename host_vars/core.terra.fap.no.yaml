@@ -22,6 +22,7 @@ caddy_passthroughs:
       - dfekt.no
       - drone.fap.no
       - git.kradalby.no
+      - investapi.kradalby.no
       - grocy.kradalby.no
       - umami.kradalby.no
       - hugindemo.kradalby.no
@@ -187,6 +188,8 @@ wireguard_prefer_ip: false
 
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
+tailscale_exit_node: true
+
 node_exporter: true
 # udpbroadcastrelay_ip: "{{ router_gateway_addr }}"
 # udpbroadcastrelay_interface: "{{ router_lan }}"
@@ -202,6 +205,7 @@ restic_backup_job_repos: "{{ restic_host_config.repos }}"
 restic_backup_job_password: "{{ restic_host_config.password }}"
 restic_backup_job_directories: "{{ restic_host_config.directories }}"
 restic_backup_job_excludes: "{{ restic_host_config.exclude }}"
+restic_backup_job_no_cache: true
 restic_max_age: 5
 
 rclone_jotta: true

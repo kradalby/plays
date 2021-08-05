@@ -3,6 +3,7 @@ restic_backup_job_password: ""
 restic_backup_job_directories: []
 restic_backup_job_excludes: []
 restic_backup_job_cronjob: true
+restic_backup_job_no_cache: false
 restic_backup_job_base_path: "/usr/local/bin"
 pushgateway: ""
 restic_max_age: 14 # days

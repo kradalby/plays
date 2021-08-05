@@ -1,0 +1,24 @@
+---
+{% if headscale_domain != "" %}
+server_url: https://{{ headscale_domain }}
+{% else %}
+server_url: https://{{ inventory_hostname }}
+{% endif %}
+listen_addr: 0.0.0.0:{{ headscale_port }}
+private_key_path: {{ headscale_base_directory }}/private.key
+derp_map_path: {{ headscale_config_directory }}/derp.yaml
+ephemeral_node_inactivity_timeout: 30m
+db_type: sqlite3
+db_path: {{ headscale_base_directory }}/db.sqlite
+acl_policy_path: {{ headscale_config_directory }}/ACL.hujson
+
+{% if headscale_domain != "" %}
+tls_letsencrypt_hostname: {{ headscale_domain }}
+{% else %}
+tls_letsencrypt_hostname: {{ inventory_hostname }}
+{% endif %}
+tls_letsencrypt_listen: ":http"
+tls_letsencrypt_cache_dir: "{{ headscale_base_directory }}/cache"
+tls_letsencrypt_challenge_type: HTTP-01
+
+

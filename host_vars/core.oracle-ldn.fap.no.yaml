@@ -87,9 +87,12 @@ router_bgp_neighbours: "{{ kubernetes_nodes }}"
 
 wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
-wireguard_current_host: "{{ wireguard_config.clients.oracleldn1 }}"
-wireguard_current_host_name: "oracleldn1"
+wireguard_current_host: "{{ wireguard_config.servers.oracleldn }}"
+wireguard_current_host_name: "oracleldn"
+wireguard_prefer_ip: false
 wireguard_jumps: "{{ wireguard_config.jumps }}"
+
+tailscale_exit_node: true
 
 k3s_master: true
 k3s_master_schedule: true
@@ -108,3 +111,5 @@ k3s_skip_servicelb: false
 node_exporter: true
 blackbox_exporter: false
 skip_repo: true
+
+tailscale: true

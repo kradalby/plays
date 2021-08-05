@@ -1,0 +1,5 @@
+tailscale_login_server: https://headscale.kradalby.no
+tailscale_namespace: fap
+tailscale_exit_node: false
+tailscale_reset: true
+

@@ -65,6 +65,10 @@
       when: deploy_user is defined and deploy_user
     - role: roles/wireguard
       when: wireguard is defined and wireguard
+    - role: roles/headscale
+      when: headscale is defined and headscale
+    - role: roles/ubuntu-tailscale
+      when: tailscale is defined and tailscale
     - role: roles/postfix
       when: skip_postfix is not defined
     - role: roles/caddy-server
@@ -83,6 +87,8 @@
       when: starship is defined and starship
     - role: roles/yarn-install
       when: yarn_packages is defined and yarn_packages|length > 0
+    - role: roles/avahi
+      when: avahi_remote_timemachines is defined and avahi_remote_timemachines|length > 0
     - role: roles/nfs-export
       when: nfs_exports is defined and nfs_exports|length > 0
     - role: roles/ubuntu-promtail
