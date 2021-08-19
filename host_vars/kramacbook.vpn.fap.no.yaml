@@ -75,6 +75,7 @@ brew_packages:
   - git-delta
   - procs
   - gswitch
+  - universal-ctags
 
 brew_cask_packages:
   # - adobe-creative-cloud
@@ -121,6 +122,7 @@ brew_cask_packages:
   - mailtrackerblocker
   - slowquitapps
   - handbrake
+  - temurin # OpenJDK
 
 brew_cask_packages_absent:
   - teamviewer

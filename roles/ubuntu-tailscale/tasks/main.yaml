@@ -66,6 +66,7 @@
 
 - name: Tailscale | Join network
   vars:
+    # tailscale_auth_key: 8644fd979298c8997576c2e94673083d544ec7b1a7cfc359
     tailscale_auth_key: >
       {{ hostvars['headscale.oracle-ldn.fap.no']['tailscale_auth_key'] or "" }}
   command:

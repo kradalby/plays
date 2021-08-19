@@ -3,10 +3,32 @@
   shell: dpkg --print-architecture
   register: deb_architecture
 
+- name: restic | Check installed version
+  slurp:
+    src: /var/misc/ansible/restic_version
+  register: installed_restic_version
+  ignore_errors: true
+
 - name: restic | Ensure restic package
   get_url:
     url: "https://github.com/restic/restic/releases/download/v{{ restic_version }}/restic_{{ restic_version }}_linux_{{ arch or deb_architecture.stdout }}.bz2"
     dest: "/usr/local/bin/restic.bz2"
+  when: >
+    restic_version != 
+    (
+      installed_restic_version is defined and 
+      "content" in installed_restic_version and
+      installed_restic_version.content | b64decode
+    )
+  register: downloaded_restic
+
+- name: restic | Update install state
+  lineinfile:
+    path: /var/misc/ansible/restic_version
+    line: "{{ restic_version }}"
+    create: true
+    regexp: ".*"
+  when: downloaded_restic.changed
 
 - name: restic | Extract restic
   command:
