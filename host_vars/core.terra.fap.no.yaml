@@ -189,6 +189,7 @@ wireguard_prefer_ip: false
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
 tailscale_exit_node: true
+tailscale_advertise_routes: "{{ wireguard_current_host.additional_networks }}"
 
 node_exporter: true
 # udpbroadcastrelay_ip: "{{ router_gateway_addr }}"

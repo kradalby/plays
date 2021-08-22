@@ -76,6 +76,8 @@
       --hostname {{ inventory_hostname }}
       --authkey {{ tailscale_auth_key }}
       {% if tailscale_exit_node %}--advertise-exit-node{% endif %}
+      {% if tailscale_accept_routes %}--accept-routes{% endif %}
+      {% if tailscale_advertise_routes|length > 0 %}--advertise-routes={{ tailscale_advertise_routes | join(",") }}{% endif %}
       {% if tailscale_reset %}--reset{% endif %}
     creates: /var/lib/tailscale/files
   when: >
