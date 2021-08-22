@@ -12,6 +12,7 @@ brew_taps:
   - kradalby/tap
   - lukakerr/things
   - dteoh/sqa
+  - sachaos/tap
 
 brew_packages_base:
   - bat

@@ -76,6 +76,7 @@ brew_packages:
   - procs
   - gswitch
   - universal-ctags
+  - viddy
 
 brew_cask_packages:
   # - adobe-creative-cloud
