@@ -73,7 +73,7 @@
     cmd: >
       tailscale up 
       -login-server {{ tailscale_login_server }} 
-      --hostname {{ inventory_hostname }}
+      --hostname {{ inventory_hostname | replace(".fap.no", "") }}
       --authkey {{ tailscale_auth_key }}
       {% if tailscale_exit_node %}--advertise-exit-node{% endif %}
       {% if tailscale_accept_routes %}--accept-routes{% endif %}

@@ -14,7 +14,7 @@ router_interfaces:
     netplan:
       dhcp4: true
       dhcp6: false
-  - name: selskap300
+  - name: selskap
     vlan: true
     bridge: false
     wan: false
@@ -24,7 +24,7 @@ router_interfaces:
     dhcp_end: 192.168.200.200
     netplan:
       link: enp1s0f1
-      id: 300
+      id: 324
       addresses:
         - 192.168.200.1/24
       dhcp4: false
@@ -138,6 +138,22 @@ router_static_leases:
   # - ip:
   #   mac:
 
+router_network_repair:
+  - interface: wg0
+    ips:
+      - 10.62.0.1
+    reboot: false
+  - interface: wg0
+    ips:
+      - 10.60.0.1
+      - 10.61.0.1
+    reboot: false
+  - interface: enp1s0f0
+    ips:
+      - 1.1.1.1
+      - 8.8.8.8
+    reboot: true
+
 kubernetes_nodes: []
 #   - name: node01
 #     ip: 10.61.0.111
@@ -160,6 +176,7 @@ wireguard_jumps: "{{ wireguard_config.jumps }}"
 
 tailscale_exit_node: true
 tailscale_advertise_routes: "{{ wireguard_current_host.additional_networks }}"
+tailscale_accept_routes: false
 
 node_exporter: true
 

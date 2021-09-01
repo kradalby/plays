@@ -2,7 +2,7 @@
 tailscale_login_server: https://headscale.kradalby.no
 tailscale_namespace: fap
 tailscale_exit_node: false
-tailscale_reset: false
+tailscale_reset: true
 
 tailscale_advertise_routes: []
 tailscale_accept_routes: true

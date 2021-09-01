@@ -15,7 +15,7 @@
 - name: Enable remote Timemachine
   template:
     src: timemachine.service
-    dest: "/etc/avahi/services/timemachine_{{ item.hostname | replace('.', '-') }}.service"
+    dest: "/etc/avahi/services/timemachine_{{ item.hostname | replace('.fap.no', '') | replace('.', '-') }}.service"
     owner: root
     mode: 644
   notify: Restart Avahi

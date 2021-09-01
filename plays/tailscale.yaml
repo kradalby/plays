@@ -1,6 +1,6 @@
 ---
 - name: Setup tailscale
-  hosts: ubuntu
+  hosts: tailscale
 
   roles:
     - role: roles/headscale

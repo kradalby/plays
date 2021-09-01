@@ -10,7 +10,8 @@ derp_map_path: {{ headscale_config_directory }}/derp.yaml
 ephemeral_node_inactivity_timeout: 30m
 db_type: sqlite3
 db_path: {{ headscale_base_directory }}/db.sqlite
-acl_policy_path: {{ headscale_config_directory }}/ACL.hujson
+acl_policy_path: ""
+# acl_policy_path: {{ headscale_config_directory }}/ACL.hujson
 
 {% if headscale_domain != "" %}
 tls_letsencrypt_hostname: {{ headscale_domain }}

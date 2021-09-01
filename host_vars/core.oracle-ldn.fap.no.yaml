@@ -94,6 +94,7 @@ wireguard_jumps: "{{ wireguard_config.jumps }}"
 
 tailscale_exit_node: true
 tailscale_advertise_routes: "{{ wireguard_current_host.additional_networks }}"
+tailscale_accept_routes: false
 
 k3s_master: true
 k3s_master_schedule: true

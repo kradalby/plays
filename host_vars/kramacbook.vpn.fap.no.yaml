@@ -23,6 +23,7 @@ brew_packages:
   # - wireguard-go
   # - drone
   - aria2
+  - glow
   - cdrtools
   - cloc
   - coreutils

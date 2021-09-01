@@ -208,6 +208,7 @@ wireguard_jumps: "{{ wireguard_config.jumps }}"
 
 tailscale_exit_node: true
 tailscale_advertise_routes: "{{ wireguard_current_host.additional_networks }}"
+tailscale_accept_routes: false
 
 node_exporter: true
 skip_repo: true

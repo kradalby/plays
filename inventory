@@ -12,8 +12,6 @@
 # nfs.terra.fap.no
 
 [storage]
-# storage.terra.fap.no
-# storage.tjoda.fap.no
 # storage.bassan.fap.no ansible_host=192.168.2.2
 core.tjoda.fap.no ansible_host=10.62.0.1
 core.terra.fap.no ansible_host=185.243.216.95
@@ -106,3 +104,11 @@ win.ntnu.fap.no
 kontor-pc.tjoda.fap.no
 anders-laptop.tjoda.fap.no
 kradell.vpn.fap.no
+
+[tailscale]
+core.tjoda.fap.no ansible_host=10.62.0.1
+core.terra.fap.no ansible_host=185.243.216.95
+core.oracle-ldn.fap.no ansible_host=core.oracle-ldn-public.fap.no
+rpi1.ldn.fap.no # ansible_host=10.65.0.1
+headscale.oracle-ldn.fap.no ansible_host=headscale.oracle-ldn-public.fap.no
+# storage.bassan.fap.no ansible_host=192.168.2.2

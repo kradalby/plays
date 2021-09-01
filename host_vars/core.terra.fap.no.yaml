@@ -44,6 +44,7 @@ caddy_passthroughs:
       - thanos-gateway.terra.fap.no
       - thanos.terra.fap.no
       - loki.terra.fap.no
+      - karma.terra.fap.no
     target_ip: 10.60.6.1
 
 hp: true
@@ -190,6 +191,7 @@ wireguard_jumps: "{{ wireguard_config.jumps }}"
 
 tailscale_exit_node: true
 tailscale_advertise_routes: "{{ wireguard_current_host.additional_networks }}"
+tailscale_accept_routes: false
 
 node_exporter: true
 # udpbroadcastrelay_ip: "{{ router_gateway_addr }}"
