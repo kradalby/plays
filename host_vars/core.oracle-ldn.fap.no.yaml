@@ -38,7 +38,7 @@ router_interfaces:
 # router_ipv6_prefix_delegation_length: 56
 
 router_gateway_addr: 10.66.0.2
-router_domain: tjoda.fap.no
+router_domain: oracle-ldn.fap.no
 
 router_upstream_dns:
   - 1.1.1.1

@@ -67,8 +67,8 @@
       when: wireguard is defined and wireguard
     - role: roles/headscale
       when: headscale is defined and headscale
-    - role: roles/ubuntu-tailscale
-      when: tailscale is defined and tailscale
+    # - role: roles/ubuntu-tailscale
+    #   when: tailscale is defined and tailscale
     - role: roles/postfix
       when: skip_postfix is not defined
     - role: roles/caddy-server

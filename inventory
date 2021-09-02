@@ -2,15 +2,6 @@
 # fap.no
 ################################
 
-[hugin]
-# hugin.terra.fap.no
-
-[minio]
-# minio.terra.fap.no
-
-[nfs]
-# nfs.terra.fap.no
-
 [storage]
 # storage.bassan.fap.no ansible_host=192.168.2.2
 core.tjoda.fap.no ansible_host=10.62.0.1
@@ -22,15 +13,12 @@ postgres.terra.fap.no
 [unifi]
 unifi.tjoda.fap.no
 
-[packer]
-packer-builder.ntnu.fap.no
-
 [gateway]
-# gateway.ntnu.fap.no
 rpi1.ldn.fap.no # ansible_host=10.65.0.1
 core.tjoda.fap.no ansible_host=10.62.0.1
 core.terra.fap.no ansible_host=185.243.216.95
 core.oracle-ldn.fap.no ansible_host=core.oracle-ldn-public.fap.no
+core.ntnu.fap.no # ansible_host=129.241.210.38
 
 [socat_mdns]
 mdns-socat.terra.fap.no
@@ -59,16 +47,12 @@ ldn_kubernetes
 
 [ubuntu:children]
 postgres
-minio
-nfs
 ntnu_kubernetes
 oracle_ldn_kubernetes
-packer
 socat_mdns
 storage
 terra_kubernetes
 unifi
-hugin
 rpi_speaker
 ldn_kubernetes
 misc
@@ -112,3 +96,4 @@ core.oracle-ldn.fap.no ansible_host=core.oracle-ldn-public.fap.no
 rpi1.ldn.fap.no # ansible_host=10.65.0.1
 headscale.oracle-ldn.fap.no ansible_host=headscale.oracle-ldn-public.fap.no
 # storage.bassan.fap.no ansible_host=192.168.2.2
+core.ntnu.fap.no # ansible_host=129.241.210.38

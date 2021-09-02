@@ -3,24 +3,18 @@
   apt_key:
     url: https://pkgs.tailscale.com/stable/ubuntu/focal.gpg
     state: present
-  when: >
-    headscale is not defined or not headscale|bool
 
 - name: Tailscale | repository
   apt_repository:
     repo: "deb https://pkgs.tailscale.com/stable/ubuntu {{ ansible_distribution_release }} main"
     state: present
     filename: tailscale
-  when: >
-    headscale is not defined or not headscale|bool
 
 - name: Tailscale | Ensure tailscale
   apt:
     pkg:
       - tailscale
     state: latest
-  when: >
-    headscale is not defined or not headscale|bool
 
 - name: Tailscale | Create key
   become: true
@@ -43,16 +37,14 @@
     name: tailscaled
     state: stopped
   when: >
-    tailscale_reset and
-    headscale is not defined or not headscale|bool
+    tailscale_reset
 
 - name: Tailscale | Remove files dir
   file:
     path: "{{ item }}"
     state: absent
   when: >
-    tailscale_reset and
-    headscale is not defined or not headscale|bool
+    tailscale_reset
   loop:
     - /var/lib/tailscale/files
     - /var/cache/tailscale
@@ -61,8 +53,6 @@
   service:
     name: tailscaled
     state: started
-  when: >
-    headscale is not defined or not headscale|bool
 
 - name: Tailscale | Join network
   vars:
@@ -81,5 +71,4 @@
       {% if tailscale_reset %}--reset{% endif %}
     creates: /var/lib/tailscale/files
   when: >
-    tailscale_auth_key is defined and tailscale_auth_key != "" and
-    headscale is not defined or not headscale|bool
+    tailscale_auth_key is defined and tailscale_auth_key != ""
