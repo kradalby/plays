@@ -20,13 +20,6 @@ core.terra.fap.no ansible_host=185.243.216.95
 core.oracle-ldn.fap.no ansible_host=core.oracle-ldn-public.fap.no
 core.ntnu.fap.no # ansible_host=129.241.210.38
 
-[socat_mdns]
-mdns-socat.terra.fap.no
-mdns-socat.ntnu.fap.no
-mdns-socat.tjoda.fap.no
-rpi1.ldn.fap.no ansible_host=10.65.0.1
-# core.tjoda.fap.no ansible_host=10.62.0.1
-
 [rpi_speaker]
 # rpi-speaker1.ldn.fap.no skip_repo=true
 
@@ -49,7 +42,6 @@ ldn_kubernetes
 postgres
 ntnu_kubernetes
 oracle_ldn_kubernetes
-socat_mdns
 storage
 terra_kubernetes
 unifi
@@ -68,7 +60,7 @@ node01.ntnu.fap.no
 node[02:03].ntnu.fap.no k3s_agent=True node_exporter=False
 
 [oracle_ldn_kubernetes]
-core.oracle-ldn.fap.no ansible_host=core.oracle-ldn-public.fap.no
+core.oracle-ldn.fap.no
 node02.oracle-ldn.fap.no
 
 [kubernetes_clusters:children]
@@ -90,10 +82,10 @@ anders-laptop.tjoda.fap.no
 kradell.vpn.fap.no
 
 [tailscale]
-core.tjoda.fap.no ansible_host=10.62.0.1
+core.tjoda.fap.no # ansible_host=10.62.0.1
 core.terra.fap.no ansible_host=185.243.216.95
 core.oracle-ldn.fap.no ansible_host=core.oracle-ldn-public.fap.no
-rpi1.ldn.fap.no # ansible_host=10.65.0.1
+rpi1.ldn.fap.no ansible_host=ldn.fap.no
 headscale.oracle-ldn.fap.no ansible_host=headscale.oracle-ldn-public.fap.no
 # storage.bassan.fap.no ansible_host=192.168.2.2
-core.ntnu.fap.no # ansible_host=129.241.210.38
+core.ntnu.fap.no ansible_host=129.241.210.106

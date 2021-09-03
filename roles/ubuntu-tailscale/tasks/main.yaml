@@ -69,6 +69,7 @@
       {% if tailscale_accept_routes %}--accept-routes{% endif %}
       {% if tailscale_advertise_routes|length > 0 %}--advertise-routes={{ tailscale_advertise_routes | join(",") }}{% endif %}
       {% if tailscale_reset %}--reset{% endif %}
+      {% if tailscale_force_reauth %}--force-reauth{% endif %}
     creates: /var/lib/tailscale/files
   when: >
     tailscale_auth_key is defined and tailscale_auth_key != ""

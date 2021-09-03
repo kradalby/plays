@@ -92,6 +92,7 @@ wireguard_current_host_name: "oracleldn"
 wireguard_prefer_ip: false
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
+tailscale: true
 tailscale_exit_node: true
 tailscale_advertise_routes: "{{ wireguard_current_host.additional_networks }}"
 tailscale_accept_routes: false
@@ -114,4 +115,3 @@ node_exporter: true
 blackbox_exporter: false
 skip_repo: true
 
-tailscale: true
