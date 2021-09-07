@@ -26,6 +26,7 @@ brew_packages:
   - glow
   - cdrtools
   - cloc
+  - yamllint
   - coreutils
   - diff-so-fancy
   - dos2unix
