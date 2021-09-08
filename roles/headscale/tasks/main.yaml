@@ -32,14 +32,14 @@
 
 - name: headscale | Ensure headscale
   get_url:
-    url: "https://github.com/juanfont/headscale/releases/download/v{{ headscale_version }}/headscale_{{ headscale_version }}_linux_{{ arch or deb_architecture.stdout }}"
+    url: >-
+      https://github.com/juanfont/headscale/releases/download/v{{ headscale_version }}/headscale_{{ headscale_version }}_linux_{{ arch or deb_architecture.stdout }}
     dest: "/usr/local/bin/headscale"
     mode: "0755"
-    # creates: "/usr/local/bin/headscale"
   when: >
-    headscale_version != 
+    headscale_version !=
     (
-      installed_headscale_version is defined and 
+      installed_headscale_version is defined and
       "content" in installed_headscale_version and
       installed_headscale_version.content | b64decode
     )

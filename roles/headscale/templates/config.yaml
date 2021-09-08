@@ -22,4 +22,8 @@ tls_letsencrypt_listen: ":http"
 tls_letsencrypt_cache_dir: "{{ headscale_base_directory }}/cache"
 tls_letsencrypt_challenge_type: HTTP-01
 
-
+dns_config:
+  nameservers:
+    - 1.1.1.1
+  domains:
+    - fap.no
