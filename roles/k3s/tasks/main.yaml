@@ -59,6 +59,9 @@
     params: >-
       -v 0
       --disable local-storage
+      --cluster-cidr {{ k3s_cluster_cidr }}
+      --service-cidr {{ k3s_service_cidr }}
+      --cluster-dns {{ k3s_cluster_dns }}
       {% if k3s_master_ip is defined and k3s_master_ip %}--advertise-address {{ k3s_master_ip }} {% endif %}
       {% if k3s_skip_traefik %}--disable traefik{% endif %}
       {% if k3s_skip_servicelb %}--disable servicelb{% endif %}

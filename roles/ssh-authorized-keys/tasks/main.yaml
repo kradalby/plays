@@ -1,23 +1,9 @@
 ---
-- name: authorized-keys | Ensure path to authorized_keys
-  file:
-    path: "{{ item.path | dirname }}"
-    owner: "{{ item.user }}"
-    group: "{{ item.group }}"
-    recurse: true
-    state: directory
-  loop: "{{ authorized_keys }}"
-
-- name: authorized-keys | Add keys to authorized_keys
-  blockinfile:
-    path: "{{ item.path }}"
-    create: true
-    owner: "{{ item.user }}"
-    group: "{{ item.group }}"
-    mode: "0700"
-    marker: "# --- {mark} Ansible managed block ---"
-    block: |-
-      {% for key in item.ssh_keys %}
-      {{ key }}
-      {% endfor %}
-  loop: "{{ authorized_keys }}"
+- name: SSH keys | Ensure SSH keys
+  ansible.posix.authorized_key:
+    user: "{{ item.user }}"
+    state: "{{ item.state }}"
+    key: "{{ item.key }}"
+    key_options: "{{ item.options | join(',') if 'options' in item else '' }}"
+  loop: >-
+    {{ global_authorized_keys + authorized_keys | unique }}

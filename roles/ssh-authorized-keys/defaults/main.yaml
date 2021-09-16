@@ -1,5 +1,6 @@
 authorized_keys: []
-#  - path: /root/.ssh/authorized_keys
-#    ssh_keys: []
-#    user: "root"
-#    group: "root"
+# - user:
+#   state: present
+#   key:
+
+global_authorized_keys: []

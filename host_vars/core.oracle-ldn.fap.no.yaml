@@ -97,6 +97,10 @@ tailscale_exit_node: true
 tailscale_advertise_routes: "{{ wireguard_current_host.additional_networks }}"
 tailscale_accept_routes: false
 
+k3s_cluster_cidr: 172.18.0.0/16
+k3s_service_cidr: 172.17.0.0/16
+k3s_cluster_dns: 172.17.0.10
+
 k3s_master: true
 k3s_master_schedule: true
 k3s_master_cpu_allowed:
@@ -114,4 +118,3 @@ k3s_skip_servicelb: false
 node_exporter: true
 blackbox_exporter: false
 skip_repo: true
-

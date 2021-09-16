@@ -203,14 +203,17 @@ rclone_jotta: true
 time_machine: true
 time_machine_size: 600G
 
+zfs: true
+
 mounts:
-  - path: /storage
-    uuid: "b6c32a6c-428f-4f58-858c-1659bcf103f6"
-    fs: xfs
-    options: "defaults,noatime"
+  # Now mounted by ZFS
+  # - path: /storage
+  #   uuid: "b6c32a6c-428f-4f58-858c-1659bcf103f6"
+  #   fs: xfs
+  #   options: "defaults,noatime"
   - path: /vm
-    uuid: "ad248c71-8d62-44bb-8351-50c4cf494f9b"
-    fs: ext4
+    uuid: "2cba5c75-0fd3-4a65-8f7f-607bc3d1916c"
+    fs: xfs
     options: "defaults,discard"
 
 terraform: false
@@ -221,3 +224,16 @@ cloudflare_dns_name: "tjoda.fap.no"
 cloudflare_zone_id: "6467f74f10e206068c311e586104ebe0"
 cloudflare_ipv4_dns_id: "30b9d64eb7ee200491fa99b26143736a"
 cloudflare_ipv6_dns_id: ""
+
+cron:
+  - name: /storage to /backup
+    time: daily
+    command: >-
+      /usr/bin/flock
+      -n /tmp/backup_storage_pictures_sync.lockfile
+      /usr/bin/rsync
+      --timeout=10
+      -avxHAX
+      /storage/{sync,pictures}/
+      /backup/{sync,pictures}/
+    state: present

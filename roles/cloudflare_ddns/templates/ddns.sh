@@ -25,23 +25,47 @@ IPv6_FILE="/tmp/last_ipv6.txt"
 
 {% if cloudflare_ipv4_dns_id | length %}
 if [ "$IPv4_CURRENT" != "$IPv4_STORED" ]; then
-    echo $IPv4_CURRENT >$IPv4_FILE
-    curl -X PUT "https://api.cloudflare.com/client/v4/zones/{{ cloudflare_zone_id }}/dns_records/{{ cloudflare_ipv4_dns_id }}" \
-        -H "Authorization: Bearer {{ cloudflare_token }}" \
-        -H "Content-Type: application/json" \
-        --data '{"type":"A","name":"{{ cloudflare_dns_name }}","content":"'"$IPv4_CURRENT"'","proxied":false,"ttl":"120"}' |
-        jq
+	echo $IPv4_CURRENT >$IPv4_FILE
+	RESPONSE=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/{{ cloudflare_zone_id }}/dns_records/{{ cloudflare_ipv4_dns_id }}" \
+		-H "Authorization: Bearer {{ cloudflare_token }}" \
+		-H "Content-Type: application/json" \
+		--data '{"type":"A","name":"{{ cloudflare_dns_name }}","content":"'"$IPv4_CURRENT"'","proxied":false,"ttl":"120"}')
+
+	SUCCESS=$(echo $RESPONSE | jq '.success')
+	ERRORS=$(echo $RESPONSE | jq '.errors | join(", ")')
+	MESSAGES=$(echo $RESPONSE | jq '.messages | join(", ")')
+
+	if $SUCCESS; then
+		echo "{{ cloudflare_dns_name }} has been updated to: $IPv4_CURRENT"
+	else
+		echo "Could not update {{ cloudflare_dns_name }} to: $IPv4_CURRENT"
+		echo "Errors: $ERRORS"
+		echo "Messages: $MESSAGES"
+	fi
+
 fi
 {% endif %}
 
 {% if cloudflare_ipv6_dns_id | length %}
 if [ "$IPv6_CURRENT" != "$IPv6_STORED" ]; then
-    echo $IPv6_CURRENT >$IPv6_FILE
-    curl -X PUT "https://api.cloudflare.com/client/v4/zones/{{ cloudflare_zone_id }}/dns_records/{{ cloudflare_ipv6_dns_id }}" \
-        -H "Authorization: Bearer {{ cloudflare_token }}" \
-        -H "Content-Type: application/json" \
-        --data '{"type":"AAAA","name":"{{ cloudflare_dns_name }}","content":"'"$IPv6_CURRENT"'","proxied":false,"ttl":"120"}' |
-        jq
+	echo $IPv6_CURRENT >$IPv6_FILE
+	RESPONSE=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/{{ cloudflare_zone_id }}/dns_records/{{ cloudflare_ipv6_dns_id }}" \
+		-H "Authorization: Bearer {{ cloudflare_token }}" \
+		-H "Content-Type: application/json" \
+		--data '{"type":"AAAA","name":"{{ cloudflare_dns_name }}","content":"'"$IPv6_CURRENT"'","proxied":false,"ttl":"120"}')
+
+	SUCCESS=$(echo $RESPONSE | jq '.success')
+	ERRORS=$(echo $RESPONSE | jq '.errors | join(", ")')
+	MESSAGES=$(echo $RESPONSE | jq '.messages | join(", ")')
+
+	if $SUCCESS; then
+		echo "{{ cloudflare_dns_name }} has been updated to: $IPv6_CURRENT"
+	else
+		echo "Could not update {{ cloudflare_dns_name }} to: $IPv6_CURRENT"
+		echo "Errors: $ERRORS"
+		echo "Messages: $MESSAGES"
+	fi
+
 fi
 {% endif %}
 
@@ -49,6 +73,6 @@ io::prometheus::NewGauge name=cloudflare_ddns_end_time_seconds help='End time of
 cloudflare_ddns_end_time_seconds set $(date +%s)
 
 io::prometheus::PushAdd \
-    job="ddns_update" \
-    instance="{{ inventory_hostname }}" \
-    gateway="{{ pushgateway }}"
+	job="ddns_update" \
+	instance="{{ inventory_hostname }}" \
+	gateway="{{ pushgateway }}"

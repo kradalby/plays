@@ -1,3 +1,9 @@
 pushgateway: https://pushgateway.terra.fap.no
 
 prometheus_bash_client_path: /opt/git/client_bash
+
+global_authorized_keys:
+  - user: root
+    state: present
+    key: >-
+      {{ lookup('file', '~/Sync/config/ssh/kramacbook/id_ed25519.pub') }}
