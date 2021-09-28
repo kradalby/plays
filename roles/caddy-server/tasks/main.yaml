@@ -37,14 +37,14 @@
 
 - name: caddy | Ensure caddy group
   group:
-    gid: 1995
+    gid: "{{ accounts.caddy.gid }}"
     name: caddy
     system: true
     state: present
 
 - name: caddy | Ensure caddy user
   user:
-    uid: 1995
+    uid: "{{ accounts.caddy.uid }}"
     name: caddy
     group: caddy
     home: /var/lib/caddy

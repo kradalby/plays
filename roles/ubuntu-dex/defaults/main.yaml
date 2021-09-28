@@ -1,0 +1,9 @@
+arch: ""
+
+dex_version: "2.30.0"
+dex_config_directory: /etc/dex
+dex_base_directory: /var/lib/dex
+
+dex_domain: ""
+dex_port: "5556"
+dex_clients: []

@@ -5,6 +5,8 @@ from typing import Any
 from typing import Mapping
 from typing import Sequence
 
+import toml
+
 
 def site_code(ipv4):
     # Verify IP address
@@ -106,6 +108,11 @@ def router_id(interfaces: Sequence[Mapping]) -> Sequence[str]:
     return main["netplan"]["addresses"][0].split("/")[0]
 
 
+def to_toml(obj: Any) -> str:
+    print(obj)
+    return toml.dumps(obj)
+
+
 class FilterModule:
     def filters(self):
         return {
@@ -123,4 +130,5 @@ class FilterModule:
             "filter_inf_names": interfaces_names,
             "filter_inf_addresses": interfaces_addresses,
             "filter_router_id": router_id,
+            "to_toml": to_toml,
         }

@@ -1,0 +1,11 @@
+---
+- name: zfs-auto-snap | Ensure zfs-auto-snap
+  apt:
+    pkg:
+      - zfs-auto-snapshot
+    state: latest
+
+- name: zfs-auto-snap | Ensure cron
+  template:
+    src: cron
+    dest: /etc/cron.d/zfs-auto-snapshot

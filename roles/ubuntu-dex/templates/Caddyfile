@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+
+{% if dex_domain != "" %}{{ dex_domain }} {% endif -%} {{ inventory_hostname }} {
+    import cf
+    reverse_proxy 127.0.0.1:{{ dex_port }}
+}

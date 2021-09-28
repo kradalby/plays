@@ -2,7 +2,6 @@
 apt_update_cache: false
 
 caddy: true
-caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 caddy_serve:
   - domain: files.kradalby.no
     directory: /fastest/serve/files
@@ -251,3 +250,14 @@ nfs_exports:
       - no_root_squash
       - async
       - crossmnt
+
+glauth: true
+glauth_domain: ldap.fap.no
+glauth_users:
+  users: "{{ (lookup('file', '~/Sync/config/glauth.yaml') | from_yaml).users }}"
+glauth_groups:
+  groups: "{{ (lookup('file', '~/Sync/config/glauth.yaml') | from_yaml).groups }}"
+
+dex: true
+dex_domain: id.kradalby.no
+dex_clients: "{{ (lookup('file', '~/Sync/config/dex.yaml') | from_yaml).clients }}"

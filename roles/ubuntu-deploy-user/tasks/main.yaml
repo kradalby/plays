@@ -1,7 +1,7 @@
 ---
 - name: deploy | Ensure deploy user
   user:
-    uid: 1990
+    uid: "{{ accounts.deploy.uid }}"
     name: deploy
     home: /var/lib/deploy
     groups: "{{ deploy_user_directories | map(attribute='group') | join(',') }}"

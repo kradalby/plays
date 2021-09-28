@@ -1,0 +1,54 @@
+---
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
+- name: lego | Check installed version
+  slurp:
+    src: /var/misc/ansible/lego_version
+  register: installed_lego_version
+  ignore_errors: true
+
+- name: lego | Ensure lego
+  unarchive:
+    src: "https://github.com/go-acme/lego/releases/download/v{{ lego_version }}/lego_v{{ lego_version }}_linux_{{ arch or deb_architecture.stdout }}.tar.gz"
+    # There is currently a bug preventing extract to work with extra_opts
+    # https://github.com/ansible/ansible/issues/64612
+    # dest: "/usr/local/bin"
+    dest: "/tmp"
+    remote_src: true
+    # extra_opts:
+    #   - --wildcards
+    #   - "*/lego"
+    #   - --no-anchored
+    mode: "0755"
+  when: >
+    lego_version !=
+    (
+      installed_lego_version is defined and
+      "content" in installed_lego_version and
+      installed_lego_version.content | b64decode
+    )
+  register: downloaded_lego
+
+- name: lego | Copy lego
+  copy:
+    remote_src: true
+    src: /tmp/lego
+    dest: /usr/local/bin/lego
+    mode: "0755"
+  when: >
+    lego_version !=
+    (
+      installed_lego_version is defined and
+      "content" in installed_lego_version and
+      installed_lego_version.content | b64decode
+    )
+
+- name: lego | Update install state
+  lineinfile:
+    path: /var/misc/ansible/lego_version
+    line: "{{ lego_version }}"
+    create: true
+    regexp: ".*"
+  when: downloaded_lego.changed

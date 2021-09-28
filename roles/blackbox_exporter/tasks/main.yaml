@@ -24,14 +24,14 @@
 
 - name: blackbox_exporter | Ensure blackbox_exporter group
   group:
-    gid: 1998
+    gid: "{{ accounts.blackbox.gid }}"
     name: blackbox_exporter
     system: false
     state: present
 
 - name: blackbox_exporter | Ensure blackbox_exporter user
   user:
-    uid: 1998
+    uid: "{{ accounts.blackbox.uid }}"
     name: blackbox_exporter
     group: blackbox_exporter
     # home: /home/blackbox_exporter

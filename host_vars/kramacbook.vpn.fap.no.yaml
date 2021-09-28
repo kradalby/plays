@@ -126,6 +126,7 @@ brew_cask_packages:
   - slowquitapps
   - handbrake
   - temurin # OpenJDK
+  - hex-fiend
 
 brew_cask_packages_absent:
   - teamviewer

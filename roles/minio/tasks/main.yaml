@@ -8,14 +8,14 @@
 
 - name: minio | Ensure minio group
   group:
-    gid: 1996
+    gid: "{{ accounts.minio.gid }}"
     name: minio
     system: false
     state: present
 
 - name: minio | Ensure minio user
   user:
-    uid: 1996
+    uid: "{{ accounts.minio.uid }}"
     name: minio
     group: minio
     groups:

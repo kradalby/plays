@@ -1,0 +1,7 @@
+PATH="/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin"
+
+*/5 * * * * root zfs-auto-snapshot -q -g --label=frequent --keep=24 //
+00 * * * * root zfs-auto-snapshot -q -g --label=hourly --keep=24 //
+00 4 * * * root zfs-auto-snapshot -q -g --label=daily --keep=14 //
+00 4 * * 0 root zfs-auto-snapshot -q -g --label=weekly --keep=4 //
+00 4 1 * * root zfs-auto-snapshot -q -g --label=monthly --keep=12 //

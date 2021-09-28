@@ -16,7 +16,6 @@ mounts:
     options: "defaults,noauto,noatime"
 
 caddy: true
-caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 
 restic_rest_server: true
 restic_rest_server_base_directory: /storage/restic

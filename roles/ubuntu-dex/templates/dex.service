@@ -1,0 +1,22 @@
+[Unit]
+Description=dex controller
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=dex
+Group=dex
+ExecStart=/usr/local/bin/dex serve {{ dex_config_directory }}/config.yaml
+Restart=always
+RestartSec=5
+
+# Optional security enhancements
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

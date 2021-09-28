@@ -2,15 +2,15 @@
 - name: Add storage group
   group:
     name: storage
-    gid: "1992"
+    gid: "{{ accounts.storage.gid }}"
     state: present
 
 - name: Add storage user
   user:
     name: storage
     comment: Storage user, owner of /storage
-    uid: "1992"
-    group: "1992"
+    uid: "{{ accounts.storage.uid }}"
+    group: "{{ accounts.storage.gid }}"
     home: /storage
     state: present
 
@@ -18,25 +18,24 @@
   user:
     name: syncthing
     comment: Syncthing user, responsible for syncing
-    uid: "1993"
-    group: "1992"
+    uid: "{{ accounts.syncthing.uid }}"
+    group: "{{ accounts.storage.gid }}"
     home: /storage
     state: present
 
 - name: Add jotta user to storage group
   user:
     name: jottad
-    uid: "1998"
-    group: "1992"
-    groups: storage
+    uid: "{{ accounts.jotta.uid }}"
+    group: "{{ accounts.storage.gid }}"
     append: true
 
 - name: Add dalby user
   user:
     name: dalby
     comment: Dalby family user
-    uid: "1994"
-    group: "1992"
+    uid: "{{ accounts.dalby.uid }}"
+    group: "{{ accounts.storage.gid }}"
     home: /storage
     state: present
     shell: /usr/sbin/nologin

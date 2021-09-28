@@ -2,7 +2,6 @@
 apt_update_cache: false
 
 caddy: true
-caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 
 router_vlan_wan: true
 router_interfaces:
@@ -229,7 +228,6 @@ restic_backup_job_excludes: "{{ restic_host_config.exclude }}"
 #   - br0
 #   - iot156
 
-cloudflare_token: '{{ lookup("env", "CLOUDFLARE_FAP_NO_API_TOKEN") }}'
 cloudflare_dns_name: "ldn.fap.no"
 cloudflare_zone_id: "6467f74f10e206068c311e586104ebe0"
 cloudflare_ipv4_dns_id: "1bf1d2b7b029c3e7cbd7190c65fbdffc"

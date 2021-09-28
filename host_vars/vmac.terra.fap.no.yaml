@@ -3,7 +3,6 @@ ansible_user: kradalby
 hostname: vmac.terra
 
 caddy: true
-caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 
 exporter: true
 

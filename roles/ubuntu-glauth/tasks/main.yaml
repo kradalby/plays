@@ -1,0 +1,137 @@
+---
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
+- name: glauth | Check installed version
+  slurp:
+    src: /var/misc/ansible/glauth_version
+  register: installed_glauth_version
+  ignore_errors: true
+
+- name: glauth | Ensure glauth
+  get_url:
+    # TODO: support arm
+    url: >-
+      https://github.com/glauth/glauth/releases/download/v{{ glauth_version }}/glauth64
+    dest: "/usr/local/bin/glauth"
+    mode: "0755"
+  when: >
+    glauth_version !=
+    (
+      installed_glauth_version is defined and
+      "content" in installed_glauth_version and
+      installed_glauth_version.content | b64decode
+    )
+  register: downloaded_glauth
+  notify: Restart glauth
+
+- name: glauth | Update install state
+  lineinfile:
+    path: /var/misc/ansible/glauth_version
+    line: "{{ glauth_version }}"
+    create: true
+    regexp: ".*"
+  when: downloaded_glauth.changed
+
+- name: glauth | Ensure glauth group
+  group:
+    gid: "{{ accounts.glauth.gid }}"
+    name: glauth
+    system: false
+    state: present
+
+- name: glauth | Ensure glauth user
+  user:
+    uid: "{{ accounts.glauth.uid }}"
+    name: glauth
+    group: glauth
+    home: "{{ glauth_config_directory }}"
+    shell: /usr/sbin/nologin
+    comment: tailscale coordinator
+    create_home: true
+
+# - name: glauth | Install Caddyfile
+#   template:
+#     src: Caddyfile
+#     dest: /etc/caddy/Caddyfile.d/glauth
+#     owner: caddy
+#     group: caddy
+#   when: caddy is defined and caddy
+#   notify: Restart Caddy
+
+- name: glauth | Ensure /etc directory
+  file:
+    path: "{{ glauth_config_directory }}"
+    owner: glauth
+    group: glauth
+    state: directory
+
+- name: glauth | Ensure certs directory
+  file:
+    path: "{{ glauth_config_directory }}/certs"
+    owner: glauth
+    group: glauth
+    state: directory
+
+- name: glauth | Ensure certs
+  become: true
+  become_user: glauth
+  environment:
+    CF_DNS_API_TOKEN: "{{ cloudflare_token }}"
+  command:
+    cmd: >-
+      lego
+      --accept-tos
+      --path {{ glauth_config_directory }}/certs
+      --email {{ acme_email }}
+      --dns cloudflare
+      --domains {{ glauth_domain }}
+      run
+    creates: "{{ glauth_config_directory }}/certs/certificates/{{ glauth_domain }}.crt"
+
+- name: glauth | Certs cron renew
+  cron:
+    name: CF_DNS_API_TOKEN
+    env: true
+    value: "{{ cloudflare_token }}"
+    user: glauth
+    cron_file: ansible-glauth-cert-renew
+
+- name: glauth | Certs cron renew
+  cron:
+    name: Renew glauth certs
+    job: >-
+      lego
+      --accept-tos
+      --path {{ glauth_config_directory }}/certs
+      --email {{ acme_email }}
+      --dns cloudflare
+      --domains {{ glauth_domain }}
+      --days 15
+      renew
+    special_time: "daily"
+    user: glauth
+    cron_file: ansible-glauth-cert-renew
+
+- name: glauth | Ensure configuration
+  template:
+    src: config.cfg
+    dest: "{{ glauth_config_directory }}/config.cfg"
+    owner: glauth
+    group: glauth
+    mode: "0644"
+  notify: Restart glauth
+
+- name: glauth | Install systemd service description
+  template:
+    src: glauth.service
+    dest: "/etc/systemd/system/glauth.service"
+  notify: Restart glauth
+
+- name: glauth | Enable systemd service
+  systemd:
+    name: "glauth"
+    daemon_reload: true
+    enabled: true
+    state: started

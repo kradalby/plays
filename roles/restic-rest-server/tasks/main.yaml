@@ -19,14 +19,14 @@
 
 - name: rest-server | Ensure rest-server group
   group:
-    gid: 1997
+    gid: "{{ accounts.rest_server.gid }}"
     name: restic
     system: false
     state: present
 
 - name: rest-server | Ensure rest-server user
   user:
-    uid: 1997
+    uid: "{{ accounts.rest_server.uid }}"
     name: restic
     group: restic
     home: "{{ restic_rest_server_base_directory }}"

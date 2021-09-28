@@ -1,0 +1,134 @@
+---
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
+- name: dex | Check installed version
+  slurp:
+    src: /var/misc/ansible/dex_version
+  register: installed_dex_version
+  ignore_errors: true
+
+# - name: dex | Ensure dex
+#   get_url:
+#     # TODO: support arm
+#     url: >-
+#       https://github.com/dex/dex/releases/download/v{{ dex_version }}/dex64
+#     dest: "/usr/local/bin/dex"
+#     mode: "0755"
+#   when: >
+#     dex_version !=
+#     (
+#       installed_dex_version is defined and
+#       "content" in installed_dex_version and
+#       installed_dex_version.content | b64decode
+#     )
+#   register: downloaded_dex
+#   notify: Restart dex
+
+# - name: dex | Ensure dex source code
+#   ansible.builtin.git:
+#     repo: https://github.com/dexidp/dex.git
+#     dest: "/tmp/dex"
+#     single_branch: true
+#     version: "v{{ dex_version }}"
+#   when: >
+#     dex_version !=
+#     (
+#     installed_dex_version is defined and
+#     "content" in installed_dex_version and
+#     installed_dex_version.content | b64decode
+#     )
+#   register: downloaded_dex
+#   notify: Restart dex
+#
+# - name: dex | Build dex
+#   community.general.make:
+#     chdir: "/tmp/dex"
+#     target: build
+#   when: >
+#     dex_version !=
+#     (
+#     installed_dex_version is defined and
+#     "content" in installed_dex_version and
+#     installed_dex_version.content | b64decode
+#     )
+#   notify: Restart dex
+#
+# - name: dex | Install dex
+#   copy:
+#     remote_src: true
+#     src: /tmp/dex/bin/dex
+#     dest: /usr/local/bin/dex
+#     mode: "0755"
+#   when: >
+#     dex_version !=
+#     (
+#     installed_dex_version is defined and
+#     "content" in installed_dex_version and
+#     installed_dex_version.content | b64decode
+#     )
+#   notify: Restart dex
+#
+# - name: dex | Update install state
+#   lineinfile:
+#     path: /var/misc/ansible/dex_version
+#     line: "{{ dex_version }}"
+#     create: true
+#     regexp: ".*"
+#   when: downloaded_dex.changed
+
+- name: dex | Ensure dex group
+  group:
+    gid: "{{ accounts.dex.gid }}"
+    name: dex
+    system: false
+    state: present
+
+- name: dex | Ensure dex user
+  user:
+    uid: "{{ accounts.dex.uid }}"
+    name: dex
+    group: dex
+    home: "{{ dex_base_directory }}"
+    shell: /usr/sbin/nologin
+    comment: tailscale coordinator
+    create_home: true
+
+- name: dex | Install Caddyfile
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile.d/dex
+    owner: caddy
+    group: caddy
+  when: caddy is defined and caddy
+  notify: Restart Caddy
+
+- name: dex | Ensure /etc directory
+  file:
+    path: "{{ dex_config_directory }}"
+    owner: dex
+    group: dex
+    state: directory
+
+- name: dex | Ensure configuration
+  template:
+    src: config.yaml
+    dest: "{{ dex_config_directory }}/config.yaml"
+    owner: dex
+    group: dex
+    mode: "0644"
+  notify: Restart dex
+
+- name: dex | Install systemd service description
+  template:
+    src: dex.service
+    dest: "/etc/systemd/system/dex.service"
+  notify: Restart dex
+
+- name: dex | Enable systemd service
+  systemd:
+    name: "dex"
+    daemon_reload: true
+    enabled: true
+    state: started

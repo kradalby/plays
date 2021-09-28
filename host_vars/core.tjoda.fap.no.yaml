@@ -2,7 +2,6 @@
 apt_update_cache: false
 
 caddy: true
-caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 
 router_vlan_wan: false
 
@@ -219,21 +218,33 @@ mounts:
 terraform: false
 libvirt: true
 
-cloudflare_token: '{{ lookup("env", "CLOUDFLARE_FAP_NO_API_TOKEN") }}'
 cloudflare_dns_name: "tjoda.fap.no"
 cloudflare_zone_id: "6467f74f10e206068c311e586104ebe0"
 cloudflare_ipv4_dns_id: "30b9d64eb7ee200491fa99b26143736a"
 cloudflare_ipv6_dns_id: ""
 
 cron:
-  - name: /storage to /backup
+  - name: /storage/pictures to /backup/pictures
     time: daily
     command: >-
       /usr/bin/flock
-      -n /tmp/backup_storage_pictures_sync.lockfile
+      -n /tmp/backup_storage_pictures.lockfile
       /usr/bin/rsync
       --timeout=10
       -avxHAX
-      /storage/{sync,pictures}/
-      /backup/{sync,pictures}/
+      /storage/pictures/
+      /backup/pictures/
+      > /dev/null
+    state: present
+  - name: /storage/sync to /backup/sync
+    time: daily
+    command: >-
+      /usr/bin/flock
+      -n /tmp/backup_storage_sync.lockfile
+      /usr/bin/rsync
+      --timeout=10
+      -avxHAX
+      /storage/sync/
+      /backup/sync/
+      > /dev/null
     state: present

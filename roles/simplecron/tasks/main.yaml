@@ -1,0 +1,7 @@
+- name: Simple Cron | Add cron entries
+  cron:
+    name: "{{ item.name }}"
+    special_time: "{{ item.time }}"
+    job: "{{ item.command }}"
+    state: "{{ item.state }}"
+  loop: "{{ cron }}"

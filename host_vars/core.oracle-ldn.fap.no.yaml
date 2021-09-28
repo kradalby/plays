@@ -2,7 +2,6 @@
 apt_update_cache: false
 
 caddy: true
-caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 
 router_vlan_wan: false
 

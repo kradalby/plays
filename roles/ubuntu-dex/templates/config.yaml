@@ -1,0 +1,47 @@
+issuer: https://{{ dex_domain }}/dex
+storage:
+  type: memory
+  # type: sqlite3
+  # config:
+  #   file: {{ dex_base_directory }}/dex.db
+web:
+  http: 127.0.0.1:5556
+
+connectors:
+- type: ldap
+  name: ldap
+  id: ldap
+  config:
+    host: ldap.fap.no:636
+    insecureNoSSL: false
+    insecureSkipVerify: false
+
+    bindDN: cn=readonly,ou=serviceaccounts,dc=kradalby,dc=no
+    bindPW: readonly
+
+    usernamePrompt: Username
+
+    userSearch:
+      baseDN: dc=kradalby,dc=no
+      # (memberOf=cn=vpn,ou=groups,dc=kradalby,dc=no)
+      filter: "(objectClass=posixAccount)"
+      username: cn
+      idAttr: DN
+      emailAttr: mail
+      nameAttr: cn
+
+    # groupSearch:
+    #   baseDN: ou=Groups,dc=example,dc=org
+    #   filter: "(objectClass=groupOfNames)"
+
+    #   userMatchers:
+    #     # A user is a member of a group when their DN matches
+    #     # the value of a "member" attribute on the group entity.
+    #   - userAttr: DN
+    #     groupAttr: member
+
+    #   # The group name should be the "cn" value.
+    #   nameAttr: cn
+
+staticClients:
+{{ dex_clients | to_nice_yaml }}

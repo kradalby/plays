@@ -30,6 +30,7 @@
           - tmux
           - unzip
           - xz-utils
+          - make
         state: present
 
     - name: Remove packages
@@ -39,6 +40,10 @@
         state: absent
 
   roles:
+    - role: roles/ubuntu-dex
+      when: dex is defined and dex
+    - role: roles/ubuntu-glauth
+      when: glauth is defined and glauth
     - role: roles/hostname
     - role: roles/repo
       when: skip_repo is undefined or not skip_repo
@@ -48,6 +53,7 @@
     - role: roles/dotfiles
     - role: roles/apticron
     - role: roles/rclone
+    - role: roles/ubuntu-lego
     - role: roles/restic
     - role: roles/ubuntu-promtail
     - role: roles/swap-off

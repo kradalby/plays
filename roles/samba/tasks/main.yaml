@@ -14,8 +14,8 @@
   user:
     name: timemachine
     comment: Time Machine user, owner of /storage/timemachine
-    uid: 1080
-    group: "1000"
+    uid: "{{ accounts.timemachine.uid }}"
+    group: "{{ accounts.timemachine.gid }}"
     home: /storage/timemachine
     state: present
     shell: /usr/sbin/nologin
@@ -53,8 +53,8 @@
   user:
     name: "{{ item }}"
     comment: "Time Machine {{ item }} user, owner of /storage/timemachine"
-    uid: "{{ 2500 + index }}"
-    group: "1000"
+    uid: "{{ accounts.timemachine_user.uid + index }}"
+    group: "{{ accounts.timemachine.gid }}"
     home: "/storage/timemachine/{{ item }}"
     state: present
     shell: /usr/sbin/nologin

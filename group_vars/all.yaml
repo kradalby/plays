@@ -7,3 +7,47 @@ global_authorized_keys:
     state: present
     key: >-
       {{ lookup('file', '~/Sync/config/ssh/kramacbook/id_ed25519.pub') }}
+
+caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
+
+cloudflare_token: '{{ lookup("env", "CLOUDFLARE_FAP_NO_API_TOKEN") }}'
+acme_email: kristoffer@dalby.cc
+
+accounts:
+  storage:
+    uid: "1992"
+    gid: "1992"
+  syncthing:
+    uid: "1993"
+  minio:
+    uid: "1996"
+    gid: "1996"
+  dex:
+    uid: "1991"
+    gid: "1991"
+  timemachine:
+    uid: "1080"
+    gid: "1000"
+  timemachine_user:
+    uid: 2500
+  blackbox:
+    uid: "1989"
+    gid: "1989"
+  jotta:
+    uid: "1998"
+  dalby:
+    uid: "1994"
+  rest_server:
+    uid: "1997"
+    gid: "1997"
+  caddy:
+    uid: "1995"
+    gid: "1995"
+  headscale:
+    uid: "1988"
+    gid: "1988"
+  glauth:
+    uid: "1999"
+    gid: "1999"
+  deploy:
+    uid: "1990"

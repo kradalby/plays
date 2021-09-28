@@ -56,14 +56,14 @@
 
 - name: headscale | Ensure headscale group
   group:
-    gid: 1997
+    gid: "{{ accounts.headscale.gid }}"
     name: headscale
     system: false
     state: present
 
 - name: headscale | Ensure headscale user
   user:
-    uid: 1997
+    uid: "{{ accounts.headscale.uid }}"
     name: headscale
     group: headscale
     home: "{{ headscale_base_directory }}"
