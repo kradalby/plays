@@ -40,10 +40,6 @@
         state: absent
 
   roles:
-    - role: roles/ubuntu-dex
-      when: dex is defined and dex
-    - role: roles/ubuntu-glauth
-      when: glauth is defined and glauth
     - role: roles/hostname
     - role: roles/repo
       when: skip_repo is undefined or not skip_repo
@@ -75,6 +71,10 @@
       when: deploy_user is defined and deploy_user
     - role: roles/wireguard
       when: wireguard is defined and wireguard
+    - role: roles/ubuntu-dex
+      when: dex is defined and dex
+    - role: roles/ubuntu-glauth
+      when: glauth is defined and glauth
     - role: roles/headscale
       when: headscale is defined and headscale
     # - role: roles/ubuntu-tailscale
