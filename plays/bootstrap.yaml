@@ -86,6 +86,8 @@
     - role: roles/ubuntu-swift
       when: swift is defined and swift
     - role: roles/ubuntu-go
+      when: podman is defined and podman
+    - role: roles/ubuntu-podman
       when: go is defined and go
     - role: roles/ubuntu-nodejs
       when: nodejs is defined and nodejs

@@ -86,6 +86,7 @@ brew_cask_packages:
   # - pine # Markdown editor
   # - lunar # Sync brightness for external monitors
   - maccy # Clipboard manager
+  - monitorcontrol
   - 1password
   # - 1password-cli
   - balenaetcher

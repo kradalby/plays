@@ -30,6 +30,7 @@ rpi[2:4].ldn.fap.no
 [misc]
 # bastard.terra.fap.no
 dev.terra.fap.no
+dev.ntnu.fap.no
 
 [headscale]
 headscale.oracle-ldn.fap.no ansible_host=headscale.oracle-ldn-public.fap.no
@@ -40,7 +41,7 @@ ldn_kubernetes
 
 [ubuntu:children]
 postgres
-ntnu_kubernetes
+# ntnu_kubernetes
 oracle_ldn_kubernetes
 storage
 terra_kubernetes
@@ -55,9 +56,9 @@ headscale
 node01.terra.fap.no
 node[02:03].terra.fap.no node_exporter=False k3s_agent=True
 
-[ntnu_kubernetes]
-node01.ntnu.fap.no
-node[02:03].ntnu.fap.no k3s_agent=True node_exporter=False
+# [ntnu_kubernetes]
+# node01.ntnu.fap.no
+# node[02:03].ntnu.fap.no k3s_agent=True node_exporter=False
 
 [oracle_ldn_kubernetes]
 core.oracle-ldn.fap.no
@@ -65,7 +66,7 @@ node02.oracle-ldn.fap.no
 
 [kubernetes_clusters:children]
 terra_kubernetes
-ntnu_kubernetes
+# ntnu_kubernetes
 oracle_ldn_kubernetes
 ldn_kubernetes
 

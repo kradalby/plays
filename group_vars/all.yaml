@@ -7,6 +7,10 @@ global_authorized_keys:
     state: present
     key: >-
       {{ lookup('file', '~/Sync/config/ssh/kramacbook/id_ed25519.pub') }}
+  - user: root
+    state: present
+    key: >-
+      {{ lookup('file', '~/Sync/config/ssh/dev/id_ed25519.pub') }}
 
 caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 

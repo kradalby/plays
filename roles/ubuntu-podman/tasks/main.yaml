@@ -1,0 +1,43 @@
+---
+- name: "Install podman and role dependencies"
+  become: true
+  apt:
+    name: "{{ packages }}"
+    state: present
+    install_recommends: false
+  vars:
+    packages:
+      - "apt-transport-https"
+      - "ca-certificates"
+      - "software-properties-common"
+      - "curl"
+
+- name: Add podman repository key
+  apt_key:
+    url: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/Release.key"
+    state: "{{ 'present' if podman is defined and podman else 'absent' }}"
+
+- name: Get DEB architecture
+  shell: dpkg --print-architecture
+  register: deb_architecture
+
+- name: Add podman repository
+  apt_repository:
+    repo: "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/ /"
+    state: "{{ 'present' if podman is defined and podman else 'absent' }}"
+
+- name: Install podman engine
+  apt:
+    name: "{{ packages }}"
+    update_cache: true
+    state: "{{ 'present' if podman is defined and podman else 'absent' }}"
+  vars:
+    packages:
+      - "podman"
+  # notify: start podman
+
+- name: Enable podman.sock
+  systemd:
+    name: podman.socket
+    enabled: "{{ 'true' if podman is defined and podman else 'false' }}"
+    state: "{{ 'started' if podman is defined and podman else 'stopped' }}"

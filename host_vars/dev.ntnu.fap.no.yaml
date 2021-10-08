@@ -1,6 +1,7 @@
 ---
 swift: true
 docker: true
+podman: true
 go: true
 nodejs: true
 neovim: true

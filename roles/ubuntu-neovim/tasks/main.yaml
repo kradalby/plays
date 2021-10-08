@@ -2,15 +2,17 @@
 - name: Neovim | Ensure PPA
   apt_repository:
     repo: ppa:neovim-ppa/unstable
-    state: absent
+    state: present
 
 - name: Neovim | Ensure PPA
   apt_repository:
     repo: ppa:neovim-ppa/stable
-    state: present
+    state: absent
 
 - name: Neovim | Ensure Neovim
   apt:
     pkg:
       - neovim
+      - python3-pip
+      - python3-venv
     state: latest
