@@ -47,7 +47,7 @@
 - name: Prober | Install systemd service description
   template:
     src: systemd.service
-    dest: "/etc/systemd/system/blackbox_exporter.service"
+    dest: "{{ systemd_service_path }}/blackbox_exporter.service"
   notify: Restart blackbox_exporter
 
 - name: Prober | Enable systemd service

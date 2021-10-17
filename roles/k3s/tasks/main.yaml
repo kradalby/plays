@@ -174,7 +174,7 @@
 # https://github.com/rancher/k3s/issues/294#issuecomment-670372870
 - name: k3s | Set SystemD CPU limits on master
   blockinfile:
-    path: /etc/systemd/system/k3s.service
+    path: {{ systemd_service_path }}/k3s.service
     insertafter: "[Service]"
     marker: "# --- {mark} Ansible managed block ---"
     block: |-
@@ -189,7 +189,7 @@
 
 - name: k3s | Start master after time is synced
   lineinfile:
-    path: /etc/systemd/system/k3s.service
+    path: {{ systemd_service_path }}/k3s.service
     insertafter: "After="
     line: After=time-sync.target
   when: >
@@ -202,7 +202,7 @@
 
 - name: k3s | Set SystemD CPU limits on agent
   blockinfile:
-    path: /etc/systemd/system/k3s-agent.service
+    path: {{ systemd_service_path }}/k3s-agent.service
     insertafter: "[Service]"
     marker: "# --- {mark} Ansible managed block ---"
     block: |-
@@ -218,7 +218,7 @@
 
 - name: k3s | Start agent after time is synced
   lineinfile:
-    path: /etc/systemd/system/k3s-agent.service
+    path: {{ systemd_service_path }}/k3s-agent.service
     insertafter: "After="
     line: After=time-sync.target
   when: >

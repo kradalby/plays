@@ -126,7 +126,7 @@
 - name: glauth | Install systemd service description
   template:
     src: glauth.service
-    dest: "/etc/systemd/system/glauth.service"
+    dest: "{{ systemd_service_path }}/glauth.service"
   notify: Restart glauth
 
 - name: glauth | Enable systemd service

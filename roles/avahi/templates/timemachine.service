@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone='no'?>
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 <service-group>
- <name replace-wildcards="yes">{{ item.hostname | replace('.', '-') }}</name>
+ <name replace-wildcards="yes">{{ item.hostname | regex_replace("\.fap\.no", '') | replace('.', '-') }}</name>
  <service>
    <type>_smb._tcp</type>
    <host-name>{{ item.hostname }}</host-name>

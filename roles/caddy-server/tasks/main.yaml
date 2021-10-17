@@ -123,7 +123,7 @@
 - name: caddy | Install systemd service description
   template:
     src: caddy.service
-    dest: /etc/systemd/system/caddy.service
+    dest: "{{ systemd_service_path }}/caddy.service"
 
 - name: cadde | Enable systemd service
   systemd:

@@ -13,4 +13,7 @@
     mode: "0644"
     owner: bird
     group: bird
+  when: >
+    kubernetes_nodes is defined and
+    kubernetes_nodes|length > 0
   notify: Restart bird

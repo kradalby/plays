@@ -123,7 +123,7 @@
 - name: dex | Install systemd service description
   template:
     src: dex.service
-    dest: "/etc/systemd/system/dex.service"
+    dest: "{{ systemd_service_path }}/dex.service"
   notify: Restart dex
 
 - name: dex | Enable systemd service

@@ -7,7 +7,11 @@
     - role: roles/wireguard
       when: wireguard is defined and wireguard
     - role: roles/ubuntu_router
+    - role: roles/ubuntu-pihole
+      when: pihole is defined and pihole
     - role: roles/ubuntu_router_ap
       when: router_ap_ssid is defined and router_ap_ssid|length
     - role: roles/ubuntu_router_bgp
     - role: roles/ubuntu_router_bgp_kube_neighbours
+    - role: roles/caddy-server
+      when: caddy is defined and caddy

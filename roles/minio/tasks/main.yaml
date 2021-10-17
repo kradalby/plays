@@ -46,7 +46,7 @@
 - name: minio | Install systemd service description
   template:
     src: minio.service
-    dest: "/etc/systemd/system/minio-{{ item }}.service"
+    dest: "{{ systemd_service_path }}/minio-{{ item }}.service"
   loop: "{{ minio_sub_domains }}"
   loop_control:
     index_var: index

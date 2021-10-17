@@ -10,7 +10,7 @@
 - name: RPi Spotifyd | Ensure Spotifyd service
   template:
     src: spotifyd.service
-    dest: /etc/systemd/system/spotifyd.service
+    dest: {{ systemd_service_path }}/spotifyd.service
   notify: Restart Spotifyd
 
 - name: RPi Spotifyd | Enable SystemD service

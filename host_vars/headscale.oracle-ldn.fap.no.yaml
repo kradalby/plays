@@ -3,7 +3,22 @@ caddy: true
 
 headscale: true
 headscale_domain: headscale.kradalby.no
+headscale_magic_dns_domain: hs.fap.no
+
+headscale_oidc_issuer: "https://id.kradalby.no/dex"
+headscale_oidc_client_id: "headscale"
+headscale_oidc_client_secret: "3g9jb8dhb09wj1f0ng905jh1@#!ff"
 
 tailscale: true
 
 go: true
+
+restic_config: "{{ lookup('file', '~/Sync/config/restic.yaml') | from_yaml }}"
+restic_host_config: "{{ restic_config[inventory_hostname] }}"
+
+restic_backup_job: true
+restic_backup_job_repos: "{{ restic_host_config.repos }}"
+restic_backup_job_password: "{{ restic_host_config.password }}"
+restic_backup_job_directories: "{{ restic_host_config.directories }}"
+restic_backup_job_excludes: "{{ restic_host_config.exclude }}"
+restic_backup_job_no_cache: true

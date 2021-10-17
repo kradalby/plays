@@ -46,7 +46,7 @@
 - name: rest-server | Install systemd service description
   template:
     src: rest-server.service
-    dest: "/etc/systemd/system/rest-server.service"
+    dest: "{{ systemd_service_path }}/rest-server.service"
   notify: Restart rest-server
 
 - name: rest-server | Enable systemd service

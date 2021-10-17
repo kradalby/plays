@@ -40,6 +40,8 @@
         state: absent
 
   roles:
+    - role: roles/ubuntu-micromdm
+      when: micromdm is defined and micromdm
     - role: roles/hostname
     - role: roles/repo
       when: skip_repo is undefined or not skip_repo
@@ -85,9 +87,9 @@
       when: caddy is defined and caddy
     - role: roles/ubuntu-swift
       when: swift is defined and swift
-    - role: roles/ubuntu-go
-      when: podman is defined and podman
     - role: roles/ubuntu-podman
+      when: podman is defined and podman
+    - role: roles/ubuntu-go
       when: go is defined and go
     - role: roles/ubuntu-nodejs
       when: nodejs is defined and nodejs
@@ -112,3 +114,5 @@
       when: blackbox_exporter is defined and blackbox_exporter
     - role: roles/ubuntu-hp-ssacli
       when: hp is defined and hp
+    - role: roles/ubuntu-matterbridge
+      when: matterbridge is defined and matterbridge

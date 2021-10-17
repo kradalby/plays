@@ -27,7 +27,7 @@
 - name: promtail | Install systemd service description
   template:
     src: promtail.service
-    dest: "/etc/systemd/system/promtail.service"
+    dest: "{{ systemd_service_path }}/promtail.service"
   notify: Restart promtail
 
 - name: promtail | Enable systemd service

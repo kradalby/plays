@@ -26,12 +26,12 @@
 #
 # - name: RPi Shairport | Ensure SystemD override dir
 #   file:
-#     path: /etc/systemd/system/shairport-sync.service.d
+#     path: {{ systemd_service_path }}/shairport-sync.service.d
 #     state: directory
 #
 # - name: RPi Shairport | Ensure SystemD override
 #   blockinfile:
-#     path: /etc/systemd/system/shairport-sync.service.d/override.conf
+#     path: {{ systemd_service_path }}/shairport-sync.service.d/override.conf
 #     create: true
 #     block: |
 #       [Service]

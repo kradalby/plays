@@ -180,6 +180,12 @@ router_bgp_as: "50000"
 router_bgp_neighbour_as: "50001"
 router_bgp_neighbours: "{{ kubernetes_nodes }}"
 
+pihole: true
+pihole_domain: "pihole.terra.fap.no"
+pihole_password: '{{ lookup("env", "PIHOLE_PASSWORD") }}'
+pihole_email: '{{ lookup("env", "PIHOLE_EMAIL") }}'
+pihole_interface: "br0"
+
 wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.servers.terra }}"
@@ -261,3 +267,7 @@ glauth_groups:
 dex: true
 dex_domain: id.kradalby.no
 dex_clients: "{{ (lookup('file', '~/Sync/config/dex.yaml') | from_yaml).clients }}"
+
+micromdm: true
+micromdm_domain: "mdm.fap.no"
+micromdm_api_key: '{{ lookup("env", "MICROMDM_API_KEY") }}'

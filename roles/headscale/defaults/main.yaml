@@ -1,6 +1,11 @@
 arch: ""
-headscale_version: "0.9.2"
+headscale_version: "0.10.1"
 headscale_base_directory: /var/lib/headscale
 headscale_config_directory: /etc/headscale
 headscale_domain: ""
+headscale_magic_dns_domain: ""
 headscale_port: 443 # 8000
+
+headscale_oidc_issuer: ""
+headscale_oidc_client_id: ""
+headscale_oidc_client_secret: ""

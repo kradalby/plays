@@ -27,11 +27,11 @@
 - name: drone-runner-exec | Install service
   command:
     cmd: drone-runner-exec service install
-    creates: /etc/systemd/system/drone-runner-exec.service
+    creates: {{ systemd_service_path }}/drone-runner-exec.service
 
 - name: drone-runner-exec | Ensure service user
   lineinfile:
-    path: /etc/systemd/system/drone-runner-exec.service
+    path: {{ systemd_service_path }}/drone-runner-exec.service
     line: "User=ola"
     insertafter: '^\[Service\]$'
     state: present

@@ -165,6 +165,13 @@ router_bgp_as: "52000"
 router_bgp_neighbour_as: "52001"
 router_bgp_neighbours: "{{ kubernetes_nodes }}"
 
+pihole: true
+pihole_domain: "pihole.tjoda.fap.no"
+pihole_password: '{{ lookup("env", "PIHOLE_PASSWORD") }}'
+pihole_email: '{{ lookup("env", "PIHOLE_EMAIL") }}'
+pihole_interface: "br0"
+
+
 wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.servers.tjoda }}"

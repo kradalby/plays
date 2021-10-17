@@ -46,12 +46,10 @@ router_upstream_dns:
   - 8.8.4.4
 
 router_nftable_allow_incoming:
-  - port: https
+  - port: 80
     protocol: tcp
-  - port: http
+  - port: 443
     protocol: tcp
-  - port: http
-    protocol: udp
   - port: 51820
     protocol: udp
   - port: 500
@@ -72,17 +70,19 @@ router_nftable_port_redirects:
     destination: 22
     protocol: tcp
 
-kubernetes_nodes:
-  - name: node01
-    ip: 10.66.0.2
-  - name: node02
-    ip: 10.66.0.6
-  - name: node03
-    ip: 10.66.0.7
+router_nftable_port_forwards: []
 
-router_bgp_as: "50000"
-router_bgp_neighbour_as: "50001"
-router_bgp_neighbours: "{{ kubernetes_nodes }}"
+# kubernetes_nodes:
+#   - name: node01
+#     ip: 10.66.0.2
+#   - name: node02
+#     ip: 10.66.0.6
+#   - name: node03
+#     ip: 10.66.0.7
+
+# router_bgp_as: "50000"
+# router_bgp_neighbour_as: "50001"
+# router_bgp_neighbours: "{{ kubernetes_nodes }}"
 
 wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
@@ -96,24 +96,72 @@ tailscale_exit_node: true
 tailscale_advertise_routes: "{{ wireguard_current_host.additional_networks }}"
 tailscale_accept_routes: false
 
-k3s_cluster_cidr: 172.18.0.0/16
-k3s_service_cidr: 172.17.0.0/16
-k3s_cluster_dns: 172.17.0.10
-
-k3s_master: true
-k3s_master_schedule: true
-k3s_master_cpu_allowed:
-  - 2
-  - 3
-k3s_master_cpu_quota: 40%
-k3s_master_memory_quota: 6144M
-k3s_master_io_read_bandwidth: 15M
-k3s_master_io_write_bandwidth: 15M
-k3s_master_scheduled_restart: daily
-
-k3s_skip_traefik: true
-k3s_skip_servicelb: false
+# k3s_cluster_cidr: 172.18.0.0/16
+# k3s_service_cidr: 172.17.0.0/16
+# k3s_cluster_dns: 172.17.0.10
+#
+# k3s_master: true
+# k3s_master_schedule: true
+# k3s_master_cpu_allowed:
+#   - 2
+#   - 3
+# k3s_master_cpu_quota: 40%
+# k3s_master_memory_quota: 6144M
+# k3s_master_io_read_bandwidth: 15M
+# k3s_master_io_write_bandwidth: 15M
+# k3s_master_scheduled_restart: daily
+#
+# k3s_skip_traefik: true
+# k3s_skip_servicelb: false
 # k3s_logfile: '/var/log/k3s.log'
+
 node_exporter: true
 blackbox_exporter: false
 skip_repo: true
+
+podman: true
+uptime: true
+uptime_kuma_domain: "uptime.kradalby.no"
+
+router_internal_dns: 10.66.0.2
+
+pihole: true
+pihole_domain: "pihole.oracle-ldn.fap.no"
+pihole_password: '{{ lookup("env", "PIHOLE_PASSWORD") }}'
+pihole_email: '{{ lookup("env", "PIHOLE_EMAIL") }}'
+
+matterbridge: true
+matterbridge_config: |-
+  [gitter]
+    [gitter.headscale-dev]
+    Token = "9fdde71ff0d916deff9d186f5575265c2655c490"
+    StripNick=true
+    RemoteNickFormat="[Discord] {NICK}: "
+
+  [discord]
+    [discord.headscale]
+    Token = "ODk3MjE3NzEwMDE3MTA1OTQw.YWSdGw.dq86boAVtrM81TVT5YSxGEtdy1A"
+    Server = "headscale"
+    StripNick=true
+    RemoteNickFormat="[Gitter] {NICK}: "
+
+  [[gateway]]
+  name = "headscale"
+  enable = true
+
+    [[gateway.inout]]
+    account = "gitter.headscale-dev"
+    channel = "headscale-dev/community"
+
+    [[gateway.inout]]
+    account = "discord.headscale"
+    channel = "general"
+
+restic_config: "{{ lookup('file', '~/Sync/config/restic.yaml') | from_yaml }}"
+restic_host_config: "{{ restic_config[inventory_hostname] }}"
+
+restic_backup_job: true
+restic_backup_job_repos: "{{ restic_host_config.repos }}"
+restic_backup_job_password: "{{ restic_host_config.password }}"
+restic_backup_job_directories: "{{ restic_host_config.directories }}"
+restic_backup_job_excludes: "{{ restic_host_config.exclude }}"

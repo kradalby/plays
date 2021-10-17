@@ -79,6 +79,7 @@ brew_packages:
   - gswitch
   - universal-ctags
   - viddy
+  - mosh # HEAD
 
 brew_cask_packages:
   # - adobe-creative-cloud

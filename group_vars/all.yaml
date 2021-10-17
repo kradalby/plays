@@ -1,5 +1,7 @@
 pushgateway: https://pushgateway.terra.fap.no
 
+systemd_service_path: "/etc/systemd/system"
+
 prometheus_bash_client_path: /opt/git/client_bash
 
 global_authorized_keys:
@@ -16,6 +18,19 @@ caddy_cloudflare_api_token: '{{ lookup("env", "CLOUDFLARE_API_TOKEN") }}'
 
 cloudflare_token: '{{ lookup("env", "CLOUDFLARE_FAP_NO_API_TOKEN") }}'
 acme_email: kristoffer@dalby.cc
+
+podman: true
+
+public_dns6:
+  - 2001:4860:4860::8888
+  - 2001:4860:4860::8844
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+public_dns4:
+  - 8.8.8.8
+  - 8.8.4.4
+  - 1.1.1.1
+  - 1.0.0.1
 
 accounts:
   storage:
@@ -55,3 +70,15 @@ accounts:
     gid: "1999"
   deploy:
     uid: "1990"
+  uptime_kuma:
+    uid: "1987"
+    gid: "1987"
+  pihole:
+    uid: "1986"
+    gid: "1986"
+  matterbridge:
+    uid: "1985"
+    gid: "1985"
+  micromdm:
+    uid: "1985"
+    gid: "1985"

@@ -93,6 +93,15 @@
     path: "{{ headscale_config_directory }}"
     owner: headscale
     group: headscale
+    recurse: true
+    state: directory
+
+- name: headscale | Ensure /var/lib directory
+  file:
+    path: "{{ headscale_base_directory }}"
+    owner: headscale
+    group: headscale
+    recurse: true
     state: directory
 
 - name: headscale | Ensure configuration
@@ -125,7 +134,7 @@
 - name: headscale | Install systemd service description
   template:
     src: headscale.service
-    dest: "/etc/systemd/system/headscale.service"
+    dest: "{{ systemd_service_path }}/headscale.service"
   notify: Restart headscale
 
 - name: headscale | Enable systemd service

@@ -60,14 +60,7 @@ router_ipv6_prefix_delegation_length: 48
 router_domain: ldn.fap.no
 
 router_upstream_dns:
-  - 2001:4860:4860::8888
-  - 2001:4860:4860::8844
-  - 2606:4700:4700::1111
-  - 2606:4700:4700::1001
-  - 8.8.8.8
-  - 8.8.4.4
-  - 1.1.1.1
-  - 1.0.0.1
+  - 127.0.0.1#5053
 
 router_nftable_allow_incoming:
   - port: https
@@ -197,6 +190,11 @@ router_network_repair:
       - 8.8.8.8
     reboot: true
 
+pihole: true
+pihole_domain: "pihole.ldn.fap.no"
+pihole_password: '{{ lookup("env", "PIHOLE_PASSWORD") }}'
+pihole_email: '{{ lookup("env", "PIHOLE_EMAIL") }}'
+
 wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.servers.ldn }}"
@@ -235,3 +233,6 @@ cloudflare_ipv6_dns_id: "4145e034d486a8b275cef0c71c2ec2dd"
 
 avahi_remote_timemachines:
   - hostname: core.tjoda.fap.no
+
+podman: true
+router_internal_dns: 10.65.0.1
