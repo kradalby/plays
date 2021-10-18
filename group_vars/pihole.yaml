@@ -1,0 +1,3 @@
+---
+pihole_password: '{{ lookup("env", "PIHOLE_PASSWORD") }}'
+pihole_email: '{{ lookup("env", "PIHOLE_EMAIL") }}'

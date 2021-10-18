@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+
+{{ uptime_kuma_domain }} {
+    import cf
+    reverse_proxy 127.0.0.1:{{ uptime_kuma_port }}
+}

@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+
+{{ pihole_domain }} {
+    import cf
+    reverse_proxy 127.0.0.1:{{ pihole_http_port }}
+}

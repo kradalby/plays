@@ -1,0 +1,24 @@
+---
+- import_playbook: common.yaml
+- import_playbook: backup.yaml
+- import_playbook: gateway.yaml
+- import_playbook: pihole.yaml
+- import_playbook: storage.yaml
+- import_playbook: wireguard.yaml
+- import_playbook: tailscale.yaml
+- import_playbook: postgres.yaml
+- import_playbook: libvirt.yaml
+- import_playbook: unifi.yaml
+- import_playbook: dev.yaml
+- import_playbook: idp.yaml
+- import_playbook: matterbridge.yaml
+- import_playbook: micromdm.yaml
+- import_playbook: blackbox.yaml
+- import_playbook: uptime.yaml
+- import_playbook: hp.yaml
+# - import_playbook: caddy.yaml #TODO: Does this make sense?
+# - import_playbook: k3s.yaml # TODO: Rework and make sure it would work here
+# - import_playbook: packer.yaml
+# - import_playbook: rpi.yaml
+# - import_playbook: rpi_netboot_master.yaml
+# - import_playbook: rpi_speaker.yaml

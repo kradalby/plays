@@ -1,0 +1,5 @@
+---
+- name: Matterbridge
+  hosts: matterbridge
+  roles:
+    - role: ubuntu-matterbridge

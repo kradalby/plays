@@ -1,0 +1,5 @@
+---
+- name: Pihole
+  hosts: pihole
+  roles:
+    - role: ubuntu-pihole

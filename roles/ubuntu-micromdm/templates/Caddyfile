@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+
+{{ micromdm_domain }} {
+    import cf
+    reverse_proxy 127.0.0.1:{{ micromdm_port }}
+}

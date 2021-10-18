@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: ubuntu-podman
+  - role: caddy-server

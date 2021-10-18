@@ -1,0 +1,5 @@
+arch: ""
+
+matterbridge_version: "1.22.3"
+matterbridge_config_directory: /etc/matterbridge
+matterbridge_config: ""

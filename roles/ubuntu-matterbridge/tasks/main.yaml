@@ -1,0 +1,77 @@
+---
+- name: matterbridge | Check installed version
+  slurp:
+    src: /var/misc/ansible/matterbridge_version
+  register: installed_matterbridge_version
+  ignore_errors: true
+
+- name: matterbridge | Ensure matterbridge
+  get_url:
+    # TODO: support arm
+    url: >-
+      https://github.com/42wim/matterbridge/releases/download/v{{ matterbridge_version }}/matterbridge-{{ matterbridge_version }}-linux-arm64
+    dest: "/usr/local/bin/matterbridge"
+    mode: "0755"
+  when: >
+    matterbridge_version !=
+    (
+      installed_matterbridge_version is defined and
+      "content" in installed_matterbridge_version and
+      installed_matterbridge_version.content | b64decode
+    )
+  register: downloaded_matterbridge
+  notify: Restart matterbridge
+
+- name: matterbridge | Update install state
+  lineinfile:
+    path: /var/misc/ansible/matterbridge_version
+    line: "{{ matterbridge_version }}"
+    create: true
+    regexp: ".*"
+  when: downloaded_matterbridge.changed
+
+- name: matterbridge | Ensure matterbridge group
+  group:
+    gid: "{{ accounts.matterbridge.gid }}"
+    name: matterbridge
+    system: false
+    state: present
+
+- name: matterbridge | Ensure matterbridge user
+  user:
+    uid: "{{ accounts.matterbridge.uid }}"
+    name: matterbridge
+    group: matterbridge
+    home: "{{ matterbridge_config_directory }}"
+    shell: /usr/sbin/nologin
+    comment: tailscale coordinator
+    create_home: true
+
+- name: matterbridge | Ensure /etc directory
+  file:
+    path: "{{ matterbridge_config_directory }}"
+    owner: matterbridge
+    group: matterbridge
+    state: directory
+
+- name: matterbridge | Ensure configuration
+  copy:
+    content: "{{ matterbridge_config }}"
+    dest: "{{ matterbridge_config_directory }}/config.toml"
+    owner: matterbridge
+    group: matterbridge
+    mode: "0644"
+  notify: Restart matterbridge
+
+- name: matterbridge | Install systemd service description
+  template:
+    src: systemd.service
+    dest: "{{ systemd_service_path }}/matterbridge.service"
+  notify: Restart matterbridge
+
+- name: matterbridge | Enable systemd service
+  systemd:
+    name: "matterbridge"
+    daemon_reload: true
+    enabled: true
+    state: started

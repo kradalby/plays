@@ -1,0 +1,14 @@
+---
+- name: Setup base configuration
+  hosts: dev
+
+  roles:
+    - role: ubuntu-swift
+    - role: ubuntu-podman
+    - role: ubuntu-go
+    - role: ubuntu-nodejs
+    - role: ubuntu-neovim
+    - role: ubuntu-fish
+    - role: ubuntu-starship
+    - role: yarn-install
+    - role: ubuntu_terraform

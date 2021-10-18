@@ -1,0 +1,14 @@
+pihole_version: "v5.8.1"
+pihole_domain: ""
+pihole_dns_servers:
+  - 1.1.1.1
+  - 1.0.0.1
+
+pihole_password: ""
+pihole_email: ""
+
+# pihole_dns_port: 5053
+pihole_http_port: 48080
+pihole_config_directory: /etc/pihole
+pihole_base_directory: /var/lib/pihole
+pihole_interface: ""

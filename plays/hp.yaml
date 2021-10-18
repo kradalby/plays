@@ -1,0 +1,5 @@
+---
+- name: HP server
+  hosts: hp
+  roles:
+    - role: ubuntu-hp-ssacli

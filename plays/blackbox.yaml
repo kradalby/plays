@@ -1,0 +1,5 @@
+---
+- name: Blackbox exporter
+  hosts: blackbox
+  roles:
+    - role: blackbox_exporter

@@ -1,0 +1,105 @@
+---
+- name: micromdm | Check installed version
+  slurp:
+    src: /var/misc/ansible/micromdm_version
+  register: installed_micromdm_version
+  ignore_errors: true
+
+- name: micromdm | Ensure temp dir
+  file:
+    path: /tmp/micromdm
+    state: directory
+  when: >
+    micromdm_version !=
+    (
+      installed_micromdm_version is defined and
+      "content" in installed_micromdm_version and
+      installed_micromdm_version.content | b64decode
+    )
+
+- name: micromdm | Ensure micromdm
+  ansible.builtin.unarchive:
+    # TODO: support arm
+    remote_src: true
+    src: >-
+      https://github.com/micromdm/micromdm/releases/download/v{{ micromdm_version }}/micromdm_v{{ micromdm_version }}.zip
+    dest: "/tmp/micromdm"
+    mode: "0755"
+  when: >
+    micromdm_version !=
+    (
+      installed_micromdm_version is defined and
+      "content" in installed_micromdm_version and
+      installed_micromdm_version.content | b64decode
+    )
+  register: downloaded_micromdm
+  notify: Restart micromdm
+
+- name: micromdm | Copy binary
+  copy:
+    remote_src: true
+    src: "/tmp/micromdm/build/linux/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: "0755"
+  loop:
+    - micromdm
+    - mdmctl
+  when: downloaded_micromdm.changed
+  notify: Restart micromdm
+
+- name: micromdm | Update install state
+  lineinfile:
+    path: /var/misc/ansible/micromdm_version
+    line: "{{ micromdm_version }}"
+    create: true
+    regexp: ".*"
+  when: downloaded_micromdm.changed
+
+- name: micromdm | Ensure micromdm group
+  group:
+    gid: "{{ accounts.micromdm.gid }}"
+    name: micromdm
+    system: false
+    state: present
+
+- name: micromdm | Ensure micromdm user
+  user:
+    uid: "{{ accounts.micromdm.uid }}"
+    name: micromdm
+    group: micromdm
+    home: "{{ micromdm_base_directory }}"
+    shell: /usr/sbin/nologin
+    comment: Micro MDM user
+    create_home: true
+
+- name: micromdm | Install Caddyfile
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile.d/micromdm
+    owner: caddy
+    group: caddy
+  when: caddy is defined and caddy
+  notify: Restart Caddy
+
+- name: micromdm | Ensure config directories
+  file:
+    path: "{{ micromdm_base_directory }}/{{ item }}"
+    owner: micromdm
+    group: micromdm
+    state: directory
+  loop:
+    - db
+    - http
+
+- name: micromdm | Install systemd service description
+  template:
+    src: systemd.service
+    dest: "{{ systemd_service_path }}/micromdm.service"
+  notify: Restart micromdm
+
+- name: micromdm | Enable systemd service
+  systemd:
+    name: "micromdm"
+    daemon_reload: true
+    enabled: true
+    state: started

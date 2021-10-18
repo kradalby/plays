@@ -1,0 +1,67 @@
+---
+- name: Common roles
+  hosts: common
+
+  pre_tasks:
+    - name: Upgrade packages
+      apt:
+        upgrade: true
+        update_cache: true
+
+    - name: Install packages
+      apt:
+        update_cache: true
+        pkg:
+          - bzip2
+          - curl
+          - fd-find
+          - git
+          - htop
+          - iotop
+          - iputils-ping
+          - jq
+          - lsof
+          - mosh
+          - ncdu
+          - nload
+          - silversearcher-ag
+          - socat
+          - tcpdump
+          - tmux
+          - unzip
+          - xz-utils
+          - make
+        state: present
+
+  roles:
+    - role: hostname
+    - role: repo
+      when: skip_repo is undefined or not skip_repo
+    - role: datetime
+    - role: locale
+    - role: prometheus_bash_client
+    - role: dotfiles
+    - role: apticron
+    - role: rclone
+    - role: ubuntu-lego
+    - role: restic
+    - role: ubuntu-promtail
+    - role: swap-off
+    - role: ssh-authorized-keys
+    - role: ubuntu-promtail
+
+    # TODO: Make these idempotent
+    - role: nfs-export
+      when: nfs_exports is defined and nfs_exports|length > 0
+    - role: prometheus-node-exporter
+      when: node_exporter is undefined or node_exporter
+    - role: simplecron
+      when: cron is defined and cron|length > 0
+    - role: mount_devices
+      when: mounts is defined and mounts|length > 0
+    - role: postfix
+      when: skip_postfix is not defined
+    - role: ubuntu_no_snap
+      when: snap is undefined or not snap
+    - role: ubuntu-deploy-user
+      when: deploy_user is defined and deploy_user

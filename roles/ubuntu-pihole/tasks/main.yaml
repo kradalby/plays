@@ -1,0 +1,92 @@
+---
+# - name: pihole | Ensure pihole group
+#   group:
+#     gid: "{{ accounts.pihole.gid }}"
+#     name: pihole
+#     system: false
+#     state: present
+#
+# - name: pihole | Ensure pihole user
+#   user:
+#     uid: "{{ accounts.pihole.uid }}"
+#     name: pihole
+#     group: pihole
+#     home: "{{ pihole_base_directory }}"
+#     shell: /usr/sbin/nologin
+#     comment: tailscale coordinator
+#     create_home: true
+
+- name: pihole | Install Caddyfile
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile.d/pihole
+    owner: caddy
+    group: caddy
+  when: caddy is defined and caddy
+  notify: Restart Caddy
+
+  # - name: pihole | Ensure configuration
+  #   template:
+  #     src: config.cfg
+  #     dest: "{{ pihole_config_directory }}/config.cfg"
+  #     owner: pihole
+  #     group: pihole
+  #     mode: "0644"
+  #   notify: Restart pihole
+
+- name: pihole | Ensure config dirs
+  file:
+    path: "{{ pihole_config_directory }}/{{ item }}"
+    state: directory
+    # owner: pihole
+    # group: pihole
+    recurse: true
+  loop:
+    - pihole
+    - dnsmasq.d
+
+- name: pihole | Ensure interface-bind
+  copy:
+    dest: "{{ pihole_config_directory }}/dnsmasq.d/99-bind.conf"
+    content: |
+      {{ "bind-interfaces" if pihole_interface != "" else ""}}
+
+- name: pihole | Ensure container
+  containers.podman.podman_container:
+    name: pihole
+    image: "pihole/pihole:{{ pihole_version }}"
+    # user: pihole
+    # groups:
+    #   - pihole
+    log_driver: journald
+    state: started
+    restart: yes
+    network: host
+    # ports:
+    #   - "127.0.0.1:{{ pihole_http_port }}:80/tcp"
+    #   - "127.0.0.1:{{ pihole_dns_port }}:53/tcp"
+    #   - "127.0.0.1:{{ pihole_dns_port }}:53/udp"
+    volume:
+      - "{{ pihole_config_directory }}/pihole:/etc/pihole/"
+      - "{{ pihole_config_directory }}/dnsmasq.d:/etc/dnsmasq.d/"
+    privileged: true
+    env:
+      TZ: Europe/London
+      PIHOLE_DNS_: "{{ pihole_dns_servers | join(';') }}"
+      WEBPASSWORD: "{{ pihole_password }}"
+      ADMIN_EMAIL: "{{ pihole_email }}"
+      VIRTUAL_HOST: "{{ pihole_domain }}"
+      WEB_PORT: "{{ pihole_http_port }}"
+      INTERFACE: "{{ pihole_interface }}"
+      DNSMASQ_LISTENING: "{{ 'all' if pihole_interface == '' else 'single' }}"
+      DNSMASQ_USER: pihole
+
+    generate_systemd:
+      path: "{{ systemd_service_path }}"
+
+- name: pihole | Enable systemd service
+  systemd:
+    name: "container-pihole"
+    daemon_reload: true
+    enabled: true
+    state: started

@@ -1,0 +1,6 @@
+---
+- name: Set up Identity provider
+  hosts: idp
+  roles:
+    - role: roles/ubuntu-dex
+    - role: roles/ubuntu-glauth

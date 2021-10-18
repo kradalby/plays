@@ -1,0 +1,10 @@
+---
+arch: ""
+acme_email: ""
+
+micromdm_version: "1.8.0"
+micromdm_api_key: ""
+micromdm_config_directory: /etc/micromdm
+micromdm_base_directory: /var/lib/micromdm
+micromdm_domain: ""
+micromdm_port: 58866

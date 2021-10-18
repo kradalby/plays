@@ -1,0 +1,5 @@
+---
+- name: Micro MDM
+  hosts: micromdm
+  roles:
+    - role: roles/ubuntu-micromdm

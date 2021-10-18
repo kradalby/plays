@@ -1,0 +1,22 @@
+[Unit]
+Description=matterbridge
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=matterbridge
+Group=matterbridge
+ExecStart=/usr/local/bin/matterbridge -debug -conf {{ matterbridge_config_directory }}/config.toml
+Restart=always
+RestartSec=5
+
+# Optional security enhancements
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

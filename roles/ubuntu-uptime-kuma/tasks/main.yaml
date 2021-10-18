@@ -1,0 +1,65 @@
+---
+- name: uptime-kuma | Ensure uptime-kuma group
+  group:
+    gid: "{{ accounts.uptime_kuma.gid }}"
+    name: uptime-kuma
+    system: false
+    state: present
+
+- name: uptime-kuma | Ensure uptime-kuma user
+  user:
+    uid: "{{ accounts.uptime_kuma.uid }}"
+    name: uptime-kuma
+    group: uptime-kuma
+    home: "{{ uptime_kuma_base_directory }}"
+    shell: /usr/sbin/nologin
+    comment: Uptime kuma user
+    create_home: true
+
+- name: uptime-kuma | Install Caddyfile
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile.d/uptime-kuma
+    owner: caddy
+    group: caddy
+  when: >
+    caddy is defined and caddy and uptime_kuma_domain != ""
+  notify: Generate Caddy config
+
+  # - name: uptime-kuma | Ensure configuration
+  #   template:
+  #     src: config.cfg
+  #     dest: "{{ uptime_kuma_config_directory }}/config.cfg"
+  #     owner: uptime-kuma
+  #     group: uptime-kuma
+  #     mode: "0644"
+  #   notify: Restart uptime-kuma
+
+- name: uptime-kuma | Ensure container
+  containers.podman.podman_container:
+    name: uptime-kuma
+    image: "louislam/uptime-kuma:{{ uptime_kuma_version }}"
+    # user: "{{ accounts.uptime_kuma.uid }}"
+    # groups:
+    #   - "{{ accounts.uptime_kuma.gid }}"
+    log_driver: journald
+    state: started
+    restart: true
+    privileged: true
+    ports:
+      - "127.0.0.1:{{ uptime_kuma_port }}:3001"
+    volume:
+      - "{{ uptime_kuma_base_directory }}:/app/data"
+    env:
+      PUID: "{{ accounts.uptime_kuma.uid }}"
+      PGID: "{{ accounts.uptime_kuma.gid }}"
+
+    generate_systemd:
+      path: "{{ systemd_service_path }}"
+
+- name: uptime-kuma | Enable systemd service
+  systemd:
+    name: "container-uptime-kuma"
+    daemon_reload: true
+    enabled: true
+    state: started

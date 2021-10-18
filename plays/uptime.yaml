@@ -1,0 +1,6 @@
+---
+- name: Uptime and monitoring
+  hosts: uptime
+  roles:
+    - role: roles/ubuntu-podman
+    - role: roles/ubuntu-uptime-kuma
