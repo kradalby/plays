@@ -119,13 +119,13 @@ pihole_domain: "pihole.oracle-ldn.fap.no"
 matterbridge_config: |-
   [gitter]
     [gitter.headscale-dev]
-    Token = "9fdde71ff0d916deff9d186f5575265c2655c490"
+    Token = "{{ lookup('env', 'GITTER_HEADSCALE') }}"
     StripNick=true
     RemoteNickFormat="[Discord] {NICK}: "
 
   [discord]
     [discord.headscale]
-    Token = "ODk3MjE3NzEwMDE3MTA1OTQw.YWSdGw.dq86boAVtrM81TVT5YSxGEtdy1A"
+    Token = "{{ lookup('env', 'DISCORD_HEADSCALE') }}"
     Server = "headscale"
     StripNick=true
     RemoteNickFormat="[Gitter] {NICK}: "

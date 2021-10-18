@@ -83,7 +83,7 @@ core.ntnu.fap.no ansible_host=129.241.210.106
 core.terra.fap.no
 
 [matterbridge]
-core.terra.fap.no
+core.oracle-ldn.fap.no
 
 [blackbox]
 
