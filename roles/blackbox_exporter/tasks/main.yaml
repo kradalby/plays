@@ -1,17 +1,13 @@
 ---
-- name: Prober | Get DEB architecture
-  shell: dpkg --print-architecture
-  register: deb_architecture
-
 - name: Prober | get prometheus node exporter
   unarchive:
-    src: "https://github.com/prometheus/blackbox_exporter/releases/download/v{{ blackbox_exporter_version }}/blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ arch or deb_architecture.stdout }}.tar.gz"
+    src: "https://github.com/prometheus/blackbox_exporter/releases/download/v{{ blackbox_exporter_version }}/blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ arch }}.tar.gz"
     dest: /tmp
     remote_src: true
 
 - name: Prober | replace prometheus node exporter binary
   copy:
-    src: /tmp/blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ arch or deb_architecture.stdout }}/blackbox_exporter
+    src: /tmp/blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ arch }}/blackbox_exporter
     dest: /usr/local/bin/blackbox_exporter
     mode: 0755
     remote_src: true
@@ -19,7 +15,7 @@
 
 - name: Prober | clean up blackbox_exporter folder
   file:
-    path: /tmp/blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ arch or deb_architecture.stdout }}
+    path: /tmp/blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ arch }}
     state: absent
 
 - name: blackbox_exporter | Ensure blackbox_exporter group

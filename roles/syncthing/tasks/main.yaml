@@ -63,10 +63,6 @@
     enabled: true
     state: started
 
-- name: Get DEB architecture
-  shell: dpkg --print-architecture
-  register: deb_architecture
-
 - name: Syncthing | Get API token
   community.general.xml:
     path: /storage/.config/syncthing/config.xml
@@ -76,7 +72,7 @@
 
 - name: Syncthing | Ensure exporter
   unarchive:
-    src: "https://github.com/f100024/syncthing_exporter/releases/download/v{{ syncthing_exporter_version }}/syncthing_exporter-{{ syncthing_exporter_version }}.linux-{{ arch or deb_architecture.stdout }}.tar.gz"
+    src: "https://github.com/f100024/syncthing_exporter/releases/download/v{{ syncthing_exporter_version }}/syncthing_exporter-{{ syncthing_exporter_version }}.linux-{{ arch }}.tar.gz"
     remote_src: true
     dest: "/usr/local/bin"
     mode: "0755"

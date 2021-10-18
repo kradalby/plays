@@ -1,5 +1,0 @@
----
-- name: Install socat mDNS tunnel
-  hosts: socat_mdns
-  roles:
-    - role: roles/mdns-socat-tunnel

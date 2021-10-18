@@ -1,8 +1,4 @@
 ---
-- name: Get DEB architecture
-  shell: dpkg --print-architecture
-  register: deb_architecture
-
 - name: Terraform | Hashicorp signing key
   apt_key:
     url: https://apt.releases.hashicorp.com/gpg
@@ -10,7 +6,7 @@
 
 - name: Terraform | Hashicorp repository
   apt_repository:
-    repo: "deb [arch={{ deb_architecture.stdout }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    repo: "deb [arch={{ arch }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
     state: present
     filename: terraform
 

@@ -1,3 +1,5 @@
+arch: "{% if ansible_architecture == 'x86_64' %}amd64{% elif ansible_architecture == 'aarch64' %}arm64{% else %}{{ ansible_architecture }}{% endif %}"
+
 pushgateway: https://pushgateway.terra.fap.no
 
 systemd_service_path: "/etc/systemd/system"
@@ -82,3 +84,6 @@ accounts:
   micromdm:
     uid: "1985"
     gid: "1985"
+  prometheus:
+    uid: "1984"
+    gid: "1984"

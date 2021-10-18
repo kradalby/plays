@@ -115,14 +115,7 @@ router_gateway_addr: 10.60.0.1
 router_domain: tjoda.fap.no
 
 router_upstream_dns:
-  - 2606:4700:4700::1111
-  - 2606:4700:4700::1001
-  - 2001:4860:4860::8888
-  - 2001:4860:4860::8844
-  - 1.1.1.1
-  - 1.0.0.1
-  - 8.8.8.8
-  - 8.8.4.4
+  - 127.0.0.1#5053
 
 router_nftable_allow_incoming:
   - port: https
@@ -180,10 +173,7 @@ router_bgp_as: "50000"
 router_bgp_neighbour_as: "50001"
 router_bgp_neighbours: "{{ kubernetes_nodes }}"
 
-pihole: true
 pihole_domain: "pihole.terra.fap.no"
-pihole_password: '{{ lookup("env", "PIHOLE_PASSWORD") }}'
-pihole_email: '{{ lookup("env", "PIHOLE_EMAIL") }}'
 pihole_interface: "br0"
 
 wireguard: true

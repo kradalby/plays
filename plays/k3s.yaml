@@ -7,8 +7,8 @@
   #   - debug:
   #       msg: "{{ group_names }}"
   roles:
-    - role: roles/postgres
-      when: >
-        k3s_datastore_on_host_postgres is defined and
-        k3s_datastore_on_host_postgres
-    - role: roles/k3s
+    # - role: roles/postgres
+    #   when: >
+    #     k3s_datastore_on_host_postgres is defined and
+    #     k3s_datastore_on_host_postgres
+    - role: k3s

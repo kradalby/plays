@@ -1,7 +1,5 @@
 ---
 - name: WireGuard
-  hosts: ubuntu
-
+  hosts: wireguard
   roles:
-    - role: roles/wireguard
-      when: wireguard is defined and wireguard
+    - role: wireguard

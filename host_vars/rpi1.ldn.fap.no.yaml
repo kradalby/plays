@@ -190,10 +190,8 @@ router_network_repair:
       - 8.8.8.8
     reboot: true
 
-pihole: true
 pihole_domain: "pihole.ldn.fap.no"
-pihole_password: '{{ lookup("env", "PIHOLE_PASSWORD") }}'
-pihole_email: '{{ lookup("env", "PIHOLE_EMAIL") }}'
+pihole_interface: "br0"
 
 wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"

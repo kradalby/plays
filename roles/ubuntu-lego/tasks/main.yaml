@@ -1,8 +1,4 @@
 ---
-- name: Get DEB architecture
-  shell: dpkg --print-architecture
-  register: deb_architecture
-
 - name: lego | Check installed version
   slurp:
     src: /var/misc/ansible/lego_version
@@ -11,7 +7,7 @@
 
 - name: lego | Ensure lego
   unarchive:
-    src: "https://github.com/go-acme/lego/releases/download/v{{ lego_version }}/lego_v{{ lego_version }}_linux_{{ arch or deb_architecture.stdout }}.tar.gz"
+    src: "https://github.com/go-acme/lego/releases/download/v{{ lego_version }}/lego_v{{ lego_version }}_linux_{{ arch }}.tar.gz"
     # There is currently a bug preventing extract to work with extra_opts
     # https://github.com/ansible/ansible/issues/64612
     # dest: "/usr/local/bin"

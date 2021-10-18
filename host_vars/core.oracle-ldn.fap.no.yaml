@@ -1,8 +1,4 @@
 ---
-apt_update_cache: false
-
-caddy: true
-
 router_vlan_wan: false
 
 router_interfaces:
@@ -40,10 +36,7 @@ router_gateway_addr: 10.66.0.2
 router_domain: oracle-ldn.fap.no
 
 router_upstream_dns:
-  - 1.1.1.1
-  - 1.0.0.1
-  - 8.8.8.8
-  - 8.8.4.4
+  - 127.0.0.1#5053
 
 router_nftable_allow_incoming:
   - port: 80
@@ -84,14 +77,12 @@ router_nftable_port_forwards: []
 # router_bgp_neighbour_as: "50001"
 # router_bgp_neighbours: "{{ kubernetes_nodes }}"
 
-wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"
 wireguard_current_host: "{{ wireguard_config.servers.oracleldn }}"
 wireguard_current_host_name: "oracleldn"
 wireguard_prefer_ip: false
 wireguard_jumps: "{{ wireguard_config.jumps }}"
 
-tailscale: true
 tailscale_exit_node: true
 tailscale_advertise_routes: "{{ wireguard_current_host.additional_networks }}"
 tailscale_accept_routes: false
@@ -119,18 +110,12 @@ node_exporter: true
 blackbox_exporter: false
 skip_repo: true
 
-podman: true
-uptime: true
 uptime_kuma_domain: "uptime.kradalby.no"
 
 router_internal_dns: 10.66.0.2
 
-pihole: true
 pihole_domain: "pihole.oracle-ldn.fap.no"
-pihole_password: '{{ lookup("env", "PIHOLE_PASSWORD") }}'
-pihole_email: '{{ lookup("env", "PIHOLE_EMAIL") }}'
 
-matterbridge: true
 matterbridge_config: |-
   [gitter]
     [gitter.headscale-dev]
@@ -160,7 +145,6 @@ matterbridge_config: |-
 restic_config: "{{ lookup('file', '~/Sync/config/restic.yaml') | from_yaml }}"
 restic_host_config: "{{ restic_config[inventory_hostname] }}"
 
-restic_backup_job: true
 restic_backup_job_repos: "{{ restic_host_config.repos }}"
 restic_backup_job_password: "{{ restic_host_config.password }}"
 restic_backup_job_directories: "{{ restic_host_config.directories }}"

@@ -1,8 +1,4 @@
 ---
-- name: Get DEB architecture
-  shell: dpkg --print-architecture
-  register: deb_architecture
-
 - name: restic | Check installed version
   slurp:
     src: /var/misc/ansible/restic_version
@@ -11,7 +7,7 @@
 
 - name: restic | Ensure restic package
   get_url:
-    url: "https://github.com/restic/restic/releases/download/v{{ restic_version }}/restic_{{ restic_version }}_linux_{{ arch or deb_architecture.stdout }}.bz2"
+    url: "https://github.com/restic/restic/releases/download/v{{ restic_version }}/restic_{{ restic_version }}_linux_{{ arch }}.bz2"
     dest: "/usr/local/bin/restic.bz2"
   when: >
     restic_version != 

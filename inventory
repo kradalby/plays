@@ -1,11 +1,24 @@
-################################
-# fap.no
-################################
+[common]
+core.tjoda.fap.no
+core.terra.fap.no
+core.oracle-ldn.fap.no
+core.ntnu.fap.no
+postgres.terra.fap.no
+unifi.tjoda.fap.no
+rpi[1:4].ldn.fap.no
+dev.terra.fap.no
+dev.ntnu.fap.no
+work.oracle-ldn.fap.no
+node[01:03].terra.fap.no
+headscale.oracle-ldn.fap.no
+
+[dev]
+dev.terra.fap.no
+dev.ntnu.fap.no
 
 [storage]
-# storage.bassan.fap.no ansible_host=192.168.2.2
-core.tjoda.fap.no ansible_host=10.62.0.1
-core.terra.fap.no ansible_host=185.243.216.95
+core.tjoda.fap.no
+core.terra.fap.no
 
 [postgres]
 postgres.terra.fap.no
@@ -20,68 +33,42 @@ core.terra.fap.no ansible_host=185.243.216.95
 core.oracle-ldn.fap.no ansible_host=core.oracle-ldn-public.fap.no
 core.ntnu.fap.no # ansible_host=129.241.210.38
 
-[rpi_speaker]
-# rpi-speaker1.ldn.fap.no skip_repo=true
-
-[ldn_kubernetes]
-# rpi1.ldn.fap.no # ansible_host=192.168.1.109
-rpi[2:4].ldn.fap.no
-
-[misc]
-# bastard.terra.fap.no
-dev.terra.fap.no
-dev.ntnu.fap.no
-work.oracle-ldn.fap.no
+[pihole]
+rpi1.ldn.fap.no
+core.tjoda.fap.no
+core.terra.fap.no
+core.oracle-ldn.fap.no
+core.ntnu.fap.no
 
 [headscale]
 headscale.oracle-ldn.fap.no ansible_host=headscale.oracle-ldn-public.fap.no
 
-[rpi:children]
-rpi_speaker
-ldn_kubernetes
 
-[ubuntu:children]
-postgres
-# ntnu_kubernetes
-# oracle_ldn_kubernetes
-storage
-terra_kubernetes
-unifi
-rpi_speaker
+[kubernetes_clusters:children]
 ldn_kubernetes
-misc
-gateway
-headscale
+terra_kubernetes
+
+[ldn_kubernetes]
+rpi[2:4].ldn.fap.no
 
 [terra_kubernetes]
 node01.terra.fap.no
 node[02:03].terra.fap.no node_exporter=False k3s_agent=True
 
-# [ntnu_kubernetes]
-# node01.ntnu.fap.no
-# node[02:03].ntnu.fap.no k3s_agent=True node_exporter=False
+# [macs]
+# kramacbook.vpn.fap.no ansible_host=localhost
+# vmac.terra.fap.no
+# vmac.ntnu.fap.no
 
-# [oracle_ldn_kubernetes]
-# core.oracle-ldn.fap.no
-# node02.oracle-ldn.fap.no
+# [windows]
+# # kranovo.vpn.fap.no
+# win.ntnu.fap.no
+# kontor-pc.tjoda.fap.no
+# anders-laptop.tjoda.fap.no
+# kradell.vpn.fap.no
 
-[kubernetes_clusters:children]
-terra_kubernetes
-# ntnu_kubernetes
-# oracle_ldn_kubernetes
-ldn_kubernetes
-
-[macs]
-kramacbook.vpn.fap.no ansible_host=localhost
-vmac.terra.fap.no
-vmac.ntnu.fap.no
-
-[windows]
-# kranovo.vpn.fap.no
-win.ntnu.fap.no
-kontor-pc.tjoda.fap.no
-anders-laptop.tjoda.fap.no
-kradell.vpn.fap.no
+[idp]
+core.terra.fap.no
 
 [tailscale]
 core.tjoda.fap.no # ansible_host=10.62.0.1
@@ -91,3 +78,40 @@ rpi1.ldn.fap.no ansible_host=ldn.fap.no
 headscale.oracle-ldn.fap.no ansible_host=headscale.oracle-ldn-public.fap.no
 # storage.bassan.fap.no ansible_host=192.168.2.2
 core.ntnu.fap.no ansible_host=129.241.210.106
+
+[micromdm]
+core.terra.fap.no
+
+[matterbridge]
+core.terra.fap.no
+
+[blackbox]
+
+[hp]
+core.terra.fap.no
+
+[backup]
+core.oracle-ldn.fap.no
+core.terra.fap.no
+core.tjoda.fap.no
+headscale.oracle-ldn.fap.no
+# kramacbook.vpn.fap.no
+postgres.terra.fap.no
+rpi1.ldn.fap.no
+# storage.bassan.fap.no
+
+
+[wireguard]
+core.ntnu.fap.no
+core.oracle-ldn.fap.no
+core.terra.fap.no
+core.tjoda.fap.no
+rpi1.ldn.fap.no
+# storage.bassan.fap.no
+
+[uptime]
+core.oracle-ldn.fap.no
+
+[libvirt]
+core.terra.fap.no
+core.tjoda.fap.no

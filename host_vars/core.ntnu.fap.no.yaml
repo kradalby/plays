@@ -1,8 +1,4 @@
 ---
-apt_update_cache: false
-
-caddy: true
-
 router_vlan_wan: false
 
 router_interfaces:
@@ -43,10 +39,7 @@ router_gateway_addr: 10.61.0.1
 router_domain: ntnu.fap.no
 
 router_upstream_dns:
-  - 1.1.1.1
-  - 1.0.0.1
-  - 8.8.8.8
-  - 8.8.4.4
+  - 127.0.0.1#5053
 
 router_nftable_allow_incoming:
   - port: https
@@ -86,6 +79,9 @@ kubernetes_nodes:
 router_bgp_as: "64512"
 router_bgp_neighbour_as: "64461"
 router_bgp_neighbours: "{{ kubernetes_nodes }}"
+
+pihole_domain: "pihole.ntnu.fap.no"
+pihole_interface: "br0"
 
 wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"

@@ -1,11 +1,7 @@
 ---
-- name: Get DEB architecture
-  shell: dpkg --print-architecture
-  register: deb_architecture
-
 - name: promtail | Ensure promtail
   unarchive:
-    src: "https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-{{ arch or deb_architecture.stdout }}.zip"
+    src: "https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-{{ arch }}.zip"
     remote_src: true
     dest: "/usr/local/bin"
     mode: "0755"
@@ -14,7 +10,7 @@
 
 - name: promtail | Symlink binary
   file:
-    src: "/usr/local/bin/promtail-linux-{{ arch or deb_architecture.stdout }}"
+    src: "/usr/local/bin/promtail-linux-{{ arch }}"
     dest: /usr/local/bin/promtail
     state: link
 

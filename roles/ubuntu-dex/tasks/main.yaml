@@ -1,8 +1,4 @@
 ---
-- name: Get DEB architecture
-  shell: dpkg --print-architecture
-  register: deb_architecture
-
 - name: dex | Check installed version
   slurp:
     src: /var/misc/ansible/dex_version

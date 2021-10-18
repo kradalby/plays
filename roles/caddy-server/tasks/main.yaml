@@ -5,35 +5,31 @@
       - jq
     state: present
 
-- name: caddy | Get DEB architecture
-  shell: dpkg --print-architecture
-  register: deb_architecture
-
 - name: caddy | Build caddy
   environment:
-    GOARCH: "{{ deb_architecture.stdout }}"
+    GOARCH: "{{ arch }}"
     GOOS: linux
   local_action:
     module: ansible.builtin.command
     chdir: /tmp
     cmd: >
       xcaddy build
-      --output /tmp/caddy_linux_{{ deb_architecture.stdout }}
+      --output /tmp/caddy_linux_{{ arch }}
       --with github.com/abiosoft/caddy-json-schema
       --with github.com/abiosoft/caddy-yaml
       --with github.com/caddy-dns/cloudflare
       --with github.com/mholt/caddy-l4
-    creates: "/tmp/caddy_linux_{{ deb_architecture.stdout }}"
+    creates: "/tmp/caddy_linux_{{ arch }}"
 
 - name: caddy | Ensure caddy
   # get_url:
-  #   url: "https://caddyserver.com/api/download?os=linux&arch={{ deb_architecture.stdout }}&p=github.com%2Fcaddy-dns%2Fcloudflare"
+  #   url: "https://caddyserver.com/api/download?os=linux&arch={{ arch }}&p=github.com%2Fcaddy-dns%2Fcloudflare"
   #   url: "https://caddyserver.com/api/download?os=linux&arch=amd64&p=github.com%2Fabiosoft%2Fcaddy-json-schema&p=github.com%2Fabiosoft%2Fcaddy-yaml&p=github.com%2Fcaddy-dns%2Fcloudflare&p=github.com%2Fmholt%2Fcaddy-l4"
   copy:
-    src: "/tmp/caddy_linux_{{ deb_architecture.stdout }}"
+    src: "/tmp/caddy_linux_{{ arch }}"
     dest: /usr/bin/caddy
     mode: "0755"
-  notify: Restart Caddy
+  notify: Generate Caddy config
 
 - name: caddy | Ensure caddy group
   group:
@@ -80,7 +76,7 @@
     owner: caddy
     group: caddy
   loop: "{{ caddy_passthroughs }}"
-  notify: Restart Caddy
+  notify: Generate Caddy config
 
 - name: caddy | Ensure Caddyfile.json.d config directory
   file:
@@ -95,7 +91,7 @@
     dest: /etc/caddy/Caddyfile
     owner: caddy
     group: caddy
-  notify: Restart Caddy
+  notify: Generate Caddy config
 
 - name: caddy | Install Caddyfile l4 config
   template:
@@ -103,7 +99,7 @@
     dest: /etc/caddy/Caddyfile.yaml.d/l4.yaml
     owner: caddy
     group: caddy
-  notify: Restart Caddy
+  notify: Generate Caddy config
 
 - name: caddy | Ensure config creation script
   template:
@@ -118,14 +114,14 @@
     cmd: /etc/caddy/build_config.sh
   environment:
     CLOUDFLARE_API_TOKEN: "{{ caddy_cloudflare_api_token }}"
-  notify: Restart Caddy
+  notify: Generate Caddy config
 
 - name: caddy | Install systemd service description
   template:
     src: caddy.service
     dest: "{{ systemd_service_path }}/caddy.service"
 
-- name: cadde | Enable systemd service
+- name: caddy | Enable systemd service
   systemd:
     name: caddy
     daemon_reload: true

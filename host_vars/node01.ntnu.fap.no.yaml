@@ -1,5 +1,0 @@
----
-k3s_master: true
-k3s_skip_traefik: true
-k3s_skip_servicelb: true
-node_exporter: false
