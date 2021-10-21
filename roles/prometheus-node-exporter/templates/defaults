@@ -1,1 +1,1 @@
-ARGS="--collector.textfile.directory=\"/var/lib/prometheus/node-exporter\""
+ARGS="--collector.systemd --collector.textfile.directory=\"/var/lib/prometheus/node-exporter\""

@@ -30,7 +30,7 @@
     owner: minio
     group: minio
     mode: "0755"
-    recurse: true
+    # recurse: true
     state: directory
   loop: "{{ minio_sub_domains }}"
 

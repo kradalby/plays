@@ -80,6 +80,7 @@ brew_packages:
   - universal-ctags
   - viddy
   - mosh # HEAD
+  - clang-format
 
 brew_cask_packages:
   # - adobe-creative-cloud

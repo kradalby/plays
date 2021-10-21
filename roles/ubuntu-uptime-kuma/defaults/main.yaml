@@ -1,4 +1,4 @@
-uptime_kuma_version: "1.9.0"
+uptime_kuma_version: "1.9.1"
 uptime_kuma_domain: ""
 uptime_kuma_port: 3001
 uptime_kuma_config_directory: /etc/uptime-kuma
