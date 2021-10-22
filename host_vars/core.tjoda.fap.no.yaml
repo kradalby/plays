@@ -160,7 +160,7 @@ router_bgp_neighbour_as: "52001"
 router_bgp_neighbours: "{{ kubernetes_nodes }}"
 
 pihole_domain: "pihole.tjoda.fap.no"
-pihole_interface: "br0"
+# pihole_interface: "br0"
 
 wireguard: true
 wireguard_config: "{{ lookup('file', '~/Sync/config/vpn/wireguard.yaml') | from_yaml }}"

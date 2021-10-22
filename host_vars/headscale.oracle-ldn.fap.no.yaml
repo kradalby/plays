@@ -22,3 +22,6 @@ restic_backup_job_password: "{{ restic_host_config.password }}"
 restic_backup_job_directories: "{{ restic_host_config.directories }}"
 restic_backup_job_excludes: "{{ restic_host_config.exclude }}"
 restic_backup_job_no_cache: true
+
+derper_enabled: false
+derper_hostname: "headscale.kradalby.no"

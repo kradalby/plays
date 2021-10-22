@@ -5,6 +5,7 @@
     - name: Classify hosts depending on their OS distribution
       group_by:
         key: os_{{ ansible_facts['distribution'] }}
+      changed_when: False
 
 - hosts: os_Ubuntu
   gather_facts: false

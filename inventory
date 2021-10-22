@@ -43,6 +43,8 @@ core.ntnu.fap.no
 [headscale]
 headscale.oracle-ldn.fap.no ansible_host=headscale.oracle-ldn-public.fap.no
 
+[derper]
+headscale.oracle-ldn.fap.no ansible_host=headscale.oracle-ldn-public.fap.no
 
 [kubernetes_clusters:children]
 ldn_kubernetes

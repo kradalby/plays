@@ -87,3 +87,6 @@ accounts:
   prometheus:
     uid: "1984"
     gid: "1984"
+  derper:
+    uid: "1983"
+    gid: "1983"
