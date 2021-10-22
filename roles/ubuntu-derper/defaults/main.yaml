@@ -1,0 +1,10 @@
+arch: ""
+
+derper_enabled: true
+derper_base_directory: "/var/lib/derper"
+derper_version: "1.16.1"
+derper_address: ":443"
+derper_certdir: "{{ derper_base_directory }}/certs"
+derper_hostname: ""
+derper_stun: true
+derper_verify_clients: true

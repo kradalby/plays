@@ -1,0 +1,25 @@
+[Unit]
+Description=derper
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=derper
+Group=derper
+ExecStart=/usr/local/bin/derper {% if derper_stun %}-stun{% endif %} {% if derper_verify_clients %}-verify-clients{% endif %} \
+    -a {{ derper_address }} \
+    -certdir {{ derper_certdir }} \
+    -hostname {{ derper_hostname }}
+Restart=always
+RestartSec=5
+
+# Optional security enhancements
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

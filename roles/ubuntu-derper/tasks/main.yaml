@@ -1,0 +1,59 @@
+---
+- name: derper | Check installed version
+  slurp:
+    src: /var/misc/ansible/derper_version
+  register: installed_derper_version
+  ignore_errors: true
+
+- name: derper | Build derper
+  command:
+    cmd: >-
+      go install tailscale.com/cmd/derper@v{{ derper_version }}
+  register: downloaded_derper
+  notify: Restart derper
+
+- name: derper | Install derper binary
+  copy:
+    remote_src: true
+    src: "{{ ansible_env.HOME }}/go/bin/derper"
+    dest: /usr/local/bin/derper
+    mode: "0755"
+  when: downloaded_derper.changed
+
+- name: derper | Update install state
+  lineinfile:
+    path: /var/misc/ansible/derper_version
+    line: "{{ derper_version }}"
+    create: true
+    regexp: ".*"
+  when: downloaded_derper.changed
+
+- name: derper | Ensure derper group
+  group:
+    gid: "{{ accounts.derper.gid }}"
+    name: derper
+    system: false
+    state: present
+
+- name: derper | Ensure derper user
+  user:
+    uid: "{{ accounts.derper.uid }}"
+    name: derper
+    group: derper
+    home: "{{ derper_base_directory }}"
+    shell: /usr/sbin/nologin
+    comment: tailscale DERP server
+    create_home: true
+
+- name: derper | Install systemd service description
+  template:
+    src: systemd.service
+    dest: "{{ systemd_service_path }}/derper.service"
+  notify: Restart derper
+
+- name: derper | Enable systemd service
+  systemd:
+    name: "derper"
+    daemon_reload: true
+    enabled: "{{ derper_enabled }}"
+    state: started
