@@ -1,4 +1,5 @@
-pihole_version: "v5.8.1"
+pihole_version: "latest"
+# pihole_version: "v5.8.1"
 pihole_domain: ""
 pihole_dns_servers:
   - 1.1.1.1

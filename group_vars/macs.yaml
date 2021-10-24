@@ -13,6 +13,7 @@ brew_taps:
   - lukakerr/things
   - dteoh/sqa
   - sachaos/tap
+  - bufbuild/buf
 
 brew_packages_base:
   - bat

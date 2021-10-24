@@ -6,7 +6,6 @@ server_url: https://{{ inventory_hostname }}
 {% endif %}
 listen_addr: 0.0.0.0:{{ headscale_port }}
 private_key_path: {{ headscale_base_directory }}/private.key
-derp_map_path: {{ headscale_config_directory }}/derp.yaml
 ephemeral_node_inactivity_timeout: 30m
 db_type: sqlite3
 db_path: {{ headscale_base_directory }}/db.sqlite
@@ -36,3 +35,18 @@ oidc_issuer: {{ headscale_oidc_issuer }}
 oidc_client_id: {{ headscale_oidc_client_id }}
 oidc_client_secret: {{ headscale_oidc_client_secret }}
 
+derp:
+  # List of externally available DERP maps encoded in JSON
+  urls:
+    - https://controlplane.tailscale.com/derpmap/default
+
+  # Locally available DERP map files encoded in YAML
+  paths: []
+
+  # If enabled, a worker will be set up to periodically
+  # refresh the given sources and update the derpmap
+  # will be set up.
+  auto_update_enabled: true
+
+  # How often should we check for updates?
+  update_frequency: 24h

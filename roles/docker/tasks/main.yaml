@@ -17,10 +17,6 @@
     url: https://download.docker.com/linux/ubuntu/gpg
     state: "{{ 'present' if docker is defined and docker else 'absent' }}"
 
-- name: Get DEB architecture
-  shell: dpkg --print-architecture
-  register: deb_architecture
-
 - name: Add docker repository
   apt_repository:
     repo: "deb [arch={{ deb_architecture.stdout }}] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"

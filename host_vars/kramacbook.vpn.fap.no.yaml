@@ -81,6 +81,7 @@ brew_packages:
   - viddy
   - mosh # HEAD
   - clang-format
+  - buf
 
 brew_cask_packages:
   # - adobe-creative-cloud

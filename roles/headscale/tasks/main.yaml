@@ -118,15 +118,6 @@
     mode: "0644"
   notify: Restart headscale
 
-- name: headscale | Ensure DERP configuration
-  get_url:
-    url: "https://github.com/juanfont/headscale/raw/main/derp.yaml"
-    dest: "{{ headscale_config_directory }}/derp.yaml"
-    owner: headscale
-    group: headscale
-    mode: "0644"
-  notify: Restart headscale
-
 - name: headscale | Install systemd service description
   template:
     src: headscale.service

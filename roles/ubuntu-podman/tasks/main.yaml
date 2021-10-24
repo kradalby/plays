@@ -17,10 +17,6 @@
     url: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/Release.key"
     state: "{{ 'present' if podman is defined and podman else 'absent' }}"
 
-- name: Get DEB architecture
-  shell: dpkg --print-architecture
-  register: deb_architecture
-
 - name: Add podman repository
   apt_repository:
     repo: "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/ /"

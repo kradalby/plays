@@ -71,6 +71,7 @@
       --authkey {{ tailscale_auth_key }}
       {% if tailscale_exit_node %}--advertise-exit-node{% endif %}
       {% if tailscale_accept_routes %}--accept-routes{% endif %}
+      {% if not tailscale_accept_dns %}--accept-dns=false{% endif %}
       {% if tailscale_advertise_routes|length > 0 %}--advertise-routes={{ tailscale_advertise_routes | join(",") }}{% endif %}
       {% if tailscale_reset %}--reset{% endif %}
       {% if tailscale_force_reauth %}--force-reauth{% endif %}

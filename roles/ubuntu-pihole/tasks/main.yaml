@@ -60,7 +60,10 @@
     #   - pihole
     log_driver: journald
     state: started
-    restart: yes
+    recreate: true
+    # restart: true
+    hostname: pihole-docker
+    no_hosts: true
     network: host
     # ports:
     #   - "127.0.0.1:{{ pihole_http_port }}:80/tcp"
@@ -83,6 +86,11 @@
 
     generate_systemd:
       path: "{{ systemd_service_path }}"
+
+- name: pihole | Wait for pihole to start
+  wait_for:
+    port: 53
+    delay: 5
 
 - name: pihole | Enable systemd service
   systemd:

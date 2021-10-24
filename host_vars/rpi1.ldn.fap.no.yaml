@@ -59,8 +59,8 @@ router_interfaces:
 router_ipv6_prefix_delegation_length: 48
 router_domain: ldn.fap.no
 
-router_upstream_dns:
-  - 127.0.0.1#5053
+# router_upstream_dns:
+#   - 127.0.0.1#5053
 
 router_nftable_allow_incoming:
   - port: https
