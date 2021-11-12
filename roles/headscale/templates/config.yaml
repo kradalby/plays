@@ -23,6 +23,8 @@ tls_letsencrypt_challenge_type: HTTP-01
 
 dns_config:
   nameservers:
+    - 10.60.0.1
+    - 10.62.0.1
     - 10.65.0.1
   domains:
     - fap.no
@@ -50,3 +52,5 @@ derp:
 
   # How often should we check for updates?
   update_frequency: 24h
+
+unix_socket: /var/run/headscale/headscale.sock

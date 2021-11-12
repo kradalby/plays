@@ -31,6 +31,7 @@
           - unzip
           - xz-utils
           - make
+          - fzf
         state: present
 
   roles:

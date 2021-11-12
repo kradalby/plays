@@ -18,6 +18,7 @@ ProtectSystem=strict
 ProtectHome=yes
 ReadWritePaths={{ headscale_base_directory }}
 AmbientCapabilities=CAP_NET_BIND_SERVICE
+RuntimeDirectory=headscale
 
 [Install]
 WantedBy=multi-user.target
