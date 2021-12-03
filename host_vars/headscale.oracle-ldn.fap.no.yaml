@@ -10,6 +10,8 @@ headscale_oidc_client_id: "headscale"
 headscale_oidc_client_secret: "3g9jb8dhb09wj1f0ng905jh1@#!ff"
 
 tailscale: true
+tailscale_exit_node: true
+tailscale_accept_routes: true
 
 go: true
 

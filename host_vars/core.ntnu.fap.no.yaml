@@ -80,6 +80,12 @@ router_bgp_as: "64512"
 router_bgp_neighbour_as: "64461"
 router_bgp_neighbours: "{{ kubernetes_nodes }}"
 
+router_network_repair:
+  - interface: wg0
+    ips:
+      - 10.60.0.1
+    reboot: false
+
 pihole_domain: "pihole.ntnu.fap.no"
 pihole_interface: "br0"
 

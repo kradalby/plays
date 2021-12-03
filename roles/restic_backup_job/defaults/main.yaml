@@ -7,5 +7,5 @@ restic_backup_job_no_cache: false
 restic_backup_job_base_path: "/usr/local/bin"
 pushgateway: ""
 restic_max_age: 14 # days
-restic_cache_dir: ""
 restic_backup_job_configuration_path: /etc/restic
+restic_backup_job_cache_dir: ""

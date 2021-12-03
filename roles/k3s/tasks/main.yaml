@@ -54,6 +54,13 @@
     k3s_datastore_on_host_postgres is defined and
     k3s_datastore_on_host_postgres
 
+- name: k3s | Stop master before upgrade
+  systemd:
+    daemon_reload: true
+    name: k3s
+    state: stopped
+  when: k3s_master|bool
+
 - name: Install k3s on master
   vars:
     params: >-
@@ -69,7 +76,7 @@
       {% if k3s_datastore_on_host_postgres %}--datastore-endpoint postgres://k3s:k3s@127.0.0.1:5432/k3s{% endif %}
   # {% if k3s_logfile is defined %}--log {{ k3s_logfile }}{% endif %}
   environment:
-    INSTALL_K3S_CHANNEL: latest
+    INSTALL_K3S_VERSION: "{{ k3s_version }}"
     INSTALL_K3S_EXEC: "server {{ params }}"
   shell: |-
     curl -sfL https://get.k3s.io | sh -s -
@@ -84,6 +91,13 @@
     k3s_master|bool
       and k3s_master_scheduled_restart is defined
       and k3s_master_scheduled_restart != ""
+
+- name: k3s | Start master after upgrade
+  systemd:
+    daemon_reload: true
+    name: k3s
+    state: started
+  when: k3s_master|bool
 
 - name: Wait for node-token
   wait_for:
@@ -141,24 +155,18 @@
 
 - name: Install k3s on workers
   vars:
-    group_name: "{{ group_names[1] }}"
-    master_ip: >-
-      {{ hostvars[groups[group_names[1]][0]].ansible_default_ipv4.address or hostvars[groups[group_names[1]][0]].ansible_all_ipv4_addresses[0] }}
-    master_ip_override: >-
-      {{ hostvars[groups[group_names[1]][0]].k3s_master_ip is defined and hostvars[groups[group_names[1]][0]].k3s_master_ip  or "" }}
-    agent_ipv4: "{{ ansible_default_ipv4 }}"
-    token: "{{ hostvars[groups[group_names[1]][0]]['token'] }}"
+    token: "{{ hostvars[k3s_master_address]['token'] }}"
   environment:
-    INSTALL_K3S_CHANNEL: latest
+    INSTALL_K3S_VERSION: "{{ k3s_version }}"
     INSTALL_K3S_EXEC: >-
       {% if k3s_snapshotter %}--snapshotter {{ k3s_snapshotter }}{% endif %}
-    K3S_URL: "https://{{ master_ip_override or master_ip }}:6443"
+    K3S_URL: "https://{{ k3s_master_address }}:6443"
     K3S_TOKEN: "{{ token }}"
   shell: >
     curl -sfL https://get.k3s.io | sh -
   when: >
-    k3s_agent|bool and
-    group_name is match(".+_kubernetes")
+    k3s_agent|bool
+  # and group_name is match(".+_kubernetes")
 
 - name: Restart k3s agent on schedule
   cron:

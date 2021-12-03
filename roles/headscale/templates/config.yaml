@@ -1,4 +1,5 @@
 ---
+log_level: {{ headscale_log_level }}
 {% if headscale_domain != "" %}
 server_url: https://{{ headscale_domain }}
 {% else %}
@@ -33,9 +34,12 @@ dns_config:
   base_domain: {{ headscale_magic_dns_domain }}
 {% endif %}
 
-oidc_issuer: {{ headscale_oidc_issuer }}
-oidc_client_id: {{ headscale_oidc_client_id }}
-oidc_client_secret: {{ headscale_oidc_client_secret }}
+oidc:
+  issuer: {{ headscale_oidc_issuer }}
+  client_id: {{ headscale_oidc_client_id }}
+  client_secret: {{ headscale_oidc_client_secret }}
+  domain_map:
+    ".*": fap
 
 derp:
   # List of externally available DERP maps encoded in JSON

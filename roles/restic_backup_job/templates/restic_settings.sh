@@ -1,7 +1,9 @@
 {% set excludes = restic_backup_job_excludes | map('regex_replace', '^', '--exclude=') | list | join(" ") -%}
 {% set directories = restic_backup_job_directories | join(" ") -%}
 
-export RESTIC="/usr/local/bin/restic {% if restic_cache_dir != "" %}--cache-dir {{ restic_cache_dir }}{% endif %} {% if restic_backup_job_no_cache %}--no-cache{% endif %}"
+export RESTIC="/usr/local/bin/restic 
+    {%- if restic_backup_job_cache_dir != "" %} --cache-dir {{ restic_backup_job_cache_dir }}{% endif %} 
+    {%- if restic_backup_job_no_cache %} --no-cache {% else %} --cleanup-cache {% endif %}"
 
 export RESTIC_PASSWORD="{{ restic_backup_job_password }}"
 export RESTIC_REPOSITORY="{{ item.repo }}"

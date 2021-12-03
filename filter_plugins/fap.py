@@ -109,8 +109,20 @@ def router_id(interfaces: Sequence[Mapping]) -> Sequence[str]:
 
 
 def to_toml(obj: Any) -> str:
-    print(obj)
     return toml.dumps(obj)
+
+
+class K3sMasterNotFound(Exception):
+    """Could not find k3s master"""
+
+
+def find_k3s_master(hostvars: Any) -> str:
+    kubernetes_suffix = "_kubernetes"
+    for group in hostvars["group_names"]:
+        if group.endswith(kubernetes_suffix):
+            nodes = hostvars["groups"][group]
+            return nodes[0]
+    raise K3sMasterNotFound
 
 
 class FilterModule:
@@ -131,4 +143,5 @@ class FilterModule:
             "filter_inf_addresses": interfaces_addresses,
             "filter_router_id": router_id,
             "to_toml": to_toml,
+            "find_k3s_master": find_k3s_master,
         }
