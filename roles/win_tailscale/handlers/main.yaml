@@ -1,0 +1,5 @@
+---
+- name: Restart Tailscale
+  win_service:
+    name: Tailscale
+    state: restarted

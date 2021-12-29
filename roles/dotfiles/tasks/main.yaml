@@ -12,6 +12,6 @@
     # force: true
   register: dotfiles
 
-- name: dotfiles | Run dotfiles deploy.sh
-  script: ~/git/dotfiles/deploy.sh
-  when: dotfiles.changed
+# - name: dotfiles | Run dotfiles deploy.sh
+#   script: ~/git/dotfiles/deploy.sh
+#   when: dotfiles.changed

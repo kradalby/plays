@@ -1,5 +1,5 @@
 arch: ""
-headscale_version: "0.11.0"
+headscale_version: "0.12.1"
 headscale_base_directory: /var/lib/headscale
 headscale_config_directory: /etc/headscale
 headscale_domain: ""

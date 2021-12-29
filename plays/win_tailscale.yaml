@@ -1,0 +1,6 @@
+---
+- name: Setup Windows tailscale
+  hosts: win_tailscale
+
+  roles:
+    - role: roles/win_tailscale

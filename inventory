@@ -6,14 +6,15 @@ core.ntnu.fap.no
 postgres.terra.fap.no
 unifi.tjoda.fap.no
 rpi[1:4].ldn.fap.no
-dev.terra.fap.no
+# dev.terra.fap.no
 dev.ntnu.fap.no
 work.oracle-ldn.fap.no
 node[01:03].terra.fap.no
 headscale.oracle-ldn.fap.no
+storage.bassan.fap.no ansible_host=10.10.30.15
 
 [dev]
-dev.terra.fap.no
+# dev.terra.fap.no
 dev.ntnu.fap.no
 
 [storage]
@@ -78,8 +79,16 @@ core.terra.fap.no ansible_host=185.243.216.95
 core.oracle-ldn.fap.no ansible_host=core.oracle-ldn-public.fap.no
 rpi1.ldn.fap.no ansible_host=ldn.fap.no
 headscale.oracle-ldn.fap.no ansible_host=headscale.oracle-ldn-public.fap.no
-# storage.bassan.fap.no ansible_host=192.168.2.2
+storage.bassan.fap.no ansible_host=10.10.30.15
 core.ntnu.fap.no ansible_host=129.241.210.106
+
+[win_tailscale]
+# kontor-pc.tjoda.fap.no
+anders-laptop.tjoda.fap.no ansible_host=100.64.0.9
+
+[windows]
+# kontor-pc.tjoda.fap.no
+anders-laptop.tjoda.fap.no ansible_host=100.64.0.9
 
 [micromdm]
 core.terra.fap.no
@@ -109,7 +118,7 @@ core.oracle-ldn.fap.no
 core.terra.fap.no
 core.tjoda.fap.no
 rpi1.ldn.fap.no
-# storage.bassan.fap.no
+storage.bassan.fap.no ansible_host=10.10.30.15
 
 [uptime]
 core.oracle-ldn.fap.no

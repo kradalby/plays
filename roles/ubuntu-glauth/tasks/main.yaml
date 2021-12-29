@@ -104,7 +104,6 @@
       --email {{ acme_email }}
       --dns cloudflare
       --domains {{ glauth_domain }}
-      --days 15
       renew
     special_time: "daily"
     user: glauth

@@ -4,16 +4,17 @@
 #     name: tigervnc
 #     state: present
 #   notify: Restart TigerVNC
-- name: Windows VNC | Remove old TigerVNC
-  ansible.windows.win_package:
-    product_id: "TigerVNC 64-bit_is1"
-    state: absent
+# - name: Windows VNC | Remove old TigerVNC
+#   ansible.windows.win_package:
+#     product_id: "TigerVNC 64-bit_is1"
+#     state: absent
 
 - name: Windows VNC | Ensure TigerVNC
   # Product ID: https://stackoverflow.com/questions/29937568/how-can-i-find-the-product-guid-of-an-installed-msi-setup
   ansible.windows.win_package:
     # http://tigervnc.bphinz.com/nightly/
-    path: http://tigervnc.bphinz.com/nightly/windows/tigervnc64-winvnc-1.11.80.exe
+    path: http://tigervnc.bphinz.com/nightly/windows/tigervnc64-winvnc-1.12.80.exe
+    # path: https://nav.dl.sourceforge.net/project/tigervnc/stable/1.12.0/tigervnc64-winvnc-1.12.0.exe
     arguments:
       - "/VERYSILENT"
       - "/SUPPRESSMSGBOXES"
@@ -84,7 +85,7 @@
 - name: Windows VNC | Ensure TigerVNC service
   ansible.windows.win_service:
     name: "TigerVNC"
-    path: '"C:\Program Files\TigerVNC\winvnc4.exe" -service'
+    path: '"C:\Program Files\TigerVNC Server\winvnc4.exe" -service'
     display_name: "TigerVNC Server"
     description: "Provides remote access to this machine via the VNC/RFB protocol."
     state: started

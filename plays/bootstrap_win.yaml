@@ -7,8 +7,8 @@
     - role: roles/win_hostname
     # - role: roles/win_debloat
     # - role: roles/win_packages
-    - role: roles/win_restic
-      when: restic_backup_job is defined and restic_backup_job
+    # - role: roles/win_restic
+    #   when: restic_backup_job is defined and restic_backup_job
     # - role: roles/win_time_region
     - role: roles/win_admin_users
     - role: roles/win_ssh
