@@ -2,12 +2,12 @@
 - name: Configure gateways
   hosts: gateway
   roles:
-    - role: roles/cloudflare_ddns
-      when: cloudflare_dns_name is defined and cloudflare_dns_name|length
-    - role: roles/wireguard
-    - role: roles/ubuntu_router
-    - role: roles/ubuntu-pihole
-    - role: roles/ubuntu_router_ap
-      when: router_ap_ssid is defined and router_ap_ssid|length
+    # - role: roles/cloudflare_ddns
+    #   when: cloudflare_dns_name is defined and cloudflare_dns_name|length
+    # - role: roles/wireguard
+    # - role: roles/ubuntu_router
+    # - role: roles/ubuntu-pihole
+    # - role: roles/ubuntu_router_ap
+    #   when: router_ap_ssid is defined and router_ap_ssid|length
     - role: roles/ubuntu_router_bgp
     - role: roles/ubuntu_router_bgp_kube_neighbours

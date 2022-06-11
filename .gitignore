@@ -1,4 +1,5 @@
 .pyre/
+.direnv/
 
 # Byte-compiled / optimized / DLL files
 .eggs/

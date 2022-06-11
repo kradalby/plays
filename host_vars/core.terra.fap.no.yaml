@@ -168,6 +168,12 @@ kubernetes_nodes:
     ip: 10.60.0.102
   - name: node03
     ip: 10.60.0.103
+  - name: k3m1
+    ip: 10.60.0.111
+  - name: k3a1
+    ip: 10.60.0.121
+  - name: k3a2
+    ip: 10.60.0.122
 
 router_bgp_as: "50000"
 router_bgp_neighbour_as: "50001"
