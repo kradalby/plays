@@ -16,3 +16,5 @@ choco_packages:
   - github-desktop
   - steam
   - discord
+  - qemu-guest-agent
+  - virtio-drivers
