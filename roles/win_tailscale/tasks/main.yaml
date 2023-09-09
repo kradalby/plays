@@ -22,12 +22,12 @@
       data: "{{ win_tailscale_login_server }}"
   notify: Restart Tailscale
 
-- name: Windows Tailscale | Install
-  chocolatey.chocolatey.win_chocolatey:
-    name:
-      - tailscale
-    state: present
-  notify: Restart Tailscale
+- name: Windows Tailscale | Login with CLI
+  ansible.windows.win_command: >
+    tailscale login
+    --login-server {{ item.login_server }}
+    --auth-key {{ item.auth_key }}
+  loop: "{{ win_tailscale_logins_with_key }}"
 #
 # - name: Windows Tailscale | Firewall rule to allow VNC on port 5900
 #   community.windows.win_firewall_rule:

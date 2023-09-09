@@ -1,2 +1,6 @@
 ---
-win_tailscale_login_server: "https://headscale.kradalby.no"
+win_tailscale_login_server: ""
+
+win_tailscale_logins_with_key: []
+# - login_server: "https://headscale.kradalby.no"
+#   auth_key: "key"

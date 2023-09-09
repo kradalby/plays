@@ -27,3 +27,8 @@ restic_backup_job: true
 restic_backup_job_repos: "{{ restic_host_config.repos }}"
 restic_backup_job_password: "{{ restic_host_config.password }}"
 restic_backup_job_directories: "{{ restic_host_config.directories }}"
+
+win_tailscale_logins_with_key:
+  - login_server: https://controlplane.tailscale.com
+    auth_key: >
+      tskey-auth-kvz9PN1CNTRL-mU4F61qGE7CRFUuJT8BRACU3iVvw9BeZ # one-time use

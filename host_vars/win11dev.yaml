@@ -1,0 +1,17 @@
+---
+ansible_user: "kradalby"
+ansible_shell_type: powershell
+# ansible_become_method: runas
+# ansible_become_user: System
+
+hostname: win11dev
+gr_work: false
+win_vnc_password_hex: '{{ lookup("env", "WIN_VNC_PASSWORD_HEX") }}'
+
+exporter: false
+
+choco_packages:
+  # - 1password
+  - golang
+  - qemu-guest-agent
+  - github-desktop
