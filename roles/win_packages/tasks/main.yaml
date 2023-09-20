@@ -14,13 +14,20 @@
     - "{AC76BA86-7AD7-1044-7B44-AC0F074E4100}"
     - "{26A24AE4-039D-4CA4-87B4-2F86416029FF}"
 
+- name: install git with params
+  win_chocolatey:
+    name: git.install
+    state: latest
+    choco_args:
+      - --package-parameters-sensitive "/GitAndUnixToolsOnPath /WindowsTerminal /NoAutoCrlf /NoGitLfs"
+
 - name: Windows Packages | Install packages
   # become: true
   # become_method: runas
   # become_user: administrator
   chocolatey.chocolatey.win_chocolatey:
     name: "{{ choco_packages_base + choco_packages }}"
-    state: present
+    state: latest
 
 - name: Windows Packages | Install additional packages with privileges
   # become: true
@@ -28,7 +35,7 @@
   # become_user: administrator
   chocolatey.chocolatey.win_chocolatey:
     name: "{{ choco_packages_priv_base + choco_packages_priv }}"
-    state: present
+    state: latest
 
 - name: Windows Packages | Prevent applications from starting automatically
   win_regedit:
