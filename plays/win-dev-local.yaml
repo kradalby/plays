@@ -1,0 +1,26 @@
+---
+# This play is suppose to be used without the main inventory and
+# by passing the inventory directly to -i, think the IP of a VM
+# for dev:
+# ansible-playbook -i 1.1.1.1, --extra-vars "hostname=windev-11" plays/win-dev-local.yaml
+- name: Setup base configuration for Windows Dev machine local
+  hosts: all
+
+  vars:
+    ansible_user: "kradalby"
+    ansible_shell_type: powershell
+
+    choco_packages:
+      - golang
+      - github-desktop
+
+  roles:
+    - role: roles/win_update
+    - role: roles/win_hostname
+    - role: roles/win_debloat
+    - role: roles/win_packages
+    - role: roles/win_admin_users
+    - role: roles/win_ssh
+    - role: roles/win_rdp
+    # - role: roles/win_tailscale
+    - role: roles/win_ping
