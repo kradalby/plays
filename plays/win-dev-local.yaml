@@ -13,6 +13,8 @@
     choco_packages:
       - golang
       - github-desktop
+      - neovim
+      - microsoft-windows-terminal
 
   roles:
     - role: roles/win_update
