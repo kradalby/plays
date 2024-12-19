@@ -21,6 +21,13 @@
     choco_args:
       - --package-parameters-sensitive "/GitAndUnixToolsOnPath /WindowsTerminal /NoAutoCrlf /NoGitLfs"
 
+- name: install neovim with params
+  win_chocolatey:
+    name: neovim
+    state: latest
+    choco_args:
+      - --params "/NeovimOnPathForAll"
+
 - name: Windows Packages | Install packages
   # become: true
   # become_method: runas

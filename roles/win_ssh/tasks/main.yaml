@@ -19,3 +19,8 @@
     state: present
     enabled: true
     program: '%SystemRoot%\system32\OpenSSH\sshd.exe'
+
+# - name: Windows SSH | Enable ssh agent forwarding
+#   ansible.windows.win_service:
+#     name: ssh-agent
+#     state: started

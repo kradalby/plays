@@ -6,4 +6,6 @@ PubkeyAuthentication yes
 PasswordAuthentication no
 PermitEmptyPasswords no
 
+AllowAgentForwarding yes
+
 Subsystem       sftp    sftp-server.exe

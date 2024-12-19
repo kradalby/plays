@@ -13,13 +13,14 @@
     choco_packages:
       - golang
       - github-desktop
-      - neovim
-      - microsoft-windows-terminal
+      # - microsoft-windows-terminal
+      - winfsp
+      - sshfs
 
   roles:
     - role: roles/win_update
     - role: roles/win_hostname
-    - role: roles/win_debloat
+    # - role: roles/win_debloat
     - role: roles/win_packages
     - role: roles/win_admin_users
     - role: roles/win_ssh
